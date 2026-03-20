@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oferta Educativa — Programas de Excelência | Colégio Alfa e Omega</title>
+  <meta name="description" content="Oferta educativa do Colégio Alfa e Omega: ensino primário, secundário, ATL, disciplinas, actividades extracurriculares e transporte escolar em Panguila, Angola.">
+  <meta name="author" content="Colégio Alfa e Omega">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.colegioalfaeomega.com/oferta.html">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/main.css">
+
+  <style>
+    /* ============================================
+       DESIGN TOKENS
+    ============================================ */
+    :root {
+      --ink-950:   #010E24;
+      --ink-900:   #011830;
+      --ink-800:   #012050;
+      --primary:   #01377D;
+      --primary-m: #0147A0;
+      --primary-l: #0A5FC4;
+      --accent:    #CEF431;
+      --accent-m:  #B8D400;
+      --accent-d:  #8FA300;
+      --white:     #FFFFFF;
+      --off-white: #F8F9F6;
+      --paper:     #F4F5F1;
+      --gray-50:   #F5F6F3;
+      --gray-100:  #EAEBE8;
+      --gray-200:  #D4D6D1;
+      --gray-400:  #9BA09A;
+      --gray-500:  #6D726B;
+      --gray-600:  #4D524B;
+      --gray-700:  #3D4239;
+      --gray-900:  #1A1E18;
+      --font-serif: 'DM Serif Display', serif;
+      --font-sans:  'DM Sans', sans-serif;
+      --font-head:  'Poppins', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--white);
+      color: var(--gray-700);
+      overflow-x: hidden;
+      padding-top: 5rem;
+    }
+
+    /* =============================================
+       NAVBAR
+    ============================================= */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: 5rem;
+      transition: background 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease;
+    }
+
+    .navbar.transparent {
+      background: transparent;
+    }
+
+    .navbar.scrolled {
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.08), 0 8px 32px rgba(1,55,125,0.06);
+    }
+
+    .navbar-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      text-decoration: none;
+    }
+
+    .logo-img {
+      width: 46px;
+      height: 46px;
+      object-fit: contain;
+      transition: transform 0.3s ease;
+    }
+
+    .logo-section:hover .logo-img { transform: scale(1.05); }
+
+    .logo-text-block h2 {
+      font-family: var(--font-heading);
+      font-size: 0.925rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1.1;
+      transition: color 0.3s;
+    }
+
+    .navbar.transparent .logo-text-block h2 { color: var(--white); }
+
+    .logo-text-block p {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--accent-mid);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .navbar.transparent .logo-text-block p { color: rgba(206,244,49,0.75); }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .nav-link {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--gray-700);
+      text-decoration: none;
+      padding: 0.6rem 0.9rem;
+      border-radius: 0.5rem;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .navbar.transparent .nav-link { color: rgba(255,255,255,0.85); }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 4px; left: 50%; right: 50%;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: left 0.3s ease, right 0.3s ease;
+    }
+
+    .nav-link:hover::after, .nav-link.active::after { left: 0.9rem; right: 0.9rem; }
+    .nav-link:hover { color: var(--primary); }
+    .navbar.transparent .nav-link:hover { color: var(--white); }
+
+    .nav-cta {
+      margin-left: 0.75rem;
+      background: var(--accent);
+      color: var(--primary);
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.875rem;
+      padding: 0.65rem 1.4rem;
+      border-radius: 2rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .nav-cta:hover {
+      background: var(--primary);
+      color: var(--white);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(1,55,125,0.25);
+    }
+
+    .mobile-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: var(--primary);
+      cursor: pointer;
+    }
+
+    .navbar.transparent .mobile-btn { color: var(--white); }
+
+    .mobile-menu {
+      display: none;
+      position: absolute;
+      top: 100%; left: 0; right: 0;
+      background: var(--white);
+      border-top: 3px solid var(--accent);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+      padding: 1rem 0;
+      flex-direction: column;
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-nav-link {
+      padding: 0.875rem 2rem;
+      font-weight: 600;
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 0.95rem;
+      border-left: 3px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .mobile-nav-link:hover { background: rgba(1,55,125,0.05); border-left-color: var(--accent); }
+
+    /* ============================================
+       PAGE HERO — DIAGONAL SPLIT
+    ============================================ */
+    .page-hero {
+      position: relative;
+      background: var(--ink-950);
+      overflow: hidden;
+      padding: 7rem 2rem 5rem;
+    }
+
+    /* Diagonal accent slice */
+    .hero-diagonal {
+      position: absolute;
+      top: 0; right: 0;
+      width: 45%;
+      height: 100%;
+      background: linear-gradient(160deg, var(--primary) 0%, var(--primary-m) 100%);
+      clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+      z-index: 1;
+    }
+
+    .hero-diagonal::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 20px,
+          rgba(255,255,255,0.03) 20px,
+          rgba(255,255,255,0.03) 21px
+        );
+    }
+
+    /* Ghost giant text */
+    .page-hero::before {
+      content: 'OFERTA';
+      position: absolute;
+      left: -1rem;
+      bottom: -3rem;
+      font-family: var(--font-serif);
+      font-size: clamp(7rem, 16vw, 18rem);
+      color: rgba(255,255,255,0.025);
+      line-height: 1;
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 0;
+    }
+
+    .hero-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 4rem; align-items: center;
+      position: relative; z-index: 2;
+    }
+
+    .hero-left {}
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-family: var(--font-sans); font-size: 0.7rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+    .hero-eyebrow::before { content: ''; width: 28px; height: 2px; background: var(--accent); border-radius: 2px; }
+
+    .hero-h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.8rem, 5vw, 4.8rem);
+      color: var(--white); line-height: 1.0;
+      letter-spacing: -0.025em; margin-bottom: 1.5rem;
+    }
+    .hero-h1 em { color: var(--accent); font-style: italic; }
+
+    .hero-desc {
+      font-family: var(--font-sans); font-size: 1rem;
+      color: rgba(255,255,255,0.5); line-height: 1.85; font-weight: 300;
+      max-width: 500px;
+    }
+
+    .hero-actions {
+      display: flex; gap: 0.75rem; margin-top: 2.5rem; flex-wrap: wrap;
+    }
+
+    .btn-hero-p {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: var(--accent); color: var(--primary);
+      font-family: var(--font-sans); font-weight: 700; font-size: 0.875rem;
+      padding: 0.875rem 2rem; border-radius: 3rem; text-decoration: none; transition: all 0.3s;
+    }
+    .btn-hero-p:hover { background: var(--white); transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,0.3); }
+
+    .btn-hero-s {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: transparent; border: 1.5px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.7); font-family: var(--font-sans);
+      font-weight: 500; font-size: 0.875rem;
+      padding: 0.875rem 2rem; border-radius: 3rem; text-decoration: none; transition: all 0.3s;
+    }
+    .btn-hero-s:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-3px); }
+
+    .hero-right {
+      display: flex; flex-direction: column; gap: 1rem;
+      position: relative; z-index: 3;
+    }
+
+    .hero-pill {
+      display: inline-flex; align-items: center; gap: 0.75rem;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 3rem; padding: 0.6rem 1.2rem;
+      font-family: var(--font-sans); font-size: 0.8rem;
+      color: rgba(255,255,255,0.8); white-space: nowrap;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s;
+    }
+    .hero-pill:hover { background: rgba(206,244,49,0.12); border-color: rgba(206,244,49,0.3); color: var(--white); }
+    .hero-pill i { color: var(--accent); font-size: 0.85rem; }
+
+    /* Breadcrumb */
+    .breadcrumb-strip {
+      background: rgba(255,255,255,0.04);
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 0.875rem 2rem;
+    }
+    .breadcrumb-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: 0.8rem; color: rgba(255,255,255,0.4); font-family: var(--font-sans);
+    }
+    .breadcrumb-inner a { color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+    .breadcrumb-inner a:hover { color: var(--accent); }
+    .breadcrumb-inner i { font-size: 0.6rem; }
+    .breadcrumb-inner span { color: rgba(255,255,255,0.7); }
+
+    /* ============================================
+       QUICK JUMP NAV
+    ============================================ */
+    .jump-nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-100);
+      position: sticky;
+      top: 5rem;
+      z-index: 50;
+      overflow-x: auto;
+    }
+
+    .jump-nav-inner {
+      max-width: 1280px; margin: 0 auto; padding: 0 2rem;
+      display: flex; gap: 0; width: max-content; min-width: 100%;
+    }
+
+    .jump-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 1rem 1.5rem;
+      font-family: var(--font-sans); font-size: 0.8rem; font-weight: 600;
+      color: var(--gray-500); text-decoration: none;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap; transition: all 0.2s;
+    }
+    .jump-btn:hover { color: var(--primary); border-bottom-color: var(--accent); }
+    .jump-btn i { font-size: 0.8rem; }
+
+    /* ============================================
+       SECTION UTILITIES
+    ============================================ */
+    .section-label {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: var(--font-sans); font-size: 0.7rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.18em; color: var(--primary);
+      margin-bottom: 1rem;
+    }
+    .section-label::before { content: ''; width: 22px; height: 2px; background: var(--accent); }
+
+    .display-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      color: var(--gray-900); line-height: 1.1; letter-spacing: -0.02em;
+    }
+    .display-title em { color: var(--primary); font-style: italic; }
+
+    .body-lead {
+      font-family: var(--font-sans); font-size: 1rem;
+      color: var(--gray-500); line-height: 1.85; font-weight: 300;
+    }
+
+    /* ============================================
+       SECTION: PROGRAMAS — TABULAR CARDS
+    ============================================ */
+    .section-programas {
+      padding: 7rem 2rem;
+      background: var(--white);
+      scroll-margin-top: 110px;
+    }
+
+    .programas-inner { max-width: 1280px; margin: 0 auto; }
+
+    .programas-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      gap: 2rem; margin-bottom: 4rem; flex-wrap: wrap;
+    }
+
+    /* Tab switcher */
+    .prog-tabs {
+      display: flex; gap: 0.25rem;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-100);
+      border-radius: 0.625rem;
+      padding: 0.25rem;
+    }
+
+    .prog-tab {
+      padding: 0.5rem 1.2rem;
+      font-family: var(--font-sans); font-size: 0.8rem; font-weight: 600;
+      color: var(--gray-500); border: none; background: transparent;
+      border-radius: 0.375rem; cursor: pointer; transition: all 0.2s;
+    }
+    .prog-tab.active, .prog-tab:hover {
+      background: var(--white); color: var(--primary);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    /* Program card grid */
+    .prog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .prog-card {
+      border-radius: 1.5rem;
+      overflow: hidden;
+      border: 1px solid var(--gray-100);
+      background: var(--white);
+      transition: all 0.35s ease;
+      display: flex; flex-direction: column;
+    }
+
+    .prog-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 24px 60px rgba(1,55,125,0.12);
+      border-color: rgba(1,55,125,0.2);
+    }
+
+    .prog-card-head {
+      padding: 2rem 2rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .prog-card.primary-prog .prog-card-head {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-m) 100%);
+    }
+    .prog-card.secondary-prog .prog-card-head {
+      background: linear-gradient(135deg, var(--ink-800) 0%, var(--primary) 100%);
+    }
+    .prog-card.atl-prog .prog-card-head {
+      background: linear-gradient(135deg, #0D4A2B 0%, #116B3E 100%);
+    }
+    .prog-card.atl2-prog .prog-card-head {
+      background: linear-gradient(135deg, #5B1E07 0%, #8B3612 100%);
+    }
+    .prog-card.atl3-prog .prog-card-head {
+      background: linear-gradient(135deg, #3D1A5E 0%, #6127A0 100%);
+    }
+
+    /* Geometric decoration on card head */
+    .prog-card-head::after {
+      content: '';
+      position: absolute;
+      bottom: -20px; right: -20px;
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .prog-badge {
+      display: inline-block;
+      font-family: var(--font-sans); font-size: 0.65rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.15em;
+      color: var(--accent); margin-bottom: 1rem;
+    }
+
+    .prog-icon {
+      width: 52px; height: 52px; border-radius: 1rem;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; color: var(--white); margin-bottom: 1.25rem;
+    }
+
+    .prog-name {
+      font-family: var(--font-serif); font-size: 1.6rem;
+      color: var(--white); line-height: 1.1; margin-bottom: 0.3rem;
+    }
+
+    .prog-sub {
+      font-family: var(--font-sans); font-size: 0.78rem;
+      color: rgba(255,255,255,0.5); font-weight: 300;
+    }
+
+    /* Card body */
+    .prog-card-body { padding: 1.75rem 2rem; flex: 1; display: flex; flex-direction: column; }
+
+    .prog-desc {
+      font-family: var(--font-sans); font-size: 0.9rem;
+      color: var(--gray-500); line-height: 1.75; font-weight: 300;
+      margin-bottom: 1.5rem;
+    }
+
+    .prog-features { list-style: none; margin-bottom: 1.75rem; flex: 1; }
+
+    .prog-features li {
+      display: flex; align-items: flex-start; gap: 0.6rem;
+      padding: 0.4rem 0;
+      font-family: var(--font-sans); font-size: 0.875rem;
+      color: var(--gray-600); border-bottom: 1px solid var(--gray-50);
+    }
+    .prog-features li:last-child { border-bottom: none; }
+    .prog-features li i {
+      color: var(--accent-m); font-size: 0.65rem; margin-top: 0.35rem; flex-shrink: 0;
+    }
+
+    .prog-footer {
+      padding-top: 1.25rem; border-top: 1px solid var(--gray-100);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .turno-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+    .turno-tag {
+      font-family: var(--font-sans); font-size: 0.68rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--primary); background: rgba(1,55,125,0.08);
+      padding: 0.3rem 0.75rem; border-radius: 3rem;
+    }
+
+    .prog-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-family: var(--font-sans); font-size: 0.8rem; font-weight: 700;
+      color: var(--primary); text-decoration: none; transition: gap 0.3s;
+    }
+    .prog-link:hover { gap: 0.7rem; color: var(--accent-d); }
+
+    /* ============================================
+       SECTION: DISCIPLINAS — DENSE GRID
+    ============================================ */
+    .section-disciplinas {
+      padding: 7rem 2rem;
+      background: var(--off-white);
+      scroll-margin-top: 110px;
+    }
+
+    .disciplinas-inner { max-width: 1280px; margin: 0 auto; }
+
+    .disc-header {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: center; margin-bottom: 4.5rem;
+    }
+
+    .disc-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--gray-200);
+      border-radius: 1.25rem;
+      overflow: hidden;
+      border: 1px solid var(--gray-200);
+    }
+
+    .disc-item {
+      background: var(--white);
+      padding: 2rem 1.75rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .disc-item::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--primary-l));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s ease;
+    }
+
+    .disc-item:hover { background: var(--gray-50); }
+    .disc-item:hover::before { transform: scaleX(1); }
+
+    .disc-num {
+      font-family: var(--font-serif); font-size: 2.5rem;
+      color: rgba(1,55,125,0.06); line-height: 1;
+      position: absolute; top: 1rem; right: 1rem;
+      pointer-events: none; transition: color 0.3s;
+    }
+    .disc-item:hover .disc-num { color: rgba(206,244,49,0.2); }
+
+    .disc-icon {
+      width: 46px; height: 46px; border-radius: 0.75rem;
+      background: linear-gradient(135deg, var(--primary), var(--primary-l));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.15rem; color: var(--white); margin-bottom: 1.25rem;
+      transition: transform 0.3s;
+    }
+    .disc-item:hover .disc-icon { transform: rotate(-5deg) scale(1.08); }
+
+    .disc-title {
+      font-family: var(--font-head); font-size: 0.975rem; font-weight: 700;
+      color: var(--gray-900); margin-bottom: 0.4rem;
+    }
+
+    .disc-text {
+      font-family: var(--font-sans); font-size: 0.85rem;
+      color: var(--gray-500); line-height: 1.65; font-weight: 300;
+    }
+
+    /* ============================================
+       SECTION: EXTRA — MASONRY-LIKE LAYOUT
+    ============================================ */
+    .section-extra {
+      padding: 7rem 2rem;
+      background: var(--white);
+      scroll-margin-top: 110px;
+    }
+
+    .extra-inner { max-width: 1280px; margin: 0 auto; }
+
+    .extra-header { text-align: center; margin-bottom: 4.5rem; }
+
+    .extra-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 1.5rem;
+    }
+
+    .extra-card {
+      border-radius: 1.25rem;
+      padding: 2.25rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.35s;
+    }
+
+    .extra-card.dark {
+      background: var(--ink-950);
+      grid-row: span 2;
+    }
+
+    .extra-card.light { background: var(--off-white); border: 1px solid var(--gray-100); }
+    .extra-card.accent-bg { background: var(--accent); }
+
+    .extra-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,0.12); }
+
+    .ec-ghost {
+      position: absolute; bottom: -1rem; right: -1rem;
+      font-size: 7rem; font-family: var(--font-serif);
+      color: rgba(255,255,255,0.04); line-height: 1;
+      pointer-events: none;
+    }
+
+    .extra-card.light .ec-ghost { color: rgba(1,55,125,0.05); }
+    .extra-card.accent-bg .ec-ghost { color: rgba(1,55,125,0.1); }
+
+    .ec-emoji { font-size: 2.5rem; margin-bottom: 1.25rem; display: block; }
+
+    .ec-title {
+      font-family: var(--font-head); font-size: 1.1rem; font-weight: 800;
+      margin-bottom: 0.6rem;
+    }
+
+    .extra-card.dark .ec-title { color: var(--white); }
+    .extra-card.light .ec-title { color: var(--primary); }
+    .extra-card.accent-bg .ec-title { color: var(--primary); }
+
+    .ec-text {
+      font-family: var(--font-sans); font-size: 0.875rem; line-height: 1.7; font-weight: 300;
+    }
+
+    .extra-card.dark .ec-text { color: rgba(255,255,255,0.5); }
+    .extra-card.light .ec-text { color: var(--gray-500); }
+    .extra-card.accent-bg .ec-text { color: rgba(1,55,125,0.7); }
+
+    /* Extra list (for dark featured card) */
+    .ec-list { list-style: none; margin-top: 1.5rem; }
+    .ec-list li {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.6rem 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-family: var(--font-sans); font-size: 0.875rem;
+      color: rgba(255,255,255,0.6); font-weight: 300;
+    }
+    .ec-list li:last-child { border-bottom: none; }
+    .ec-list li i { color: var(--accent); font-size: 0.7rem; flex-shrink: 0; }
+
+    /* ============================================
+       SECTION: TRANSPORTE — CLEAN TABLE STYLE
+    ============================================ */
+    .section-transporte {
+      padding: 7rem 2rem;
+      background: var(--off-white);
+      scroll-margin-top: 110px;
+    }
+
+    .transporte-inner { max-width: 1280px; margin: 0 auto; }
+
+    .transporte-layout {
+      display: grid; grid-template-columns: 1fr 1.4fr;
+      gap: 5rem; align-items: start;
+    }
+
+    .transporte-left {}
+
+    .t-intro {
+      font-family: var(--font-sans); font-size: 1rem;
+      color: var(--gray-500); line-height: 1.85; font-weight: 300;
+      margin-top: 1.5rem; margin-bottom: 2.5rem;
+    }
+
+    .t-highlight {
+      background: var(--primary);
+      border-radius: 1.25rem;
+      padding: 2rem;
+      color: var(--white);
+    }
+
+    .t-highlight-label {
+      font-family: var(--font-sans); font-size: 0.65rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.18em;
+      color: var(--accent); margin-bottom: 0.75rem; display: block;
+    }
+
+    .t-highlight p {
+      font-family: var(--font-sans); font-size: 0.9rem;
+      color: rgba(255,255,255,0.7); line-height: 1.75; font-weight: 300;
+    }
+
+    .t-highlight strong { color: var(--accent); }
+
+    .transporte-right {}
+
+    .t-features {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1px; background: var(--gray-200);
+      border-radius: 1.25rem; overflow: hidden;
+      border: 1px solid var(--gray-200);
+    }
+
+    .t-feat {
+      background: var(--white);
+      padding: 2rem 1.75rem;
+      transition: all 0.3s;
+    }
+
+    .t-feat:hover { background: var(--gray-50); }
+
+    .t-feat-icon {
+      width: 48px; height: 48px; border-radius: 0.875rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; margin-bottom: 1.25rem; transition: transform 0.3s;
+    }
+
+    .t-feat:hover .t-feat-icon { transform: rotate(-5deg) scale(1.1); }
+
+    .t-feat-icon.a { background: var(--accent); color: var(--primary); }
+    .t-feat-icon.b { background: linear-gradient(135deg, var(--primary), var(--primary-l)); color: var(--white); }
+
+    .t-feat h4 {
+      font-family: var(--font-head); font-size: 0.95rem; font-weight: 700;
+      color: var(--gray-900); margin-bottom: 0.5rem;
+    }
+
+    .t-feat p {
+      font-family: var(--font-sans); font-size: 0.85rem;
+      color: var(--gray-500); line-height: 1.65; font-weight: 300;
+    }
+
+    /* ============================================
+       SECTION: CTA FINAL
+    ============================================ */
+    .section-cta {
+      padding: 8rem 2rem;
+      background: var(--ink-950);
+      position: relative; overflow: hidden; text-align: center;
+    }
+
+    .cta-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 20% 50%, rgba(1,55,125,0.4) 0%, transparent 55%),
+        radial-gradient(circle at 80% 50%, rgba(206,244,49,0.07) 0%, transparent 55%);
+    }
+
+    .cta-grid-lines {
+      position: absolute; inset: 0;
+      background-image:
+        repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(255,255,255,0.012) 80px, rgba(255,255,255,0.012) 81px),
+        repeating-linear-gradient(0deg, transparent, transparent 80px, rgba(255,255,255,0.012) 80px, rgba(255,255,255,0.012) 81px);
+    }
+
+    .cta-inner { max-width: 700px; margin: 0 auto; position: relative; z-index: 2; }
+
+    .cta-badge {
+      display: inline-block;
+      background: rgba(206,244,49,0.1); border: 1px solid rgba(206,244,49,0.25);
+      color: var(--accent); font-size: 0.7rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.18em;
+      padding: 0.4rem 1.2rem; border-radius: 3rem; margin-bottom: 2rem;
+    }
+
+    .cta-h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.2rem, 4vw, 3.8rem);
+      color: var(--white); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 1.25rem;
+    }
+    .cta-h2 em { color: var(--accent); font-style: italic; }
+
+    .cta-p {
+      font-family: var(--font-sans); font-size: 1rem;
+      color: rgba(255,255,255,0.45); line-height: 1.8; font-weight: 300; margin-bottom: 3rem;
+    }
+
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    .btn-f-p {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: var(--accent); color: var(--primary);
+      font-family: var(--font-sans); font-weight: 700; font-size: 0.9rem;
+      padding: 1rem 2.25rem; border-radius: 3rem; text-decoration: none; transition: all 0.3s;
+    }
+    .btn-f-p:hover { background: var(--white); transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,0.4); }
+
+    .btn-f-s {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: transparent; border: 1.5px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.7); font-family: var(--font-sans); font-weight: 500; font-size: 0.9rem;
+      padding: 1rem 2.25rem; border-radius: 3rem; text-decoration: none; transition: all 0.3s;
+    }
+    .btn-f-s:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-3px); }
+
+    /* ============================================
+       RESPONSIVE
+    ============================================ */
+    @media (max-width: 1024px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-right { flex-direction: row; flex-wrap: wrap; }
+      .prog-grid { grid-template-columns: 1fr 1fr; }
+      .disc-header { grid-template-columns: 1fr; gap: 2rem; }
+      .disc-grid { grid-template-columns: repeat(2, 1fr); }
+      .extra-grid { grid-template-columns: 1fr 1fr; }
+      .extra-card.dark { grid-row: auto; }
+      .transporte-layout { grid-template-columns: 1fr; gap: 3rem; }
+      .nav-links, .nav-cta { display: none; }
+      .nav-mob-btn { display: block; }
+    }
+
+    @media (max-width: 768px) {
+      body { padding-top: 5rem; }
+      .prog-grid { grid-template-columns: 1fr; }
+      .disc-grid { grid-template-columns: 1fr; }
+      .extra-grid { grid-template-columns: 1fr; }
+      .t-features { grid-template-columns: 1fr; }
+      .section-programas, .section-disciplinas, .section-extra, .section-transporte, .section-cta { padding: 5rem 1.5rem; }
+      .hero-diagonal { display: none; }
+      .prog-grid { gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar transparent" id="navbar">
+    <div class="navbar-container">
+      <a class="logo-section" href="/">
+        <img src="/assets/images/logo/lo.png" alt="Alfa e Omega" class="logo-img">
+        <div class="logo-text-block">
+          <h2>Colégio Alfa e Omega</h2>
+          <p>Panguila · Angola</p>
+        </div>
+      </a>
+
+      <nav class="nav-menu" role="navigation">
+        <a href="/" class="nav-link">Início</a>
+        <a href="/sobre.html" class="nav-link">Sobre</a>
+        <a href="/oferta.html" class="nav-link active">Oferta</a>
+        <a href="/novidades.html" class="nav-link">Novidades</a>
+        <a href="/avisos.html" class="nav-link">Avisos</a>
+        <a href="/galeria.html" class="nav-link">Galeria</a>
+        <a href="/contactos.html" class="nav-link">Contactos</a>
+      </nav>
+
+      <a href="/matriculas.html" class="nav-cta">Matricular Agora</a>
+
+      <button class="mobile-btn" id="mobile-btn" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="/" class="mobile-nav-link"><i class="fas fa-home"></i> Início</a>
+      <a href="/sobre.html" class="mobile-nav-link"><i class="fas fa-info-circle"></i> Sobre</a>
+      <a href="/oferta.html" class="mobile-nav-link"><i class="fas fa-book-open"></i> Oferta Educativa</a>
+      <a href="/novidades.html" class="mobile-nav-link"><i class="fas fa-newspaper"></i> Novidades</a>
+      <a href="/avisos.html" class="mobile-nav-link"><i class="fas fa-bullhorn"></i> Avisos</a>
+      <a href="/galeria.html" class="mobile-nav-link"><i class="fas fa-images"></i> Galeria</a>
+      <a href="/contactos.html" class="mobile-nav-link"><i class="fas fa-envelope"></i> Contactos</a>
+      <a href="https://wa.me/925952771" class="mobile-nav-link" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ===================== HERO ===================== -->
+    <section class="page-hero">
+      <div class="hero-diagonal"></div>
+      <div class="hero-inner">
+        <div class="hero-left" data-aos="fade-right">
+          <div class="hero-eyebrow">Colégio Alfa e Omega · Panguila</div>
+          <h1 class="hero-h1">
+            Programas<br>de <em>Excelência</em><br>Educativa
+          </h1>
+          <p class="hero-desc">
+            Do ensino primário ao secundário, com ATL, actividades extra e transporte escolar. Uma oferta completa para o desenvolvimento integral de cada aluno.
+          </p>
+          <div class="hero-actions">
+            <a href="/contactos.html" class="btn-hero-p"><i class="fas fa-pen-to-square"></i> Pré-Inscrição</a>
+            <a href="#programas" class="btn-hero-s"><i class="fas fa-chevron-down"></i> Ver Programas</a>
+          </div>
+        </div>
+        <div class="hero-right" data-aos="fade-left" data-aos-delay="150">
+          <span class="hero-pill"><i class="fas fa-book"></i> Ensino Primário · Gr. 1–6</span>
+          <span class="hero-pill"><i class="fas fa-graduation-cap"></i> Ensino Secundário · Gr. 7–9</span>
+          <span class="hero-pill"><i class="fas fa-child"></i> ATL — Pré/Sabiá/Rolinha</span>
+          <span class="hero-pill"><i class="fas fa-language"></i> Curso de Inglês integrado</span>
+          <span class="hero-pill"><i class="fas fa-bus"></i> Transporte Escolar</span>
+          <span class="hero-pill"><i class="fas fa-sun"></i> Turnos: Manhã &amp; Tarde</span>
+        </div>
+      </div>
+      <div class="breadcrumb-strip">
+        <div class="breadcrumb-inner">
+          <a href="/"><i class="fas fa-home"></i> Início</a>
+          <i class="fas fa-chevron-right"></i>
+          <span>Oferta Educativa</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUICK JUMP NAV -->
+    <nav class="jump-nav">
+      <div class="jump-nav-inner">
+        <a href="#programas" class="jump-btn"><i class="fas fa-layer-group"></i> Programas</a>
+        <a href="#disciplinas" class="jump-btn"><i class="fas fa-book-open"></i> Disciplinas</a>
+        <a href="#extra" class="jump-btn"><i class="fas fa-star"></i> Actividades Extra</a>
+        <a href="#transporte" class="jump-btn"><i class="fas fa-bus"></i> Transporte</a>
+        <a href="/contactos.html" class="jump-btn"><i class="fas fa-pen-to-square"></i> Inscrição</a>
+      </div>
+    </nav>
+
+    <!-- ===================== PROGRAMAS ===================== -->
+    <section class="section-programas" id="programas">
+      <div class="programas-inner">
+        <div class="programas-header" data-aos="fade-up">
+          <div>
+            <div class="section-label">Ciclos de Ensino</div>
+            <h2 class="display-title">Os nossos <em>programas</em></h2>
+          </div>
+        </div>
+
+        <div class="prog-grid">
+
+          <!-- Ensino Primário -->
+          <div class="prog-card primary-prog" data-aos="fade-up" data-aos-delay="0">
+            <div class="prog-card-head">
+              <div class="prog-badge">Ensino Primário</div>
+              <div class="prog-icon"><i class="fas fa-book"></i></div>
+              <h3 class="prog-name">Grades 1 a 6</h3>
+              <p class="prog-sub">Formação fundamental e integral</p>
+            </div>
+            <div class="prog-card-body">
+              <p class="prog-desc">Programa focado no desenvolvimento de competências essenciais em Português, Matemática, Ciências e formação de valores, com metodologias activas e experienciais.</p>
+              <ul class="prog-features">
+                <li><i class="fas fa-circle"></i> Turmas do 1.º ao 6.º ano</li>
+                <li><i class="fas fa-circle"></i> Metodologia prática e experiencial</li>
+                <li><i class="fas fa-circle"></i> Actividades complementares integradas</li>
+                <li><i class="fas fa-circle"></i> Acompanhamento personalizado</li>
+                <li><i class="fas fa-circle"></i> Curso de inglês incluído</li>
+              </ul>
+              <div class="prog-footer">
+                <div class="turno-tags">
+                  <span class="turno-tag">Manhã</span>
+                  <span class="turno-tag">Tarde</span>
+                </div>
+                <a href="/contactos.html" class="prog-link">Inscrever <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ensino Secundário -->
+          <div class="prog-card secondary-prog" data-aos="fade-up" data-aos-delay="100">
+            <div class="prog-card-head">
+              <div class="prog-badge">Ensino Secundário</div>
+              <div class="prog-icon"><i class="fas fa-graduation-cap"></i></div>
+              <h3 class="prog-name">Grades 7 a 9</h3>
+              <p class="prog-sub">Rigor académico e preparação</p>
+            </div>
+            <div class="prog-card-body">
+              <p class="prog-desc">Programa desafiante que consolida os conhecimentos fundamentais e prepara os alunos para o ensino médio com disciplinas especializadas e raciocínio avançado.</p>
+              <ul class="prog-features">
+                <li><i class="fas fa-circle"></i> Turmas do 7.º ao 9.º ano</li>
+                <li><i class="fas fa-circle"></i> Disciplinas especializadas e aprofundadas</li>
+                <li><i class="fas fa-circle"></i> Preparação para Olimpíadas</li>
+                <li><i class="fas fa-circle"></i> Desenvolvimento de defesas académicas</li>
+                <li><i class="fas fa-circle"></i> Aulas de Inglês com vídeos</li>
+              </ul>
+              <div class="prog-footer">
+                <div class="turno-tags">
+                  <span class="turno-tag">Manhã</span>
+                  <span class="turno-tag">Tarde</span>
+                </div>
+                <a href="/contactos.html" class="prog-link">Inscrever <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- ATL Pré -->
+          <div class="prog-card atl-prog" data-aos="fade-up" data-aos-delay="200">
+            <div class="prog-card-head">
+              <div class="prog-badge">ATL · Pré-Iniciação</div>
+              <div class="prog-icon"><i class="fas fa-child"></i></div>
+              <h3 class="prog-name">Pré Iniciação</h3>
+              <p class="prog-sub">Onde a brincar se aprende</p>
+            </div>
+            <div class="prog-card-body">
+              <p class="prog-desc">Serviço de apoio completo para crianças em idade de iniciação, com actividades recreativas, alimentação balanceada e supervisão profissional em ambiente seguro.</p>
+              <ul class="prog-features">
+                <li><i class="fas fa-circle"></i> Pequeno-almoço incluído</li>
+                <li><i class="fas fa-circle"></i> Almoço e lanche diário</li>
+                <li><i class="fas fa-circle"></i> Actividades recreativas e criativas</li>
+                <li><i class="fas fa-circle"></i> Período completo com supervisão</li>
+              </ul>
+              <div class="prog-footer">
+                <div class="turno-tags">
+                  <span class="turno-tag">Período Completo</span>
+                </div>
+                <a href="/contactos.html" class="prog-link">Saber mais <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- ATL Sabiá -->
+          <div class="prog-card atl2-prog" data-aos="fade-up" data-aos-delay="0">
+            <div class="prog-card-head">
+              <div class="prog-badge">ATL · Programa Sabiá</div>
+              <div class="prog-icon"><i class="fas fa-users"></i></div>
+              <h3 class="prog-name">Sabiá</h3>
+              <p class="prog-sub">Desenvolvimento integral 1.º ciclo</p>
+            </div>
+            <div class="prog-card-body">
+              <p class="prog-desc">Programa enriquecido para crianças do 1.º ciclo com foco no desenvolvimento integral, alimentação nutritiva, brincadeiras didácticas e convívio saudável.</p>
+              <ul class="prog-features">
+                <li><i class="fas fa-circle"></i> Pequeno-almoço saudável</li>
+                <li><i class="fas fa-circle"></i> Almoço e múltiplos lanches</li>
+                <li><i class="fas fa-circle"></i> Brincadeiras e actividades didácticas</li>
+                <li><i class="fas fa-circle"></i> Supervisão responsável e afectuosa</li>
+              </ul>
+              <div class="prog-footer">
+                <div class="turno-tags">
+                  <span class="turno-tag">Período Completo</span>
+                </div>
+                <a href="/contactos.html" class="prog-link">Saber mais <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- ATL Rolinha -->
+          <div class="prog-card atl3-prog" data-aos="fade-up" data-aos-delay="100">
+            <div class="prog-card-head">
+              <div class="prog-badge">ATL · Programa Rolinha</div>
+              <div class="prog-icon"><i class="fas fa-gamepad"></i></div>
+              <h3 class="prog-name">Rolinha</h3>
+              <p class="prog-sub">Diversão com propósito</p>
+            </div>
+            <div class="prog-card-body">
+              <p class="prog-desc">Programa divertido de actividades de tempo livre com cuidado integral, alimentação balanceada, jogos, artes e brincadeiras em ambiente seguro e acolhedor.</p>
+              <ul class="prog-features">
+                <li><i class="fas fa-circle"></i> Pequeno-almoço nutritivo</li>
+                <li><i class="fas fa-circle"></i> Almoço equilibrado e lanches</li>
+                <li><i class="fas fa-circle"></i> Jogos, artes e actividades dinâmicas</li>
+                <li><i class="fas fa-circle"></i> Ambiente seguro e acolhedor</li>
+              </ul>
+              <div class="prog-footer">
+                <div class="turno-tags">
+                  <span class="turno-tag">Período Completo</span>
+                </div>
+                <a href="/contactos.html" class="prog-link">Saber mais <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== DISCIPLINAS ===================== -->
+    <section class="section-disciplinas" id="disciplinas">
+      <div class="disciplinas-inner">
+        <div class="disc-header" data-aos="fade-up">
+          <div>
+            <div class="section-label">Currículo</div>
+            <h2 class="display-title">Disciplinas que<br><em>formam mentes</em></h2>
+          </div>
+          <p class="body-lead">Currículo robusto que abrange todas as áreas essenciais do conhecimento, preparando os alunos para os exames nacionais e para a vida.</p>
+        </div>
+
+        <div class="disc-grid" data-aos="fade-up" data-aos-delay="100">
+
+          <div class="disc-item">
+            <span class="disc-num">01</span>
+            <div class="disc-icon"><i class="fas fa-language"></i></div>
+            <div class="disc-title">Português</div>
+            <p class="disc-text">Leitura, escrita, expressão oral e competências linguísticas avançadas para comunicação eficaz.</p>
+          </div>
+
+          <div class="disc-item">
+            <span class="disc-num">02</span>
+            <div class="disc-icon"><i class="fas fa-calculator"></i></div>
+            <div class="disc-title">Matemática</div>
+            <p class="disc-text">Aritmética, álgebra, geometria, raciocínio lógico e resolução de problemas complexos.</p>
+          </div>
+
+          <div class="disc-item">
+            <span class="disc-num">03</span>
+            <div class="disc-icon"><i class="fas fa-flask"></i></div>
+            <div class="disc-title">Ciências Naturais</div>
+            <p class="disc-text">Biologia, física, química e laboratório experimental — ciência com as mãos na massa.</p>
+          </div>
+
+          <div class="disc-item">
+            <span class="disc-num">04</span>
+            <div class="disc-icon"><i class="fas fa-globe-africa"></i></div>
+            <div class="disc-title">História e Geografia</div>
+            <p class="disc-text">Conhecimento do mundo, culturas, sociedades e a rica história de Angola e do continente africano.</p>
+          </div>
+
+          <div class="disc-item">
+            <span class="disc-num">05</span>
+            <div class="disc-icon"><i class="fas fa-flag"></i></div>
+            <div class="disc-title">Educação Cívica</div>
+            <p class="disc-text">Formação de cidadãos responsáveis, conscientes dos seus direitos e deveres na sociedade.</p>
+          </div>
+
+          <div class="disc-item">
+            <span class="disc-num">06</span>
+            <div class="disc-icon" style="background:linear-gradient(135deg,var(--accent),var(--accent-m)); color:var(--primary);"><i class="fas fa-microphone"></i></div>
+            <div class="disc-title">Inglês</div>
+            <p class="disc-text">Curso integrado com vídeos educativos, expressão oral e escrita para preparação global.</p>
+          </div>
+
+          <div class="disc-item">
+            <span class="disc-num">07</span>
+            <div class="disc-icon"><i class="fas fa-running"></i></div>
+            <div class="disc-title">Educação Física</div>
+            <p class="disc-text">Saúde, desporto, coordenação motora e espírito de equipa através do exercício e competição saudável.</p>
+          </div>
+
+          <div class="disc-item">
+            <span class="disc-num">08</span>
+            <div class="disc-icon"><i class="fas fa-palette"></i></div>
+            <div class="disc-title">Artes e Cultura</div>
+            <p class="disc-text">Expressão criativa, música, artes plásticas e valorização do património cultural africano e angolano.</p>
+          </div>
+
+          <div class="disc-item">
+            <span class="disc-num">09</span>
+            <div class="disc-icon"><i class="fas fa-laptop-code"></i></div>
+            <div class="disc-title">Informática</div>
+            <p class="disc-text">Competências digitais essenciais, programação básica e utilização responsável das tecnologias.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== ACTIVIDADES EXTRA ===================== -->
+    <section class="section-extra" id="extra">
+      <div class="extra-inner">
+        <div class="extra-header" data-aos="fade-up">
+          <div class="section-label" style="justify-content:center; margin-bottom:1rem;">Desenvolvimento Integral</div>
+          <h2 class="display-title" style="margin-bottom:0.75rem;">Para além da <em>sala de aula</em></h2>
+          <p class="body-lead" style="max-width:500px; margin:0 auto; text-align:center;">Actividades que desenvolvem talentos, carácter e competências para a vida.</p>
+        </div>
+
+        <div class="extra-grid" data-aos="fade-up" data-aos-delay="100">
+
+          <!-- Featured dark card -->
+          <div class="extra-card dark">
+            <div class="ec-ghost">⚽</div>
+            <span class="ec-emoji">🏆</span>
+            <h3 class="ec-title" style="font-size:1.4rem; margin-bottom:0.75rem;">Desporto &amp; Competição</h3>
+            <p class="ec-text">Futebol, voleibol, basquetebol e atletismo com competições internas. Desenvolvemos espírito de equipa, disciplina e superação pessoal em cada aluno.</p>
+            <ul class="ec-list">
+              <li><i class="fas fa-circle"></i> Futebol — equipas masculinas e femininas</li>
+              <li><i class="fas fa-circle"></i> Voleibol e basquetebol inter-turmas</li>
+              <li><i class="fas fa-circle"></i> Atletismo e educação motora</li>
+              <li><i class="fas fa-circle"></i> Torneiros e competições anuais</li>
+              <li><i class="fas fa-circle"></i> Excursões e actividades outdoor</li>
+            </ul>
+          </div>
+
+          <!-- Small cards -->
+          <div class="extra-card light" data-aos="fade-up" data-aos-delay="80">
+            <div class="ec-ghost">🎵</div>
+            <span class="ec-emoji">🎵</span>
+            <h3 class="ec-title">Música</h3>
+            <p class="ec-text">Aulas de instrumentos, coro escolar e apresentações culturais que desenvolvem a sensibilidade artística e a expressão criativa.</p>
+          </div>
+
+          <div class="extra-card accent-bg" data-aos="fade-up" data-aos-delay="160">
+            <div class="ec-ghost">🎭</div>
+            <span class="ec-emoji">🎭</span>
+            <h3 class="ec-title">Teatro e Artes</h3>
+            <p class="ec-text">Peças teatrais, expressão dramática e projectos artísticos que fortalecem a confiança, a voz e a criatividade.</p>
+          </div>
+
+          <div class="extra-card light" data-aos="fade-up" data-aos-delay="80">
+            <div class="ec-ghost">📚</div>
+            <span class="ec-emoji">📚</span>
+            <h3 class="ec-title">Clube de Leitura</h3>
+            <p class="ec-text">Promoção do hábito de leitura e desenvolvimento da literacia com sessões semanais de contação de histórias e debate literário.</p>
+          </div>
+
+          <div class="extra-card light" data-aos="fade-up" data-aos-delay="160">
+            <div class="ec-ghost">🔬</div>
+            <span class="ec-emoji">🔬</span>
+            <h3 class="ec-title">Projectos Científicos</h3>
+            <p class="ec-text">Feiras de ciência, experimentos práticos e Olimpíadas de Matemática para os alunos mais curiosos e talentosos.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TRANSPORTE ===================== -->
+    <section class="section-transporte" id="transporte">
+      <div class="transporte-inner">
+        <div class="transporte-layout">
+          <div class="transporte-left" data-aos="fade-right">
+            <div class="section-label">Comodidade e Segurança</div>
+            <h2 class="display-title" style="margin-bottom:0;">Transporte<br><em>Escolar</em></h2>
+            <p class="t-intro">Serviço de transporte seguro, confortável e eficiente para alunos do 1.º ao 9.º ano, cobrindo as principais rotas de Panguila e arredores.</p>
+            <div class="t-highlight">
+              <span class="t-highlight-label">Disponibilidade</span>
+              <p>Disponível para <strong>alunos do 1.º ao 9.º ano</strong>. O serviço inclui transporte de ida e volta com seguro escolar, respeitando sempre os horários de início e término das actividades — <strong>manhã e tarde</strong>.</p>
+            </div>
+          </div>
+
+          <div class="transporte-right" data-aos="fade-left" data-aos-delay="100">
+            <div class="t-features">
+
+              <div class="t-feat">
+                <div class="t-feat-icon a"><i class="fas fa-shield-alt"></i></div>
+                <h4>Segurança Garantida</h4>
+                <p>Veículos inspecionados com motoristas profissionais e experientes, garantindo a máxima segurança de cada aluno.</p>
+              </div>
+
+              <div class="t-feat">
+                <div class="t-feat-icon b"><i class="fas fa-map-location-dot"></i></div>
+                <h4>Múltiplas Rotas</h4>
+                <p>Cobertura abrangente com rotas flexíveis adaptadas às necessidades das famílias e da comunidade local.</p>
+              </div>
+
+              <div class="t-feat">
+                <div class="t-feat-icon a"><i class="fas fa-clock"></i></div>
+                <h4>Horários Flexíveis</h4>
+                <p>Serviço para ambos os turnos com recolha e entrega nos horários combinados — manhã e tarde.</p>
+              </div>
+
+              <div class="t-feat">
+                <div class="t-feat-icon b"><i class="fas fa-smile"></i></div>
+                <h4>Conforto e Bem-estar</h4>
+                <p>Veículos modernos e confortáveis que proporcionam uma experiência agradável em cada viagem diária.</p>
+              </div>
+
+              <div class="t-feat">
+                <div class="t-feat-icon a"><i class="fas fa-phone"></i></div>
+                <h4>Suporte Constante</h4>
+                <p>Comunicação directa com o serviço de transporte para qualquer questão, alteração ou necessidade especial.</p>
+              </div>
+
+              <div class="t-feat">
+                <div class="t-feat-icon b"><i class="fas fa-tags"></i></div>
+                <h4>Preços Acessíveis</h4>
+                <p>Tarifas competitivas e flexíveis com opções para meia jornada ou horários específicos.</p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CTA ===================== -->
+    <section class="section-cta">
+      <div class="cta-bg"></div>
+      <div class="cta-grid-lines"></div>
+      <div class="cta-inner" data-aos="fade-up">
+        <div class="cta-badge">📋 Matrículas Abertas 2026</div>
+        <h2 class="cta-h2">
+          Pronto para<br><em>começar</em>?
+        </h2>
+        <p class="cta-p">
+          Escolha o programa certo para o seu filho e garanta a sua vaga. Vagas limitadas para o ano lectivo 2026 — inscreva-se hoje.
+        </p>
+        <div class="cta-btns">
+          <a href="/contactos.html" class="btn-f-p"><i class="fas fa-pen-to-square"></i> Fazer Pré-Inscrição</a>
+          <a href="https://wa.me/925952771" target="_blank" class="btn-f-s"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="footer-container"></div>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script>
+    AOS.init({ duration: 900, once: true, offset: 70, easing: 'ease-out-cubic' });
+
+    // ─── NAVBAR SCROLL ───────────────────────────────
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        navbar.classList.remove('transparent');
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.add('transparent');
+        navbar.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    // ─── MOBILE MENU ─────────────────────────────────
+    const mobileBtn = document.getElementById('mobile-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+      mobileBtn.querySelector('i').className =
+        mobileMenu.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+    });
+
+    // ─── LOAD FOOTER ─────────────────────────────────
+    fetch('/components/footer.html')
+      .then(r => r.text())
+      .then(d => { document.getElementById('footer-container').innerHTML = d; })
+      .catch(() => {});
+  </script>
+</body>
+</html>

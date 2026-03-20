@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avisos e Comunicados — Colégio Alfa e Omega</title>
+  <meta name="description" content="Acompanhe os avisos, comunicados, datas importantes e informações actualizadas do Colégio Alfa e Omega em Panguila, Angola.">
+  <meta name="author" content="Colégio Alfa e Omega">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.colegioalfaeomega.com/avisos.html">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&family=Poppins:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/main.css">
+
+  <style>
+    /* ============================================
+       TOKENS
+    ============================================ */
+    :root {
+      --ink-950:   #010E24;
+      --ink-900:   #011830;
+      --primary:   #01377D;
+      --primary-m: #0147A0;
+      --primary-l: #0A5FC4;
+      --accent:    #CEF431;
+      --accent-m:  #B8D400;
+      --accent-d:  #8FA300;
+      --white:     #FFFFFF;
+      --off-white: #F8F9F6;
+      --gray-50:   #F5F6F3;
+      --gray-100:  #EAEBE8;
+      --gray-200:  #D4D6D1;
+      --gray-400:  #9BA09A;
+      --gray-500:  #6D726B;
+      --gray-600:  #4D524B;
+      --gray-700:  #3D4239;
+      --gray-900:  #1A1E18;
+      --urgent:    #EF4444;
+      --info:      #3B82F6;
+      --success:   #10B981;
+      --warning:   #F59E0B;
+      --font-serif: 'DM Serif Display', serif;
+      --font-sans:  'DM Sans', sans-serif;
+      --font-head:  'Poppins', sans-serif;
+      --font-mono:  'JetBrains Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--white);
+      color: var(--gray-700);
+      overflow-x: hidden;
+      padding-top: 5rem;
+    }
+
+    /* ============================================
+       NAVBAR
+    ============================================ */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      height: 5rem;
+      transition: background 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease;
+    }
+
+    .navbar.transparent {
+      background: transparent;
+    }
+
+    .navbar.scrolled {
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.08), 0 8px 32px rgba(1,55,125,0.06);
+    }
+
+    .navbar-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      text-decoration: none;
+    }
+
+    .logo-img {
+      width: 46px;
+      height: 46px;
+      object-fit: contain;
+      transition: transform 0.3s ease;
+    }
+
+    .logo-section:hover .logo-img { transform: scale(1.05); }
+
+    .logo-text-block h2 {
+      font-family: var(--font-head);
+      font-size: 0.925rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1.1;
+      transition: color 0.3s;
+    }
+
+    .navbar.transparent .logo-text-block h2 { color: var(--white); }
+
+    .logo-text-block p {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--accent-mid);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .navbar.transparent .logo-text-block p { color: rgba(206,244,49,0.75); }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .nav-link {
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--gray-700);
+      text-decoration: none;
+      padding: 0.6rem 0.9rem;
+      border-radius: 0.5rem;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .navbar.transparent .nav-link { color: rgba(255,255,255,0.85); }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 4px; left: 50%; right: 50%;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: left 0.3s ease, right 0.3s ease;
+    }
+
+    .nav-link:hover::after, .nav-link.active::after { left: 0.9rem; right: 0.9rem; }
+    .nav-link:hover { color: var(--primary); }
+    .navbar.transparent .nav-link:hover { color: var(--white); }
+
+    .nav-cta {
+      margin-left: 0.75rem;
+      background: var(--accent);
+      color: var(--primary);
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 0.875rem;
+      padding: 0.65rem 1.4rem;
+      border-radius: 2rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .nav-cta:hover {
+      background: var(--primary);
+      color: var(--white);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(1,55,125,0.25);
+    }
+
+    .mobile-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: var(--primary);
+      cursor: pointer;
+    }
+
+    .navbar.transparent .mobile-btn { color: var(--white); }
+
+    .mobile-menu {
+      display: none;
+      position: absolute;
+      top: 100%; left: 0; right: 0;
+      background: var(--white);
+      border-top: 3px solid var(--accent);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+      padding: 1rem 0;
+      flex-direction: column;
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-nav-link {
+      padding: 0.875rem 2rem;
+      font-weight: 600;
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 0.95rem;
+      border-left: 3px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .mobile-nav-link:hover { background: rgba(1,55,125,0.05); border-left-color: var(--accent); }
+    @media (max-width: 768px) { .nav-menu, .nav-cta { display: none !important; } .mobile-btn { display: block; } }
+
+    /* ============================================
+       LIVE TICKER
+    ============================================ */
+    .live-ticker {
+      background: var(--primary);
+      padding: 0.7rem 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .ticker-inner {
+      display: flex; gap: 4rem;
+      animation: ticker-run 35s linear infinite;
+      white-space: nowrap; width: max-content;
+    }
+
+    @keyframes ticker-run { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    .ticker-item { display: flex; align-items: center; gap: 0.6rem; font-family: var(--font-sans); font-size: 0.8rem; color: rgba(255,255,255,0.65); font-weight: 400; }
+    .ticker-item i { color: var(--accent); font-size: 0.65rem; }
+    .ticker-item strong { color: var(--white); font-weight: 600; }
+
+    .ticker-label {
+      position: absolute; left: 0; top: 0; bottom: 0;
+      display: flex; align-items: center;
+      background: var(--accent); color: var(--primary);
+      font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      padding: 0 1rem; z-index: 5;
+    }
+
+    /* ============================================
+       HERO
+    ============================================ */
+    .page-hero {
+      background: var(--ink-950);
+      padding: 6rem 2rem 5rem;
+      position: relative; overflow: hidden;
+    }
+
+    /* Ghost text */
+    .page-hero::before {
+      content: 'AVISOS';
+      position: absolute; right: -2rem; bottom: -2rem;
+      font-family: var(--font-serif);
+      font-size: clamp(8rem, 18vw, 20rem);
+      color: rgba(255,255,255,0.025);
+      line-height: 1; pointer-events: none; white-space: nowrap;
+    }
+
+    .page-hero::after {
+      content: ''; position: absolute; inset: 0;
+      background-image:
+        repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(255,255,255,0.012) 80px, rgba(255,255,255,0.012) 81px),
+        repeating-linear-gradient(0deg, transparent, transparent 80px, rgba(255,255,255,0.012) 80px, rgba(255,255,255,0.012) 81px);
+      pointer-events: none;
+    }
+
+    .hero-glow { position: absolute; top: -4rem; left: 20%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(1,55,125,0.5) 0%, transparent 70%); pointer-events: none; }
+
+    .hero-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 4rem; align-items: center;
+      position: relative; z-index: 2;
+    }
+
+    .hero-left {}
+
+    .hero-breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-sans); font-size: 0.75rem; color: rgba(255,255,255,0.35); margin-bottom: 2rem; }
+    .hero-breadcrumb a { color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
+    .hero-breadcrumb a:hover { color: var(--accent); }
+    .hero-breadcrumb i { font-size: 0.55rem; }
+
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--font-sans); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent); margin-bottom: 1.25rem; }
+    .hero-eyebrow::before { content: ''; width: 28px; height: 2px; background: var(--accent); border-radius: 2px; }
+
+    .hero-h1 { font-family: var(--font-serif); font-size: clamp(2.5rem, 5vw, 4.5rem); color: var(--white); line-height: 1.0; letter-spacing: -0.025em; margin-bottom: 1.5rem; }
+    .hero-h1 em { color: var(--accent); font-style: italic; }
+
+    .hero-desc { font-family: var(--font-sans); font-size: 1rem; color: rgba(255,255,255,0.45); line-height: 1.85; font-weight: 300; max-width: 480px; }
+
+    /* Stats on right */
+    .hero-right { display: flex; flex-direction: column; gap: 0; }
+
+    .stat-box {
+      padding: 1.75rem 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      text-align: center;
+      transition: background 0.25s;
+    }
+    .stat-box:first-child { border-top: 1px solid rgba(255,255,255,0.07); }
+    .stat-box:hover { background: rgba(255,255,255,0.03); }
+    .stat-n { font-family: var(--font-head); font-size: 2.2rem; font-weight: 900; color: var(--accent); display: block; line-height: 1; }
+    .stat-l { font-family: var(--font-sans); font-size: 0.65rem; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.12em; margin-top: 0.3rem; display: block; }
+
+    /* Hero strip */
+    .hero-strip { border-top: 1px solid rgba(255,255,255,0.07); padding: 0.875rem 2rem; }
+    .hero-strip-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+
+    /* ============================================
+       FILTER BAR
+    ============================================ */
+    .filter-bar {
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-100);
+      position: sticky; top: 5rem; z-index: 50;
+      padding: 0.875rem 2rem;
+    }
+
+    .filter-bar-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+    }
+
+    .filter-label { font-family: var(--font-sans); font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-400); margin-right: 0.25rem; }
+
+    .filter-btn {
+      font-family: var(--font-sans); font-size: 0.78rem; font-weight: 600;
+      color: var(--gray-600); background: var(--gray-50);
+      border: 1.5px solid var(--gray-100); border-radius: 3rem;
+      padding: 0.45rem 1.1rem; cursor: pointer; transition: all 0.25s;
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .filter-btn:hover { border-color: var(--primary); color: var(--primary); background: var(--white); }
+    .filter-btn.active { background: var(--primary); color: var(--white); border-color: var(--primary); }
+    .filter-btn .fb-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .filter-btn .fb-dot.urgent { background: var(--urgent); }
+    .filter-btn .fb-dot.info { background: var(--info); }
+    .filter-btn .fb-dot.success { background: var(--success); }
+    .filter-btn .fb-dot.warning { background: var(--warning); }
+    .filter-btn .fb-dot.all { background: var(--accent); }
+
+    /* ============================================
+       SECTION: AVISOS PRIORITÁRIOS
+    ============================================ */
+    .section-priority {
+      padding: 5rem 2rem;
+      background: var(--off-white);
+      scroll-margin-top: 110px;
+    }
+
+    .priority-inner { max-width: 900px; margin: 0 auto; }
+
+    .section-label { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-sans); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.18em; color: var(--primary); margin-bottom: 0.875rem; }
+    .section-label::before { content: ''; width: 22px; height: 2px; background: var(--accent); }
+
+    .display-title { font-family: var(--font-serif); font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--gray-900); line-height: 1.1; letter-spacing: -0.02em; }
+    .display-title em { color: var(--primary); font-style: italic; }
+
+    .priority-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
+
+    /* Aviso card */
+    .aviso-card {
+      background: var(--white); border-radius: 1.25rem;
+      border: 1px solid var(--gray-100);
+      overflow: hidden; margin-bottom: 1.25rem;
+      transition: all 0.35s ease;
+      position: relative;
+    }
+
+    .aviso-card:hover { transform: translateY(-4px); box-shadow: 0 16px 45px rgba(1,55,125,0.1); }
+
+    .aviso-card::before {
+      content: ''; position: absolute;
+      left: 0; top: 0; bottom: 0; width: 4px;
+    }
+
+    .aviso-card.type-urgent::before { background: var(--urgent); }
+    .aviso-card.type-info::before { background: var(--info); }
+    .aviso-card.type-success::before { background: var(--success); }
+    .aviso-card.type-warning::before { background: var(--warning); }
+    .aviso-card.type-accent::before { background: var(--accent); }
+
+    /* New indicator */
+    .aviso-card.is-new::after {
+      content: 'NOVO';
+      position: absolute; top: 1rem; right: 1.25rem;
+      font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700;
+      color: var(--accent); background: rgba(206,244,49,0.1);
+      border: 1px solid rgba(206,244,49,0.35);
+      padding: 0.2rem 0.6rem; border-radius: 3rem;
+      animation: pulse-new 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-new {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .aviso-body { padding: 1.75rem 2rem 1.75rem 2.25rem; display: flex; gap: 1.5rem; align-items: flex-start; }
+
+    .aviso-icon {
+      width: 50px; height: 50px; border-radius: 0.875rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; flex-shrink: 0;
+    }
+
+    .aviso-icon.urgent { background: rgba(239,68,68,0.1); color: var(--urgent); }
+    .aviso-icon.info { background: rgba(59,130,246,0.1); color: var(--info); }
+    .aviso-icon.success { background: rgba(16,185,129,0.1); color: var(--success); }
+    .aviso-icon.warning { background: rgba(245,158,11,0.1); color: var(--warning); }
+    .aviso-icon.accent { background: rgba(206,244,49,0.15); color: var(--accent-d); }
+
+    .aviso-content { flex: 1; min-width: 0; }
+
+    .aviso-meta {
+      display: flex; align-items: center; gap: 0.75rem;
+      margin-bottom: 0.5rem; flex-wrap: wrap;
+    }
+
+    .aviso-type-tag {
+      font-family: var(--font-sans); font-size: 0.62rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      padding: 0.25rem 0.7rem; border-radius: 3rem;
+    }
+    .aviso-type-tag.urgent { background: rgba(239,68,68,0.1); color: var(--urgent); }
+    .aviso-type-tag.info { background: rgba(59,130,246,0.1); color: var(--info); }
+    .aviso-type-tag.success { background: rgba(16,185,129,0.1); color: var(--success); }
+    .aviso-type-tag.warning { background: rgba(245,158,11,0.1); color: var(--warning); }
+    .aviso-type-tag.accent { background: rgba(206,244,49,0.1); color: var(--accent-d); }
+
+    .aviso-date {
+      font-family: var(--font-mono); font-size: 0.68rem; color: var(--gray-400); font-weight: 400;
+    }
+
+    .aviso-title {
+      font-family: var(--font-head); font-size: 1rem; font-weight: 700;
+      color: var(--gray-900); margin-bottom: 0.5rem; line-height: 1.3;
+    }
+
+    .aviso-text {
+      font-family: var(--font-sans); font-size: 0.875rem; color: var(--gray-500);
+      line-height: 1.75; font-weight: 300; margin-bottom: 1rem;
+    }
+
+    .aviso-action {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-family: var(--font-sans); font-size: 0.8rem; font-weight: 700;
+      color: var(--primary); text-decoration: none;
+      transition: gap 0.3s, color 0.2s;
+    }
+    .aviso-action:hover { gap: 0.7rem; color: var(--accent-d); }
+
+    /* ============================================
+       SECTION: CALENDÁRIO / TIMELINE
+    ============================================ */
+    .section-calendario {
+      padding: 7rem 2rem;
+      background: var(--white);
+      scroll-margin-top: 110px;
+    }
+
+    .cal-inner { max-width: 900px; margin: 0 auto; }
+
+    .cal-header { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-bottom: 4rem; }
+
+    .timeline-list { position: relative; }
+
+    /* Vertical line */
+    .timeline-list::before {
+      content: ''; position: absolute;
+      left: 24px; top: 24px; bottom: 24px; width: 1px;
+      background: linear-gradient(to bottom, var(--accent), var(--gray-200), transparent);
+    }
+
+    .tl-entry { display: flex; gap: 1.5rem; margin-bottom: 2rem; position: relative; }
+    .tl-entry:last-child { margin-bottom: 0; }
+
+    .tl-dot {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--white); border: 2px solid var(--gray-200);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; position: relative; z-index: 1;
+      transition: all 0.3s;
+      font-size: 1rem;
+    }
+
+    .tl-entry:hover .tl-dot { border-color: var(--accent); background: rgba(206,244,49,0.1); transform: scale(1.1); }
+    .tl-entry.tl-past .tl-dot { background: var(--gray-100); border-color: var(--gray-200); }
+    .tl-entry.tl-upcoming .tl-dot { background: rgba(1,55,125,0.08); border-color: var(--primary); }
+
+    .tl-body {
+      flex: 1; background: var(--off-white); border: 1px solid var(--gray-100);
+      border-radius: 1rem; padding: 1.5rem;
+      transition: all 0.3s;
+    }
+
+    .tl-entry:hover .tl-body { background: var(--white); box-shadow: 0 8px 25px rgba(1,55,125,0.08); border-color: transparent; }
+
+    .tl-date { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; color: var(--primary); margin-bottom: 0.3rem; display: block; text-transform: uppercase; letter-spacing: 0.06em; }
+    .tl-entry.tl-past .tl-date { color: var(--gray-400); }
+
+    .tl-title { font-family: var(--font-head); font-size: 0.975rem; font-weight: 700; color: var(--gray-900); margin-bottom: 0.3rem; }
+    .tl-text { font-family: var(--font-sans); font-size: 0.85rem; color: var(--gray-500); line-height: 1.65; font-weight: 300; }
+
+    .tl-badge {
+      display: inline-block; font-family: var(--font-sans); font-size: 0.62rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      padding: 0.2rem 0.6rem; border-radius: 3rem; margin-bottom: 0.4rem;
+    }
+    .tl-badge.upcoming { background: rgba(1,55,125,0.1); color: var(--primary); }
+    .tl-badge.past { background: var(--gray-100); color: var(--gray-400); }
+    .tl-badge.today { background: var(--accent); color: var(--primary); }
+    .tl-badge.event { background: rgba(206,244,49,0.15); color: var(--accent-d); }
+
+    /* ============================================
+       SECTION: COMUNICAÇÕES GERAIS
+    ============================================ */
+    .section-comunicados {
+      padding: 7rem 2rem;
+      background: var(--off-white);
+      scroll-margin-top: 110px;
+    }
+
+    .com-inner { max-width: 1280px; margin: 0 auto; }
+
+    .com-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; margin-bottom: 3.5rem; flex-wrap: wrap; }
+
+    .com-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 3rem; }
+
+    .com-card {
+      background: var(--white); border-radius: 1.25rem;
+      border: 1px solid var(--gray-100);
+      overflow: hidden; transition: all 0.35s;
+      display: flex; flex-direction: column;
+    }
+
+    .com-card:hover { transform: translateY(-6px); box-shadow: 0 16px 45px rgba(1,55,125,0.1); border-color: transparent; }
+
+    /* Top accent line */
+    .com-card-line { height: 3px; }
+    .com-card-line.blue { background: linear-gradient(90deg, var(--primary), var(--primary-l)); }
+    .com-card-line.yellow { background: linear-gradient(90deg, var(--accent), var(--accent-m)); }
+    .com-card-line.green { background: linear-gradient(90deg, #10B981, #059669); }
+    .com-card-line.dark { background: linear-gradient(90deg, var(--ink-900), var(--primary)); }
+
+    .com-card-body { padding: 1.75rem; flex: 1; display: flex; flex-direction: column; }
+
+    .com-card-date-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+
+    .com-date { font-family: var(--font-mono); font-size: 0.68rem; color: var(--gray-400); }
+
+    .com-icon { width: 36px; height: 36px; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+    .com-icon.blue { background: rgba(1,55,125,0.1); color: var(--primary); }
+    .com-icon.yellow { background: rgba(206,244,49,0.15); color: var(--accent-d); }
+    .com-icon.green { background: rgba(16,185,129,0.1); color: #059669; }
+
+    .com-title { font-family: var(--font-head); font-size: 0.975rem; font-weight: 700; color: var(--gray-900); margin-bottom: 0.6rem; line-height: 1.3; }
+    .com-text { font-family: var(--font-sans); font-size: 0.865rem; color: var(--gray-500); line-height: 1.7; font-weight: 300; flex: 1; margin-bottom: 1.25rem; }
+
+    .com-read { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-sans); font-size: 0.78rem; font-weight: 700; color: var(--primary); text-decoration: none; transition: gap 0.3s; }
+    .com-read:hover { gap: 0.7rem; color: var(--accent-d); }
+
+    /* CTA card (special) */
+    .com-card.cta-card { background: var(--ink-950); border-color: transparent; }
+    .com-card.cta-card .com-card-line { background: var(--accent); }
+    .com-card.cta-card .com-date { color: rgba(255,255,255,0.35); }
+    .com-card.cta-card .com-title { color: var(--white); }
+    .com-card.cta-card .com-text { color: rgba(255,255,255,0.45); }
+
+    .cta-email-btn { display: flex; align-items: center; gap: 0.6rem; background: var(--accent); color: var(--primary); font-family: var(--font-sans); font-weight: 700; font-size: 0.8rem; padding: 0.7rem 1.25rem; border-radius: 0.5rem; text-decoration: none; transition: all 0.3s; word-break: break-all; }
+    .cta-email-btn:hover { background: var(--white); transform: translateY(-2px); }
+
+    /* CTA Bottom */
+    .subscribe-banner {
+      background: var(--primary); border-radius: 1.25rem;
+      padding: 2.5rem 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 2rem; flex-wrap: wrap;
+    }
+
+    .sb-left {}
+    .sb-title { font-family: var(--font-serif); font-size: 1.4rem; color: var(--white); margin-bottom: 0.4rem; }
+    .sb-sub { font-family: var(--font-sans); font-size: 0.875rem; color: rgba(255,255,255,0.5); font-weight: 300; }
+
+    .sb-btn { display: inline-flex; align-items: center; gap: 0.6rem; background: var(--accent); color: var(--primary); font-family: var(--font-sans); font-weight: 800; font-size: 0.875rem; padding: 0.9rem 2rem; border-radius: 3rem; text-decoration: none; transition: all 0.3s; white-space: nowrap; }
+    .sb-btn:hover { background: var(--white); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
+
+    /* ============================================
+       RESPONSIVE
+    ============================================ */
+    @media (max-width: 1024px) { .com-grid { grid-template-columns: 1fr 1fr; } .cal-header { grid-template-columns: 1fr; gap: 2rem; } }
+    @media (max-width: 768px) {
+      body { padding-top: 5rem; }
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .com-grid { grid-template-columns: 1fr; }
+      .section-priority, .section-calendario, .section-comunicados { padding: 5rem 1.5rem; }
+      .aviso-body { flex-direction: column; gap: 1rem; }
+      .subscribe-banner { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar transparent" id="navbar">
+    <div class="navbar-container">
+      <a class="logo-section" href="/">
+        <img src="/assets/images/logo/lo.png" alt="Alfa e Omega" class="logo-img">
+        <div class="logo-text-block">
+          <h2>Colégio Alfa e Omega</h2>
+          <p>Panguila · Angola</p>
+        </div>
+      </a>
+
+      <nav class="nav-menu" role="navigation">
+        <a href="/" class="nav-link">Início</a>
+        <a href="/sobre.html" class="nav-link">Sobre</a>
+        <a href="/oferta.html" class="nav-link">Oferta</a>
+        <a href="/novidades.html" class="nav-link">Novidades</a>
+        <a href="/avisos.html" class="nav-link active">Avisos</a>
+        <a href="/galeria.html" class="nav-link">Galeria</a>
+        <a href="/contactos.html" class="nav-link">Contactos</a>
+      </nav>
+
+      <a href="/matriculas.html" class="nav-cta">Matricular Agora</a>
+
+      <button class="mobile-btn" id="mobile-btn" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="/" class="mobile-nav-link"><i class="fas fa-home"></i> Início</a>
+      <a href="/sobre.html" class="mobile-nav-link"><i class="fas fa-info-circle"></i> Sobre</a>
+      <a href="/oferta.html" class="mobile-nav-link"><i class="fas fa-book-open"></i> Oferta Educativa</a>
+      <a href="/novidades.html" class="mobile-nav-link"><i class="fas fa-newspaper"></i> Novidades</a>
+      <a href="/avisos.html" class="mobile-nav-link"><i class="fas fa-bullhorn"></i> Avisos</a>
+      <a href="/galeria.html" class="mobile-nav-link"><i class="fas fa-images"></i> Galeria</a>
+      <a href="/contactos.html" class="mobile-nav-link"><i class="fas fa-envelope"></i> Contactos</a>
+      <a href="https://wa.me/925952771" class="mobile-nav-link" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- LIVE TICKER -->
+    <div class="live-ticker">
+      <div class="ticker-label"><i class="fas fa-circle" style="font-size:0.5rem; margin-right:0.4rem; animation: pulse-new 1.5s ease-in-out infinite;"></i>AO VIVO</div>
+      <div class="ticker-inner" style="padding-left:90px;">
+        <!-- set 1 -->
+        <span class="ticker-item"><i class="fas fa-circle"></i> <strong>Matrículas 2026 abertas</strong> — vagas limitadas para todos os ciclos</span>
+        <span class="ticker-item"><i class="fas fa-circle"></i> <strong>Prazo de Matrícula:</strong> 31 de Janeiro 2026</span>
+        <span class="ticker-item"><i class="fas fa-circle"></i> <strong>Início do Ano Lectivo:</strong> 3 de Fevereiro 2026</span>
+        <span class="ticker-item"><i class="fas fa-circle"></i> <strong>Calendário 2026:</strong> disponível para download na secretaria</span>
+        <span class="ticker-item"><i class="fas fa-circle"></i> <strong>Olimpíadas de Matemática:</strong> CEPI Maple Bear — Março 2026</span>
+        <!-- set 2 (loop) -->
+        <span class="ticker-item"><i class="fas fa-circle"></i> <strong>Matrículas 2026 abertas</strong> — vagas limitadas para todos os ciclos</span>
+        <span class="ticker-item"><i class="fas fa-circle"></i> <strong>Prazo de Matrícula:</strong> 31 de Janeiro 2026</span>
+        <span class="ticker-item"><i class="fas fa-circle"></i> <strong>Início do Ano Lectivo:</strong> 3 de Fevereiro 2026</span>
+        <span class="ticker-item"><i class="fas fa-circle"></i> <strong>Calendário 2026:</strong> disponível para download na secretaria</span>
+        <span class="ticker-item"><i class="fas fa-circle"></i> <strong>Olimpíadas de Matemática:</strong> CEPI Maple Bear — Março 2026</span>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="page-hero" id="hero-top">
+      <div class="hero-glow"></div>
+      <div class="hero-inner">
+        <div class="hero-left" data-aos="fade-right">
+          <div class="hero-breadcrumb">
+            <a href="/"><i class="fas fa-home"></i> Início</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Avisos</span>
+          </div>
+          <div class="hero-eyebrow">Comunicação Escolar</div>
+          <h1 class="hero-h1">
+            Avisos &amp;<br><em>Comunicados</em>
+          </h1>
+          <p class="hero-desc">
+            Fique sempre actualizado com as informações mais recentes da comunidade escolar do Colégio Alfa e Omega. Avisos importantes, datas e comunicados.
+          </p>
+        </div>
+        <div class="hero-right" data-aos="fade-left" data-aos-delay="100">
+          <div class="stat-box"><span class="stat-n">3</span><span class="stat-l">Avisos prioritários</span></div>
+          <div class="stat-box"><span class="stat-n">6</span><span class="stat-l">Datas importantes</span></div>
+          <div class="stat-box"><span class="stat-n">4</span><span class="stat-l">Comunicados gerais</span></div>
+          <div class="stat-box"><span class="stat-n">2026</span><span class="stat-l">Ano lectivo</span></div>
+        </div>
+      </div>
+
+      <div class="hero-strip">
+        <div class="hero-strip-inner">
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+            <span style="font-family:var(--font-sans); font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:rgba(255,255,255,0.4); background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); padding:0.3rem 0.8rem; border-radius:3rem;">📋 Matrículas</span>
+            <span style="font-family:var(--font-sans); font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:rgba(255,255,255,0.4); background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); padding:0.3rem 0.8rem; border-radius:3rem;">📅 Calendário</span>
+            <span style="font-family:var(--font-sans); font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:rgba(255,255,255,0.4); background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); padding:0.3rem 0.8rem; border-radius:3rem;">📢 Comunicados</span>
+          </div>
+          <a href="#avisos" style="display:flex; align-items:center; gap:0.4rem; font-family:var(--font-sans); font-size:0.72rem; color:rgba(255,255,255,0.3); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">
+            Ver avisos <i class="fas fa-arrow-down"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FILTER BAR -->
+    <nav class="filter-bar">
+      <div class="filter-bar-inner">
+        <span class="filter-label">Filtrar:</span>
+        <button class="filter-btn active" data-filter="all"><span class="fb-dot all"></span> Todos</button>
+        <button class="filter-btn" data-filter="urgent"><span class="fb-dot urgent"></span> Urgente</button>
+        <button class="filter-btn" data-filter="info"><span class="fb-dot info"></span> Informação</button>
+        <button class="filter-btn" data-filter="success"><span class="fb-dot success"></span> Disponível</button>
+        <button class="filter-btn" data-filter="warning"><span class="fb-dot warning"></span> Aviso</button>
+        <button class="filter-btn" data-filter="accent"><span class="fb-dot accent"></span> Evento</button>
+      </div>
+    </nav>
+
+    <!-- ===================== AVISOS PRIORITÁRIOS ===================== -->
+    <section class="section-priority" id="avisos">
+      <div class="priority-inner">
+
+        <div class="priority-header" data-aos="fade-up">
+          <div>
+            <div class="section-label">Prioridade Alta</div>
+            <h2 class="display-title">Avisos <em>Prioritários</em></h2>
+          </div>
+        </div>
+
+        <!-- AVISO 1: Matrículas -->
+        <div class="aviso-card type-accent is-new" data-type="accent" data-aos="fade-up" data-aos-delay="0">
+          <div class="aviso-body">
+            <div class="aviso-icon accent"><i class="fas fa-pen-to-square"></i></div>
+            <div class="aviso-content">
+              <div class="aviso-meta">
+                <span class="aviso-type-tag accent">Activo</span>
+                <span class="aviso-date">2026-01-05</span>
+              </div>
+              <h3 class="aviso-title">Matrículas 2026 — Inscrições Abertas</h3>
+              <p class="aviso-text">Estão abertas as inscrições para matrícula em todos os ciclos de ensino (Primário 1.º–6.º, Secundário 7.º–9.º, ATL). Os encarregados de educação são convidados a inscrever os seus educandos até 31 de Janeiro de 2026. Documentação necessária disponível na secretaria e portal online.</p>
+              <a href="/matriculas.html" class="aviso-action">Fazer Pré-Matrícula <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- AVISO 2: Calendário -->
+        <div class="aviso-card type-info" data-type="info" data-aos="fade-up" data-aos-delay="80">
+          <div class="aviso-body">
+            <div class="aviso-icon info"><i class="fas fa-calendar-days"></i></div>
+            <div class="aviso-content">
+              <div class="aviso-meta">
+                <span class="aviso-type-tag info">Informação</span>
+                <span class="aviso-date">2026-01-08</span>
+              </div>
+              <h3 class="aviso-title">Calendário Escolar 2026 Disponível</h3>
+              <p class="aviso-text">O calendário escolar completo para o ano lectivo 2026 está disponível. Inclui datas de início e fim de trimestres, períodos de interrupção, testes, avaliações e eventos académicos importantes para todo o ano. Pode levantar uma cópia na secretaria.</p>
+              <a href="/contactos.html" class="aviso-action">Contactar Secretaria <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- AVISO 3: Material Escolar -->
+        <div class="aviso-card type-success" data-type="success" data-aos="fade-up" data-aos-delay="160">
+          <div class="aviso-body">
+            <div class="aviso-icon success"><i class="fas fa-book"></i></div>
+            <div class="aviso-content">
+              <div class="aviso-meta">
+                <span class="aviso-type-tag success">Disponível</span>
+                <span class="aviso-date">2026-01-08</span>
+              </div>
+              <h3 class="aviso-title">Materiais Didácticos e Listas Escolares 2026</h3>
+              <p class="aviso-text">As listas completas de materiais escolares, livros, fardas e outros equipamentos necessários para o ano lectivo 2026 estão disponíveis. Pode solicitar na secretaria durante o horário de atendimento (Segunda a Sexta, 7h–17h; Sábado, 8h–12h).</p>
+              <a href="/contactos.html" class="aviso-action">Ver Listas <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- AVISO 4: Urgente (Reunião Encarregados) -->
+        <div class="aviso-card type-warning is-new" data-type="warning" data-aos="fade-up" data-aos-delay="240">
+          <div class="aviso-body">
+            <div class="aviso-icon warning"><i class="fas fa-megaphone"></i></div>
+            <div class="aviso-content">
+              <div class="aviso-meta">
+                <span class="aviso-type-tag warning">Aviso</span>
+                <span class="aviso-date">2026-01-15</span>
+              </div>
+              <h3 class="aviso-title">Reunião dos Encarregados de Educação — Janeiro 2026</h3>
+              <p class="aviso-text">Convocamos todos os encarregados de educação para a reunião de início do ano lectivo. Serão apresentados os planos pedagógicos, calendário, regras e actividades de 2026. A presença é fortemente recomendada para o melhor acompanhamento dos educandos.</p>
+              <a href="/contactos.html" class="aviso-action">Mais Informações <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================== CALENDÁRIO / TIMELINE ===================== -->
+    <section class="section-calendario" id="calendario">
+      <div class="cal-inner">
+
+        <div class="cal-header" data-aos="fade-up">
+          <div>
+            <div class="section-label">Calendário</div>
+            <h2 class="display-title">Datas<br><em>Importantes</em> 2026</h2>
+          </div>
+          <p style="font-family:var(--font-sans); font-size:1rem; color:var(--gray-500); line-height:1.85; font-weight:300;">Marque na sua agenda os eventos e prazos mais relevantes do ano lectivo. Actualizações constantes ao longo do ano.</p>
+        </div>
+
+        <div class="timeline-list" data-aos="fade-up" data-aos-delay="100">
+
+          <div class="tl-entry tl-upcoming">
+            <div class="tl-dot"><i class="fas fa-file-pen" style="color:var(--primary); font-size:0.9rem;"></i></div>
+            <div class="tl-body">
+              <span class="tl-badge upcoming">Prazo</span>
+              <div class="tl-date">31 Jan 2026</div>
+              <div class="tl-title">Prazo Final de Matrícula</div>
+              <p class="tl-text">Último dia para inscrição de novos alunos para o ano lectivo 2026. Documentação completa obrigatória.</p>
+            </div>
+          </div>
+
+          <div class="tl-entry tl-upcoming">
+            <div class="tl-dot"><i class="fas fa-rocket" style="color:var(--accent-d); font-size:0.9rem;"></i></div>
+            <div class="tl-body">
+              <span class="tl-badge event">Início</span>
+              <div class="tl-date">03 Fev 2026</div>
+              <div class="tl-title">Início do Ano Lectivo 2026</div>
+              <p class="tl-text">Volta às aulas. Recepção de novos alunos, integração e apresentação dos programas académicos 2026.</p>
+            </div>
+          </div>
+
+          <div class="tl-entry tl-upcoming">
+            <div class="tl-dot"><i class="fas fa-trophy" style="color:var(--accent-d); font-size:0.9rem;"></i></div>
+            <div class="tl-body">
+              <span class="tl-badge event">Evento</span>
+              <div class="tl-date">Fev 2026</div>
+              <div class="tl-title">Olimpíadas de Matemática — CEPI Maple Bear</div>
+              <p class="tl-text">Os nossos alunos representarão o Colégio Alfa e Omega nas Olimpíadas de Matemática. Preparação intensiva em curso.</p>
+            </div>
+          </div>
+
+          <div class="tl-entry tl-upcoming">
+            <div class="tl-dot"><i class="fas fa-pen" style="color:var(--primary); font-size:0.9rem;"></i></div>
+            <div class="tl-body">
+              <span class="tl-badge upcoming">Avaliação</span>
+              <div class="tl-date">15 Abr 2026</div>
+              <div class="tl-title">Avaliações — 1.º Trimestre</div>
+              <p class="tl-text">Período de testes, avaliações de conhecimentos e trabalhos do primeiro trimestre lectivo com divulgação de resultados.</p>
+            </div>
+          </div>
+
+          <div class="tl-entry tl-upcoming">
+            <div class="tl-dot"><i class="fas fa-sun" style="color:var(--warning); font-size:0.9rem;"></i></div>
+            <div class="tl-body">
+              <span class="tl-badge event">Férias</span>
+              <div class="tl-date">25 Abr – 02 Mai 2026</div>
+              <div class="tl-title">Férias da Páscoa</div>
+              <p class="tl-text">Período de interrupção escolar. Estabelecimento encerrado. Retorno às actividades a 05 de Maio de 2026.</p>
+            </div>
+          </div>
+
+          <div class="tl-entry tl-upcoming">
+            <div class="tl-dot"><i class="fas fa-star" style="color:var(--accent-d); font-size:0.9rem;"></i></div>
+            <div class="tl-body">
+              <span class="tl-badge upcoming">Avaliação</span>
+              <div class="tl-date">30 Mai 2026</div>
+              <div class="tl-title">Avaliações — 2.º Trimestre</div>
+              <p class="tl-text">Testes finais do segundo trimestre com divulgação de resultados e reunião de encarregados.</p>
+            </div>
+          </div>
+
+          <div class="tl-entry tl-upcoming">
+            <div class="tl-dot"><i class="fas fa-graduation-cap" style="color:var(--primary); font-size:0.85rem;"></i></div>
+            <div class="tl-body">
+              <span class="tl-badge event">Cerimónia</span>
+              <div class="tl-date">20 Jun 2026</div>
+              <div class="tl-title">Cerimónia de Formatura e Prémios 2026</div>
+              <p class="tl-text">Celebração de conclusão do ano lectivo com cerimónia de formatura e premiação dos alunos com melhor desempenho académico.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== COMUNICAÇÕES GERAIS ===================== -->
+    <section class="section-comunicados" id="comunicados">
+      <div class="com-inner">
+
+        <div class="com-header" data-aos="fade-up">
+          <div>
+            <div class="section-label">Comunicações</div>
+            <h2 class="display-title">Comunicados <em>Gerais</em></h2>
+          </div>
+        </div>
+
+        <div class="com-grid" data-aos="fade-up" data-aos-delay="100">
+
+          <div class="com-card" data-type="info">
+            <div class="com-card-line blue"></div>
+            <div class="com-card-body">
+              <div class="com-card-date-row">
+                <span class="com-date">08 Jan 2026</span>
+                <div class="com-icon blue"><i class="fas fa-robot"></i></div>
+              </div>
+              <h3 class="com-title">Novo Programa de Tecnologia e Robótica 2026</h3>
+              <p class="com-text">Para o ano lectivo 2026, lançamos um novo programa de robótica, inteligência artificial e programação. Inscrições abertas para alunos do 6.º ao 9.º ano. Vagas limitadas por turma.</p>
+              <a href="/contactos.html" class="com-read">Saber mais <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+
+          <div class="com-card" data-type="info">
+            <div class="com-card-line yellow"></div>
+            <div class="com-card-body">
+              <div class="com-card-date-row">
+                <span class="com-date">05 Jan 2026</span>
+                <div class="com-icon yellow"><i class="fas fa-futbol"></i></div>
+              </div>
+              <h3 class="com-title">Actividades Extracurriculares 2026 — Inscrições</h3>
+              <p class="com-text">Novas vagas para desporto, música, artes plásticas, dança e tecnologia. Inscrições até 20 de Janeiro com desconto especial para os primeiros inscritos. Consulte os horários disponíveis.</p>
+              <a href="/oferta.html#extra" class="com-read">Ver actividades <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+
+          <div class="com-card" data-type="success">
+            <div class="com-card-line green"></div>
+            <div class="com-card-body">
+              <div class="com-card-date-row">
+                <span class="com-date">05 Jan 2026</span>
+                <div class="com-icon green"><i class="fas fa-leaf"></i></div>
+              </div>
+              <h3 class="com-title">Iniciativa Verde — Campanha de Sustentabilidade 2026</h3>
+              <p class="com-text">Projecto de sustentabilidade com horta escolar, programa de reciclagem e educação ambiental. Participação de toda a comunidade escolar ao longo do ano lectivo.</p>
+              <a href="/novidades.html" class="com-read">Ver novidades <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+
+          <!-- CTA card -->
+          <div class="com-card cta-card">
+            <div class="com-card-line"></div>
+            <div class="com-card-body">
+              <div class="com-card-date-row">
+                <span class="com-date" style="color:rgba(255,255,255,0.3);">Sempre activo</span>
+                <div class="com-icon" style="background:rgba(206,244,49,0.12);"><i class="fas fa-envelope" style="color:var(--accent);"></i></div>
+              </div>
+              <h3 class="com-title">Contacte-nos por Email</h3>
+              <p class="com-text">Tem dúvidas sobre matrículas, programas educativos ou qualquer outra informação? Envie-nos um email e respondemos em 24 horas.</p>
+              <a href="mailto:colegioalfaeomega@hotmail.com" class="cta-email-btn" style="margin-top:auto;">
+                <i class="fas fa-envelope"></i> colegioalfaeomega@hotmail.com
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Subscribe banner -->
+        <div class="subscribe-banner" data-aos="fade-up" data-aos-delay="100">
+          <div class="sb-left">
+            <div class="sb-title">Mantenha-se sempre informado</div>
+            <div class="sb-sub">Siga-nos nas redes sociais para receber todas as actualizações em tempo real</div>
+          </div>
+          <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">
+            <a href="https://www.facebook.com/colegioalfaeomegaangola" target="_blank" class="sb-btn"><i class="fab fa-facebook-f"></i> Facebook</a>
+            <a href="https://www.instagram.com/colegioalfaeomega/" target="_blank" class="sb-btn" style="background:var(--white); color:var(--primary);"><i class="fab fa-instagram"></i> Instagram</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <div id="footer-container"></div>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script>
+    AOS.init({ duration: 900, once: true, offset: 70, easing: 'ease-out-cubic' });
+
+    // ─── NAVBAR SCROLL ───────────────────────────────────────
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        navbar.classList.remove('transparent');
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.add('transparent');
+        navbar.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    // ─── MOBILE MENU ───────────────────────────────────────────
+    const mobileBtn = document.getElementById('mobile-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+      mobileBtn.querySelector('i').className =
+        mobileMenu.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+    });
+
+    // ─── FILTER ───────────────────────────────────────
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const avisoCards = document.querySelectorAll('.aviso-card[data-type], .com-card[data-type]');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.dataset.filter;
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        avisoCards.forEach(card => {
+          const match = filter === 'all' || card.dataset.type === filter;
+          card.style.display = match ? '' : 'none';
+          if (match) {
+            card.style.animation = 'none';
+            card.offsetHeight;
+            card.style.animation = 'fadeUp 0.4s ease both';
+          }
+        });
+      });
+    });
+
+    // Inline keyframe
+    const style = document.createElement('style');
+    style.textContent = '@keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }';
+    document.head.appendChild(style);
+
+    // ─── LOAD COMPONENTS ──────────────────────────────
+    fetch('/components/navbar.html')
+      .then(r => r.text())
+      .then(d => { document.getElementById('navbar-container').innerHTML = d; typeof setupMobileMenu === 'function' && setupMobileMenu(); })
+      .catch(() => { const fb = document.getElementById('navbar-fallback'); if (fb) fb.style.display = 'block'; });
+
+    fetch('/components/footer.html')
+      .then(r => r.text())
+      .then(d => { document.getElementById('footer-container').innerHTML = d; })
+      .catch(() => {});
+  </script>
+</body>
+</html>

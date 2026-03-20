@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contactos — Colégio Alfa e Omega em Panguila</title>
+  <meta name="description" content="Contacte o Colégio Alfa e Omega em Panguila, Angola. Telefone, email, WhatsApp ou formulário de contacto.">
+  <meta name="author" content="Colégio Alfa e Omega">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.colegioalfaeomega.com/contactos.html">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/main.css">
+
+  <style>
+    /* ============================================
+       TOKENS
+    ============================================ */
+    :root {
+      --ink-950:   #010E24;
+      --ink-900:   #011830;
+      --ink-800:   #012050;
+      --primary:   #01377D;
+      --primary-m: #0147A0;
+      --primary-l: #0A5FC4;
+      --accent:    #CEF431;
+      --accent-m:  #B8D400;
+      --accent-d:  #8FA300;
+      --white:     #FFFFFF;
+      --off-white: #F8F9F6;
+      --gray-50:   #F5F6F3;
+      --gray-100:  #EAEBE8;
+      --gray-200:  #D4D6D1;
+      --gray-400:  #9BA09A;
+      --gray-500:  #6D726B;
+      --gray-600:  #4D524B;
+      --gray-700:  #3D4239;
+      --gray-900:  #1A1E18;
+      --font-serif: 'DM Serif Display', serif;
+      --font-sans:  'DM Sans', sans-serif;
+      --font-head:  'Poppins', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--white);
+      color: var(--gray-700);
+      overflow-x: hidden;
+      padding-top: 5rem;
+    }
+
+    /* =============================================
+       NAVBAR
+    ============================================= */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 5rem;
+      transition: background 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease;
+    }
+
+    .navbar.transparent {
+      background: transparent;
+    }
+
+    .navbar.scrolled {
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.08), 0 8px 32px rgba(1,55,125,0.06);
+    }
+
+    .navbar-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      text-decoration: none;
+    }
+
+    .logo-img {
+      width: 46px;
+      height: 46px;
+      object-fit: contain;
+      transition: transform 0.3s ease;
+    }
+
+    .logo-section:hover .logo-img { transform: scale(1.05); }
+
+    .logo-text-block h2 {
+      font-family: var(--font-heading);
+      font-size: 0.925rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1.1;
+      transition: color 0.3s;
+    }
+
+    .navbar.transparent .logo-text-block h2 { color: var(--white); }
+
+    .logo-text-block p {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--accent-mid);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .navbar.transparent .logo-text-block p { color: rgba(206,244,49,0.75); }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .nav-link {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--gray-700);
+      text-decoration: none;
+      padding: 0.6rem 0.9rem;
+      border-radius: 0.5rem;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .navbar.transparent .nav-link { color: rgba(255,255,255,0.85); }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 4px; left: 50%; right: 50%;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: left 0.3s ease, right 0.3s ease;
+    }
+
+    .nav-link:hover::after, .nav-link.active::after { left: 0.9rem; right: 0.9rem; }
+    .nav-link:hover { color: var(--primary); }
+    .navbar.transparent .nav-link:hover { color: var(--white); }
+
+    .nav-cta {
+      margin-left: 0.75rem;
+      background: var(--accent);
+      color: var(--primary);
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.875rem;
+      padding: 0.65rem 1.4rem;
+      border-radius: 2rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .nav-cta:hover {
+      background: var(--primary);
+      color: var(--white);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(1,55,125,0.25);
+    }
+
+    .mobile-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: var(--primary);
+      cursor: pointer;
+    }
+
+    .navbar.transparent .mobile-btn { color: var(--white); }
+
+    .mobile-menu {
+      display: none;
+      position: absolute;
+      top: 100%; left: 0; right: 0;
+      background: var(--white);
+      border-top: 3px solid var(--accent);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+      padding: 1rem 0;
+      flex-direction: column;
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-nav-link {
+      padding: 0.875rem 2rem;
+      font-weight: 600;
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 0.95rem;
+      border-left: 3px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .mobile-nav-link:hover { background: rgba(1,55,125,0.05); border-left-color: var(--accent); }
+    @media (max-width: 768px) { .nav-menu, .nav-cta { display: none !important; } .mobile-btn { display: block; } }
+
+    /* ============================================
+       HERO SPLIT — INFO + FORM
+    ============================================ */
+    .page-hero {
+      background: var(--ink-950);
+      position: relative; overflow: hidden;
+    }
+
+    /* Ghost text */
+    .page-hero::before {
+      content: 'CONTACTO';
+      position: absolute; left: -1rem; bottom: -2rem;
+      font-family: var(--font-serif);
+      font-size: clamp(6rem, 14vw, 16rem);
+      color: rgba(255,255,255,0.025);
+      line-height: 1; pointer-events: none; white-space: nowrap; z-index: 0;
+    }
+
+    .page-hero::after {
+      content: ''; position: absolute; inset: 0;
+      background-image:
+        repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(255,255,255,0.012) 80px, rgba(255,255,255,0.012) 81px),
+        repeating-linear-gradient(0deg, transparent, transparent 80px, rgba(255,255,255,0.012) 80px, rgba(255,255,255,0.012) 81px);
+      pointer-events: none;
+    }
+
+    .hero-glow { position: absolute; top: -4rem; right: 20%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(1,55,125,0.5) 0%, transparent 70%); pointer-events: none; }
+
+    .hero-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1.1fr;
+      min-height: calc(100vh - 5rem);
+      position: relative; z-index: 2;
+    }
+
+    /* LEFT: info panel */
+    .hero-info {
+      padding: 5rem 4rem 5rem 2rem;
+      display: flex; flex-direction: column; justify-content: center;
+      border-right: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .hero-breadcrumb {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-family: var(--font-sans); font-size: 0.75rem; color: rgba(255,255,255,0.35);
+      margin-bottom: 2.5rem;
+    }
+    .hero-breadcrumb a { color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
+    .hero-breadcrumb a:hover { color: var(--accent); }
+    .hero-breadcrumb i { font-size: 0.55rem; }
+
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--font-sans); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent); margin-bottom: 1.25rem; }
+    .hero-eyebrow::before { content: ''; width: 28px; height: 2px; background: var(--accent); border-radius: 2px; }
+
+    .hero-h1 { font-family: var(--font-serif); font-size: clamp(2.5rem, 4vw, 3.8rem); color: var(--white); line-height: 1.05; letter-spacing: -0.025em; margin-bottom: 1.5rem; }
+    .hero-h1 em { color: var(--accent); font-style: italic; }
+
+    .hero-desc { font-family: var(--font-sans); font-size: 0.975rem; color: rgba(255,255,255,0.45); line-height: 1.85; font-weight: 300; margin-bottom: 3rem; }
+
+    /* Contact methods */
+    .contact-methods { display: flex; flex-direction: column; gap: 0; }
+
+    .cm-item {
+      display: grid; grid-template-columns: 48px 1fr;
+      gap: 1.25rem; align-items: center;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      text-decoration: none; transition: all 0.25s;
+    }
+    .cm-item:last-child { border-bottom: none; }
+    .cm-item:hover { padding-left: 0.5rem; }
+    .cm-item:hover .cm-icon { transform: rotate(-5deg) scale(1.1); }
+
+    .cm-icon {
+      width: 48px; height: 48px; border-radius: 0.875rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; flex-shrink: 0; transition: transform 0.3s;
+    }
+    .cm-icon.blue { background: linear-gradient(135deg, var(--primary), var(--primary-l)); color: var(--white); }
+    .cm-icon.yellow { background: var(--accent); color: var(--primary); }
+    .cm-icon.green { background: #25D366; color: var(--white); }
+    .cm-icon.dark { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.7); }
+
+    .cm-info {}
+    .cm-label { font-family: var(--font-sans); font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: rgba(255,255,255,0.35); display: block; margin-bottom: 0.15rem; }
+    .cm-value { font-family: var(--font-sans); font-size: 0.95rem; font-weight: 600; color: rgba(255,255,255,0.85); display: block; }
+
+    /* RIGHT: Form panel */
+    .hero-form-panel {
+      padding: 4rem 2rem 4rem 4rem;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+
+    /* Tab switcher */
+    .form-tabs { display: flex; gap: 0.25rem; margin-bottom: 2rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 0.625rem; padding: 0.25rem; }
+
+    .form-tab-btn {
+      flex: 1; padding: 0.6rem 1rem;
+      font-family: var(--font-sans); font-size: 0.8rem; font-weight: 600;
+      color: rgba(255,255,255,0.45); background: transparent;
+      border: none; border-radius: 0.375rem; cursor: pointer;
+      transition: all 0.25s; display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+    }
+    .form-tab-btn.active { background: var(--white); color: var(--primary); box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+    .form-tab-btn:not(.active):hover { color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.06); }
+
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+
+    /* Form styling */
+    .f-form { display: flex; flex-direction: column; gap: 1.1rem; }
+
+    .f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .f-group { display: flex; flex-direction: column; gap: 0.4rem; }
+
+    .f-label {
+      font-family: var(--font-sans); font-size: 0.72rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .f-input, .f-select, .f-textarea {
+      font-family: var(--font-sans); font-size: 0.9rem; font-weight: 400;
+      color: var(--white); background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12); border-radius: 0.625rem;
+      padding: 0.8rem 1rem; width: 100%;
+      transition: all 0.25s; outline: none;
+    }
+    .f-input::placeholder, .f-textarea::placeholder { color: rgba(255,255,255,0.25); }
+    .f-select { color: rgba(255,255,255,0.7); }
+    .f-select option { background: var(--ink-900); color: var(--white); }
+    .f-textarea { resize: none; min-height: 100px; }
+
+    .f-input:focus, .f-select:focus, .f-textarea:focus {
+      border-color: var(--accent); background: rgba(206,244,49,0.05);
+      box-shadow: 0 0 0 3px rgba(206,244,49,0.1);
+      color: var(--white);
+    }
+
+    .f-input:hover, .f-select:hover { border-color: rgba(206,244,49,0.4); }
+
+    /* Submit row */
+    .f-submit-row { display: flex; gap: 0.75rem; margin-top: 0.25rem; }
+
+    .f-btn-submit {
+      flex: 1; padding: 0.9rem 1.5rem;
+      background: var(--accent); color: var(--primary);
+      font-family: var(--font-sans); font-weight: 800; font-size: 0.875rem;
+      border: none; border-radius: 0.625rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      transition: all 0.3s;
+    }
+    .f-btn-submit:hover { background: var(--white); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
+    .f-btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .f-btn-wa {
+      padding: 0.9rem 1.25rem; background: #25D366; color: var(--white);
+      font-family: var(--font-sans); font-weight: 700; font-size: 0.875rem;
+      border: none; border-radius: 0.625rem; cursor: pointer;
+      display: flex; align-items: center; gap: 0.5rem; white-space: nowrap;
+      transition: all 0.3s;
+    }
+    .f-btn-wa:hover { background: #1aae54; transform: translateY(-2px); }
+
+    .f-note { font-family: var(--font-sans); font-size: 0.7rem; color: rgba(255,255,255,0.25); text-align: center; }
+
+    /* Checkbox */
+    .f-check { display: flex; align-items: flex-start; gap: 0.6rem; }
+    .f-check input { margin-top: 0.15rem; accent-color: var(--accent); width: 15px; height: 15px; flex-shrink: 0; cursor: pointer; }
+    .f-check label { font-family: var(--font-sans); font-size: 0.8rem; color: rgba(255,255,255,0.45); line-height: 1.5; cursor: pointer; }
+    .f-check a { color: var(--accent); text-decoration: none; }
+
+    /* ============================================
+       SUCCESS MODAL
+    ============================================ */
+    .modal-backdrop {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(1,8,24,0.88); backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: center; padding: 1rem;
+      opacity: 0; visibility: hidden; transition: all 0.35s;
+    }
+    .modal-backdrop.open { opacity: 1; visibility: visible; }
+
+    .modal-box {
+      background: var(--white); border-radius: 1.5rem;
+      max-width: 480px; width: 100%; overflow: hidden;
+      transform: scale(0.9) translateY(20px);
+      transition: all 0.35s ease;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+    }
+    .modal-backdrop.open .modal-box { transform: scale(1) translateY(0); }
+
+    .modal-head {
+      background: linear-gradient(135deg, var(--primary), var(--ink-950));
+      padding: 2.5rem 2rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .modal-close-btn {
+      position: absolute; top: 1.25rem; right: 1.25rem;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(255,255,255,0.15); border: none; color: rgba(255,255,255,0.8);
+      font-size: 0.9rem; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.25s;
+    }
+    .modal-close-btn:hover { background: rgba(206,244,49,0.25); color: var(--accent); transform: rotate(90deg); }
+
+    .modal-icon-circle {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: var(--accent); color: var(--primary);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; margin: 0 auto 1.25rem;
+      animation: pulse-icon 2s ease-in-out infinite;
+    }
+    @keyframes pulse-icon {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(206,244,49,0.4); }
+      50% { box-shadow: 0 0 0 14px rgba(206,244,49,0); }
+    }
+
+    .modal-head h2 { font-family: var(--font-serif); font-size: 1.8rem; color: var(--white); margin-bottom: 0.3rem; }
+    .modal-head p { font-family: var(--font-sans); font-size: 0.9rem; color: rgba(255,255,255,0.6); font-weight: 300; }
+
+    .modal-body { padding: 2rem; }
+    .modal-body p { font-family: var(--font-sans); font-size: 0.95rem; color: var(--gray-600); line-height: 1.75; margin-bottom: 1.5rem; }
+
+    .modal-detail {
+      background: rgba(206,244,49,0.08); border: 1px solid rgba(206,244,49,0.2);
+      border-left: 4px solid var(--accent); border-radius: 0.75rem;
+      padding: 1.25rem; margin-bottom: 1.5rem;
+    }
+    .modal-detail h4 { font-family: var(--font-head); font-size: 0.85rem; font-weight: 700; color: var(--primary); margin-bottom: 0.4rem; }
+    .modal-detail p { font-family: var(--font-sans); font-size: 0.85rem; color: var(--gray-500); margin: 0; }
+
+    .modal-wa-btn {
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      background: #25D366; color: var(--white);
+      font-family: var(--font-sans); font-weight: 700; font-size: 0.9rem;
+      padding: 0.875rem; border-radius: 0.625rem;
+      text-decoration: none; width: 100%; transition: all 0.3s;
+    }
+    .modal-wa-btn:hover { background: #1aae54; transform: translateY(-2px); }
+
+    .modal-foot { display: flex; gap: 0.75rem; padding: 0 2rem 2rem; }
+    .modal-btn-sec { flex: 1; padding: 0.75rem; background: transparent; color: var(--gray-500); border: 1.5px solid var(--gray-200); border-radius: 0.625rem; font-family: var(--font-sans); font-weight: 600; font-size: 0.875rem; cursor: pointer; transition: all 0.25s; }
+    .modal-btn-sec:hover { border-color: var(--primary); color: var(--primary); }
+    .modal-btn-pri { flex: 1; padding: 0.75rem; background: var(--primary); color: var(--white); border: none; border-radius: 0.625rem; font-family: var(--font-sans); font-weight: 700; font-size: 0.875rem; cursor: pointer; transition: all 0.25s; }
+    .modal-btn-pri:hover { background: var(--ink-950); }
+
+    /* ============================================
+       SECTION: HORÁRIO
+    ============================================ */
+    .section-horario { padding: 7rem 2rem; background: var(--off-white); }
+
+    .horario-inner { max-width: 1280px; margin: 0 auto; }
+
+    .horario-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+
+    .section-label { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-sans); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.18em; color: var(--primary); margin-bottom: 0.875rem; }
+    .section-label::before { content: ''; width: 22px; height: 2px; background: var(--accent); }
+
+    .display-title { font-family: var(--font-serif); font-size: clamp(1.8rem, 3vw, 2.5rem); color: var(--gray-900); line-height: 1.1; letter-spacing: -0.02em; }
+    .display-title em { color: var(--primary); font-style: italic; }
+
+    /* Schedule card */
+    .schedule-card { background: var(--ink-950); border-radius: 1.25rem; overflow: hidden; }
+
+    .sc-head { padding: 1.75rem 2rem; background: rgba(1,55,125,0.4); border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; gap: 1rem; }
+    .sc-head-icon { width: 44px; height: 44px; border-radius: 0.75rem; background: var(--accent); display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1.2rem; }
+    .sc-head h3 { font-family: var(--font-head); font-size: 1rem; font-weight: 700; color: var(--white); }
+    .sc-head p { font-family: var(--font-sans); font-size: 0.75rem; color: rgba(255,255,255,0.4); }
+
+    .sc-body { padding: 0 2rem 1.5rem; }
+    .sc-row { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .sc-row:last-child { border-bottom: none; }
+    .sc-row-label { font-family: var(--font-sans); font-size: 0.875rem; color: rgba(255,255,255,0.5); font-weight: 300; }
+    .sc-row-time { font-family: var(--font-head); font-size: 0.975rem; font-weight: 700; color: var(--accent); }
+
+    /* Weekend card */
+    .weekend-card { background: var(--white); border: 1px solid var(--gray-100); border-radius: 1.25rem; overflow: hidden; box-shadow: 0 4px 20px rgba(1,55,125,0.06); }
+
+    .wc-head { padding: 1.75rem 2rem; background: var(--accent); border-bottom: 1px solid rgba(0,0,0,0.06); display: flex; align-items: center; gap: 1rem; }
+    .wc-head-icon { width: 44px; height: 44px; border-radius: 0.75rem; background: rgba(1,55,125,0.1); display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1.2rem; }
+    .wc-head h3 { font-family: var(--font-head); font-size: 1rem; font-weight: 700; color: var(--primary); }
+    .wc-head p { font-family: var(--font-sans); font-size: 0.75rem; color: rgba(1,55,125,0.6); }
+
+    .wc-body { padding: 0 2rem 1.5rem; }
+    .wc-row { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid var(--gray-50); }
+    .wc-row:last-child { border-bottom: none; }
+    .wc-row-label { font-family: var(--font-sans); font-size: 0.875rem; color: var(--gray-600); font-weight: 300; }
+    .wc-row-time { font-family: var(--font-head); font-size: 0.975rem; font-weight: 700; color: var(--primary); }
+
+    .wc-closed { background: var(--gray-50); border-radius: 0.5rem; padding: 1rem; display: flex; align-items: center; gap: 0.75rem; margin-top: 0.5rem; }
+    .wc-closed i { color: var(--gray-400); }
+    .wc-closed p { font-family: var(--font-sans); font-size: 0.875rem; color: var(--gray-500); font-weight: 300; }
+    .wc-closed strong { font-weight: 700; color: var(--gray-700); }
+
+    /* ============================================
+       SECTION: FAQ
+    ============================================ */
+    .section-faq { padding: 7rem 2rem; background: var(--white); }
+
+    .faq-inner { max-width: 900px; margin: 0 auto; }
+
+    .faq-header { text-align: center; margin-bottom: 4rem; }
+
+    .faq-list { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--gray-100); border-radius: 1.25rem; overflow: hidden; }
+
+    .faq-item { border-bottom: 1px solid var(--gray-100); }
+    .faq-item:last-child { border-bottom: none; }
+
+    .faq-q {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.5rem 2rem;
+      cursor: pointer; background: var(--white); transition: background 0.2s;
+      gap: 1rem;
+    }
+    .faq-q:hover { background: var(--gray-50); }
+    .faq-q.open { background: var(--gray-50); }
+
+    .faq-q h3 { font-family: var(--font-head); font-size: 1rem; font-weight: 700; color: var(--gray-900); line-height: 1.35; }
+    .faq-q.open h3 { color: var(--primary); }
+
+    .faq-chevron { width: 32px; height: 32px; border-radius: 50%; background: var(--gray-100); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.3s; color: var(--gray-500); font-size: 0.75rem; }
+    .faq-q.open .faq-chevron { background: var(--accent); color: var(--primary); transform: rotate(180deg); }
+
+    .faq-a { display: none; padding: 0 2rem 1.75rem; background: var(--gray-50); }
+    .faq-a.open { display: block; }
+    .faq-a p, .faq-a ul, .faq-a ol { font-family: var(--font-sans); font-size: 0.9rem; color: var(--gray-600); line-height: 1.8; font-weight: 300; }
+    .faq-a ul, .faq-a ol { padding-left: 1.5rem; margin-top: 0.5rem; }
+    .faq-a li { margin-bottom: 0.3rem; }
+    .faq-a strong { font-weight: 700; color: var(--gray-700); }
+
+    /* ============================================
+       SECTION: MAPA
+    ============================================ */
+    .section-mapa { padding: 7rem 2rem; background: var(--off-white); }
+
+    .mapa-inner { max-width: 1280px; margin: 0 auto; }
+
+    .mapa-layout { display: grid; grid-template-columns: 1fr 1.6fr; gap: 3rem; align-items: start; }
+
+    .mapa-info {}
+
+    .mapa-address {
+      background: var(--ink-950); border-radius: 1.25rem; padding: 2.5rem;
+      margin-top: 2rem;
+    }
+
+    .ma-label { font-family: var(--font-sans); font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent); margin-bottom: 0.75rem; display: block; }
+
+    .ma-address { font-family: var(--font-sans); font-size: 0.9rem; color: rgba(255,255,255,0.65); line-height: 1.85; font-weight: 300; margin-bottom: 1.5rem; }
+
+    .ma-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--accent); font-family: var(--font-sans); font-size: 0.8rem; font-weight: 700; text-decoration: none; transition: gap 0.3s; }
+    .ma-link:hover { gap: 0.8rem; }
+
+    .mapa-embed { border-radius: 1.25rem; overflow: hidden; box-shadow: 0 12px 40px rgba(1,55,125,0.12); }
+    .mapa-embed iframe { display: block; width: 100%; height: 450px; border: none; }
+
+    /* ============================================
+       CTA DÚVIDAS
+    ============================================ */
+    .section-doubts { padding: 5rem 2rem; background: var(--white); }
+
+    .doubts-inner { max-width: 900px; margin: 0 auto; }
+
+    .doubts-box {
+      background: var(--gray-50);
+      border: 2px dashed var(--gray-200);
+      border-radius: 1.5rem; padding: 3.5rem 3rem;
+      text-align: center;
+      transition: border-color 0.3s;
+    }
+    .doubts-box:hover { border-color: rgba(206,244,49,0.5); }
+
+    .doubts-box h3 { font-family: var(--font-serif); font-size: clamp(1.5rem, 3vw, 2rem); color: var(--gray-900); margin-bottom: 0.75rem; }
+    .doubts-box p { font-family: var(--font-sans); font-size: 1rem; color: var(--gray-500); font-weight: 300; line-height: 1.7; margin-bottom: 2.5rem; }
+
+    .doubts-btns { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+
+    .db-btn { display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.875rem 1.75rem; border-radius: 0.625rem; font-family: var(--font-sans); font-weight: 700; font-size: 0.9rem; text-decoration: none; transition: all 0.3s; }
+    .db-btn.b { background: var(--primary); color: var(--white); }
+    .db-btn.b:hover { background: var(--ink-950); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(1,55,125,0.2); }
+    .db-btn.g { background: #25D366; color: var(--white); }
+    .db-btn.g:hover { background: #1aae54; transform: translateY(-2px); }
+    .db-btn.o { background: transparent; border: 1.5px solid var(--gray-200); color: var(--gray-600); }
+    .db-btn.o:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* ============================================
+       RESPONSIVE
+    ============================================ */
+    @media (max-width: 1024px) {
+      .hero-inner { grid-template-columns: 1fr; min-height: auto; }
+      .hero-info { padding: 5rem 2rem 3rem; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+      .hero-form-panel { padding: 3rem 2rem 5rem; }
+      .horario-layout { grid-template-columns: 1fr; }
+      .mapa-layout { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      body { padding-top: 5rem; }
+      .f-row { grid-template-columns: 1fr; }
+      .section-horario, .section-faq, .section-mapa, .section-doubts { padding: 5rem 1.5rem; }
+      .doubts-box { padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar transparent" id="navbar">
+    <div class="navbar-container">
+      <a class="logo-section" href="/">
+        <img src="/assets/images/logo/lo.png" alt="Alfa e Omega" class="logo-img">
+        <div class="logo-text-block">
+          <h2>Colégio Alfa e Omega</h2>
+          <p>Panguila · Angola</p>
+        </div>
+      </a>
+
+      <nav class="nav-menu" role="navigation">
+        <a href="/" class="nav-link">Início</a>
+        <a href="/sobre.html" class="nav-link">Sobre</a>
+        <a href="/oferta.html" class="nav-link">Oferta</a>
+        <a href="/novidades.html" class="nav-link">Novidades</a>
+        <a href="/avisos.html" class="nav-link">Avisos</a>
+        <a href="/galeria.html" class="nav-link">Galeria</a>
+        <a href="/contactos.html" class="nav-link active">Contactos</a>
+      </nav>
+
+      <a href="/matriculas.html" class="nav-cta">Matricular Agora</a>
+
+      <button class="mobile-btn" id="mobile-btn" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="/" class="mobile-nav-link"><i class="fas fa-home"></i> Início</a>
+      <a href="/sobre.html" class="mobile-nav-link"><i class="fas fa-info-circle"></i> Sobre</a>
+      <a href="/oferta.html" class="mobile-nav-link"><i class="fas fa-book-open"></i> Oferta Educativa</a>
+      <a href="/novidades.html" class="mobile-nav-link"><i class="fas fa-newspaper"></i> Novidades</a>
+      <a href="/avisos.html" class="mobile-nav-link"><i class="fas fa-bullhorn"></i> Avisos</a>
+      <a href="/galeria.html" class="mobile-nav-link"><i class="fas fa-images"></i> Galeria</a>
+      <a href="/contactos.html" class="mobile-nav-link"><i class="fas fa-envelope"></i> Contactos</a>
+      <a href="https://wa.me/925952771" class="mobile-nav-link" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+    </div>
+  </nav>
+
+  <!-- SUCCESS MODAL -->
+  <div class="modal-backdrop" id="successModal">
+    <div class="modal-box">
+      <div class="modal-head">
+        <button class="modal-close-btn" id="modalCloseBtn"><i class="fas fa-times"></i></button>
+        <div class="modal-icon-circle"><i class="fas fa-check"></i></div>
+        <h2>Mensagem Enviada!</h2>
+        <p>Obrigado por entrar em contacto</p>
+      </div>
+      <div class="modal-body">
+        <p>Recebemos a sua mensagem com sucesso. A nossa equipa irá analisar o seu pedido e entrará em contacto dentro de 24 horas.</p>
+        <div class="modal-detail">
+          <h4><i class="fas fa-clock" style="color:var(--accent-m); margin-right:0.4rem;"></i> Tempo de Resposta</h4>
+          <p>Normalmente respondemos em menos de 24 horas nos dias úteis.</p>
+        </div>
+        <a href="https://wa.me/925952771" target="_blank" class="modal-wa-btn">
+          <i class="fab fa-whatsapp"></i> Falar no WhatsApp
+        </a>
+      </div>
+      <div class="modal-foot">
+        <button class="modal-btn-sec" id="modalCloseSec">Fechar</button>
+        <button class="modal-btn-pri" id="modalNewMsg">Nova Mensagem</button>
+      </div>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- ===================== HERO SPLIT ===================== -->
+    <section class="page-hero" id="hero-top">
+      <div class="hero-glow"></div>
+      <div class="hero-inner">
+
+        <!-- LEFT: Info -->
+        <div class="hero-info" data-aos="fade-right">
+          <div class="hero-breadcrumb">
+            <a href="/"><i class="fas fa-home"></i> Início</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Contactos</span>
+          </div>
+          <div class="hero-eyebrow">Colégio Alfa e Omega · Panguila</div>
+          <h1 class="hero-h1">Vamos<br><em>Conversar</em></h1>
+          <p class="hero-desc">Estamos aqui para responder às suas perguntas, agendar visitas e recebê-lo na nossa comunidade escolar.</p>
+
+          <div class="contact-methods">
+            <a href="tel:+244925952771" class="cm-item">
+              <div class="cm-icon blue"><i class="fas fa-phone"></i></div>
+              <div class="cm-info">
+                <span class="cm-label">Telefone</span>
+                <span class="cm-value">+244 925 952 771</span>
+              </div>
+            </a>
+            <a href="mailto:colegioalfaeomega@hotmail.com" class="cm-item">
+              <div class="cm-icon yellow"><i class="fas fa-envelope"></i></div>
+              <div class="cm-info">
+                <span class="cm-label">Email</span>
+                <span class="cm-value">colegioalfaeomega@hotmail.com</span>
+              </div>
+            </a>
+            <a href="https://wa.me/925952771" target="_blank" class="cm-item">
+              <div class="cm-icon green"><i class="fab fa-whatsapp"></i></div>
+              <div class="cm-info">
+                <span class="cm-label">WhatsApp</span>
+                <span class="cm-value">+244 925 952 771</span>
+              </div>
+            </a>
+            <div class="cm-item" style="cursor:default;">
+              <div class="cm-icon dark"><i class="fas fa-map-marker-alt"></i></div>
+              <div class="cm-info">
+                <span class="cm-label">Localização</span>
+                <span class="cm-value">Panguila, Bengo, Angola</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Form -->
+        <div class="hero-form-panel" data-aos="fade-left" data-aos-delay="100">
+
+          <!-- Tabs -->
+          <div class="form-tabs">
+            <button class="form-tab-btn active" id="tab-btn-visit" onclick="switchTab('visit')">
+              <i class="fas fa-calendar"></i> Agendar Visita
+            </button>
+            <button class="form-tab-btn" id="tab-btn-msg" onclick="switchTab('msg')">
+              <i class="fas fa-envelope"></i> Enviar Mensagem
+            </button>
+          </div>
+
+          <!-- TAB: Agendar Visita -->
+          <div class="tab-pane active" id="tab-visit">
+            <form class="f-form" id="scheduleForm" action="https://formspree.io/f/xeekazak" method="POST">
+              <input type="hidden" name="_subject" value="Agendamento de Visita — Alfa e Omega">
+              <input type="hidden" name="tipo" value="agendamento">
+
+              <div class="f-row">
+                <div class="f-group">
+                  <label class="f-label">Nome Completo *</label>
+                  <input type="text" name="name" class="f-input" placeholder="O seu nome" required>
+                </div>
+                <div class="f-group">
+                  <label class="f-label">Telefone *</label>
+                  <input type="tel" name="phone" class="f-input" placeholder="+244 9XX XXX XXX" required>
+                </div>
+              </div>
+
+              <div class="f-group">
+                <label class="f-label">Email *</label>
+                <input type="email" name="email" class="f-input" placeholder="email@exemplo.com" required>
+              </div>
+
+              <div class="f-row">
+                <div class="f-group">
+                  <label class="f-label">Data Pretendida *</label>
+                  <input type="date" name="scheduleDate" id="scheduleDate" class="f-input" required>
+                </div>
+                <div class="f-group">
+                  <label class="f-label">Hora *</label>
+                  <select name="scheduleTime" class="f-select" required>
+                    <option value="">Seleccionar...</option>
+                    <option value="09:00">09:00 – 09:30</option>
+                    <option value="09:30">09:30 – 10:00</option>
+                    <option value="10:00">10:00 – 10:30</option>
+                    <option value="10:30">10:30 – 11:00</option>
+                    <option value="11:00">11:00 – 11:30</option>
+                    <option value="14:00">14:00 – 14:30</option>
+                    <option value="14:30">14:30 – 15:00</option>
+                    <option value="15:00">15:00 – 15:30</option>
+                    <option value="15:30">15:30 – 16:00</option>
+                    <option value="16:00">16:00 – 16:30</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="f-group">
+                <label class="f-label">Tipo de Visita *</label>
+                <select name="visitType" class="f-select" required>
+                  <option value="">Seleccionar...</option>
+                  <option value="Ensino Primário (1.º–6.º ano)">Ensino Primário (1.º–6.º ano)</option>
+                  <option value="Ensino Secundário (7.º–9.º ano)">Ensino Secundário (7.º–9.º ano)</option>
+                  <option value="Visita Geral às Instalações">Visita Geral às Instalações</option>
+                  <option value="ATL / Pré-Escolar">ATL / Pré-Escolar</option>
+                </select>
+              </div>
+
+              <div class="f-group">
+                <label class="f-label">Observações</label>
+                <textarea name="message" class="f-textarea" placeholder="Alguma questão ou pedido especial..."></textarea>
+              </div>
+
+              <div class="f-submit-row">
+                <button type="submit" class="f-btn-submit" id="scheduleSubmitBtn">
+                  <i class="fas fa-check"></i> Confirmar
+                </button>
+                <button type="button" class="f-btn-wa" onclick="sendScheduleViaWhatsApp()">
+                  <i class="fab fa-whatsapp"></i> WhatsApp
+                </button>
+              </div>
+
+              <p class="f-note">Campos * obrigatórios · Seg–Sex, 7h–17h</p>
+            </form>
+          </div>
+
+          <!-- TAB: Mensagem -->
+          <div class="tab-pane" id="tab-msg">
+            <form class="f-form" id="contactForm" action="https://formspree.io/f/xeekazak" method="POST">
+              <input type="hidden" name="_subject" value="Mensagem de Contacto — Alfa e Omega">
+              <input type="hidden" name="tipo" value="mensagem">
+
+              <div class="f-row">
+                <div class="f-group">
+                  <label class="f-label">Nome Completo *</label>
+                  <input type="text" name="name" class="f-input" placeholder="O seu nome" required>
+                </div>
+                <div class="f-group">
+                  <label class="f-label">Telefone</label>
+                  <input type="tel" name="phone" class="f-input" placeholder="+244 9XX XXX XXX">
+                </div>
+              </div>
+
+              <div class="f-group">
+                <label class="f-label">Email *</label>
+                <input type="email" name="email" class="f-input" placeholder="email@exemplo.com" required>
+              </div>
+
+              <div class="f-group">
+                <label class="f-label">Assunto *</label>
+                <select name="subject" class="f-select" required>
+                  <option value="">Seleccionar assunto...</option>
+                  <option value="Informações sobre Matrícula">Informações sobre Matrícula</option>
+                  <option value="Oferta Educativa">Oferta Educativa</option>
+                  <option value="Actividades Extracurriculares">Actividades Extracurriculares</option>
+                  <option value="Horário e Localização">Horário e Localização</option>
+                  <option value="Bolsas e Apoio Financeiro">Bolsas e Apoio Financeiro</option>
+                  <option value="Outro Assunto">Outro Assunto</option>
+                </select>
+              </div>
+
+              <div class="f-group">
+                <label class="f-label">Mensagem *</label>
+                <textarea name="message" class="f-textarea" placeholder="Escreva a sua mensagem aqui..." required></textarea>
+              </div>
+
+              <div class="f-check">
+                <input type="checkbox" id="privacy-check" name="privacy" required>
+                <label for="privacy-check">Concordo em partilhar os meus dados para resposta. <a href="#">Política de Privacidade</a></label>
+              </div>
+
+              <div class="f-submit-row">
+                <button type="submit" class="f-btn-submit" id="contactSubmitBtn">
+                  <i class="fas fa-paper-plane"></i> Enviar
+                </button>
+                <button type="button" class="f-btn-wa" onclick="sendContactViaWhatsApp()">
+                  <i class="fab fa-whatsapp"></i> WhatsApp
+                </button>
+              </div>
+
+              <p class="f-note">Campos * obrigatórios · Resposta em 24h</p>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== HORÁRIO ===================== -->
+    <section class="section-horario">
+      <div class="horario-inner">
+        <div class="horario-layout">
+
+          <div data-aos="fade-right">
+            <div class="section-label">Disponibilidade</div>
+            <h2 class="display-title" style="margin-bottom:1.5rem;">Horário de<br><em>Atendimento</em></h2>
+            <p style="font-family:var(--font-sans); font-size:1rem; color:var(--gray-500); line-height:1.85; font-weight:300;">Estamos disponíveis para receber as famílias, esclarecer dúvidas e agendar visitas durante os horários indicados.</p>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:1.5rem;" data-aos="fade-left" data-aos-delay="100">
+            <!-- Weekday card -->
+            <div class="schedule-card">
+              <div class="sc-head">
+                <div class="sc-head-icon"><i class="fas fa-calendar-days"></i></div>
+                <div>
+                  <h3>Segunda a Sexta</h3>
+                  <p>Dias Úteis</p>
+                </div>
+              </div>
+              <div class="sc-body">
+                <div class="sc-row"><span class="sc-row-label">Secretaria</span><span class="sc-row-time">07:00 – 17:00</span></div>
+                <div class="sc-row"><span class="sc-row-label">Aulas</span><span class="sc-row-time">07:30 – 16:30</span></div>
+                <div class="sc-row"><span class="sc-row-label">Atendimento de Pais</span><span class="sc-row-time">15:00 – 17:00</span></div>
+                <div class="sc-row"><span class="sc-row-label">Recepção</span><span class="sc-row-time">07:00 – 17:00</span></div>
+              </div>
+            </div>
+
+            <!-- Weekend card -->
+            <div class="weekend-card">
+              <div class="wc-head">
+                <div class="wc-head-icon"><i class="fas fa-sun"></i></div>
+                <div>
+                  <h3>Fins de Semana</h3>
+                  <p>Disponibilidade reduzida</p>
+                </div>
+              </div>
+              <div class="wc-body">
+                <div class="wc-row"><span class="wc-row-label">Sábado — Secretaria</span><span class="wc-row-time">08:00 – 12:00</span></div>
+                <div class="wc-row"><span class="wc-row-label">Sábado — Atendimento</span><span class="wc-row-time">08:00 – 12:00</span></div>
+                <div class="wc-closed">
+                  <i class="fas fa-moon"></i>
+                  <p><strong>Domingo:</strong> Estabelecimento fechado</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FAQ ===================== -->
+    <section class="section-faq">
+      <div class="faq-inner">
+        <div class="faq-header" data-aos="fade-up">
+          <div class="section-label" style="justify-content:center; margin-bottom:1rem;">Dúvidas Frequentes</div>
+          <h2 class="display-title" style="margin-bottom:0.75rem;">Perguntas <em>Frequentes</em></h2>
+          <p style="font-family:var(--font-sans); font-size:1rem; color:var(--gray-500); font-weight:300; max-width:480px; margin:0 auto;">As questões mais comuns das famílias que nos contactam.</p>
+        </div>
+
+        <div class="faq-list" data-aos="fade-up" data-aos-delay="100">
+
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">
+              <h3>Como posso agendar uma visita à escola?</h3>
+              <div class="faq-chevron"><i class="fas fa-chevron-down"></i></div>
+            </div>
+            <div class="faq-a">
+              <p>Pode agendar de três formas:</p>
+              <ul>
+                <li><strong>Formulário Online:</strong> Use a aba "Agendar Visita" acima com data e hora à sua conveniência</li>
+                <li><strong>Telefone:</strong> Ligue +244 925 952 771 (Segunda a Sexta, 7h–17h)</li>
+                <li><strong>WhatsApp:</strong> Envie mensagem directa para agendamentos flexíveis</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">
+              <h3>Qual é o processo de matrícula?</h3>
+              <div class="faq-chevron"><i class="fas fa-chevron-down"></i></div>
+            </div>
+            <div class="faq-a">
+              <p>O processo segue 4 etapas:</p>
+              <ol>
+                <li><strong>Preenchimento:</strong> Formulário com dados do aluno e encarregado</li>
+                <li><strong>Documentação:</strong> Certidão, vacinação e histórico escolar</li>
+                <li><strong>Entrevista:</strong> Conversa com a nossa secretaria</li>
+                <li><strong>Confirmação:</strong> Aprovação e pagamento de taxas</li>
+              </ol>
+              <p style="margin-top:0.75rem;">O processo leva 5–10 dias úteis. A nossa equipa guia-o em cada etapa.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">
+              <h3>Que documentos são necessários para matrícula?</h3>
+              <div class="faq-chevron"><i class="fas fa-chevron-down"></i></div>
+            </div>
+            <div class="faq-a">
+              <ul>
+                <li><strong>Certidão de nascimento</strong></li>
+                <li><strong>Cartão de vacinação</strong> actualizado</li>
+                <li><strong>Histórico académico</strong> anterior (se aplicável)</li>
+                <li><strong>Bilhete de identidade</strong> do encarregado</li>
+                <li><strong>Comprovativo de contacto</strong> (telefone/email)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">
+              <h3>Existem bolsas ou apoio financeiro disponível?</h3>
+              <div class="faq-chevron"><i class="fas fa-chevron-down"></i></div>
+            </div>
+            <div class="faq-a">
+              <p>Oferecemos dois tipos de apoio:</p>
+              <ul>
+                <li><strong>Bolsas por Mérito:</strong> Para alunos com excelente desempenho académico (até 50% da mensalidade)</li>
+                <li><strong>Apoio Socioeconómico:</strong> Planos de pagamento flexíveis para famílias com dificuldades. Contacte a secretaria para candidatura.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">
+              <h3>O colégio tem serviço de transporte escolar?</h3>
+              <div class="faq-chevron"><i class="fas fa-chevron-down"></i></div>
+            </div>
+            <div class="faq-a">
+              <p>Sim! O Colégio Alfa e Omega disponibiliza serviço de transporte para alunos do 1.º ao 9.º ano. O serviço inclui ida e volta com motoristas profissionais, veículos inspeccionados regularmente, múltiplas rotas em Panguila e arredores, e cobertura dos dois turnos (manhã e tarde).</p>
+              <p style="margin-top:0.5rem;">Contacte-nos para informações sobre rotas e tarifas disponíveis.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== MAPA ===================== -->
+    <section class="section-mapa">
+      <div class="mapa-inner">
+        <div class="mapa-layout">
+
+          <div data-aos="fade-right">
+            <div class="section-label">Localização</div>
+            <h2 class="display-title" style="margin-bottom:1rem;">Encontre-nos<br>em <em>Panguila</em></h2>
+            <p style="font-family:var(--font-sans); font-size:1rem; color:var(--gray-500); line-height:1.85; font-weight:300; margin-bottom:0;">Situados na zona urbana central de Panguila, facilmente acessível às famílias da região do Bengo.</p>
+
+            <div class="mapa-address">
+              <span class="ma-label">Endereço Completo</span>
+              <p class="ma-address">
+                Colégio Alfa e Omega<br>
+                Zona Urbana Central, Panguila<br>
+                Província do Bengo, Angola
+              </p>
+              <a href="https://www.google.com/maps/search/Panguila+Angola" target="_blank" class="ma-link">
+                Ver no Google Maps <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="mapa-embed" data-aos="fade-left" data-aos-delay="100">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3979.7551046299996!2d18.277045!3d-8.837222!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1a65d0a0a0a0a0a1%3A0x1a65d0a0a0a0a0a1!2sPanguila%2C%20Angola!5e0!3m2!1spt!2s!4v1234567890"
+              width="100%" height="450"
+              style="border:0" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== DÚVIDAS CTA ===================== -->
+    <section class="section-doubts">
+      <div class="doubts-inner">
+        <div class="doubts-box" data-aos="fade-up">
+          <h3>Ainda tem dúvidas?</h3>
+          <p>Fale connosco directamente! A nossa equipa está disponível para responder a todas as suas perguntas sobre matrículas, programas e muito mais.</p>
+          <div class="doubts-btns">
+            <a href="tel:+244925952771" class="db-btn b"><i class="fas fa-phone"></i> Ligar Agora</a>
+            <a href="https://wa.me/925952771" target="_blank" class="db-btn g"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            <a href="mailto:colegioalfaeomega@hotmail.com" class="db-btn o"><i class="fas fa-envelope"></i> Email</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="footer-container"></div>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script>
+    AOS.init({ duration: 900, once: true, offset: 70, easing: 'ease-out-cubic' });
+
+    // ─── NAVBAR SCROLL ───────────────────────────────────────
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        navbar.classList.remove('transparent');
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.add('transparent');
+        navbar.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    // ─── MOBILE MENU ───────────────────────────────────────────
+    const mobileBtn = document.getElementById('mobile-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+      mobileBtn.querySelector('i').className =
+        mobileMenu.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+    });
+
+    // ─── TAB SWITCHING ───────────────────────────────
+    function switchTab(tab) {
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.form-tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('tab-' + tab).classList.add('active');
+      document.getElementById('tab-btn-' + tab).classList.add('active');
+    }
+
+    // ─── MINIMUM DATE ─────────────────────────────────
+    const dateInput = document.getElementById('scheduleDate');
+    if (dateInput) {
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      dateInput.min = tomorrow.toISOString().split('T')[0];
+
+      dateInput.addEventListener('change', () => {
+        const d = new Date(dateInput.value);
+        if (d.getDay() === 0 || d.getDay() === 6) {
+          alert('Por favor, escolha um dia útil (Segunda a Sexta).');
+          dateInput.value = '';
+        }
+      });
+    }
+
+    // ─── FAQ ACCORDION ───────────────────────────────
+    function toggleFaq(qEl) {
+      const item = qEl.parentElement;
+      const aEl = item.querySelector('.faq-a');
+      const isOpen = qEl.classList.contains('open');
+
+      // Close all
+      document.querySelectorAll('.faq-q.open').forEach(q => {
+        q.classList.remove('open');
+        q.parentElement.querySelector('.faq-a').classList.remove('open');
+      });
+
+      // Toggle current
+      if (!isOpen) {
+        qEl.classList.add('open');
+        aEl.classList.add('open');
+      }
+    }
+
+    // ─── MODAL ───────────────────────────────────────
+    function showModal() {
+      document.getElementById('successModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('successModal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+    document.getElementById('modalCloseSec').addEventListener('click', closeModal);
+    document.getElementById('modalNewMsg').addEventListener('click', () => {
+      closeModal();
+      document.getElementById('contactForm').reset();
+      switchTab('msg');
+    });
+    document.getElementById('successModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('successModal')) closeModal();
+    });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    // ─── CONTACT FORM SUBMIT ──────────────────────────
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+      contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('contactSubmitBtn');
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> A enviar...';
+        btn.disabled = true;
+
+        try {
+          const res = await fetch(contactForm.action, {
+            method: 'POST', body: new FormData(contactForm),
+            headers: { 'Accept': 'application/json' }
+          });
+          if (res.ok) { showModal(); contactForm.reset(); }
+          else throw new Error('Failed');
+        } catch {
+          alert('Erro ao enviar. Por favor, tente por WhatsApp ou telefone.');
+        } finally {
+          btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar';
+          btn.disabled = false;
+        }
+      });
+    }
+
+    // ─── SCHEDULE FORM SUBMIT ────────────────────────
+    const scheduleForm = document.getElementById('scheduleForm');
+    if (scheduleForm) {
+      scheduleForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('scheduleSubmitBtn');
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> A confirmar...';
+        btn.disabled = true;
+
+        try {
+          const res = await fetch(scheduleForm.action, {
+            method: 'POST', body: new FormData(scheduleForm),
+            headers: { 'Accept': 'application/json' }
+          });
+          if (res.ok) { showModal(); scheduleForm.reset(); }
+          else throw new Error('Failed');
+        } catch {
+          alert('Erro ao enviar. Por favor, tente por WhatsApp ou telefone.');
+        } finally {
+          btn.innerHTML = '<i class="fas fa-check"></i> Confirmar';
+          btn.disabled = false;
+        }
+      });
+    }
+
+    // ─── WHATSAPP HELPERS ─────────────────────────────
+    function sendScheduleViaWhatsApp() {
+      const f = document.getElementById('scheduleForm');
+      const name = f.querySelector('[name="name"]').value;
+      const phone = f.querySelector('[name="phone"]').value;
+      const date = f.querySelector('[name="scheduleDate"]').value;
+      const time = f.querySelector('[name="scheduleTime"]').value;
+      const type = f.querySelector('[name="visitType"]').value;
+      const obs = f.querySelector('[name="message"]').value;
+
+      if (!name || !phone || !date || !time || !type) {
+        alert('Por favor, preencha os campos obrigatórios antes de enviar pelo WhatsApp.');
+        return;
+      }
+
+      const d = new Date(date);
+      const dateStr = d.toLocaleDateString('pt-PT', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+      const msg = `Olá! Gostaria de agendar uma visita ao Colégio Alfa e Omega.\n\n👤 Nome: ${name}\n📱 Telefone: ${phone}\n📅 Data: ${dateStr}\n⏰ Hora: ${time}\n🎓 Tipo: ${type}${obs ? '\n📝 Obs: ' + obs : ''}\n\nObrigado!`;
+      window.open('https://wa.me/925952771?text=' + encodeURIComponent(msg), '_blank');
+    }
+
+    function sendContactViaWhatsApp() {
+      const f = document.getElementById('contactForm');
+      const name = f.querySelector('[name="name"]').value;
+      const email = f.querySelector('[name="email"]').value;
+      const subject = f.querySelector('[name="subject"]').value;
+      const message = f.querySelector('[name="message"]').value;
+
+      if (!name || !email || !subject || !message) {
+        alert('Por favor, preencha os campos obrigatórios antes de enviar pelo WhatsApp.');
+        return;
+      }
+
+      const msg = `Olá! Estou a contactar através do site do Colégio Alfa e Omega.\n\n👤 Nome: ${name}\n📧 Email: ${email}\n📋 Assunto: ${subject}\n💬 Mensagem: ${message}\n\nObrigado!`;
+      window.open('https://wa.me/925952771?text=' + encodeURIComponent(msg), '_blank');
+    }
+
+    // ─── LOAD COMPONENTS ──────────────────────────────
+    fetch('/components/navbar.html')
+      .then(r => r.text())
+      .then(d => { document.getElementById('navbar-container').innerHTML = d; typeof setupMobileMenu === 'function' && setupMobileMenu(); })
+      .catch(() => { const fb = document.getElementById('navbar-fallback'); if (fb) fb.style.display = 'block'; });
+
+    fetch('/components/footer.html')
+      .then(r => r.text())
+      .then(d => { document.getElementById('footer-container').innerHTML = d; })
+      .catch(() => {});
+  </script>
+</body>
+</html>
