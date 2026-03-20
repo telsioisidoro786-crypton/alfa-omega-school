@@ -1,0 +1,647 @@
+/**
+ * Colégio Alfa e Omega - Módulo de Matrículas
+ * Sistema de pré-matrícula online com geração de ID único
+ * Arquivo: matriculas.js
+ */
+
+// ===== CONFIGURAÇÃO =====
+const CONFIG = {
+  MAX_FILE_SIZE: 5 * 1024 * 1024, // 5MB total
+  ALLOWED_EXTENSIONS: ['pdf', 'jpg', 'jpeg', 'png'],
+  FORMSPREE_ID: 'xeekazak', // ID do Formspree para matrículas
+  WHATSAPP_NUMBER: '957834748', // Número do WhatsApp
+};
+
+// ===== ARMAZENAMENTO LOCAL =====
+const MatriculasStorage = {
+  /**
+   * Gera um ID único no formato AO-2026-XXXXXX
+   */
+  generateReferenceId() {
+    const timestamp = Date.now();
+    const random = Math.floor(Math.random() * 1000000);
+    const suffix = String(random).padStart(6, '0');
+    return `AO-2026-${suffix}`;
+  },
+
+  /**
+   * Salva dados da matrícula no localStorage
+   */
+  saveEnrollment(formData, referenceId) {
+    const enrollment = {
+      referenceId,
+      studentName: formData.nomeAluno,
+      guardianName: formData.nomeEncarregado,
+      guardianPhone: formData.telefone,
+      guardianEmail: formData.email,
+      class: formData.classePretendida,
+      shift: formData.turno,
+      submittedAt: new Date().toLocaleString('pt-PT'),
+      status: 'Aguardando confirmação presencial',
+    };
+
+    const enrollments = this.getAllEnrollments();
+    enrollments.push(enrollment);
+    localStorage.setItem('enrollments', JSON.stringify(enrollments));
+
+    return enrollment;
+  },
+
+  /**
+   * Recupera todas as matrículas do localStorage
+   */
+  getAllEnrollments() {
+    const data = localStorage.getItem('enrollments');
+    return data ? JSON.parse(data) : [];
+  },
+
+  /**
+   * Busca uma matrícula por ID
+   */
+  findEnrollment(referenceId) {
+    const enrollments = this.getAllEnrollments();
+    return enrollments.find(e => e.referenceId === referenceId.toUpperCase());
+  },
+
+  /**
+   * Limpa todos os dados de matrículas (apenas para teste)
+   */
+  clearAll() {
+    localStorage.removeItem('enrollments');
+  },
+};
+
+// ===== GERENCIAMENTO DE FICHEIROS =====
+const FileManager = {
+  files: [],
+
+  /**
+   * Valida e adiciona um ficheiro
+   */
+  addFile(file) {
+    // Validar extensão
+    const fileExtension = file.name.split('.').pop().toLowerCase();
+    if (!CONFIG.ALLOWED_EXTENSIONS.includes(fileExtension)) {
+      this.showError(`Tipo de ficheiro não permitido: ${fileExtension}`);
+      return false;
+    }
+
+    // Validar tamanho individual (max 2MB por ficheiro)
+    if (file.size > 2 * 1024 * 1024) {
+      this.showError(`Ficheiro "${file.name}" é muito grande (máx: 2MB)`);
+      return false;
+    }
+
+    // Validar tamanho total
+    const totalSize = this.files.reduce((sum, f) => sum + f.size, 0) + file.size;
+    if (totalSize > CONFIG.MAX_FILE_SIZE) {
+      this.showError(`Tamanho total dos ficheiros excede 5MB`);
+      return false;
+    }
+
+    // Evitar duplicatas
+    if (this.files.some(f => f.name === file.name)) {
+      this.showError(`Ficheiro "${file.name}" já foi adicionado`);
+      return false;
+    }
+
+    this.files.push(file);
+    return true;
+  },
+
+  /**
+   * Remove um ficheiro da lista
+   */
+  removeFile(fileName) {
+    this.files = this.files.filter(f => f.name !== fileName);
+  },
+
+  /**
+   * Atualiza a visualização dos ficheiros
+   */
+  updatePreview() {
+    const preview = document.getElementById('filePreview');
+    const sizeInfo = document.getElementById('fileSizeInfo');
+
+    preview.innerHTML = '';
+
+    if (this.files.length === 0) {
+      sizeInfo.style.display = 'none';
+      return;
+    }
+
+    const totalSize = this.files.reduce((sum, f) => sum + f.size, 0);
+    const totalSizeMB = (totalSize / (1024 * 1024)).toFixed(2);
+
+    this.files.forEach(file => {
+      const fileSize = (file.size / 1024).toFixed(2);
+      const fileExtension = file.name.split('.').pop().toLowerCase();
+      const iconMap = {
+        pdf: 'fa-file-pdf',
+        jpg: 'fa-file-image',
+        jpeg: 'fa-file-image',
+        png: 'fa-file-image',
+      };
+
+      const item = document.createElement('div');
+      item.className = 'file-item';
+      item.innerHTML = `
+        <i class="fas ${iconMap[fileExtension] || 'fa-file'}"></i>
+        <div class="file-item-name">${file.name}</div>
+        <div class="file-size">${fileSize} KB</div>
+        <button type="button" class="remove-file" onclick="FileManager.removeFile('${file.name}'); FileManager.updatePreview();">
+          Remover
+        </button>
+      `;
+      preview.appendChild(item);
+    });
+
+    sizeInfo.style.display = 'block';
+    document.getElementById('totalFileSize').textContent = totalSizeMB;
+  },
+
+  /**
+   * Exibe mensagem de erro
+   */
+  showError(message) {
+    const alerts = document.getElementById('formAlerts');
+    const alert = document.createElement('div');
+    alert.className = 'alert alert-error';
+    alert.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+    alerts.appendChild(alert);
+
+    setTimeout(() => alert.remove(), 5000);
+  },
+
+  /**
+   * Retorna se existem ficheiros adicionados
+   */
+  hasFiles() {
+    return this.files.length > 0;
+  },
+
+  /**
+   * Limpa todos os ficheiros
+   */
+  clear() {
+    this.files = [];
+  },
+};
+
+// ===== UPLOAD DE FICHEIROS PARA FIREBASE/ARMAZENAMENTO =====
+const FileUploader = {
+  /**
+   * Faz upload dos ficheiros para Firebase Storage
+   * Retorna array com URLs dos ficheiros
+   */
+  async uploadFilesToFirebase(files, referenceId) {
+    if (!CONFIG.USE_FIREBASE || !storage) {
+      // Se Firebase não está configurado, retorna dados em base64
+      console.log('Firebase não configurado, usando dados locais');
+      return this.createBase64FileData(files);
+    }
+
+    const fileUrls = [];
+    try {
+      for (const file of files) {
+        // Criar caminho único para o ficheiro
+        const fileName = `${referenceId}/${Date.now()}_${file.name}`;
+        const fileRef = storage.ref(`matriculas/${fileName}`);
+};
+
+// ===== VALIDAÇÃO DE FORMULÁRIO =====
+const FormValidator = {
+  /**
+   * Valida o formulário completo
+   */
+  validate(formData) {
+    const errors = [];
+
+    // Validar campos obrigatórios
+    const requiredFields = [
+      'nomeAluno',
+      'dataNascimento',
+      'sexo',
+      'classePretendida',
+      'turno',
+      'nomeEncarregado',
+      'grauParentesco',
+      'telefone',
+      'email',
+      'morada',
+    ];
+
+    requiredFields.forEach(field => {
+      if (!formData[field] || formData[field].trim() === '') {
+        errors.push(`${field} é obrigatório`);
+      }
+    });
+
+    // Validar email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (formData.email && !emailRegex.test(formData.email)) {
+      errors.push('Email inválido');
+    }
+
+    // Validar telefone (aceita +244, 244 ou 9XX)
+    const phoneRegex = /^(\+?244|0)?9\d{8}$/;
+    if (formData.telefone && !phoneRegex.test(formData.telefone.replace(/\s/g, ''))) {
+      errors.push('Telefone inválido');
+    }
+
+    // Validar data de nascimento
+    const birthDate = new Date(formData.dataNascimento);
+    const today = new Date();
+    const age = today.getFullYear() - birthDate.getFullYear();
+
+    if (age < 4 || age > 25) {
+      errors.push('Idade do aluno deve estar entre 4 e 25 anos');
+    }
+
+    // Validar documentos
+    if (!FileManager.hasFiles()) {
+      errors.push('Pelo menos um documento é obrigatório');
+    }
+
+    // Validar confirmação
+    if (!formData.confirmacao) {
+      errors.push('Você deve aceitar os termos de confirmação');
+    }
+
+    return {
+      isValid: errors.length === 0,
+      errors: errors,
+    };
+  },
+};
+
+// ===== MANIPULAÇÃO DO FORMULÁRIO =====
+const MatriculasForm = {
+  /**
+   * Inicializa os event listeners do formulário
+   */
+  init() {
+    this.setupFileUpload();
+    this.setupFormSubmit();
+  },
+
+  /**
+   * Configura o upload de ficheiros
+   */
+  setupFileUpload() {
+    const uploadArea = document.getElementById('fileUploadArea');
+    const fileInput = document.getElementById('fileInput');
+
+    // Click no upload area
+    uploadArea.addEventListener('click', () => fileInput.click());
+
+    // Selecção de ficheiros
+    fileInput.addEventListener('change', (e) => {
+      this.handleFileSelection(e.target.files);
+      fileInput.value = ''; // Limpar input para permitir seleccionar o mesmo ficheiro novamente
+    });
+
+    // Drag and drop
+    uploadArea.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadArea.classList.add('dragover');
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+      uploadArea.classList.remove('dragover');
+    });
+
+    uploadArea.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadArea.classList.remove('dragover');
+      this.handleFileSelection(e.dataTransfer.files);
+    });
+  },
+
+  /**
+   * Processa os ficheiros seleccionados
+   */
+  handleFileSelection(files) {
+    Array.from(files).forEach(file => {
+      FileManager.addFile(file);
+    });
+    FileManager.updatePreview();
+  },
+
+  /**
+   * Configura o envio do formulário
+   */
+  setupFormSubmit() {
+    const form = document.getElementById('matriculaForm');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Limpar alertas anteriores
+      document.getElementById('formAlerts').innerHTML = '';
+
+      // Recolher dados do formulário
+      const formData = this.getFormData();
+
+      // Validar formulário
+      const validation = FormValidator.validate(formData);
+      if (!validation.isValid) {
+        this.showValidationErrors(validation.errors);
+        return;
+      }
+
+      // Desabilitar botão e mostrar loader
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+
+      try {
+        // Gerar ID único
+        const referenceId = MatriculasStorage.generateReferenceId();
+
+        // Preparar dados para envio
+        const submitData = {
+          ...formData,
+          referenceId,
+          _subject: `Nova Pré-Matrícula: ${formData.nomeAluno}`,
+          _captcha: 'false',
+        };
+
+        // Fazer upload dos ficheiros
+        let uploadedFiles = [];
+        if (FileManager.files.length > 0) {
+          uploadedFiles = await FileUploader.uploadFilesToFirebase(
+            FileManager.files, 
+            referenceId
+          );
+          console.log('Ficheiros enviados:', uploadedFiles);
+        }
+
+        // Enviar SIMULTANEAMENTE para Formspree e WhatsApp (com ficheiros)
+        await Promise.all([
+          this.submitToFormspree(submitData),
+          this.submitToWhatsApp(formData, referenceId, uploadedFiles)
+        ]);
+
+        // Salvar no localStorage
+        MatriculasStorage.saveEnrollment(formData, referenceId);
+
+        // Mostrar tela de sucesso
+        this.showSuccessScreen(referenceId);
+
+        // Limpar formulário
+        form.reset();
+        FileManager.clear();
+        FileManager.updatePreview();
+      } catch (error) {
+        console.error('Erro ao submeter:', error);
+        this.showError('Erro ao enviar a pré-matrícula. Por favor, tente novamente ou entre em contacto connosco.');
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  },
+
+  /**
+   * Recolhe os dados do formulário
+   */
+  getFormData() {
+    return {
+      nomeAluno: document.getElementById('nomeAluno').value.trim(),
+      dataNascimento: document.getElementById('dataNascimento').value,
+      sexo: document.getElementById('sexo').value,
+      classePretendida: document.getElementById('classePretendida').value,
+      turno: document.getElementById('turno').value,
+      nomeEncarregado: document.getElementById('nomeEncarregado').value.trim(),
+      grauParentesco: document.getElementById('grauParentesco').value,
+      telefone: document.getElementById('telefone').value.trim(),
+      email: document.getElementById('email').value.trim().toLowerCase(),
+      morada: document.getElementById('morada').value.trim(),
+      confirmacao: document.getElementById('confirmacao').checked,
+      numDocumentos: FileManager.files.length,
+    };
+  },
+
+  /**
+   * Envia dados para Formspree
+   */
+  async submitToFormspree(data) {
+    const response = await fetch(`https://formspree.io/f/${CONFIG.FORMSPREE_ID}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Erro HTTP: ${response.status}`);
+    }
+
+    return response.json();
+  },
+
+  /**
+   * Envia mensagem para WhatsApp com os dados da pré-matrícula e ficheiros
+   */
+  async submitToWhatsApp(formData, referenceId, uploadedFiles = []) {
+    // Construir mensagem formatada para WhatsApp
+    const message = this.formatWhatsAppMessage(formData, referenceId, uploadedFiles);
+    
+    // Número da escola (número de WhatsApp)
+    const phoneNumber = '957834748'; // Número de Angola
+    
+    // Criar URL do WhatsApp com a mensagem
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    
+    // Abrir WhatsApp em nova aba
+    window.open(whatsappUrl, '_blank');
+    
+    // Retornar promessa resolvida (não precisa validação de resposta)
+    return Promise.resolve();
+  },
+
+  /**
+   * Formata os dados para uma mensagem legível no WhatsApp (com ficheiros)
+   */
+  formatWhatsAppMessage(formData, referenceId, uploadedFiles = []) {
+    const dataAtual = new Date().toLocaleDateString('pt-PT');
+    
+    // Montar informações dos ficheiros
+    let filesInfo = '*📎 DOCUMENTOS*\n';
+    if (uploadedFiles.length > 0) {
+      filesInfo += `Número de documentos: ${uploadedFiles.length}\n`;
+      uploadedFiles.forEach((file, index) => {
+        filesInfo += `\n${index + 1}. ${file.name} (${file.size} KB)`;
+        if (file.url) {
+          filesInfo += `\n   🔗 ${file.url}`;
+        }
+      });
+    } else {
+      filesInfo += `Número de documentos enviados: ${formData.numDocumentos || 0}`;
+    }
+    
+    return `*📋 NOVA PRÉ-MATRÍCULA - COLÉGIO ALFA E OMEGA*
+
+*ID de Referência:* ${referenceId}
+*Data de Envio:* ${dataAtual}
+
+*👤 DADOS DO ALUNO*
+Nome: ${formData.nomeAluno}
+Data de Nascimento: ${formData.dataNascimento}
+Sexo: ${formData.sexo}
+Classe Pretendida: ${formData.classePretendida}
+Turno: ${formData.turno}
+
+*👨‍👩‍👧 DADOS DO ENCARREGADO*
+Nome: ${formData.nomeEncarregado}
+Grau de Parentesco: ${formData.grauParentesco}
+Telefone: ${formData.telefone}
+Email: ${formData.email}
+Morada: ${formData.morada}
+
+${filesInfo}
+
+---
+✅ Pré-matrícula recebida com sucesso!
+Para consultar o estado, use o ID de referência acima.`;
+  },
+
+  /**
+   * Mostra erros de validação
+   */
+  showValidationErrors(errors) {
+    const alerts = document.getElementById('formAlerts');
+    errors.forEach(error => {
+      const alert = document.createElement('div');
+      alert.className = 'alert alert-error';
+      alert.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${error}`;
+      alerts.appendChild(alert);
+    });
+
+    // Scroll para alertas
+    alerts.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  },
+
+  /**
+   * Mostra mensagem de erro genérica
+   */
+  showError(message) {
+    const alerts = document.getElementById('formAlerts');
+    const alert = document.createElement('div');
+    alert.className = 'alert alert-error';
+    alert.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+    alerts.appendChild(alert);
+    alerts.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  },
+
+  /**
+   * Mostra tela de sucesso
+   */
+  showSuccessScreen(referenceId) {
+    document.getElementById('matriculaForm').style.display = 'none';
+    document.getElementById('referenceIdDisplay').textContent = referenceId;
+
+    const successScreen = document.getElementById('successScreen');
+    successScreen.classList.add('active');
+    successScreen.scrollIntoView({ behavior: 'smooth' });
+  },
+};
+
+// ===== FUNÇÕES GLOBAIS =====
+
+/**
+ * Copia o ID de referência para a área de transferência
+ */
+function copyReferenceId() {
+  const referenceId = document.getElementById('referenceIdDisplay').textContent;
+  navigator.clipboard.writeText(referenceId).then(() => {
+    const feedback = document.getElementById('copyFeedback');
+    feedback.classList.add('show');
+    setTimeout(() => feedback.classList.remove('show'), 2000);
+  });
+}
+
+/**
+ * Abre o WhatsApp
+ */
+function openWhatsApp() {
+  const message = encodeURIComponent('Olá! Gostaria de mais informações sobre a matrícula no Colégio Alfa e Omega.');
+  window.open(`https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${message}`, '_blank');
+}
+
+/**
+ * Reseta o formulário
+ */
+function resetForm() {
+  document.getElementById('matriculaForm').style.display = 'block';
+  document.getElementById('successScreen').classList.remove('active');
+  document.getElementById('formAlerts').innerHTML = '';
+  FileManager.clear();
+  FileManager.updatePreview();
+  document.getElementById('matriculaForm').reset();
+  document.getElementById('matriculaForm').scrollIntoView({ behavior: 'smooth' });
+}
+
+/**
+ * Consulta matrícula por ID
+ */
+function consultarMatricula() {
+  const referenceId = document.getElementById('consultaId').value.trim().toUpperCase();
+
+  if (!referenceId) {
+    alert('Por favor, digite o ID de referência');
+    return;
+  }
+
+  const enrollment = MatriculasStorage.findEnrollment(referenceId);
+  const result = document.getElementById('consultaResult');
+  const content = document.getElementById('consultaContent');
+
+  if (enrollment) {
+    content.innerHTML = `
+      <div style="background: var(--gray-50); padding: 1.5rem; border-radius: 0.5rem; border-left: 4px solid var(--success);">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+          <i class="fas fa-check-circle" style="color: var(--success); font-size: 1.5rem;"></i>
+          <h3 style="margin: 0; color: var(--primary);">Pré-Matrícula Encontrada</h3>
+        </div>
+        
+        <div style="color: var(--gray-700); line-height: 1.8;">
+          <p><strong>ID de Referência:</strong> ${enrollment.referenceId}</p>
+          <p><strong>Aluno:</strong> ${enrollment.studentName}</p>
+          <p><strong>Encarregado:</strong> ${enrollment.guardianName}</p>
+          <p><strong>Classe:</strong> ${enrollment.class}</p>
+          <p><strong>Turno:</strong> ${enrollment.shift}</p>
+          <p><strong>Status:</strong> <span style="color: var(--accent); font-weight: 700;">${enrollment.status}</span></p>
+          <p><strong>Data de Inscrição:</strong> ${enrollment.submittedAt}</p>
+        </div>
+        
+        <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--gray-300);">
+          <p style="color: var(--gray-600); font-size: 0.95rem; margin: 0;">
+            <strong>Próximo passo:</strong> Compareça à escola com este ID e os documentos originais para confirmação presencial.
+          </p>
+        </div>
+      </div>
+    `;
+  } else {
+    content.innerHTML = `
+      <div style="background: rgba(239, 68, 68, 0.1); padding: 1.5rem; border-radius: 0.5rem; border-left: 4px solid var(--error); color: var(--error);">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+          <i class="fas fa-times-circle" style="font-size: 1.5rem;"></i>
+          <h3 style="margin: 0;">ID não encontrado</h3>
+        </div>
+        <p style="margin: 0;">O ID "<strong>${referenceId}</strong>" não foi encontrado no sistema.</p>
+        <p style="margin: 0.5rem 0 0; font-size: 0.95rem;">Por favor, verifique o ID e tente novamente. Se o problema persistir, contacte-nos.</p>
+      </div>
+    `;
+  }
+
+  result.classList.add('show');
+}
+
+// ===== INICIALIZAÇÃO =====
+document.addEventListener('DOMContentLoaded', () => {
+  MatriculasForm.init();
+
+  // Log para debug (remover em produção)
+  console.log('✓ Módulo de Matrículas inicializado');
+});
