@@ -1,5 +1,7 @@
 # 🏫 Website Oficial - Colégio Alfa e Omega
-
+<p align="center">
+  <img src="screenshot.png" alt="Captura de ecrã da página inicial do Colégio Alfa e Omega" width="800px">
+</p>
 Este é o repositório do website institucional do **Colégio Alfa e Omega**, desenvolvido para fornecer informações sobre matrículas, atividades pedagógicas e novidades escolares.
 
 ## 🚀 Tecnologias Utilizadas
