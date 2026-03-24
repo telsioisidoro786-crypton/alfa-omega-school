@@ -311,6 +311,90 @@
     .nc-read { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-sans); font-size: 0.78rem; font-weight: 700; color: var(--primary); text-decoration: none; transition: gap 0.3s, color 0.2s; }
     .nc-read:hover { gap: 0.7rem; color: var(--accent-d); }
 
+    /* ---- VIDEO PREVIEW CARDS ---- */
+    .video-preview-block { margin-bottom: 2rem; }
+    .video-preview-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+    .video-preview-title { font-family: var(--font-head); font-size: 0.98rem; font-weight: 800; color: var(--gray-900); letter-spacing: 0.01em; }
+    .video-preview-hint { font-family: var(--font-sans); font-size: 0.76rem; color: var(--gray-400); }
+    .video-preview-grid { margin-bottom: 1.5rem; }
+    .video-preview-card .nc-img { height: 220px; }
+    .video-preview {
+      position: relative;
+      overflow: hidden;
+      background: var(--ink-900);
+      isolation: isolate;
+      cursor: pointer;
+    }
+    .preview-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transform: scale(1.001);
+      transition: transform 0.65s ease;
+    }
+    .video-preview::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(1,14,36,0.88) 2%, rgba(1,14,36,0.28) 55%, rgba(1,14,36,0.12) 100%);
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    .video-preview-card:hover .preview-video,
+    .video-preview.is-playing .preview-video { transform: scale(1.06); }
+    .video-preview-card:hover .video-preview::after,
+    .video-preview.is-playing::after { opacity: 0.85; }
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 0.85rem;
+      padding: 1rem;
+      pointer-events: none;
+    }
+    .video-overlay-title {
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      color: var(--white);
+      line-height: 1.15;
+      max-width: 82%;
+      letter-spacing: -0.01em;
+      text-shadow: 0 6px 18px rgba(1,14,36,0.5);
+    }
+    .video-social-link {
+      align-self: flex-start;
+      pointer-events: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.5rem 0.85rem;
+      border-radius: 999px;
+      text-decoration: none;
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--white);
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.25);
+      backdrop-filter: blur(8px);
+      transition: all 0.25s ease;
+    }
+    .video-social-link:hover {
+      color: var(--primary);
+      background: var(--accent);
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+    .video-preview .nc-tag {
+      z-index: 3;
+      background: rgba(206,244,49,0.95);
+      backdrop-filter: blur(4px);
+    }
+
     /* ---- SOCIAL CTA ---- */
     .section-social { padding: 7rem 2rem; background: var(--ink-950); position: relative; overflow: hidden; text-align: center; }
     .social-bg { position: absolute; inset: 0; background: radial-gradient(circle at 25% 50%, rgba(1,55,125,0.5) 0%, transparent 55%), radial-gradient(circle at 75% 50%, rgba(206,244,49,0.07) 0%, transparent 55%); }
@@ -341,6 +425,8 @@
       .section-arquivo, .section-recentes, .section-social { padding-left: 1.5rem; padding-right: 1.5rem; }
       .section-arquivo { padding-top: 5rem; }
       .news-list { grid-template-columns: 1fr; }
+      .video-preview-card .nc-img { height: 210px; }
+      .video-overlay-title { max-width: 90%; }
       .mc-cover { height: 200px; }
     }
   </style>
@@ -560,6 +646,68 @@
           </div>
           <a href="/novidades/fevereiro.html" class="view-all">Ver todos <i class="fas fa-arrow-right"></i></a>
         </div>
+        <div class="video-preview-block" data-aos="fade-up" data-aos-delay="40">
+          <div class="video-preview-header">
+            <h3 class="video-preview-title">Video Preview Cards</h3>
+            <p class="video-preview-hint">Passe o rato para reproduzir, ou toque no telemovel.</p>
+          </div>
+          <div class="news-list video-preview-grid">
+            <article class="news-card video-preview-card" data-aos="fade-up" data-aos-delay="0">
+              <div class="nc-img video-preview" data-preview-card>
+                <video class="preview-video" muted loop playsinline preload="none" poster="/assets/img/novidades/laugorim-cover.webp" data-preview-video>
+                  <source data-src="/assets/video/laugorim-preview.webm" type="video/webm">
+                  <source data-src="/assets/video/laugorim-preview.mp4" type="video/mp4">
+                </video>
+                <span class="nc-tag">Video</span>
+                <div class="video-overlay">
+                  <h3 class="video-overlay-title">Excursao ao Laugorim</h3>
+                  <a href="https://www.facebook.com/colegioalfaeomegaangola" target="_blank" rel="noopener noreferrer" class="video-social-link">Ver completo no Facebook <i class="fas fa-arrow-up-right-from-square"></i></a>
+                </div>
+              </div>
+              <div class="nc-body">
+                <div class="nc-date"><i class="fas fa-clock"></i> Preview 10-15s</div>
+                <h3 class="nc-title">Resumo rapido da excursao de Fevereiro</h3>
+                <p class="nc-excerpt">Preview otimizado para carregar leve. O video so e carregado no primeiro hover ou toque.</p>
+              </div>
+            </article>
+            <article class="news-card video-preview-card" data-aos="fade-up" data-aos-delay="80">
+              <div class="nc-img video-preview" data-preview-card>
+                <video class="preview-video" muted loop playsinline preload="none" poster="/assets/img/novidades/matematica-cover.webp" data-preview-video>
+                  <source data-src="/assets/video/matematica-preview.webm" type="video/webm">
+                  <source data-src="/assets/video/matematica-preview.mp4" type="video/mp4">
+                </video>
+                <span class="nc-tag">Video</span>
+                <div class="video-overlay">
+                  <h3 class="video-overlay-title">Olimpiadas de Matematica</h3>
+                  <a href="https://www.instagram.com/colegioalfaeomega/" target="_blank" rel="noopener noreferrer" class="video-social-link">Ver completo no Instagram <i class="fas fa-arrow-up-right-from-square"></i></a>
+                </div>
+              </div>
+              <div class="nc-body">
+                <div class="nc-date"><i class="fas fa-clock"></i> Preview 10-15s</div>
+                <h3 class="nc-title">Momentos dos alunos no CEPI Maple Bear</h3>
+                <p class="nc-excerpt">Card com poster estatico e playback apenas quando ha interacao do utilizador.</p>
+              </div>
+            </article>
+            <article class="news-card video-preview-card" data-aos="fade-up" data-aos-delay="160">
+              <div class="nc-img video-preview" data-preview-card>
+                <video class="preview-video" muted loop playsinline preload="none" poster="/assets/img/novidades/cultura-cover.webp" data-preview-video>
+                  <source data-src="/assets/video/cultura-preview.webm" type="video/webm">
+                  <source data-src="/assets/video/cultura-preview.mp4" type="video/mp4">
+                </video>
+                <span class="nc-tag">Video</span>
+                <div class="video-overlay">
+                  <h3 class="video-overlay-title">Palestra sobre tradicoes africanas</h3>
+                  <a href="https://www.facebook.com/colegioalfaeomegaangola" target="_blank" rel="noopener noreferrer" class="video-social-link">Ver completo no Facebook <i class="fas fa-arrow-up-right-from-square"></i></a>
+                </div>
+              </div>
+              <div class="nc-body">
+                <div class="nc-date"><i class="fas fa-clock"></i> Preview 10-15s</div>
+                <h3 class="nc-title">Cultura e identidade em destaque</h3>
+                <p class="nc-excerpt">Overlay elegante com CTA para o video completo nas redes sociais do colegio.</p>
+              </div>
+            </article>
+          </div>
+        </div>
         <div class="news-list">
           <div class="news-card" data-aos="fade-up" data-aos-delay="0">
             <div class="nc-img">
@@ -656,6 +804,69 @@
       .then(r => r.text())
       .then(d => { document.getElementById('footer-container').innerHTML = d; })
       .catch(() => {});
+
+    // VIDEO PREVIEW CARDS
+    const previewCards = document.querySelectorAll('[data-preview-card]');
+    const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    function hydratePreviewVideo(videoEl) {
+      if (!videoEl || videoEl.dataset.hydrated === '1') return;
+      const sources = videoEl.querySelectorAll('source[data-src]');
+      sources.forEach(source => {
+        source.src = source.dataset.src;
+        source.removeAttribute('data-src');
+      });
+      videoEl.load();
+      videoEl.dataset.hydrated = '1';
+    }
+
+    function playPreview(videoEl) {
+      hydratePreviewVideo(videoEl);
+      const playPromise = videoEl.play();
+      if (playPromise && typeof playPromise.catch === 'function') {
+        playPromise.catch(() => {});
+      }
+      const wrapper = videoEl.closest('.video-preview');
+      if (wrapper) wrapper.classList.add('is-playing');
+    }
+
+    function stopPreview(videoEl) {
+      if (!videoEl) return;
+      videoEl.pause();
+      videoEl.currentTime = 0;
+      const wrapper = videoEl.closest('.video-preview');
+      if (wrapper) wrapper.classList.remove('is-playing');
+    }
+
+    previewCards.forEach(card => {
+      const video = card.querySelector('[data-preview-video]');
+      if (!video) return;
+
+      card.addEventListener('mouseenter', () => {
+        if (!canHover) return;
+        playPreview(video);
+      });
+
+      card.addEventListener('mouseleave', () => {
+        if (!canHover) return;
+        stopPreview(video);
+      });
+
+      card.addEventListener('click', event => {
+        if (event.target.closest('.video-social-link')) return;
+        if (canHover) return;
+        if (video.paused) {
+          playPreview(video);
+        } else {
+          stopPreview(video);
+        }
+      });
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) return;
+      document.querySelectorAll('[data-preview-video]').forEach(video => stopPreview(video));
+    });
   </script>
 </body>
 </html>
