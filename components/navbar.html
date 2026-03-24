@@ -1,0 +1,579 @@
+<nav style="position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(243, 244, 246, 0.95)); backdrop-filter: blur(20px); box-shadow: 0 8px 32px rgba(1, 55, 125, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04); transition: all 0.3s ease; height: 5rem; border-bottom: 1px solid rgba(206, 244, 49, 0.15);">
+  <!-- Google Analytics 4 (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FEXXN9D5XY"></script>
+  <script src="/assets/js/analytics.js"></script>
+
+  <div style="max-width: 1280px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 100%;">
+    
+    <!-- Logo -->
+    <a href="/index.html" style="display: flex; align-items: center; gap: 0.75rem; text-decoration: none; flex-shrink: 0; transition: transform 0.3s ease;" class="navbar-logo" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      <img src="/assets/images/logo/lo.png" alt="Colégio Alfa e Omega" style="width: 56px; height: 56px; object-fit: contain; filter: drop-shadow(0 4px 12px rgba(1, 55, 125, 0.25)); transition: filter 0.3s ease;" />
+      <div style="display: none; min-width: fit-content;" class="logo-text">
+        <h2 style="color: #01377D; font-weight: 800; font-size: 1rem; margin: 0; line-height: 1.1; white-space: nowrap; background: linear-gradient(135deg, #01377D, #0E47A1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Alfa e Omega</h2>
+        <p style="color: #CEF431; font-size: 0.7rem; font-weight: 800; margin: 0; letter-spacing: 0.04em; text-transform: uppercase; font-style: italic;">Complexo Escolar</p>
+      </div>
+    </a>
+
+    <!-- Desktop Menu -->
+    <div style="display: none; gap: 0.25rem; align-items: center; flex: 1; justify-content: center;" class="desktop-menu">
+      <a href="/index.html" style="color: #374151; font-size: 0.9rem; font-weight: 600; text-decoration: none; padding: 0.625rem 1rem; border-radius: 0.5rem; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); display: flex; align-items: center; gap: 0.375rem; white-space: nowrap; position: relative;" class="nav-link" onmouseover="this.style.color='#01377D'; this.style.backgroundColor='rgba(206, 244, 49, 0.15)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.color='#374151'; this.style.backgroundColor='transparent'; this.style.transform='translateY(0)'"><i class="fas fa-home" style="font-size: 0.85rem;"></i> Início</a>
+      <a href="/sobre.html" style="color: #374151; font-size: 0.9rem; font-weight: 600; text-decoration: none; padding: 0.625rem 1rem; border-radius: 0.5rem; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); display: flex; align-items: center; gap: 0.375rem; white-space: nowrap; position: relative;" class="nav-link" onmouseover="this.style.color='#01377D'; this.style.backgroundColor='rgba(206, 244, 49, 0.15)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.color='#374151'; this.style.backgroundColor='transparent'; this.style.transform='translateY(0)'"><i class="fas fa-info-circle" style="font-size: 0.85rem;"></i> Sobre</a>
+      <!-- Ensinos Dropdown -->
+      <div style="position: relative; display: inline-block; group/ensino;" class="ensino-dropdown">
+        <button style="color: #374151; font-size: 0.9rem; font-weight: 600; text-decoration: none; padding: 0.625rem 1rem; border-radius: 0.5rem; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); display: flex; align-items: center; gap: 0.375rem; white-space: nowrap; position: relative; background: none; border: none; cursor: pointer;" class="nav-link ensino-btn" onmouseover="this.style.color='#01377D'; this.style.backgroundColor='rgba(206, 244, 49, 0.15)'; this.style.transform='translateY(-2px)'; document.getElementById('ensino-dropdown-menu').style.display='block'" onmouseout="document.addEventListener('mouseleave', function checkEnsino(e) { if (!document.querySelector('.ensino-dropdown').contains(e.relatedTarget)) { document.getElementById('ensino-dropdown-menu').style.display='none'; } })"><i class="fas fa-graduation-cap" style="font-size: 0.85rem;"></i> Ensinos <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 0.25rem;"></i></button>
+        <div id="ensino-dropdown-menu" style="display: none; position: absolute; top: 100%; left: 0; background: white; border-radius: 0.5rem; box-shadow: 0 12px 32px rgba(1, 55, 125, 0.15); min-width: 220px; margin-top: 0.5rem; overflow: hidden; z-index: 100;" onmouseover="this.style.display='block'" onmouseout="this.style.display='none'">
+          <a href="/infantil.html" style="color: #374151; font-size: 0.9rem; font-weight: 500; text-decoration: none; padding: 0.75rem 1rem; transition: all 0.2s ease; display: flex; align-items: center; gap: 0.5rem; border-left: 3px solid transparent;" class="dropdown-item" onmouseover="this.style.backgroundColor='rgba(206, 244, 49, 0.1)'; this.style.borderLeftColor='#CEF431'; this.style.color='#01377D'; this.style.paddingLeft='0.75rem'" onmouseout="this.style.backgroundColor='transparent'; this.style.borderLeftColor='transparent'; this.style.color='#374151'; this.style.paddingLeft='1rem'"><i class="fas fa-baby" style="color: #CEF431; font-size: 0.85rem;"></i> Educação Infantil</a>
+          <a href="/primario.html" style="color: #374151; font-size: 0.9rem; font-weight: 500; text-decoration: none; padding: 0.75rem 1rem; transition: all 0.2s ease; display: flex; align-items: center; gap: 0.5rem; border-left: 3px solid transparent;" class="dropdown-item" onmouseover="this.style.backgroundColor='rgba(206, 244, 49, 0.1)'; this.style.borderLeftColor='#CEF431'; this.style.color='#01377D'; this.style.paddingLeft='0.75rem'" onmouseout="this.style.backgroundColor='transparent'; this.style.borderLeftColor='transparent'; this.style.color='#374151'; this.style.paddingLeft='1rem'"><i class="fas fa-book" style="color: #CEF431; font-size: 0.85rem;"></i> Ensino Primário</a>
+          <a href="/secundario.html" style="color: #374151; font-size: 0.9rem; font-weight: 500; text-decoration: none; padding: 0.75rem 1rem; transition: all 0.2s ease; display: flex; align-items: center; gap: 0.5rem; border-left: 3px solid transparent; border-bottom: 1px solid rgba(206, 244, 49, 0.1);" class="dropdown-item" onmouseover="this.style.backgroundColor='rgba(206, 244, 49, 0.1)'; this.style.borderLeftColor='#CEF431'; this.style.color='#01377D'; this.style.paddingLeft='0.75rem'" onmouseout="this.style.backgroundColor='transparent'; this.style.borderLeftColor='transparent'; this.style.color='#374151'; this.style.paddingLeft='1rem'"><i class="fas fa-graduation-cap" style="color: #CEF431; font-size: 0.85rem;"></i> Ensino Secundário</a>
+          <a href="/todos-ensinos.html" style="color: #01377D; font-size: 0.9rem; font-weight: 600; text-decoration: none; padding: 0.75rem 1rem; transition: all 0.2s ease; display: flex; align-items: center; gap: 0.5rem; background: rgba(206, 244, 49, 0.08);" class="dropdown-all" onmouseover="this.style.backgroundColor='rgba(206, 244, 49, 0.15)'; this.style.transform='translateX(2px)'" onmouseout="this.style.backgroundColor='rgba(206, 244, 49, 0.08)'; this.style.transform='translateX(0)'"><i class="fas fa-eye" style="color: #CEF431;"></i> Ver Todos</a>
+        </div>
+      </div>
+
+      <!-- Programas & Oferta Dropdown -->
+      <div style="position: relative; display: inline-block;" class="oferta-dropdown">
+        <button style="color: #374151; font-size: 0.9rem; font-weight: 600; text-decoration: none; padding: 0.625rem 1rem; border-radius: 0.5rem; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); display: flex; align-items: center; gap: 0.375rem; white-space: nowrap; position: relative; background: none; border: none; cursor: pointer;" class="nav-link" onmouseover="this.style.color='#01377D'; this.style.backgroundColor='rgba(206, 244, 49, 0.15)'; this.style.transform='translateY(-2px)'; document.getElementById('oferta-dropdown-menu').style.display='block'" onmouseout=""><i class="fas fa-book" style="font-size: 0.85rem;"></i> Programas <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 0.25rem;"></i></button>
+        <div id="oferta-dropdown-menu" style="display: none; position: absolute; top: 100%; left: 0; background: white; border-radius: 0.5rem; box-shadow: 0 12px 32px rgba(1, 55, 125, 0.15); min-width: 200px; margin-top: 0.5rem; overflow: hidden; z-index: 100;" onmouseover="this.style.display='block'" onmouseout="this.style.display='none'">
+          <a href="/oferta.html" style="color: #374151; font-size: 0.9rem; font-weight: 500; text-decoration: none; padding: 0.75rem 1rem; transition: all 0.2s ease; display: flex; align-items: center; gap: 0.5rem; border-left: 3px solid transparent;" class="dropdown-item" onmouseover="this.style.backgroundColor='rgba(206, 244, 49, 0.1)'; this.style.borderLeftColor='#CEF431'; this.style.color='#01377D'; this.style.paddingLeft='0.75rem'" onmouseout="this.style.backgroundColor='transparent'; this.style.borderLeftColor='transparent'; this.style.color='#374151'; this.style.paddingLeft='1rem'"><i class="fas fa-star" style="color: #CEF431; font-size: 0.85rem;"></i> Oferta Educativa</a>
+          <a href="/todos-ensinos.html" style="color: #374151; font-size: 0.9rem; font-weight: 500; text-decoration: none; padding: 0.75rem 1rem; transition: all 0.2s ease; display: flex; align-items: center; gap: 0.5rem; border-left: 3px solid transparent; border-bottom: 1px solid rgba(206, 244, 49, 0.1);" class="dropdown-item" onmouseover="this.style.backgroundColor='rgba(206, 244, 49, 0.1)'; this.style.borderLeftColor='#CEF431'; this.style.color='#01377D'; this.style.paddingLeft='0.75rem'" onmouseout="this.style.backgroundColor='transparent'; this.style.borderLeftColor='transparent'; this.style.color='#374151'; this.style.paddingLeft='1rem'"><i class="fas fa-graduation-cap" style="color: #CEF431; font-size: 0.85rem;"></i> Níveis de Ensino</a>
+        </div>
+      </div>
+
+      <!-- Comunidade Dropdown -->
+      <div style="position: relative; display: inline-block;" class="comunidade-dropdown">
+        <button style="color: #374151; font-size: 0.9rem; font-weight: 600; text-decoration: none; padding: 0.625rem 1rem; border-radius: 0.5rem; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); display: flex; align-items: center; gap: 0.375rem; white-space: nowrap; position: relative; background: none; border: none; cursor: pointer;" class="nav-link" onmouseover="this.style.color='#01377D'; this.style.backgroundColor='rgba(206, 244, 49, 0.15)'; this.style.transform='translateY(-2px)'; document.getElementById('comunidade-dropdown-menu').style.display='block'" onmouseout=""><i class="fas fa-users" style="font-size: 0.85rem;"></i> Comunidade <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 0.25rem;"></i></button>
+        <div id="comunidade-dropdown-menu" style="display: none; position: absolute; top: 100%; left: 0; background: white; border-radius: 0.5rem; box-shadow: 0 12px 32px rgba(1, 55, 125, 0.15); min-width: 200px; margin-top: 0.5rem; overflow: hidden; z-index: 100;" onmouseover="this.style.display='block'" onmouseout="this.style.display='none'">
+          <a href="/avisos.html" style="color: #374151; font-size: 0.9rem; font-weight: 500; text-decoration: none; padding: 0.75rem 1rem; transition: all 0.2s ease; display: flex; align-items: center; gap: 0.5rem; border-left: 3px solid transparent;" class="dropdown-item" onmouseover="this.style.backgroundColor='rgba(206, 244, 49, 0.1)'; this.style.borderLeftColor='#CEF431'; this.style.color='#01377D'; this.style.paddingLeft='0.75rem'" onmouseout="this.style.backgroundColor='transparent'; this.style.borderLeftColor='transparent'; this.style.color='#374151'; this.style.paddingLeft='1rem'"><i class="fas fa-bell" style="color: #CEF431; font-size: 0.85rem;"></i> Avisos</a>
+          <a href="/novidades.html" style="color: #374151; font-size: 0.9rem; font-weight: 500; text-decoration: none; padding: 0.75rem 1rem; transition: all 0.2s ease; display: flex; align-items: center; gap: 0.5rem; border-left: 3px solid transparent;" class="dropdown-item" onmouseover="this.style.backgroundColor='rgba(206, 244, 49, 0.1)'; this.style.borderLeftColor='#CEF431'; this.style.color='#01377D'; this.style.paddingLeft='0.75rem'" onmouseout="this.style.backgroundColor='transparent'; this.style.borderLeftColor='transparent'; this.style.color='#374151'; this.style.paddingLeft='1rem'"><i class="fas fa-newspaper" style="color: #CEF431; font-size: 0.85rem;"></i> Novidades</a>
+          <a href="/galeria.html" style="color: #374151; font-size: 0.9rem; font-weight: 500; text-decoration: none; padding: 0.75rem 1rem; transition: all 0.2s ease; display: flex; align-items: center; gap: 0.5rem; border-left: 3px solid transparent; border-bottom: 1px solid rgba(206, 244, 49, 0.1);" class="dropdown-item" onmouseover="this.style.backgroundColor='rgba(206, 244, 49, 0.1)'; this.style.borderLeftColor='#CEF431'; this.style.color='#01377D'; this.style.paddingLeft='0.75rem'" onmouseout="this.style.backgroundColor='transparent'; this.style.borderLeftColor='transparent'; this.style.color='#374151'; this.style.paddingLeft='1rem'"><i class="fas fa-images" style="color: #CEF431; font-size: 0.85rem;"></i> Galeria</a>
+        </div>
+      </div>
+      <div style="position: relative; display: inline-block;">
+        <a href="/matriculas.html" style="color: #01377D; font-size: 0.9rem; font-weight: 700; text-decoration: none; padding: 0.625rem 1.125rem; border-radius: 0.5rem; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); display: flex; align-items: center; gap: 0.375rem; white-space: nowrap; background: linear-gradient(135deg, rgba(206, 244, 49, 0.25), rgba(206, 244, 49, 0.1)); border: 1.5px solid rgba(206, 244, 49, 0.3); position: relative; overflow: hidden;" class="nav-link-primary" onmouseover="this.style.background='linear-gradient(135deg, rgba(206, 244, 49, 0.35), rgba(206, 244, 49, 0.2))'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(206, 244, 49, 0.25)'" onmouseout="this.style.background='linear-gradient(135deg, rgba(206, 244, 49, 0.25), rgba(206, 244, 49, 0.1))'; this.style.transform='translateY(0)'; this.style.boxShadow='none'"><i class="fas fa-graduation-cap" style="font-size: 0.85rem;"></i> Matrículas</a>
+        <span style="position: absolute; top: -0.35rem; right: -0.5rem; background: linear-gradient(135deg, #CEF431, #E8FF70); color: #01377D; font-size: 0.7rem; font-weight: 900; padding: 0.3rem 0.6rem; border-radius: 0.25rem; box-shadow: 0 4px 16px rgba(206, 244, 49, 0.5); animation: badge-pulse 2.5s ease-in-out infinite; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.05em;" class="badge-2026">2026</span>
+      </div>
+      <a href="/contactos.html" style="color: #374151; font-size: 0.9rem; font-weight: 600; text-decoration: none; padding: 0.625rem 1rem; border-radius: 0.5rem; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); display: flex; align-items: center; gap: 0.375rem; white-space: nowrap; position: relative;" class="nav-link" onmouseover="this.style.color='#01377D'; this.style.backgroundColor='rgba(206, 244, 49, 0.15)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.color='#374151'; this.style.backgroundColor='transparent'; this.style.transform='translateY(0)'"><i class="fas fa-envelope" style="font-size: 0.85rem;"></i> Contacto</a>
+    </div>
+
+    <!-- Right Section -->
+    <div style="display: flex; align-items: center; gap: 1rem; flex-shrink: 0;">
+      <a href="https://wa.me/925952771" target="_blank" style="display: none; align-items: center; gap: 0.5rem; background: linear-gradient(135deg, #CEF431, #E8FF70); color: #01377D; padding: 0.625rem 1.25rem; border-radius: 0.5rem; font-weight: 700; font-size: 0.85rem; text-decoration: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: none; cursor: pointer; box-shadow: 0 4px 16px rgba(206, 244, 49, 0.25); white-space: nowrap; text-transform: uppercase; letter-spacing: 0.05em; position: relative; overflow: hidden;" class="whatsapp-btn" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 24px rgba(206, 244, 49, 0.35)'; this.style.background='linear-gradient(135deg, #E8FF70, #CEF431)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 16px rgba(206, 244, 49, 0.25)'; this.style.background='linear-gradient(135deg, #CEF431, #E8FF70)'"><i class="fab fa-whatsapp"></i> <span>WhatsApp</span></a>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobile-menu-btn" style="display: none; background: none; border: none; font-size: 1.5rem; color: #01377D; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); padding: 0.25rem; flex-shrink: 0;" class="mobile-menu-btn" onmouseover="this.style.color='#CEF431'; this.style.transform='scale(1.15)'" onmouseout="this.style.color='#01377D'; this.style.transform='scale(1)'"><i class="fas fa-bars"></i></button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" style="display: none; background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(243, 244, 246, 0.95)); backdrop-filter: blur(10px); border-top: 2px solid rgba(206, 244, 49, 0.2); max-height: calc(100vh - 5rem); overflow-y: auto;" class="mobile-menu hidden">
+    <div style="padding: 1.5rem 2rem; display: flex; flex-direction: column; gap: 0.75rem;">
+      <a href="/index.html" style="color: #01377D; font-weight: 600; font-size: 0.95rem; text-decoration: none; padding: 0.875rem 1rem; border-radius: 0.5rem; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); background: rgba(206, 244, 49, 0.08); display: flex; align-items: center; gap: 0.5rem;" onmouseover="this.style.backgroundColor='rgba(206, 244, 49, 0.2)'; this.style.transform='translateX(4px)'" onmouseout="this.style.backgroundColor='rgba(206, 244, 49, 0.08)'; this.style.transform='translateX(0)'"><i class="fas fa-home" style="color: #CEF431;"></i> Início</a>
+      <a href="/sobre.html" style="color: #01377D; font-weight: 600; font-size: 0.95rem; text-decoration: none; padding: 0.875rem 1rem; border-radius: 0.5rem; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); background: rgba(206, 244, 49, 0.08); display: flex; align-items: center; gap: 0.5rem;" onmouseover="this.style.backgroundColor='rgba(206, 244, 49, 0.2)'; this.style.transform='translateX(4px)'" onmouseout="this.style.backgroundColor='rgba(206, 244, 49, 0.08)'; this.style.transform='translateX(0)'"><i class="fas fa-info-circle" style="color: #CEF431;"></i> Sobre</a>
+      <!-- Mobile Ensinos Dropdown -->
+      <button id="mobile-ensinos-btn" style="color: #01377D; font-weight: 600; font-size: 0.95rem; text-decoration: none; padding: 0.875rem 1rem; border-radius: 0.5rem; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); background: rgba(206, 244, 49, 0.08); display: flex; align-items: center; gap: 0.5rem; border: none; cursor: pointer; width: 100%; justify-content: space-between;" onmouseover="this.style.backgroundColor='rgba(206, 244, 49, 0.2)'; this.style.transform='translateX(4px)'" onmouseout="this.style.backgroundColor='rgba(206, 244, 49, 0.08)'; this.style.transform='translateX(0)'" onclick="toggleMobileDropdown('mobile-ensinos-menu', this.querySelector('i:last-child'))"><span style="display: flex; align-items: center; gap: 0.5rem;"><i class="fas fa-graduation-cap" style="color: #CEF431;"></i> Ensinos</span><i class="fas fa-chevron-down" style="color: #CEF431; transition: transform 0.3s ease;"></i></button>
+      <div id="mobile-ensinos-menu" style="display: none; flex-direction: column; gap: 0.5rem; padding: 0.5rem 1rem; background: rgba(206, 244, 49, 0.05); border-radius: 0.5rem; margin-bottom: 0.75rem;">
+        <a href="/infantil.html" style="color: #01377D; font-weight: 500; font-size: 0.9rem; text-decoration: none; padding: 0.75rem 0.75rem; border-radius: 0.5rem; transition: all 0.2s ease; display: flex; align-items: center; gap: 0.5rem; background: rgba(206, 244, 49, 0.1);" onmouseover="this.style.backgroundColor='rgba(206, 244, 49, 0.2)'" onmouseout="this.style.backgroundColor='rgba(206, 244, 49, 0.1)'"><i class="fas fa-baby" style="color: #CEF431;"></i> Educação Infantil</a>
+        <a href="/primario.html" style="color: #01377D; font-weight: 500; font-size: 0.9rem; text-decoration: none; padding: 0.75rem 0.75rem; border-radius: 0.5rem; transition: all 0.2s ease; display: flex; align-items: center; gap: 0.5rem; background: rgba(206, 244, 49, 0.1);" onmouseover="this.style.backgroundColor='rgba(206, 244, 49, 0.2)'" onmouseout="this.style.backgroundColor='rgba(206, 244, 49, 0.1)'"><i class="fas fa-book" style="color: #CEF431;"></i> Ensino Primário</a>
+        <a href="/secundario.html" style="color: #01377D; font-weight: 500; font-size: 0.9rem; text-decoration: none; padding: 0.75rem 0.75rem; border-radius: 0.5rem; transition: all 0.2s ease; display: flex; align-items: center; gap: 0.5rem; background: rgba(206, 244, 49, 0.1);" onmouseover="this.style.backgroundColor='rgba(206, 244, 49, 0.2)'" onmouseout="this.style.backgroundColor='rgba(206, 244, 49, 0.1)'"><i class="fas fa-graduation-cap" style="color: #CEF431;"></i> Ensino Secundário</a>
+        <a href="/todos-ensinos.html" style="color: #01377D; font-weight: 500; font-size: 0.9rem; text-decoration: none; padding: 0.75rem 0.75rem; border-radius: 0.5rem; transition: all 0.2s ease; display: flex; align-items: center; gap: 0.5rem; background: rgba(206, 244, 49, 0.1);" onmouseover="this.style.backgroundColor='rgba(206, 244, 49, 0.2)'" onmouseout="this.style.backgroundColor='rgba(206, 244, 49, 0.1)'"><i class="fas fa-eye" style="color: #CEF431;"></i> Ver Todos</a>
+      </div>
+      <a href="/oferta.html" style="color: #01377D; font-weight: 600; font-size: 0.95rem; text-decoration: none; padding: 0.875rem 1rem; border-radius: 0.5rem; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); background: rgba(206, 244, 49, 0.08); display: flex; align-items: center; gap: 0.5rem;" onmouseover="this.style.backgroundColor='rgba(206, 244, 49, 0.2)'; this.style.transform='translateX(4px)'" onmouseout="this.style.backgroundColor='rgba(206, 244, 49, 0.08)'; this.style.transform='translateX(0)'"><i class="fas fa-book" style="color: #CEF431;"></i> Programas</a>
+      <!-- Mobile Comunidade Dropdown -->
+      <button id="mobile-comunidade-btn" style="color: #01377D; font-weight: 600; font-size: 0.95rem; text-decoration: none; padding: 0.875rem 1rem; border-radius: 0.5rem; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); background: rgba(206, 244, 49, 0.08); display: flex; align-items: center; gap: 0.5rem; border: none; cursor: pointer; width: 100%; justify-content: space-between;" onmouseover="this.style.backgroundColor='rgba(206, 244, 49, 0.2)'; this.style.transform='translateX(4px)'" onmouseout="this.style.backgroundColor='rgba(206, 244, 49, 0.08)'; this.style.transform='translateX(0)'" onclick="toggleMobileDropdown('mobile-comunidade-menu', this.querySelector('i:last-child'))"><span style="display: flex; align-items: center; gap: 0.5rem;"><i class="fas fa-users" style="color: #CEF431;"></i> Comunidade</span><i class="fas fa-chevron-down" style="color: #CEF431; transition: transform 0.3s ease;"></i></button>
+      <div id="mobile-comunidade-menu" style="display: none; flex-direction: column; gap: 0.5rem; padding: 0.5rem 1rem; background: rgba(206, 244, 49, 0.05); border-radius: 0.5rem; margin-bottom: 0.75rem;">
+        <a href="/avisos.html" style="color: #01377D; font-weight: 500; font-size: 0.9rem; text-decoration: none; padding: 0.75rem 0.75rem; border-radius: 0.5rem; transition: all 0.2s ease; display: flex; align-items: center; gap: 0.5rem; background: rgba(206, 244, 49, 0.1);" onmouseover="this.style.backgroundColor='rgba(206, 244, 49, 0.2)'" onmouseout="this.style.backgroundColor='rgba(206, 244, 49, 0.1)'"><i class="fas fa-bell" style="color: #CEF431;"></i> Avisos</a>
+        <a href="/novidades.html" style="color: #01377D; font-weight: 500; font-size: 0.9rem; text-decoration: none; padding: 0.75rem 0.75rem; border-radius: 0.5rem; transition: all 0.2s ease; display: flex; align-items: center; gap: 0.5rem; background: rgba(206, 244, 49, 0.1);" onmouseover="this.style.backgroundColor='rgba(206, 244, 49, 0.2)'" onmouseout="this.style.backgroundColor='rgba(206, 244, 49, 0.1)'"><i class="fas fa-newspaper" style="color: #CEF431;"></i> Novidades</a>
+        <a href="/galeria.html" style="color: #01377D; font-weight: 500; font-size: 0.9rem; text-decoration: none; padding: 0.75rem 0.75rem; border-radius: 0.5rem; transition: all 0.2s ease; display: flex; align-items: center; gap: 0.5rem; background: rgba(206, 244, 49, 0.1);" onmouseover="this.style.backgroundColor='rgba(206, 244, 49, 0.2)'" onmouseout="this.style.backgroundColor='rgba(206, 244, 49, 0.1)'"><i class="fas fa-images" style="color: #CEF431;"></i> Galeria</a>
+      </div>
+      <div style="position: relative; display: block;">
+        <a href="/matriculas.html" style="color: #01377D; font-weight: 700; font-size: 0.95rem; text-decoration: none; padding: 0.875rem 1rem; border-radius: 0.5rem; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); background: linear-gradient(135deg, rgba(206, 244, 49, 0.2), rgba(206, 244, 49, 0.08)); border: 1.5px solid rgba(206, 244, 49, 0.25); display: flex; align-items: center; gap: 0.5rem;" onmouseover="this.style.backgroundColor='rgba(206, 244, 49, 0.28)'; this.style.transform='translateX(4px)'; this.style.boxShadow='0 4px 12px rgba(206, 244, 49, 0.2)'" onmouseout="this.style.backgroundColor='rgba(206, 244, 49, 0.1)'; this.style.transform='translateX(0)'; this.style.boxShadow='none'"><i class="fas fa-graduation-cap" style="color: #CEF431;"></i> Matrículas</a>
+        <span style="position: absolute; top: -0.75rem; right: 1rem; background: linear-gradient(135deg, #CEF431, #E8FF70); color: #01377D; font-size: 0.7rem; font-weight: 900; padding: 0.3rem 0.6rem; border-radius: 0.25rem; box-shadow: 0 4px 16px rgba(206, 244, 49, 0.5); animation: badge-pulse 2.5s ease-in-out infinite; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.05em;" class="badge-2026">2026</span>
+      </div>
+      <a href="/contactos.html" style="color: #01377D; font-weight: 600; font-size: 0.95rem; text-decoration: none; padding: 0.875rem 1rem; border-radius: 0.5rem; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); background: rgba(206, 244, 49, 0.08); display: flex; align-items: center; gap: 0.5rem;" onmouseover="this.style.backgroundColor='rgba(206, 244, 49, 0.2)'; this.style.transform='translateX(4px)'" onmouseout="this.style.backgroundColor='rgba(206, 244, 49, 0.08)'; this.style.transform='translateX(0)'"><i class="fas fa-envelope" style="color: #CEF431;"></i> Contactos</a>
+      <div style="margin-top: 1rem; padding-top: 1rem; border-top: 2px solid rgba(206, 244, 49, 0.2);"></div>
+      <a href="https://wa.me/925952771" target="_blank" style="display: flex; align-items: center; justify-content: center; gap: 0.625rem; background: linear-gradient(135deg, #CEF431, #E8FF70); color: #01377D; padding: 0.875rem 1rem; border-radius: 0.5rem; font-weight: 700; font-size: 0.95rem; text-decoration: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: none; cursor: pointer; width: 100%; text-transform: uppercase; letter-spacing: 0.05em;" onmouseover="this.style.transform='scale(1.03)'; this.style.boxShadow='0 8px 24px rgba(206, 244, 49, 0.35)'; this.style.background='linear-gradient(135deg, #E8FF70, #CEF431)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 16px rgba(206, 244, 49, 0.25)'; this.style.background='linear-gradient(135deg, #CEF431, #E8FF70)'"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+    </div>
+  </div>
+</nav>
+
+<style>
+  /* Base styles */
+  .desktop-menu { display: none !important; }
+  .whatsapp-btn { display: none !important; }
+  .mobile-menu-btn { display: none !important; }
+  .logo-text { display: none !important; }
+  
+  /* Hidden state for mobile menu */
+  .mobile-menu.hidden {
+    display: none !important;
+  }
+  
+  .mobile-menu:not(.hidden) {
+    display: block !important;
+  }
+
+  /* Dropdown animations */
+  @keyframes dropdown-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(-12px) scale(0.95);
+      filter: blur(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+  }
+
+  @keyframes dropdown-fade-out {
+    from {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-12px) scale(0.95);
+      filter: blur(4px);
+    }
+  }
+
+  /* Apply animation to visible dropdowns */
+  .dropdown-visible {
+    animation: dropdown-fade-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+  }
+
+  .dropdown-hidden {
+    animation: dropdown-fade-out 0.25s cubic-bezier(0.7, 0, 0.84, 0) forwards !important;
+    pointer-events: none;
+  }
+
+  /* Badge animation */
+  @keyframes badge-pulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 0 4px 16px rgba(206, 244, 49, 0.5);
+    }
+    50% {
+      transform: scale(1.12);
+      box-shadow: 0 6px 24px rgba(206, 244, 49, 0.7);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 0 4px 16px rgba(206, 244, 49, 0.5);
+    }
+  }
+
+  /* Nav link hover animation */
+  @keyframes nav-hover {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-2px);
+    }
+  }
+
+  /* Button icon rotation animation */
+  @keyframes icon-rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(180deg);
+    }
+  }
+
+  /* Desktop styles */
+  @media (min-width: 768px) {
+    .desktop-menu { display: flex !important; }
+    .whatsapp-btn { display: flex !important; }
+    .mobile-menu { display: none !important; }
+    .mobile-menu-btn { display: none !important; }
+    .logo-text { display: block !important; }
+  }
+
+  /* Mobile styles */
+  @media (max-width: 767px) {
+    .desktop-menu { display: none !important; }
+    .whatsapp-btn { display: none !important; }
+    .mobile-menu-btn { display: block !important; }
+    .logo-text { display: none !important; }
+  }
+</style>
+
+<script>
+  /**
+   * 🎯 ADVANCED DROPDOWN MANAGEMENT SYSTEM
+   * Melhorado com recursos avançados de UX
+   */
+
+  // ========== MOBILE DROPDOWN TOGGLE ==========
+  function toggleMobileDropdown(menuId, iconElement) {
+    const menu = document.getElementById(menuId);
+    const isOpen = menu.style.display === 'flex';
+    
+    // Animação de rotação do ícone
+    if (iconElement) {
+      iconElement.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+      iconElement.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+    }
+    
+    // Animar abertura/fechamento do menu
+    if (isOpen) {
+      menu.style.animation = 'slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+      setTimeout(() => {
+        menu.style.display = 'none';
+      }, 300);
+    } else {
+      menu.style.display = 'flex';
+      menu.style.animation = 'slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+    }
+  }
+
+  // ========== ADVANCED DROPDOWN MANAGER ==========
+  const dropdownManager = {
+    activeDropdown: null,
+    closeDelay: null,
+    animationDuration: 250,
+    
+    /**
+     * Fechar dropdown com animação
+     */
+    closeDropdown(dropdownId, force = false) {
+      const menu = document.getElementById(dropdownId);
+      if (!menu || menu.style.display === 'none') return;
+      
+      // Se force, fecha imediatamente
+      if (force) {
+        menu.style.display = 'none';
+        menu.style.opacity = '0';
+        menu.style.transform = 'translateY(-10px) scale(0.95)';
+        return;
+      }
+      
+      // Animação suave
+      menu.classList.remove('dropdown-visible');
+      menu.classList.add('dropdown-hidden');
+      menu.style.animation = 'dropdownFadeOut 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+      
+      setTimeout(() => {
+        menu.style.display = 'none';
+        menu.classList.remove('dropdown-hidden');
+      }, this.animationDuration);
+    },
+    
+    /**
+     * Abrir dropdown com animação
+     */
+    openDropdown(dropdownId) {
+      // Fechar outros dropdowns
+      const allMenus = ['ensino-dropdown-menu', 'oferta-dropdown-menu', 'comunidade-dropdown-menu'];
+      allMenus.forEach(id => {
+        if (id !== dropdownId) {
+          this.closeDropdown(id, true);
+        }
+      });
+      
+      // Cancelar close delay anterior
+      if (this.closeDelay) clearTimeout(this.closeDelay);
+      
+      // Abrir novo dropdown
+      const menu = document.getElementById(dropdownId);
+      if (!menu) return;
+      
+      menu.style.display = 'block';
+      menu.style.animation = 'dropdownFadeIn 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+      menu.classList.remove('dropdown-hidden');
+      menu.classList.add('dropdown-visible');
+      this.activeDropdown = dropdownId;
+      
+      // Log para debug
+      console.log(`✓ Dropdown aberto: ${dropdownId}`);
+    },
+    
+    /**
+     * Toggle dropdown (abrir/fechar)
+     */
+    toggleDropdown(dropdownId) {
+      const menu = document.getElementById(dropdownId);
+      if (!menu) return;
+      
+      if (menu.style.display === 'block') {
+        this.closeDropdown(dropdownId);
+      } else {
+        this.openDropdown(dropdownId);
+      }
+    },
+    
+    /**
+     * Fechar dropdown com delay (para hover)
+     */
+    closeDropdownWithDelay(dropdownId, delay = 200) {
+      if (this.closeDelay) clearTimeout(this.closeDelay);
+      
+      this.closeDelay = setTimeout(() => {
+        this.closeDropdown(dropdownId);
+      }, delay);
+    },
+    
+    /**
+     * Cancelar close delay
+     */
+    cancelCloseDropdown() {
+      if (this.closeDelay) {
+        clearTimeout(this.closeDelay);
+        this.closeDelay = null;
+      }
+    },
+    
+    /**
+     * Fechar todos os dropdowns
+     */
+    closeAllDropdowns() {
+      const allMenus = ['ensino-dropdown-menu', 'oferta-dropdown-menu', 'comunidade-dropdown-menu'];
+      allMenus.forEach(id => {
+        this.closeDropdown(id, true);
+      });
+      this.activeDropdown = null;
+      console.log('✓ Todos os dropdowns fechados');
+    }
+  };
+  
+  // ========== INICIALIZAR DROPDOWNS DESKTOP ==========
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 Inicializando Advanced Dropdown System');
+    
+    // ===== ENSINOS DROPDOWN =====
+    const ensinoBtn = document.querySelector('.ensino-btn');
+    const ensinoMenu = document.getElementById('ensino-dropdown-menu');
+    
+    if (ensinoBtn) {
+      ensinoBtn.addEventListener('mouseenter', function() {
+        dropdownManager.cancelCloseDropdown();
+        dropdownManager.openDropdown('ensino-dropdown-menu');
+      });
+      
+      ensinoBtn.addEventListener('mouseleave', function() {
+        dropdownManager.closeDropdownWithDelay('ensino-dropdown-menu', 150);
+      });
+    }
+    
+    if (ensinoMenu) {
+      ensinoMenu.addEventListener('mouseenter', function() {
+        dropdownManager.cancelCloseDropdown();
+        this.style.display = 'block';
+      });
+      
+      ensinoMenu.addEventListener('mouseleave', function() {
+        dropdownManager.closeDropdownWithDelay('ensino-dropdown-menu', 100);
+      });
+      
+      // Fechar ao clicar num item
+      ensinoMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', function() {
+          dropdownManager.closeDropdown('ensino-dropdown-menu');
+        });
+      });
+    }
+    
+    // ===== OFERTA DROPDOWN =====
+    const ofertaBtn = document.querySelector('.oferta-dropdown button');
+    const ofertaMenu = document.getElementById('oferta-dropdown-menu');
+    
+    if (ofertaBtn) {
+      ofertaBtn.addEventListener('mouseenter', function() {
+        dropdownManager.cancelCloseDropdown();
+        dropdownManager.openDropdown('oferta-dropdown-menu');
+      });
+      
+      ofertaBtn.addEventListener('mouseleave', function() {
+        dropdownManager.closeDropdownWithDelay('oferta-dropdown-menu', 150);
+      });
+    }
+    
+    if (ofertaMenu) {
+      ofertaMenu.addEventListener('mouseenter', function() {
+        dropdownManager.cancelCloseDropdown();
+        this.style.display = 'block';
+      });
+      
+      ofertaMenu.addEventListener('mouseleave', function() {
+        dropdownManager.closeDropdownWithDelay('oferta-dropdown-menu', 100);
+      });
+      
+      // Fechar ao clicar num item
+      ofertaMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', function() {
+          dropdownManager.closeDropdown('oferta-dropdown-menu');
+        });
+      });
+    }
+    
+    // ===== COMUNIDADE DROPDOWN =====
+    const comunidadeBtn = document.querySelector('.comunidade-dropdown button');
+    const comunidadeMenu = document.getElementById('comunidade-dropdown-menu');
+    
+    if (comunidadeBtn) {
+      comunidadeBtn.addEventListener('mouseenter', function() {
+        dropdownManager.cancelCloseDropdown();
+        dropdownManager.openDropdown('comunidade-dropdown-menu');
+      });
+      
+      comunidadeBtn.addEventListener('mouseleave', function() {
+        dropdownManager.closeDropdownWithDelay('comunidade-dropdown-menu', 150);
+      });
+    }
+    
+    if (comunidadeMenu) {
+      comunidadeMenu.addEventListener('mouseenter', function() {
+        dropdownManager.cancelCloseDropdown();
+        this.style.display = 'block';
+      });
+      
+      comunidadeMenu.addEventListener('mouseleave', function() {
+        dropdownManager.closeDropdownWithDelay('comunidade-dropdown-menu', 100);
+      });
+      
+      // Fechar ao clicar num item
+      comunidadeMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', function() {
+          dropdownManager.closeDropdown('comunidade-dropdown-menu');
+        });
+      });
+    }
+    
+    // ===== FECHAR DROPDOWNS AO CLICAR FORA =====
+    document.addEventListener('click', function(event) {
+      const isDropdownMenu = event.target.closest('[class*="dropdown"]');
+      const isDropdownBtn = event.target.closest('button[class*="btn"]') || 
+                           event.target.closest('.nav-link');
+      
+      if (!isDropdownMenu && !isDropdownBtn) {
+        dropdownManager.closeAllDropdowns();
+      }
+    });
+    
+    // ===== FECHAR COM ESC =====
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        dropdownManager.closeAllDropdowns();
+      }
+    });
+    
+    // ===== MOBILE MENU =====
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    if (mobileMenuBtn && mobileMenu) {
+      mobileMenuBtn.addEventListener('click', function() {
+        const isOpen = mobileMenu.style.display === 'flex';
+        
+        if (isOpen) {
+          mobileMenu.style.animation = 'slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+          setTimeout(() => {
+            mobileMenu.style.display = 'none';
+          }, 300);
+        } else {
+          mobileMenu.style.display = 'flex';
+          mobileMenu.style.animation = 'slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+        }
+        
+        // Animar ícone
+        const icon = this.querySelector('i');
+        if (icon) {
+          icon.style.transition = 'transform 0.3s ease';
+          icon.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(90deg)';
+        }
+      });
+      
+      // Fechar mobile menu ao clicar num link
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', function() {
+          mobileMenu.style.animation = 'slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+          setTimeout(() => {
+            mobileMenu.style.display = 'none';
+          }, 300);
+          
+          const icon = mobileMenuBtn.querySelector('i');
+          if (icon) icon.style.transform = 'rotate(0deg)';
+        });
+      });
+    }
+    
+    console.log('✅ Advanced Dropdown System inicializado com sucesso!');
+  });
+
+  /**
+   * 🎨 ANIMAÇÕES CSS
+   */
+  const style = document.createElement('style');
+  style.innerHTML = `
+    @keyframes dropdownFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.95);
+        backdrop-filter: blur(0px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        backdrop-filter: blur(10px);
+      }
+    }
+    
+    @keyframes dropdownFadeOut {
+      from {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        backdrop-filter: blur(10px);
+      }
+      to {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.95);
+        backdrop-filter: blur(0px);
+      }
+    }
+    
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        max-height: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        max-height: 1000px;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes slideUp {
+      from {
+        opacity: 1;
+        max-height: 1000px;
+        transform: translateY(0);
+      }
+      to {
+        opacity: 0;
+        max-height: 0;
+        transform: translateY(-20px);
+      }
+    }
+    
+    .dropdown-visible {
+      pointer-events: auto;
+      opacity: 1;
+    }
+    
+    .dropdown-hidden {
+      pointer-events: none;
+      opacity: 0;
+    }
+  `;
+  document.head.appendChild(style);
+
+  // 📊 Expor dropdownManager globalmente para debugging
+  window.dropdownManager = dropdownManager;
+  console.log('✓ dropdownManager disponível globalmente (window.dropdownManager)');
+</script>
