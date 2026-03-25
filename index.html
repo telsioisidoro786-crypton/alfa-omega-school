@@ -21,6 +21,9 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
   <link rel="stylesheet" href="/assets/css/main.css">
 
+  <!-- OneSignal Web Push Notifications SDK v16 -->
+  <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.js" defer></script>
+
   <style>
     /* =============================================
        DESIGN SYSTEM — ALFA E OMEGA SUPREME
@@ -953,6 +956,259 @@
     .nov-read:hover { gap: 0.7rem; color: var(--accent-dark); }
 
     /* =============================================
+       SECTION: PEQUENOS FINALISTAS — MURAL MODERNO
+    ============================================= */
+    .section-finalistas {
+      padding: 10rem 2rem;
+      background: linear-gradient(135deg, var(--white) 0%, rgba(206,244,49,0.03) 50%, var(--off-white) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-finalistas::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(206,244,49,0.08) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .section-finalistas::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -15%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(1,55,125,0.05) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .finalistas-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .finalistas-header {
+      text-align: center;
+      margin-bottom: 6rem;
+    }
+
+    .finalistas-header .section-eyebrow {
+      justify-content: center;
+      width: 100%;
+    }
+
+    .finalistas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 3rem 2rem;
+      padding: 0 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .finalistas-grid {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 2.5rem 1.5rem;
+        padding: 0 0.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .finalistas-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 0;
+      }
+    }
+
+    .finalista-card {
+      border-radius: 1.5rem;
+      overflow: hidden;
+      aspect-ratio: 9 / 12;
+      position: relative;
+      box-shadow: 0 12px 48px rgba(1, 55, 125, 0.15);
+      transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      cursor: pointer;
+      display: flex;
+      align-items: flex-end;
+      height: 100%;
+    }
+
+    .finalista-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, 
+        rgba(1, 55, 125, 0.95) 0%, 
+        rgba(1, 55, 125, 0.7) 30%, 
+        rgba(1, 55, 125, 0.2) 70%, 
+        transparent 100%);
+      z-index: 2;
+      transition: opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .finalista-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.4) 100%);
+      z-index: 3;
+      opacity: 0;
+      transition: opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .finalista-card:hover::after {
+      opacity: 1;
+    }
+
+    .finalista-card:hover {
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: 0 24px 72px rgba(1, 55, 125, 0.3), 
+                  0 0 40px rgba(206, 244, 49, 0.2);
+    }
+
+    .fc-image-wrapper {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .fc-overlay {
+      position: absolute;
+      inset: 0;
+      background: transparent;
+      opacity: 0;
+      transition: opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 4;
+    }
+
+    .fc-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+      filter: brightness(0.95);
+    }
+
+    .finalista-card:hover .fc-image {
+      transform: scale(1.15) rotate(-2deg);
+      filter: brightness(1.05) drop-shadow(0 0 40px rgba(206, 244, 49, 0.4));
+    }
+
+    .fc-content {
+      position: relative;
+      z-index: 5;
+      width: 100%;
+      padding: 2rem 1.75rem 2.5rem 1.75rem;
+      text-align: center;
+      transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      flex-direction: column;
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .fc-name {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin: 0;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .finalista-card:hover .fc-name {
+      color: var(--accent);
+      text-shadow: 0 4px 20px rgba(206, 244, 49, 0.6);
+      letter-spacing: 0.05em;
+    }
+
+    .fc-motto {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--white);
+      font-style: italic;
+      font-weight: 400;
+      line-height: 1.6;
+      margin: 0;
+      max-width: 85%;
+      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      text-shadow: 0 3px 15px rgba(0, 0, 0, 0.6);
+      opacity: 0.95;
+    }
+
+    .finalista-card:hover .fc-motto {
+      color: var(--accent);
+      opacity: 1;
+      text-shadow: 0 4px 20px rgba(206, 244, 49, 0.5);
+    }
+
+    .fc-divider {
+      width: 35px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      margin: 0.5rem auto 0;
+      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .finalista-card:hover .fc-divider {
+      width: 70px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--accent-dark), var(--accent), var(--accent-dark), transparent);
+      box-shadow: 0 0 15px rgba(206, 244, 49, 0.5);
+    }
+
+    @media (max-width: 768px) {
+      .fc-name {
+        font-size: 1.1rem;
+      }
+
+      .fc-motto {
+        font-size: 0.9rem;
+      }
+
+      .fc-content {
+        padding: 1.5rem 1.25rem 2rem 1.25rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .section-finalistas {
+        padding: 6rem 1.5rem;
+      }
+
+      .fc-content {
+        padding: 1.25rem 1rem 1.75rem 1rem;
+      }
+
+      .fc-name {
+        font-size: 1rem;
+      }
+
+      .fc-motto {
+        font-size: 0.85rem;
+        max-width: 90%;
+      }
+
+      .fc-divider {
+        width: 25px;
+      }
+    }
+
+    /* =============================================
        SECTION: HIGHLIGHTS TICKER
     ============================================= */
     .section-ticker {
@@ -1499,6 +1755,151 @@
       </div>
     </section>
 
+    <!-- ===================== PEQUENOS FINALISTAS ===================== -->
+    <section class="section-finalistas">
+      <div class="finalistas-inner">
+        <div class="finalistas-header" data-aos="fade-up">
+          <div class="section-eyebrow">Comunidade Escolar</div>
+          <h2 class="section-title-xl">
+            Nossos <em>Pequenos Finalistas</em>
+          </h2>
+          <p class="section-body-text">Conheça os alunos que brilham no Colégio Alfa e Omega. Cada um é uma história de potencial, esforço e futuro promissor.</p>
+        </div>
+
+        <div class="finalistas-grid" data-aos="fade-up" data-aos-delay="100">
+          <!-- Aluno 1 -->
+          <div class="finalista-card">
+            <div class="fc-image-wrapper">
+              <img src="assets/img/finalistas/aluno1.webp" alt="Gabriel Isidoro" class="fc-image">
+              <div class="fc-overlay"></div>
+            </div>
+            <div class="fc-content">
+              <h3 class="fc-name">Gabriel Isidoro</h3>
+              <p class="fc-motto">"Futuro Engenheiro"</p>
+              <div class="fc-divider"></div>
+            </div>
+          </div>
+
+          <!-- Aluno 2 -->
+          <div class="finalista-card">
+            <div class="fc-image-wrapper">
+              <img src="assets/img/finalistas/aluno2.webp" alt="Maria da Silva" class="fc-image">
+              <div class="fc-overlay"></div>
+            </div>
+            <div class="fc-content">
+              <h3 class="fc-name">Maria da Silva</h3>
+              <p class="fc-motto">"Médica com Coração"</p>
+              <div class="fc-divider"></div>
+            </div>
+          </div>
+
+          <!-- Aluno 3 -->
+          <div class="finalista-card">
+            <div class="fc-image-wrapper">
+              <img src="assets/img/finalistas/aluno3.webp" alt="João Nzuanda" class="fc-image">
+              <div class="fc-overlay"></div>
+            </div>
+            <div class="fc-content">
+              <h3 class="fc-name">João Nzuanda</h3>
+              <p class="fc-motto">"Líder de Comunidade"</p>
+              <div class="fc-divider"></div>
+            </div>
+          </div>
+
+          <!-- Aluno 4 -->
+          <div class="finalista-card">
+            <div class="fc-image-wrapper">
+              <img src="assets/img/finalistas/aluno4.webp" alt="Amélia Costa" class="fc-image">
+              <div class="fc-overlay"></div>
+            </div>
+            <div class="fc-content">
+              <h3 class="fc-name">Amélia Costa</h3>
+              <p class="fc-motto">"Advogada Defensora"</p>
+              <div class="fc-divider"></div>
+            </div>
+          </div>
+
+          <!-- Aluno 5 -->
+          <div class="finalista-card">
+            <div class="fc-image-wrapper">
+              <img src="assets/img/finalistas/aluno5.webp" alt="David Mendes" class="fc-image">
+              <div class="fc-overlay"></div>
+            </div>
+            <div class="fc-content">
+              <h3 class="fc-name">David Mendes</h3>
+              <p class="fc-motto">"Empreendedor Inovador"</p>
+              <div class="fc-divider"></div>
+            </div>
+          </div>
+
+          <!-- Aluno 6 -->
+          <div class="finalista-card">
+            <div class="fc-image-wrapper">
+              <img src="assets/img/finalistas/aluno6.webp" alt="Carla Dias" class="fc-image">
+              <div class="fc-overlay"></div>
+            </div>
+            <div class="fc-content">
+              <h3 class="fc-name">Carla Dias</h3>
+              <p class="fc-motto">"Professora Inspiradora"</p>
+              <div class="fc-divider"></div>
+            </div>
+          </div>
+
+          <!-- Aluno 7 -->
+          <div class="finalista-card">
+            <div class="fc-image-wrapper">
+              <img src="assets/img/finalistas/aluno7.webp" alt="Tiago Gonçalves" class="fc-image">
+              <div class="fc-overlay"></div>
+            </div>
+            <div class="fc-content">
+              <h3 class="fc-name">Tiago Gonçalves</h3>
+              <p class="fc-motto">"Atleta de Excelência"</p>
+              <div class="fc-divider"></div>
+            </div>
+          </div>
+
+          <!-- Aluno 8 -->
+          <div class="finalista-card">
+            <div class="fc-image-wrapper">
+              <img src="assets/img/finalistas/aluno8.webp" alt="Luciana Monteiro" class="fc-image">
+              <div class="fc-overlay"></div>
+            </div>
+            <div class="fc-content">
+              <h3 class="fc-name">Luciana Monteiro</h3>
+              <p class="fc-motto">"Artista Criativa"</p>
+              <div class="fc-divider"></div>
+            </div>
+          </div>
+
+          <!-- Aluno 9 -->
+          <div class="finalista-card">
+            <div class="fc-image-wrapper">
+              <img src="assets/img/finalistas/aluno9.webp" alt="Ricardo Ferreira" class="fc-image">
+              <div class="fc-overlay"></div>
+            </div>
+            <div class="fc-content">
+              <h3 class="fc-name">Ricardo Ferreira</h3>
+              <p class="fc-motto">"Cientista Pesquisador"</p>
+              <div class="fc-divider"></div>
+            </div>
+          </div>
+
+          <!-- Aluno 10 -->
+          <div class="finalista-card">
+            <div class="fc-image-wrapper">
+              <img src="assets/img/finalistas/aluno10.webp" alt="Sofia Tavares" class="fc-image">
+              <div class="fc-overlay"></div>
+            </div>
+            <div class="fc-content">
+              <h3 class="fc-name">Sofia Tavares</h3>
+              <p class="fc-motto">"Embaixadora do Saber"</p>
+              <div class="fc-divider"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ===================== DIFERENCIAIS ===================== -->
     <section class="section-diff">
       <div class="diff-inner">
@@ -1581,6 +1982,51 @@
   <script src="/assets/js/main.js"></script>
 
   <script>
+
+    // ─── ONESIGNAL WEB PUSH NOTIFICATIONS ─────────────
+    window.OneSignalDeferred = window.OneSignalDeferred || [];
+    OneSignalDeferred.push(async function(OneSignal) {
+      try {
+        await OneSignal.init({
+          appId: "8c76e6d4-7aa0-47b3-8ed7-fff36a2ab8af",
+          allowLocalhostAsSecureOrigin: true,
+          serviceWorkerPath: "/OneSignalSDKWorker.js",
+          serviceWorkerParam: { scope: "/" },
+          notifyButton: {
+            enable: true,
+            size: 'medium',
+            theme: 'default',
+            position: 'bottom-right',
+            displayPredicate: function() {
+              return OneSignal.NotificationPermission.permission !== true;
+            },
+            text: {
+              'tip.state.unsubscribed': '🔔 Receber avisos do Colégio',
+              'tip.state.subscribed': '✅ Inscrição ativa',
+              'tip.state.blocked': '🚫 Notificações bloqueadas',
+              'message.prenotify': 'Ative as notificações para ficar a par das novidades',
+              'message.action.subscribing': 'A inscrever...',
+              'message.action.subscribed': 'Obrigado pela inscrição!',
+              'dialog.main.title': '📢 Notificações do Alfa e Omega',
+              'dialog.main.content': 'Receba atualizações sobre eventos, avisos importantes e novidades da escola.',
+              'dialog.main.button.subscribe': 'INSCREVER AGORA',
+              'dialog.main.button.unsubscribe': 'Não, obrigado'
+            }
+          },
+          welcomeNotification: {
+            title: '🎓 Bem-vindo ao Colégio Alfa e Omega!',
+            message: 'Obrigado por se inscrever. Agora você receberá nossas notificações com atualizações, eventos e avisos importantes.',
+            url: '/'
+          }
+        });
+
+        // Permite que o utilizador permita/negue notificações manualmente
+        await OneSignal.Slidedown.promptPush();
+      } catch (error) {
+        console.log('OneSignal initialization error:', error);
+      }
+    });
+
     // ─── PRELOADER ───────────────────────────────────
     document.addEventListener('DOMContentLoaded', () => {
       const preloader = document.getElementById('preloader');
