@@ -24,6 +24,45 @@
   <!-- OneSignal Web Push Notifications SDK v16 -->
   <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.js" defer></script>
 
+  <!-- OneSignal Initialization — Versão Robusta -->
+  <script>
+    window.OneSignalDeferred = window.OneSignalDeferred || [];
+    window.OneSignalDeferred.push(async function(OneSignal) {
+      console.log("OneSignal Inicializado com sucesso!");
+      try {
+        await OneSignal.init({
+          appId: "8c76e6d4-7aa0-47b3-8ed7-fff36a2ab8af",
+          allowLocalhostAsSecureOrigin: true,
+          notifyButton: {
+            enable: true,
+            position: 'bottom-right',
+            colors: {
+              'circle.background': '#01377d', /* Azul do Colégio */
+              'circle.foreground': '#ffffff',
+              'badge.background': '#01377d',
+              'badge.foreground': '#ffffff',
+              'badge.bordercolor': '#ffffff',
+              'pulse.color': '#ffffff',
+              'dialog.button.background.hover': '#01377d',
+              'dialog.button.background.active': '#01377d',
+              'dialog.button.background': '#01377d',
+              'dialog.button.foreground': '#ffffff'
+            }
+          }
+        });
+        
+        // Forçar a aparição se o utilizador ainda não estiver inscrito
+        if (!OneSignal.Notifications.permission) {
+          setTimeout(() => {
+            OneSignal.Slidedown.promptPush();
+          }, 5000); // 5 segundos após carregar
+        }
+      } catch (error) {
+        console.log('OneSignal initialization error:', error);
+      }
+    });
+  </script>
+
   <style>
     /* =============================================
        DESIGN SYSTEM — ALFA E OMEGA SUPREME
@@ -1756,7 +1795,150 @@
     </section>
 
     <!-- ===================== PEQUENOS FINALISTAS ===================== -->
-   
+    <section class="section-finalistas">
+      <div class="finalistas-inner">
+        <div class="finalistas-header" data-aos="fade-up">
+          <div class="section-eyebrow">Comunidade Escolar</div>
+          <h2 class="section-title-xl">
+            Nossos <em>Pequenos Finalistas</em>
+          </h2>
+          <p class="section-body-text">Conheça os alunos que brilham no Colégio Alfa e Omega. Cada um é uma história de potencial, esforço e futuro promissor.</p>
+        </div>
+
+        <div class="finalistas-grid" data-aos="fade-up" data-aos-delay="100">
+          <!-- Aluno 1 -->
+          <div class="finalista-card">
+            <div class="fc-image-wrapper">
+              <img src="assets/img/finalistas/aluno1.webp" alt="Gabriel Isidoro" class="fc-image">
+              <div class="fc-overlay"></div>
+            </div>
+            <div class="fc-content">
+              <h3 class="fc-name">Gabriel Isidoro</h3>
+              <p class="fc-motto">"Futuro Engenheiro"</p>
+              <div class="fc-divider"></div>
+            </div>
+          </div>
+
+          <!-- Aluno 2 -->
+          <div class="finalista-card">
+            <div class="fc-image-wrapper">
+              <img src="assets/img/finalistas/aluno2.webp" alt="Maria da Silva" class="fc-image">
+              <div class="fc-overlay"></div>
+            </div>
+            <div class="fc-content">
+              <h3 class="fc-name">Maria da Silva</h3>
+              <p class="fc-motto">"Médica com Coração"</p>
+              <div class="fc-divider"></div>
+            </div>
+          </div>
+
+          <!-- Aluno 3 -->
+          <div class="finalista-card">
+            <div class="fc-image-wrapper">
+              <img src="assets/img/finalistas/aluno3.webp" alt="João Nzuanda" class="fc-image">
+              <div class="fc-overlay"></div>
+            </div>
+            <div class="fc-content">
+              <h3 class="fc-name">João Nzuanda</h3>
+              <p class="fc-motto">"Líder de Comunidade"</p>
+              <div class="fc-divider"></div>
+            </div>
+          </div>
+
+          <!-- Aluno 4 -->
+          <div class="finalista-card">
+            <div class="fc-image-wrapper">
+              <img src="assets/img/finalistas/aluno4.webp" alt="Amélia Costa" class="fc-image">
+              <div class="fc-overlay"></div>
+            </div>
+            <div class="fc-content">
+              <h3 class="fc-name">Amélia Costa</h3>
+              <p class="fc-motto">"Advogada Defensora"</p>
+              <div class="fc-divider"></div>
+            </div>
+          </div>
+
+          <!-- Aluno 5 -->
+          <div class="finalista-card">
+            <div class="fc-image-wrapper">
+              <img src="assets/img/finalistas/aluno5.webp" alt="David Mendes" class="fc-image">
+              <div class="fc-overlay"></div>
+            </div>
+            <div class="fc-content">
+              <h3 class="fc-name">David Mendes</h3>
+              <p class="fc-motto">"Empreendedor Inovador"</p>
+              <div class="fc-divider"></div>
+            </div>
+          </div>
+
+          <!-- Aluno 6 -->
+          <div class="finalista-card">
+            <div class="fc-image-wrapper">
+              <img src="assets/img/finalistas/aluno6.webp" alt="Carla Dias" class="fc-image">
+              <div class="fc-overlay"></div>
+            </div>
+            <div class="fc-content">
+              <h3 class="fc-name">Carla Dias</h3>
+              <p class="fc-motto">"Professora Inspiradora"</p>
+              <div class="fc-divider"></div>
+            </div>
+          </div>
+
+          <!-- Aluno 7 -->
+          <div class="finalista-card">
+            <div class="fc-image-wrapper">
+              <img src="assets/img/finalistas/aluno7.webp" alt="Tiago Gonçalves" class="fc-image">
+              <div class="fc-overlay"></div>
+            </div>
+            <div class="fc-content">
+              <h3 class="fc-name">Tiago Gonçalves</h3>
+              <p class="fc-motto">"Atleta de Excelência"</p>
+              <div class="fc-divider"></div>
+            </div>
+          </div>
+
+          <!-- Aluno 8 -->
+          <div class="finalista-card">
+            <div class="fc-image-wrapper">
+              <img src="assets/img/finalistas/aluno8.webp" alt="Luciana Monteiro" class="fc-image">
+              <div class="fc-overlay"></div>
+            </div>
+            <div class="fc-content">
+              <h3 class="fc-name">Luciana Monteiro</h3>
+              <p class="fc-motto">"Artista Criativa"</p>
+              <div class="fc-divider"></div>
+            </div>
+          </div>
+
+          <!-- Aluno 9 -->
+          <div class="finalista-card">
+            <div class="fc-image-wrapper">
+              <img src="assets/img/finalistas/aluno9.webp" alt="Ricardo Ferreira" class="fc-image">
+              <div class="fc-overlay"></div>
+            </div>
+            <div class="fc-content">
+              <h3 class="fc-name">Ricardo Ferreira</h3>
+              <p class="fc-motto">"Cientista Pesquisador"</p>
+              <div class="fc-divider"></div>
+            </div>
+          </div>
+
+          <!-- Aluno 10 -->
+          <div class="finalista-card">
+            <div class="fc-image-wrapper">
+              <img src="assets/img/finalistas/aluno10.webp" alt="Sofia Tavares" class="fc-image">
+              <div class="fc-overlay"></div>
+            </div>
+            <div class="fc-content">
+              <h3 class="fc-name">Sofia Tavares</h3>
+              <p class="fc-motto">"Embaixadora do Saber"</p>
+              <div class="fc-divider"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ===================== DIFERENCIAIS ===================== -->
     <section class="section-diff">
       <div class="diff-inner">
@@ -1839,50 +2021,6 @@
   <script src="/assets/js/main.js"></script>
 
   <script>
-
-    // ─── ONESIGNAL WEB PUSH NOTIFICATIONS ─────────────
-    window.OneSignalDeferred = window.OneSignalDeferred || [];
-    OneSignalDeferred.push(async function(OneSignal) {
-      try {
-        await OneSignal.init({
-          appId: "8c76e6d4-7aa0-47b3-8ed7-fff36a2ab8af",
-          allowLocalhostAsSecureOrigin: true,
-          serviceWorkerPath: "/OneSignalSDKWorker.js",
-          serviceWorkerParam: { scope: "/" },
-          notifyButton: {
-            enable: true,
-            size: 'medium',
-            theme: 'default',
-            position: 'bottom-right',
-            displayPredicate: function() {
-              return OneSignal.NotificationPermission.permission !== true;
-            },
-            text: {
-              'tip.state.unsubscribed': '🔔 Receber avisos do Colégio',
-              'tip.state.subscribed': '✅ Inscrição ativa',
-              'tip.state.blocked': '🚫 Notificações bloqueadas',
-              'message.prenotify': 'Ative as notificações para ficar a par das novidades',
-              'message.action.subscribing': 'A inscrever...',
-              'message.action.subscribed': 'Obrigado pela inscrição!',
-              'dialog.main.title': '📢 Notificações do Alfa e Omega',
-              'dialog.main.content': 'Receba atualizações sobre eventos, avisos importantes e novidades da escola.',
-              'dialog.main.button.subscribe': 'INSCREVER AGORA',
-              'dialog.main.button.unsubscribe': 'Não, obrigado'
-            }
-          },
-          welcomeNotification: {
-            title: '🎓 Bem-vindo ao Colégio Alfa e Omega!',
-            message: 'Obrigado por se inscrever. Agora você receberá nossas notificações com atualizações, eventos e avisos importantes.',
-            url: '/'
-          }
-        });
-
-        // Permite que o utilizador permita/negue notificações manualmente
-        await OneSignal.Slidedown.promptPush();
-      } catch (error) {
-        console.log('OneSignal initialization error:', error);
-      }
-    });
 
     // ─── PRELOADER ───────────────────────────────────
     document.addEventListener('DOMContentLoaded', () => {
