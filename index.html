@@ -26,25 +26,18 @@
 
   <!-- OneSignal Initialization — Debug Mode -->
   <script>
-    window.OneSignalDeferred = window.OneSignalDeferred || [];
-    window.OneSignalDeferred.push(async function(OneSignal) {
-      console.log("Tentando iniciar OneSignal...");
-      
-      try {
-        await OneSignal.init({
-          appId: "8c76e6d4-7aa0-47b3-8ed7-fff36a2ab8af",
-          debug: true, // Isso vai inundar a consola com informações
-        });
-
-        console.log("Estado atual da permissão:", OneSignal.Notifications.permission);
-        
-        // Forçar a exibição do sininho (Notify Button)
-        OneSignal.Slidedown.promptPush();
-      } catch (error) {
-        console.error('OneSignal initialization error:', error);
-      }
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  window.OneSignalDeferred.push(function(OneSignal) {
+    OneSignal.init({
+      appId: "8c76e6d4-7aa0-47b3-8ed7-fff36a2ab8af",
+      safari_web_id: "COLA_SE_TIVERES_OU_DEIXA_VAZIO",
+      notifyButton: {
+        enable: true,
+      },
+      allowLocalhostAsSecureOrigin: true,
     });
-  </script>
+  });
+</script>
 
   <style>
     /* =============================================
