@@ -24,41 +24,24 @@
   <!-- OneSignal Web Push Notifications SDK v16 -->
   <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.js" defer></script>
 
-  <!-- OneSignal Initialization — Versão Robusta -->
+  <!-- OneSignal Initialization — Debug Mode -->
   <script>
     window.OneSignalDeferred = window.OneSignalDeferred || [];
     window.OneSignalDeferred.push(async function(OneSignal) {
-      console.log("OneSignal Inicializado com sucesso!");
+      console.log("Tentando iniciar OneSignal...");
+      
       try {
         await OneSignal.init({
           appId: "8c76e6d4-7aa0-47b3-8ed7-fff36a2ab8af",
-          allowLocalhostAsSecureOrigin: true,
-          notifyButton: {
-            enable: true,
-            position: 'bottom-right',
-            colors: {
-              'circle.background': '#01377d', /* Azul do Colégio */
-              'circle.foreground': '#ffffff',
-              'badge.background': '#01377d',
-              'badge.foreground': '#ffffff',
-              'badge.bordercolor': '#ffffff',
-              'pulse.color': '#ffffff',
-              'dialog.button.background.hover': '#01377d',
-              'dialog.button.background.active': '#01377d',
-              'dialog.button.background': '#01377d',
-              'dialog.button.foreground': '#ffffff'
-            }
-          }
+          debug: true, // Isso vai inundar a consola com informações
         });
+
+        console.log("Estado atual da permissão:", OneSignal.Notifications.permission);
         
-        // Forçar a aparição se o utilizador ainda não estiver inscrito
-        if (!OneSignal.Notifications.permission) {
-          setTimeout(() => {
-            OneSignal.Slidedown.promptPush();
-          }, 5000); // 5 segundos após carregar
-        }
+        // Forçar a exibição do sininho (Notify Button)
+        OneSignal.Slidedown.promptPush();
       } catch (error) {
-        console.log('OneSignal initialization error:', error);
+        console.error('OneSignal initialization error:', error);
       }
     });
   </script>
@@ -1794,8 +1777,8 @@
       </div>
     </section>
 
-    <!-- ===================== PEQUENOS FINALISTAS ===================== -->
-    
+  
+
     <!-- ===================== DIFERENCIAIS ===================== -->
     <section class="section-diff">
       <div class="diff-inner">
