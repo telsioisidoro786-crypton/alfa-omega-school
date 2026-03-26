@@ -22,15 +22,143 @@
   <link rel="stylesheet" href="/assets/css/main.css">
 
   <!-- OneSignal Web Push Notifications SDK v16 -->
-<script>
-  var beamer_config = {
-    product_id : "GZZiuRbv83013", // DO NOT CHANGE: This is your product code on Beamer
-    user_id : "user's unique id" // A unique ID to identify the user
-  };
-</script>
-<script type="text/javascript" src="https://app.getbeamer.com/js/beamer-embed.js" defer="defer"></script>
 
   <style>
+
+    /* --- NOTIFICAÇÃO PREMIUM: CLEAN & MODERN --- */
+.notification-toast-premium {
+  position: fixed;
+  top: 20px; /* Aparece no topo para maior visibilidade, como no telemóvel */
+  right: -400px; /* Começa escondido à direita */
+  background: rgba(255, 255, 255, 0.9); /* Fundo branco "gelo" */
+  backdrop-filter: blur(12px); /* Efeito de vidro jateado moderno */
+  color: #333; /* Texto escuro para leitura limpa */
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(1, 55, 125, 0.15); /* Sombra suave com o azul do colégio */
+  z-index: 10000;
+  max-width: 380px;
+  width: calc(100% - 40px);
+  overflow: hidden; /* Necessário para a barra de progresso */
+  border: 1px solid rgba(1, 55, 125, 0.05); /* Borda quase invisível */
+  transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1); /* Animação "suculenta" */
+}
+
+.notification-toast-premium.show {
+  right: 20px; /* Desliza para dentro */
+}
+
+.notif-wrapper {
+  padding: 18px 25px 18px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  position: relative;
+}
+
+.notif-icon-premium {
+  font-size: 1.6rem;
+  background: rgba(1, 55, 125, 0.05); /* Fundo azul clarinho suave */
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+
+.notif-content-premium {
+  flex: 1;
+}
+
+.notif-tag-premium {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  background: #e6b325; /* O dourado do colégio */
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: 50px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  display: inline-block;
+}
+
+.notif-title-premium {
+  font-family: 'Poppins', sans-serif; /* Usa a fonte de destaque do teu site */
+  font-weight: 700;
+  font-size: 1rem;
+  color: #01377d; /* Azul do colégio no título */
+  margin: 0 0 4px 0;
+}
+
+.notif-text-premium {
+  font-size: 0.85rem;
+  margin: 0 0 8px 0;
+  line-height: 1.5;
+  color: #555; /* Texto mais suave */
+}
+
+.notif-link-premium {
+  color: #01377d; /* Azul do colégio */
+  font-size: 0.85rem;
+  text-decoration: none;
+  font-weight: 700;
+  display: inline-block;
+  border-bottom: 2px solid #e6b325; /* Sublinhado dourado */
+  padding-bottom: 2px;
+  transition: 0.3s;
+}
+
+.notif-link-premium:hover {
+  color: #e6b325;
+}
+
+.notif-close-premium {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 1.4rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  transition: 0.3s;
+}
+
+.notif-close-premium:hover { color: #01377d; transform: rotate(90deg); }
+
+/* Barra de progresso para fechar sozinha */
+.notif-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #e6b325, #01377d); /* Gradiente dourado-azul */
+  width: 100%;
+}
+
+.notification-toast-premium.show .notif-progress {
+  animation: progressLoad 8s linear forwards; /* Barra carrega em 8 segundos */
+}
+
+@keyframes progressLoad {
+  from { width: 100%; }
+  to { width: 0%; }
+}
+
+/* Ajuste para telemóveis */
+@media (max-width: 480px) {
+  .notification-toast-premium {
+    max-width: calc(100% - 30px);
+    right: 15px;
+    top: 15px;
+  }
+}
+
     /* =============================================
        DESIGN SYSTEM — ALFA E OMEGA SUPREME
     ============================================= */
@@ -1489,7 +1617,22 @@
   </style>
 </head>
 <body>
+<div id="alfa-notification" class="notification-toast-premium">
+  <div class="notif-wrapper">
+    <div class="notif-icon-premium">🏆</div>
+    <div class="notif-content-premium">
+      <span class="notif-tag-premium">Destaque</span>
+      <p class="notif-title-premium">Novidade no Mural!</p>
+      <p class="notif-text-premium">Conheça os nossos <strong>Pequenos Finalistas 2026</strong>. O futuro brilha em Panguila! 🎓</p>
+      <a href="#finalistas" class="notif-link-premium" onclick="closeNotif()">Ver Agora</a>
+    </div>
+    <button class="notif-close-premium" onclick="closeNotif()" aria-label="Fechar">&times;</button>
+  </div>
+  <div class="notif-progress"></div> </div>
 
+<audio id="notif-sound" preload="auto">
+  <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_133442650c.mp3" type="audio/mpeg">
+</audio>
   <!-- PRELOADER -->
   <div id="preloader">
     <div class="pl-inner">
@@ -1534,6 +1677,7 @@
         <a href="/novidades.html" class="nav-link">Novidades</a>
         <a href="/avisos.html" class="nav-link">Avisos</a>
         <a href="/galeria.html" class="nav-link">Galeria</a>
+        <a href="/olimpiadas.html" class="nav-link">Olimpíadas</a>
         <a href="/contactos.html" class="nav-link">Contactos</a>
       </nav>
 
@@ -1845,6 +1989,48 @@
   <script src="/assets/js/main.js"></script>
 
   <script>
+
+    // Função para gerir a notificação nativa
+function managePremiumNotification() {
+  const notif = document.getElementById('alfa-notification');
+  const sound = document.getElementById('notif-sound');
+
+  // Verifica se o utilizador já interagiu com esta notificação nesta sessão
+  if (!sessionStorage.getItem('alfaNotifSeen')) {
+    // Aparece após 4 segundos para deixar o site carregar primeiro
+    setTimeout(() => {
+      notif.classList.add('show');
+      
+      // Toca o som (tenta tocar, alguns browsers bloqueiam sem interação)
+      if (sound) {
+        sound.play().catch(error => {
+          console.log("Som bloqueado pelo navegador. Toca após interação.");
+        });
+      }
+
+      // Fecha automaticamente após 8 segundos (dá tempo para ler)
+      setTimeout(() => {
+        if (notif.classList.contains('show')) {
+          closeNotif();
+        }
+      }, 8000);
+
+    }, 4000); 
+  }
+}
+
+// Função para fechar a notificação e registar na sessão
+function closeNotif() {
+  const notif = document.getElementById('alfa-notification');
+  if (notif) {
+    notif.classList.remove('show');
+    // Regista que o utilizador viu/fechou, para não ser chato
+    sessionStorage.setItem('alfaNotifSeen', 'true');
+  }
+}
+
+// Inicia a função quando o site carregar completamente
+window.addEventListener('load', managePremiumNotification);
 
     // ─── PRELOADER ───────────────────────────────────
     document.addEventListener('DOMContentLoaded', () => {
