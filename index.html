@@ -22,20 +22,31 @@
   <link rel="stylesheet" href="/assets/css/main.css">
 
   <!-- OneSignal Web Push Notifications SDK v16 -->
-  <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.js" defer></script>
-
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignal.SDK.sw.js"></script>
   <!-- OneSignal Initialization — Debug Mode -->
-  <script>
+ <script>
   window.OneSignalDeferred = window.OneSignalDeferred || [];
-  window.OneSignalDeferred.push(function(OneSignal) {
-    OneSignal.init({
+  window.OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({
       appId: "8c76e6d4-7aa0-47b3-8ed7-fff36a2ab8af",
-      safari_web_id: "COLA_SE_TIVERES_OU_DEIXA_VAZIO",
-      notifyButton: {
-        enable: true,
-      },
       allowLocalhostAsSecureOrigin: true,
+      notifyButton: {
+        enable: true, /* Força a ativação */
+        displayPredicate: function() {
+            return true; /* Força a exibição mesmo que já existam permissões */
+        },
+        position: 'bottom-right',
+        size: 'medium',
+        theme: 'default'
+      }
     });
+    
+    // Comando extra para abrir o prompt após 3 segundos
+    setTimeout(() => {
+        if (!OneSignal.Notifications.permission) {
+            OneSignal.Slidedown.promptPush();
+        }
+    }, 3000);
   });
 </script>
 
