@@ -22,33 +22,13 @@
   <link rel="stylesheet" href="/assets/css/main.css">
 
   <!-- OneSignal Web Push Notifications SDK v16 -->
-<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignal.SDK.sw.js"></script>
-  <!-- OneSignal Initialization — Debug Mode -->
- <script>
-  window.OneSignalDeferred = window.OneSignalDeferred || [];
-  window.OneSignalDeferred.push(async function(OneSignal) {
-    await OneSignal.init({
-      appId: "8c76e6d4-7aa0-47b3-8ed7-fff36a2ab8af",
-      allowLocalhostAsSecureOrigin: true,
-      notifyButton: {
-        enable: true, /* Força a ativação */
-        displayPredicate: function() {
-            return true; /* Força a exibição mesmo que já existam permissões */
-        },
-        position: 'bottom-right',
-        size: 'medium',
-        theme: 'default'
-      }
-    });
-    
-    // Comando extra para abrir o prompt após 3 segundos
-    setTimeout(() => {
-        if (!OneSignal.Notifications.permission) {
-            OneSignal.Slidedown.promptPush();
-        }
-    }, 3000);
-  });
+<script>
+  var beamer_config = {
+    product_id : "GZZiuRbv83013", // DO NOT CHANGE: This is your product code on Beamer
+    user_id : "user's unique id" // A unique ID to identify the user
+  };
 </script>
+<script type="text/javascript" src="https://app.getbeamer.com/js/beamer-embed.js" defer="defer"></script>
 
   <style>
     /* =============================================
