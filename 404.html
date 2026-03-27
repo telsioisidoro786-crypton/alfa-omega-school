@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página não encontrada — Colégio Alfa e Omega</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* ============================================
+       TOKENS — sistema idêntico ao site
+    ============================================ */
+    :root {
+      --ink-950:    #010E24;
+      --ink-900:    #011830;
+      --ink-800:    #031E38;
+      --primary:    #01377D;
+      --primary-m:  #0147A0;
+      --primary-l:  #0A5FC4;
+      --accent:     #CEF431;
+      --accent-m:   #B8D400;
+      --accent-d:   #8FA300;
+      --white:      #FFFFFF;
+      --gray-400:   #9BA09A;
+      --gray-600:   #4D524B;
+      --font-serif: 'DM Serif Display', serif;
+      --font-sans:  'DM Sans', sans-serif;
+      --font-head:  'Poppins', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; height: 100%; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--ink-950);
+      color: var(--white);
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ============================================
+       CANVAS — fundo com símbolos matemáticos
+    ============================================ */
+    #bg-canvas {
+      position: fixed; inset: 0;
+      z-index: 0; pointer-events: none;
+    }
+
+    /* ============================================
+       GRID CORREDORES — textura perspectiva
+    ============================================ */
+    .corridor-grid {
+      position: fixed; inset: 0; z-index: 1; pointer-events: none;
+      overflow: hidden;
+    }
+    .corridor-grid::before {
+      content: '';
+      position: absolute; inset: -20%;
+      background-image:
+        repeating-linear-gradient(90deg,  transparent, transparent 100px, rgba(255,255,255,0.013) 100px, rgba(255,255,255,0.013) 101px),
+        repeating-linear-gradient(0deg,   transparent, transparent 100px, rgba(255,255,255,0.013) 100px, rgba(255,255,255,0.013) 101px);
+      transform: perspective(600px) rotateX(25deg) scale(1.4);
+      transform-origin: center top;
+    }
+    /* Scanlines */
+    .corridor-grid::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(0,0,0,0.04) 3px,
+        rgba(0,0,0,0.04) 4px
+      );
+      pointer-events: none;
+    }
+
+    /* Radial vignette */
+    .vignette {
+      position: fixed; inset: 0; z-index: 2; pointer-events: none;
+      background: radial-gradient(ellipse at 50% 40%, transparent 35%, rgba(1,8,24,0.75) 80%, rgba(1,8,24,0.95) 100%);
+    }
+
+    /* Glow spots */
+    .glow-top {
+      position: fixed; top: -10rem; left: 50%; transform: translateX(-50%);
+      width: 900px; height: 600px; z-index: 2; pointer-events: none;
+      background: radial-gradient(ellipse, rgba(1,55,125,0.35) 0%, transparent 65%);
+    }
+    .glow-accent {
+      position: fixed; bottom: -8rem; right: -8rem;
+      width: 600px; height: 600px; z-index: 2; pointer-events: none;
+      background: radial-gradient(circle, rgba(206,244,49,0.04) 0%, transparent 65%);
+    }
+
+    /* ============================================
+       NAVBAR
+    ============================================ */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100; height: 5rem;
+      background: rgba(1,8,24,0.7);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .navbar-container {
+      max-width: 1280px; margin: 0 auto; padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between; height: 100%;
+    }
+    .logo-section { display: flex; align-items: center; gap: 0.875rem; text-decoration: none; }
+    .logo-img { width: 44px; height: 44px; object-fit: contain; transition: transform 0.3s; }
+    .logo-section:hover .logo-img { transform: scale(1.05); }
+    .logo-text-block h2 { font-family: var(--font-head); font-size: 0.9rem; font-weight: 800; color: var(--white); line-height: 1.1; }
+    .logo-text-block p  { font-size: 0.62rem; font-weight: 700; color: rgba(206,244,49,0.7); text-transform: uppercase; letter-spacing: 0.08em; }
+    .nav-home {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--accent); color: var(--primary);
+      font-family: var(--font-sans); font-weight: 700; font-size: 0.85rem;
+      padding: 0.6rem 1.3rem; border-radius: 2rem; text-decoration: none;
+      transition: all 0.3s;
+    }
+    .nav-home:hover { background: var(--white); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(1,55,125,0.3); }
+
+    /* ============================================
+       MAIN WRAPPER
+    ============================================ */
+    .page-wrap {
+      flex: 1; position: relative; z-index: 10;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 8rem 2rem 4rem;
+      text-align: center;
+    }
+
+    /* ============================================
+       404 GLITCH NUMBER
+    ============================================ */
+    .error-number-wrap {
+      position: relative; margin-bottom: 2.5rem;
+      line-height: 1;
+    }
+
+    /* Watermark school name behind 404 */
+    .error-school-watermark {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-head);
+      font-size: clamp(1rem, 3vw, 2rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: rgba(206,244,49,0.06);
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 0;
+      user-select: none;
+    }
+
+    .error-number {
+      font-family: var(--font-head);
+      font-size: clamp(9rem, 22vw, 18rem);
+      font-weight: 900;
+      letter-spacing: -0.06em;
+      color: transparent;
+      -webkit-text-stroke: 2px rgba(255,255,255,0.12);
+      position: relative; z-index: 2;
+      /* The glitch layers come from pseudo-elements */
+    }
+
+    /* Base filled number on top */
+    .error-number::before,
+    .error-number::after {
+      content: '404';
+      position: absolute; top: 0; left: 0;
+      width: 100%;
+      font-family: inherit; font-size: inherit;
+      font-weight: inherit; letter-spacing: inherit;
+    }
+
+    /* Accent layer */
+    .error-number::before {
+      color: var(--accent);
+      z-index: 3;
+      animation: glitch-layer-1 5s steps(1) infinite;
+      clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+    }
+
+    /* White/blue shifted layer */
+    .error-number::after {
+      color: rgba(10,95,196,0.8);
+      z-index: 4;
+      transform: translateX(4px);
+      animation: glitch-layer-2 5s steps(1) infinite;
+      clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+    }
+
+    @keyframes glitch-layer-1 {
+      0%,89%  { transform: none; opacity:1; }
+      90%     { transform: translateX(-4px) skewX(-1deg); opacity:0.9; }
+      91%     { transform: translateX(4px)  skewX(1deg); }
+      92%     { transform: none; }
+      93%     { transform: translateX(-6px); }
+      94%,100%{ transform: none; opacity:1; }
+    }
+    @keyframes glitch-layer-2 {
+      0%,89%  { transform: translateX(4px); opacity:1; }
+      90%     { transform: translateX(6px) skewX(2deg); opacity:0.8; }
+      91%     { transform: translateX(-4px); }
+      92%     { transform: translateX(4px); }
+      93%     { transform: translateX(8px) skewX(-1deg); }
+      94%,100%{ transform: translateX(4px); opacity:1; }
+    }
+
+    /* Glitch flash overlay */
+    .error-number-wrap::after {
+      content: '';
+      position: absolute; inset: -4px; z-index: 5;
+      background: var(--accent);
+      opacity: 0;
+      pointer-events: none;
+      animation: glitch-flash 5s steps(1) infinite;
+      mix-blend-mode: overlay;
+    }
+    @keyframes glitch-flash {
+      0%,89%,92%,100% { opacity:0; }
+      90%             { opacity:0.05; }
+      91%             { opacity:0; }
+    }
+
+    /* ─── Horizontal glitch lines ─── */
+    .glitch-lines {
+      position: absolute; inset: 0; z-index: 6; pointer-events: none; overflow: hidden;
+    }
+    .gl-line {
+      position: absolute; left: 0; right: 0; height: 2px;
+      background: var(--accent);
+      opacity: 0;
+      animation: gl-scan 5s linear infinite;
+    }
+    .gl-line:nth-child(1) { top: 18%; animation-delay: 0s;   animation-duration: 5s; }
+    .gl-line:nth-child(2) { top: 62%; animation-delay: 0.4s; animation-duration: 5s; }
+    .gl-line:nth-child(3) { top: 80%; animation-delay: 0.8s; animation-duration: 5s; }
+    @keyframes gl-scan {
+      0%,88%,95%,100% { opacity:0; transform:scaleX(0); transform-origin:left; }
+      89%             { opacity:0.6; transform:scaleX(1); }
+      90%             { opacity:0; }
+      91%,93%         { opacity:0.3; transform:scaleX(0.7); transform-origin:right; }
+      94%             { opacity:0; }
+    }
+
+    /* ============================================
+       TEXT CONTENT
+    ============================================ */
+    .error-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.22em; color: var(--accent); margin-bottom: 1.25rem;
+      opacity: 0; animation: fade-in-up 0.7s ease 0.2s forwards;
+    }
+    .error-eyebrow::before, .error-eyebrow::after {
+      content: ''; width: 24px; height: 2px; background: var(--accent); border-radius: 2px;
+    }
+
+    .error-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.6rem, 3.5vw, 2.75rem);
+      color: var(--white); line-height: 1.15;
+      letter-spacing: -0.02em; margin-bottom: 1rem;
+      opacity: 0; animation: fade-in-up 0.7s ease 0.35s forwards;
+    }
+    .error-title em { color: var(--accent); font-style: italic; }
+
+    .error-desc {
+      font-size: 1rem; color: rgba(255,255,255,0.42);
+      line-height: 1.8; font-weight: 300;
+      max-width: 480px; margin: 0 auto 2.5rem;
+      opacity: 0; animation: fade-in-up 0.7s ease 0.5s forwards;
+    }
+
+    @keyframes fade-in-up {
+      from { opacity:0; transform:translateY(20px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* ============================================
+       LOCATION INDICATOR
+    ============================================ */
+    .location-bar {
+      display: inline-flex; align-items: center; gap: 0.75rem;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 3rem; padding: 0.6rem 1.25rem 0.6rem 0.75rem;
+      margin-bottom: 2.5rem;
+      opacity: 0; animation: fade-in-up 0.7s ease 0.6s forwards;
+    }
+    .loc-dot {
+      width: 8px; height: 8px; border-radius: 50%; background: #FF4A4A;
+      box-shadow: 0 0 0 0 rgba(255,74,74,0.4);
+      animation: loc-pulse 2s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    @keyframes loc-pulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(255,74,74,0.4); }
+      50%     { box-shadow: 0 0 0 8px rgba(255,74,74,0); }
+    }
+    .loc-text { font-size: 0.72rem; font-weight: 600; color: rgba(255,255,255,0.4); font-family: var(--font-sans); letter-spacing: 0.03em; }
+    .loc-url { color: rgba(255,255,255,0.18); font-size: 0.68rem; font-family: monospace; }
+
+    /* ============================================
+       CTA BUTTONS
+    ============================================ */
+    .error-btns {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+      margin-bottom: 4rem;
+      opacity: 0; animation: fade-in-up 0.7s ease 0.7s forwards;
+    }
+
+    .btn-home {
+      display: inline-flex; align-items: center; gap: 0.7rem;
+      background: var(--accent); color: var(--primary);
+      font-family: var(--font-sans); font-weight: 700; font-size: 0.95rem;
+      padding: 1rem 2.25rem; border-radius: 3rem; text-decoration: none;
+      transition: all 0.35s cubic-bezier(0.23,1,0.32,1);
+      position: relative; overflow: hidden;
+    }
+    .btn-home::before {
+      content: ''; position: absolute; inset: 0; border-radius: inherit;
+      background: var(--white); transform: translateX(-105%); transition: transform 0.4s cubic-bezier(0.23,1,0.32,1);
+    }
+    .btn-home:hover::before { transform: translateX(0); }
+    .btn-home span, .btn-home i { position: relative; z-index: 1; }
+    .btn-home:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.4); }
+
+    .btn-back {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: transparent; border: 1.5px solid rgba(255,255,255,0.13);
+      color: rgba(255,255,255,0.65); font-family: var(--font-sans); font-weight: 500; font-size: 0.9rem;
+      padding: 1rem 2rem; border-radius: 3rem; text-decoration: none;
+      transition: all 0.3s; cursor: pointer;
+    }
+    .btn-back:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-3px); }
+
+    /* ============================================
+       QUICK LINKS MAPA
+    ============================================ */
+    .quick-links-section {
+      width: 100%; max-width: 740px;
+      opacity: 0; animation: fade-in-up 0.7s ease 0.9s forwards;
+    }
+
+    .ql-header {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.2em; color: rgba(255,255,255,0.25);
+      margin-bottom: 1.25rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .ql-header::before, .ql-header::after {
+      content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.07);
+    }
+
+    .quick-links {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+    }
+
+    .ql-item {
+      display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 1.1rem; padding: 1.25rem 0.75rem;
+      text-decoration: none; transition: all 0.3s cubic-bezier(0.23,1,0.32,1);
+      position: relative; overflow: hidden;
+    }
+    .ql-item::before {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 2px; background: var(--accent);
+      transform: scaleX(0); transition: transform 0.3s ease;
+    }
+    .ql-item:hover { background: rgba(255,255,255,0.07); border-color: rgba(206,244,49,0.2); transform: translateY(-4px); }
+    .ql-item:hover::before { transform: scaleX(1); }
+
+    .ql-icon {
+      width: 40px; height: 40px; border-radius: 0.75rem;
+      background: rgba(1,55,125,0.4); border: 1px solid rgba(1,95,196,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; color: var(--accent);
+      transition: all 0.3s;
+    }
+    .ql-item:hover .ql-icon { background: rgba(206,244,49,0.15); border-color: rgba(206,244,49,0.3); }
+
+    .ql-name {
+      font-family: var(--font-head); font-size: 0.78rem; font-weight: 700;
+      color: rgba(255,255,255,0.75); text-align: center; line-height: 1.2;
+    }
+    .ql-item:hover .ql-name { color: var(--white); }
+
+    @media (max-width: 560px) { .quick-links { grid-template-columns: repeat(2,1fr); } }
+
+    /* ============================================
+       FOOTER MICRO
+    ============================================ */
+    .error-footer {
+      position: relative; z-index: 10;
+      padding: 1.5rem 2rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      text-align: center;
+    }
+    .error-footer p {
+      font-size: 0.72rem; color: rgba(255,255,255,0.2);
+    }
+    .error-footer a { color: var(--accent); text-decoration: none; }
+    .error-footer a:hover { text-decoration: underline; }
+
+    /* ============================================
+       DECORATIVE CORNER ELEMENTS
+    ============================================ */
+    .corner-tl, .corner-br {
+      position: fixed; z-index: 3; pointer-events: none;
+    }
+    .corner-tl { top: 5.5rem; left: 1.5rem; }
+    .corner-br { bottom: 1.5rem; right: 1.5rem; }
+
+    .corner-svg { opacity: 0.15; }
+
+    /* ============================================
+       FLOATING EQUATION
+    ============================================ */
+    .float-eq {
+      position: fixed; z-index: 3; pointer-events: none;
+      font-family: var(--font-serif); font-style: italic;
+      font-size: clamp(0.75rem, 1.2vw, 1rem);
+      color: rgba(206,244,49,0.12);
+      animation: float-drift linear infinite;
+      user-select: none;
+    }
+    @keyframes float-drift {
+      0%   { transform: translateY(100vh) rotate(0deg);   opacity:0; }
+      5%   { opacity:1; }
+      95%  { opacity:0.8; }
+      100% { transform: translateY(-20vh) rotate(10deg);  opacity:0; }
+    }
+
+    /* Code error badge */
+    .code-badge {
+      position: fixed; bottom: 2rem; left: 2rem; z-index: 20;
+      display: flex; align-items: center; gap: 0.5rem;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 0.5rem; padding: 0.5rem 0.875rem;
+      font-family: monospace; font-size: 0.7rem; color: rgba(255,255,255,0.2);
+      pointer-events: none;
+    }
+    .code-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #FF4A4A; }
+
+    @media (max-width: 480px) { .code-badge { display:none; } .corner-tl, .corner-br { display:none; } }
+  </style>
+</head>
+<body>
+
+  <!-- Background layers -->
+  <canvas id="bg-canvas"></canvas>
+  <div class="corridor-grid"></div>
+  <div class="vignette"></div>
+  <div class="glow-top"></div>
+  <div class="glow-accent"></div>
+
+  <!-- Floating math symbols -->
+  <div class="float-eq" style="left:8%;  animation-duration:18s; animation-delay:0s;   font-size:1.4rem;">∑</div>
+  <div class="float-eq" style="left:18%; animation-duration:24s; animation-delay:3s;   font-size:0.9rem;">π ≈ 3.14</div>
+  <div class="float-eq" style="left:75%; animation-duration:20s; animation-delay:6s;   font-size:1.2rem;">√x</div>
+  <div class="float-eq" style="left:85%; animation-duration:16s; animation-delay:1.5s; font-size:1.1rem;">∫</div>
+  <div class="float-eq" style="left:55%; animation-duration:22s; animation-delay:9s;   font-size:0.85rem;">f(x) = ax²</div>
+  <div class="float-eq" style="left:30%; animation-duration:19s; animation-delay:4s;   font-size:1rem;">Δ</div>
+  <div class="float-eq" style="left:65%; animation-duration:28s; animation-delay:7s;   font-size:0.9rem;">∞</div>
+  <div class="float-eq" style="left:42%; animation-duration:15s; animation-delay:12s;  font-size:1.3rem;">θ</div>
+
+  <!-- Corner decorations -->
+  <div class="corner-tl">
+    <svg class="corner-svg" width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0 H80 V4 H4 V80 H0 Z" fill="#CEF431"/>
+      <circle cx="4" cy="4" r="3" fill="#CEF431"/>
+    </svg>
+  </div>
+  <div class="corner-br">
+    <svg class="corner-svg" width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M80 80 H0 V76 H76 V0 H80 Z" fill="#CEF431"/>
+      <circle cx="76" cy="76" r="3" fill="#CEF431"/>
+    </svg>
+  </div>
+
+  <!-- Code badge -->
+  <div class="code-badge">HTTP 404 · Not Found</div>
+
+  <!-- ─── NAVBAR ─── -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar-container">
+      <a class="logo-section" href="/">
+        <img src="/assets/images/logo/lo.png" alt="Alfa e Omega" class="logo-img">
+        <div class="logo-text-block">
+          <h2>Colégio Alfa e Omega</h2>
+          <p>Panguila · Angola</p>
+        </div>
+      </a>
+      <a href="/" class="nav-home">
+        <i class="fas fa-home"></i> Voltar ao Início
+      </a>
+    </div>
+  </nav>
+
+  <!-- ─── MAIN CONTENT ─── -->
+  <main class="page-wrap">
+
+    <!-- 404 Glitch Number -->
+    <div class="error-number-wrap">
+      <div class="error-school-watermark">ALFA E OMEGA</div>
+      <div class="error-number">404</div>
+      <div class="glitch-lines">
+        <div class="gl-line"></div>
+        <div class="gl-line"></div>
+        <div class="gl-line"></div>
+      </div>
+    </div>
+
+    <!-- Eyebrow -->
+    <div class="error-eyebrow">Erro 404 · Página não encontrada</div>
+
+    <!-- Title -->
+    <h1 class="error-title">
+      Ops! Parece que se perdeu<br>nos <em>corredores</em>.
+    </h1>
+
+    <!-- Description -->
+    <p class="error-desc">
+      A página que procura não existe, foi movida ou o endereço foi escrito incorrectamente. Não se preocupe — acontece até aos melhores alunos.
+    </p>
+
+    <!-- Location indicator -->
+    <div class="location-bar">
+      <div class="loc-dot"></div>
+      <span class="loc-text">Localização actual:</span>
+      <span class="loc-url" id="current-url">/página-não-encontrada</span>
+    </div>
+
+    <!-- CTA Buttons -->
+    <div class="error-btns">
+      <a href="/" class="btn-home">
+        <i class="fas fa-chalkboard-teacher"></i>
+        <span>Voltar para a Sala de Aula</span>
+      </a>
+      <button class="btn-back" onclick="history.back()">
+        <i class="fas fa-arrow-left"></i> Página Anterior
+      </button>
+    </div>
+
+    <!-- Quick links -->
+    <div class="quick-links-section">
+      <div class="ql-header">Ou escolha um destino</div>
+      <div class="quick-links">
+        <a href="/" class="ql-item">
+          <div class="ql-icon"><i class="fas fa-home"></i></div>
+          <span class="ql-name">Início</span>
+        </a>
+        <a href="/sobre.html" class="ql-item">
+          <div class="ql-icon"><i class="fas fa-info-circle"></i></div>
+          <span class="ql-name">Sobre a Escola</span>
+        </a>
+        <a href="/galeria.html" class="ql-item">
+          <div class="ql-icon"><i class="fas fa-images"></i></div>
+          <span class="ql-name">Galeria</span>
+        </a>
+        <a href="/olimpiadas.html" class="ql-item">
+          <div class="ql-icon"><i class="fas fa-trophy"></i></div>
+          <span class="ql-name">Olimpíadas</span>
+        </a>
+        <a href="/oferta.html" class="ql-item">
+          <div class="ql-icon"><i class="fas fa-book-open"></i></div>
+          <span class="ql-name">Oferta Educativa</span>
+        </a>
+        <a href="/novidades.html" class="ql-item">
+          <div class="ql-icon"><i class="fas fa-newspaper"></i></div>
+          <span class="ql-name">Novidades</span>
+        </a>
+        <a href="/matriculas.html" class="ql-item">
+          <div class="ql-icon"><i class="fas fa-graduation-cap"></i></div>
+          <span class="ql-name">Matrículas</span>
+        </a>
+        <a href="/contactos.html" class="ql-item">
+          <div class="ql-icon"><i class="fas fa-envelope"></i></div>
+          <span class="ql-name">Contactos</span>
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ─── FOOTER MICRO ─── -->
+  <footer class="error-footer">
+    <p>
+      © <span id="year"></span> Colégio Alfa e Omega · Panguila, Angola ·
+      <a href="/">colegioalfaeomega.com</a>
+    </p>
+  </footer>
+
+  <script>
+    // ─── YEAR ─────────────────────────────────────────────
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ─── CURRENT URL path ─────────────────────────────────
+    const urlEl = document.getElementById('current-url');
+    if (urlEl) {
+      const path = window.location.pathname || '/404';
+      urlEl.textContent = path.length > 40 ? path.substring(0, 38) + '…' : path;
+    }
+
+    // ─── CANVAS — partículas + símbolos flutuantes ─────────
+    const canvas = document.getElementById('bg-canvas');
+    const ctx    = canvas.getContext('2d');
+
+    function resize() {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize, { passive: true });
+
+    // Partículas simples
+    const pts = [];
+    for (let i = 0; i < 70; i++) {
+      pts.push({
+        x: Math.random(), y: Math.random(),
+        r: Math.random() * 1.4 + 0.2,
+        vx: (Math.random() - 0.5) * 0.00012,
+        vy: (Math.random() - 0.5) * 0.00012,
+        c: ['rgba(1,55,125,', 'rgba(206,244,49,', 'rgba(10,95,196,'][Math.floor(Math.random()*3)],
+        a: Math.random() * 0.35 + 0.05,
+      });
+    }
+
+    function drawFrame() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const W = canvas.width, H = canvas.height;
+
+      pts.forEach(p => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0) p.x = 1;  if (p.x > 1) p.x = 0;
+        if (p.y < 0) p.y = 1;  if (p.y > 1) p.y = 0;
+        ctx.beginPath();
+        ctx.arc(p.x * W, p.y * H, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.c + p.a + ')';
+        ctx.fill();
+      });
+
+      // Linhas de conexão
+      for (let i = 0; i < pts.length; i++) {
+        for (let j = i + 1; j < pts.length; j++) {
+          const dx = (pts[i].x - pts[j].x) * W;
+          const dy = (pts[i].y - pts[j].y) * H;
+          const d  = Math.sqrt(dx*dx + dy*dy);
+          if (d < 140) {
+            ctx.beginPath();
+            ctx.moveTo(pts[i].x * W, pts[i].y * H);
+            ctx.lineTo(pts[j].x * W, pts[j].y * H);
+            ctx.strokeStyle = `rgba(1,55,125,${0.1 * (1 - d/140)})`;
+            ctx.lineWidth = 0.6;
+            ctx.stroke();
+          }
+        }
+      }
+
+      requestAnimationFrame(drawFrame);
+    }
+    drawFrame();
+
+    // ─── LOAD FOOTER ──────────────────────────────────────
+    fetch('/components/footer.html')
+      .then(r => r.text())
+      .then(d => {
+        const fc = document.getElementById('footer-container');
+        if (fc) fc.innerHTML = d;
+      })
+      .catch(() => {});
+  </script>
+</body>
+</html>
