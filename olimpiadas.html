@@ -13,6 +13,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     /* ============================================
@@ -138,7 +139,7 @@
      .page-hero-02 {
       background:
         linear-gradient(140deg, rgba(1,14,36,0.88), rgba(1,24,48,0.86)),
-        url('/assets/images/olimpiadas/todos-02.webp') center/cover no-repeat;
+        url('/assets/olimpiadas/todos-02.webp') center/cover no-repeat;
       padding: 4rem 1rem 2rem;
       position: relative; overflow: hidden; min-height: 88vh;
       display: flex; flex-direction: column; justify-content: center;
@@ -148,7 +149,7 @@
     .page-hero {
       background:
         linear-gradient(140deg, rgba(1,14,36,0.88), rgba(1,24,48,0.86)),
-        url('/assets/images/olimpiadas/todos.webp') center/cover no-repeat;
+        url('/assets/olimpiadas/todos.webp') center/cover no-repeat;
       padding: 6rem 2rem 4rem;
       position: relative; overflow: hidden; min-height: 92vh;
       display: flex; flex-direction: column; justify-content: center;
@@ -910,7 +911,7 @@
             <div class="ranking-badge rb-silver">#2</div>
             <div class="card-body">
               <div class="card-photo">
-                <img src="/assets/images/olimpiadas/prata.webp" alt="Alunos com medalhas de prata" loading="lazy" decoding="async">
+                <img src="/assets/olimpiadas/prata.webp" alt="Alunos com medalhas de prata" loading="lazy" decoding="async">
               </div>
               <div class="medal-icon-wrap icon-silver">
                 <div class="medal-icon-inner">🥈</div>
@@ -941,7 +942,7 @@
             <div class="ranking-badge rb-gold">#1</div>
             <div class="card-body">
               <div class="card-photo">
-                <img src="/assets/images/olimpiadas/ouro.webp" alt="Alunos com medalhas de ouro" loading="lazy" decoding="async">
+                <img src="/assets/olimpiadas/ouro.webp" alt="Alunos com medalhas de ouro" loading="lazy" decoding="async">
               </div>
               <div class="medal-icon-wrap icon-gold">
                 <div class="medal-icon-inner">🥇</div>
@@ -973,7 +974,7 @@
             <div class="ranking-badge rb-bronze">#3</div>
             <div class="card-body">
               <div class="card-photo">
-                <img src="/assets/images/olimpiadas/bronze.webp" alt="Alunos com medalhas de bronze" loading="lazy" decoding="async">
+                <img src="/assets/olimpiadas/bronze.webp" alt="Alunos com medalhas de bronze" loading="lazy" decoding="async">
               </div>
               <div class="medal-icon-wrap icon-bronze">
                 <div class="medal-icon-inner">🥉</div>
@@ -1202,6 +1203,67 @@
       .then(r => r.text())
       .then(d => { document.getElementById('footer-container').innerHTML = d; })
       .catch(() => {});
+  </script>
+  <script>
+    /**
+     * SISTEMA DE INTELIGÊNCIA - COLÉGIO ALFA E ÓMEGA
+     * Implementação: Supabase Realtime Data Tracking
+     *
+     * Este script conecta o frontend ao banco de dados para capturar:
+     * 1. Leads de Encarregados (Quiz)
+     * 2. Cliques em Medalhas (Métricas de Interesse)
+     */
+    const SUPABASE_URL = 'https://xpoysdrwvmamrtybiflj.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_f5TrSsgbVRptK1PINCmRag_tWmjDcIp';
+    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    async function saveQuizLead(payload) {
+      if (!_supabase) return;
+      const { error } = await _supabase.from('leads_quiz').insert([
+        {
+          nome: payload.nome,
+          whatsapp: payload.whatsapp,
+          score: payload.score,
+          status: payload.status,
+        },
+      ]);
+
+      if (error) console.error('Erro Supabase (Quiz):', error.message);
+    }
+
+    async function registrarCliqueMedalha(tipo) {
+      if (!_supabase) return;
+      const { error } = await _supabase.from('site_metrics').insert([
+        {
+          event_type: `clique_medalha_${String(tipo).toLowerCase()}`,
+          page_url: window.location.pathname,
+        },
+      ]);
+
+      if (error) {
+        console.error('Erro nas Métricas:', error.message);
+      } else {
+        console.log(`Evento: Clique na medalha de ${tipo} registado!`);
+      }
+    }
+
+    async function trackMedalInteraction(medalType) {
+      await registrarCliqueMedalha(medalType);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const map = [
+        { selector: '.card-gold', type: 'ouro' },
+        { selector: '.card-silver', type: 'prata' },
+        { selector: '.card-bronze', type: 'bronze' },
+      ];
+
+      map.forEach(item => {
+        document.querySelectorAll(item.selector).forEach(el => {
+          el.addEventListener('click', () => registrarCliqueMedalha(item.type));
+        });
+      });
+    });
   </script>
 </body>
 </html>

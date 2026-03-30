@@ -1283,15 +1283,47 @@ async function fetchDashboardData() {
     .from('site_metrics')
     .select('event_type');
 
+  const { data: pageViews, error: viewError } = await _supabase
+    .from('page_views')
+    .select('page_url');
+
   if (leadError) console.error('Erro ao buscar leads:', leadError.message);
   if (metricError) console.error('Erro ao buscar métricas:', metricError.message);
+  if (viewError) console.error('Erro ao buscar page views:', viewError.message);
 
   if (leads) renderLeadsTable(leads);
   if (metrics) updateCharts(metrics, leads || []);
+  if (pageViews) updatePageViewStats(pageViews);
 }
 
 async function carregarDadosDashboard() {
   await fetchDashboardData();
+}
+
+function updatePageViewStats(pageViews) {
+  const rows = Array.isArray(pageViews) ? pageViews : [];
+  const byPage = {};
+
+  rows.forEach(item => {
+    const raw = String(item.page_url || '/').trim();
+    const path = raw.startsWith('/') ? raw : `/${raw}`;
+    byPage[path] = (byPage[path] || 0) + 1;
+  });
+
+  DB.stats.visits = rows.length;
+  DB.sparklines.visits = [...DB.sparklines.visits.slice(0, 11), DB.stats.visits];
+  document.getElementById('stat-visits').textContent = DB.stats.visits.toLocaleString('pt-PT');
+  buildSparkline('spark-visits', DB.sparklines.visits, '#0A5FC4', '#0A5FC4');
+
+  const pages = Object.entries(byPage)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 6)
+    .map(([name, hits]) => ({ name, hits, trend: '↑' }));
+
+  if (pages.length > 0) {
+    DB.topPages = pages;
+    buildTopPages();
+  }
 }
 
 function generateWA(phone, name, status) {

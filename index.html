@@ -20,6 +20,7 @@
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
   <link rel="stylesheet" href="/assets/css/main.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <!-- OneSignal Web Push Notifications SDK v16 -->
 
@@ -1617,22 +1618,6 @@
   </style>
 </head>
 <body>
-<div id="alfa-notification" class="notification-toast-premium">
-  <div class="notif-wrapper">
-    <div class="notif-icon-premium">🏆</div>
-    <div class="notif-content-premium">
-      <span class="notif-tag-premium">Destaque</span>
-      <p class="notif-title-premium">Novidade no Mural!</p>
-      <p class="notif-text-premium">Conheça os nossos <strong>Pequenos Finalistas 2026</strong>. O futuro brilha em Panguila! 🎓</p>
-      <a href="#finalistas" class="notif-link-premium" onclick="closeNotif()">Ver Agora</a>
-    </div>
-    <button class="notif-close-premium" onclick="closeNotif()" aria-label="Fechar">&times;</button>
-  </div>
-  <div class="notif-progress"></div> </div>
-
-<audio id="notif-sound" preload="auto">
-  <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_133442650c.mp3" type="audio/mpeg">
-</audio>
   <!-- PRELOADER -->
   <div id="preloader">
     <div class="pl-inner">
@@ -1982,6 +1967,22 @@
 
   </main>
 
+  <!-- Notificação Premium: Olimpíadas -->
+  <div id="alfa-notification" class="notification-toast-premium" role="status" aria-live="polite">
+    <div class="notif-wrapper">
+      <div class="notif-icon-premium">🏅</div>
+      <div class="notif-content-premium">
+        <span class="notif-tag-premium">Olimpíadas 2026</span>
+        <h3 class="notif-title-premium">Confira o resultado das Olimpíadas de Matemática</h3>
+        <p class="notif-text-premium">Confira agora os resultados das Olimpíadas de Matemática e descubra quais os vencedores!</p>
+        <a href="/olimpiadas.html" class="notif-link-premium">Ver resultados</a>
+      </div>
+      <button class="notif-close-premium" onclick="closeNotif()" aria-label="Fechar notificação">&times;</button>
+      <div class="notif-progress"></div>
+    </div>
+  </div>
+  <audio id="notif-sound" preload="none"></audio>
+
   <div id="footer-container"></div>
 
   <!-- Scripts -->
@@ -2099,6 +2100,26 @@ window.addEventListener('load', managePremiumNotification);
       .then(r => r.text())
       .then(d => { document.getElementById('footer-container').innerHTML = d; })
       .catch(() => {});
+  </script>
+
+  <script>
+    const SUPABASE_URL = 'https://xpoysdrwvmamrtybiflj.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_f5TrSsgbVRptK1PINCmRag_tWmjDcIp';
+    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    async function registrarPageView() {
+      const { error } = await _supabase
+        .from('page_views')
+        .insert([{ page_url: window.location.pathname }]);
+
+      if (error) {
+        console.error('Erro ao registar page_view:', error.message);
+      } else {
+        console.log('Page view registada com sucesso.');
+      }
+    }
+
+    window.addEventListener('load', registrarPageView, { once: true });
   </script>
 </body>
 </html>
