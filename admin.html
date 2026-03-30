@@ -1188,9 +1188,9 @@ td {
      JAVASCRIPT
 ═══════════════════════════════════════════════════ -->
 <script>
-const SUPABASE_URL = 'https://f5trssgbvrptk1pincmr.supabase.co';
+const SUPABASE_URL = 'https://xpoysdrwvmamrtybiflj.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_f5TrSsgbVRptK1PINCmRag_tWmjDcIp';
-const _supabase = window.supabase?.createClient(SUPABASE_URL, SUPABASE_KEY);
+const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 /* ════════════════════════════════════════════════════
    ① DATA LAYER
    → Trocar fetchData() por chamadas Supabase/Firebase
@@ -1288,6 +1288,10 @@ async function fetchDashboardData() {
 
   if (leads) renderLeadsTable(leads);
   if (metrics) updateCharts(metrics, leads || []);
+}
+
+async function carregarDadosDashboard() {
+  await fetchDashboardData();
 }
 
 function generateWA(phone, name, status) {
@@ -1890,6 +1894,8 @@ document.addEventListener('DOMContentLoaded', () => {
   /* Dados reais (Supabase) */
   fetchDashboardData();
 });
+
+window.onload = carregarDadosDashboard;
 </script>
 </body>
 </html>
