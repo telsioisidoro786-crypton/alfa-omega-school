@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-PT">
 <head>
 <meta charset="UTF-8">
@@ -872,37 +872,6 @@ td {
         <span class="nav-label">Leads do Quiz</span>
         <span class="nav-badge" id="badge-leads">24</span>
       </div>
-      <div class="nav-item" onclick="switchSection('medals')">
-        <span class="nav-icon"><i class="fas fa-trophy"></i></span>
-        <span class="nav-label">Performance Medalhas</span>
-      </div>
-      <div class="nav-item" onclick="switchSection('gallery')">
-        <span class="nav-icon"><i class="fas fa-images"></i></span>
-        <span class="nav-label">Galeria</span>
-      </div>
-
-      <div class="sb-section-label">Gestão</div>
-
-      <div class="nav-item" onclick="switchSection('messages')">
-        <span class="nav-icon"><i class="fas fa-envelope"></i></span>
-        <span class="nav-label">Mensagens</span>
-        <span class="nav-badge">3</span>
-      </div>
-      <div class="nav-item" onclick="switchSection('reports')">
-        <span class="nav-icon"><i class="fas fa-file-chart-column"></i></span>
-        <span class="nav-label">Relatórios</span>
-      </div>
-
-      <div class="sb-section-label">Sistema</div>
-
-      <div class="nav-item" onclick="switchSection('settings')">
-        <span class="nav-icon"><i class="fas fa-gear"></i></span>
-        <span class="nav-label">Configurações</span>
-      </div>
-      <div class="nav-item" onclick="switchSection('api')">
-        <span class="nav-icon"><i class="fas fa-plug"></i></span>
-        <span class="nav-label">API / Supabase</span>
-      </div>
 
     </nav>
 
@@ -1243,13 +1212,7 @@ const DB = {
   ],
 
   /* ── Actividade recente ─────────────────────────── */
-  activity: [
-    { type:'quiz',    text:'<strong>Maria Fernandes</strong> completou o Quiz com pontuação Exemplar',  time:'há 8 min' },
-    { type:'medal',   text:'<strong>42 visitantes</strong> acederam à página de Olimpíadas hoje',       time:'há 23 min' },
-    { type:'quiz',    text:'<strong>António Silva</strong> completou o Quiz — nível Bom',               time:'há 1h' },
-    { type:'visit',   text:'<strong>Pico de tráfego</strong> — 220 visitas simultâneas detectadas',     time:'há 2h' },
-    { type:'contact', text:'<strong>Nova matrícula</strong> — pedido de contacto via WhatsApp',         time:'há 3h' },
-  ],
+  activity: [],
 
   /* ── Leads do Quiz ──────────────────────────────── */
   leads: [
@@ -1272,7 +1235,10 @@ const DB = {
    ② CLASSIFICATION HELPER
 ════════════════════════════════════════════════════ */
 async function fetchDashboardData() {
-  if (!_supabase) return;
+  if (!_supabase) {
+    updateRecentActivity([], [], []);
+    return;
+  }
 
   const { data: leads, error: leadError } = await _supabase
     .from('leads_quiz')
@@ -1281,11 +1247,15 @@ async function fetchDashboardData() {
 
   const { data: metrics, error: metricError } = await _supabase
     .from('site_metrics')
-    .select('event_type');
+    .select('event_type, page_url, created_at')
+    .order('created_at', { ascending: false })
+    .limit(50);
 
   const { data: pageViews, error: viewError } = await _supabase
     .from('page_views')
-    .select('page_url');
+    .select('page_url, created_at')
+    .order('created_at', { ascending: false })
+    .limit(50);
 
   if (leadError) console.error('Erro ao buscar leads:', leadError.message);
   if (metricError) console.error('Erro ao buscar métricas:', metricError.message);
@@ -1294,6 +1264,7 @@ async function fetchDashboardData() {
   if (leads) renderLeadsTable(leads);
   if (metrics) updateCharts(metrics, leads || []);
   if (pageViews) updatePageViewStats(pageViews);
+  updateRecentActivity(leads || [], metrics || [], pageViews || []);
 }
 
 async function carregarDadosDashboard() {
@@ -1324,6 +1295,112 @@ function updatePageViewStats(pageViews) {
     DB.topPages = pages;
     buildTopPages();
   }
+}
+
+function escapeHtml(text) {
+  return String(text ?? '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+}
+
+function formatTimeAgo(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return 'agora';
+
+  const diff = Math.max(0, Date.now() - date.getTime());
+  const min = Math.floor(diff / 60000);
+  const hour = Math.floor(min / 60);
+  const day = Math.floor(hour / 24);
+
+  if (min < 1) return 'agora';
+  if (min < 60) return `há ${min} min`;
+  if (hour < 24) return `há ${hour}h`;
+  return `há ${day}d`;
+}
+
+function normalizePagePath(raw) {
+  const path = String(raw || '/').trim();
+  return path.startsWith('/') ? path : `/${path}`;
+}
+
+function updateRecentActivity(leads, metrics, pageViews) {
+  const events = [];
+  const safeLeads = Array.isArray(leads) ? leads : [];
+  const safeMetrics = Array.isArray(metrics) ? metrics : [];
+  const safePageViews = Array.isArray(pageViews) ? pageViews : [];
+
+  safeLeads.slice(0, 25).forEach(lead => {
+    if (!lead?.created_at) return;
+    const score = Number(lead.score ?? lead.pontuacao ?? 0) || 0;
+    const level = classify(score, 32).label;
+    const name = escapeHtml(lead.nome || 'Encarregado');
+    events.push({
+      type: 'quiz',
+      ts: lead.created_at,
+      text: `<strong>${name}</strong> completou o Quiz — nível ${escapeHtml(level)}`,
+    });
+    if (lead.whatsapp) {
+      events.push({
+        type: 'contact',
+        ts: lead.created_at,
+        text: `<strong>${name}</strong> deixou contacto via WhatsApp`,
+      });
+    }
+  });
+
+  safeMetrics.slice(0, 30).forEach(metric => {
+    if (!metric?.created_at) return;
+    const eventType = String(metric.event_type || '').toLowerCase();
+    const page = escapeHtml(normalizePagePath(metric.page_url || '/olimpiadas'));
+    let medalType = '';
+    if (eventType.includes('ouro')) medalType = 'Ouro';
+    if (eventType.includes('prata')) medalType = 'Prata';
+    if (eventType.includes('bronze')) medalType = 'Bronze';
+
+    if (medalType) {
+      events.push({
+        type: 'medal',
+        ts: metric.created_at,
+        text: `<strong>Clique na medalha ${medalType}</strong> registado em ${page}`,
+      });
+    } else {
+      events.push({
+        type: 'visit',
+        ts: metric.created_at,
+        text: `<strong>Evento rastreado</strong> ${escapeHtml(metric.event_type || 'site_metrics')}`,
+      });
+    }
+  });
+
+  safePageViews.slice(0, 30).forEach(view => {
+    if (!view?.created_at) return;
+    const path = escapeHtml(normalizePagePath(view.page_url));
+    events.push({
+      type: 'visit',
+      ts: view.created_at,
+      text: `<strong>Visita registada</strong> em ${path}`,
+    });
+  });
+
+  const recent = events
+    .map(item => ({ ...item, timeMs: new Date(item.ts).getTime() }))
+    .filter(item => Number.isFinite(item.timeMs))
+    .sort((a, b) => b.timeMs - a.timeMs)
+    .slice(0, 5)
+    .map(item => ({
+      type: item.type,
+      text: item.text,
+      time: formatTimeAgo(item.ts),
+    }));
+
+  DB.activity = recent.length > 0
+    ? recent
+    : [{ type: 'visit', text: '<strong>Sem actividade recente</strong> Ainda não há eventos rastreados.', time: 'agora' }];
+
+  buildActivity();
 }
 
 function generateWA(phone, name, status) {
@@ -1644,6 +1721,16 @@ function buildTopPages() {
 function buildActivity() {
   const iconMap = { quiz:'📋', medal:'🏅', visit:'👁', contact:'✉️' };
   const el = document.getElementById('activity-feed');
+  if (!Array.isArray(DB.activity) || DB.activity.length === 0) {
+    el.innerHTML = `
+      <div class="act-item">
+        <div class="act-dot visit">ℹ️</div>
+        <div class="act-text"><strong>A carregar actividade</strong> Aguardando eventos reais do tracking.</div>
+        <div class="act-time">agora</div>
+      </div>
+    `;
+    return;
+  }
   el.innerHTML = DB.activity.map(a => `
     <div class="act-item">
       <div class="act-dot ${a.type}">${iconMap[a.type]||'●'}</div>
@@ -1931,3 +2018,4 @@ window.onload = carregarDadosDashboard;
 </script>
 </body>
 </html>
+
