@@ -1245,15 +1245,6 @@ function showResults() {
 
   saveQuizLead(payload);
 
-  fetch('processar-quiz.php', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      ...payload,
-      pontuacao: payload.score,
-    }),
-  }).catch(err => console.error('Falha ao enviar dados do quiz:', err));
-
   // Go to results screen
   goTo('screen-result');
 
@@ -1417,7 +1408,7 @@ function fireConfetti() {
  * 1. Leads de Encarregados (Quiz)
  * 2. Cliques em Medalhas (Métricas de Interesse)
  */
-const SUPABASE_URL = 'https://f5trssgbvrptk1pincmr.supabase.co';
+const SUPABASE_URL = 'https://xpoysdrwvmamrtybiflj.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_f5TrSsgbVRptK1PINCmRag_tWmjDcIp';
 const _supabase = window.supabase?.createClient(SUPABASE_URL, SUPABASE_KEY);
 
