@@ -1,0 +1,1895 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Colégio Alfa e Omega</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+/* ════════════════════════════════════════════════════════════
+   DESIGN TOKENS
+════════════════════════════════════════════════════════════ */
+:root {
+  /* Core */
+  --bg:          #0a0e14;
+  --bg-1:        #0d1220;
+  --bg-2:        #111827;
+  --sidebar-bg:  #080c14;
+  /* Brand */
+  --blue:        #01377D;
+  --blue-m:      #0147A0;
+  --blue-l:      #0A5FC4;
+  --blue-xl:     #3B82F6;
+  --gold:        #E6B325;
+  --gold-l:      #F5C842;
+  --gold-d:      #B8901C;
+  --lime:        #CEF431;
+  --lime-d:      #8FA300;
+  /* Semantic */
+  --green:       #22C55E;
+  --red:         #EF4444;
+  --orange:      #F97316;
+  --purple:      #8B5CF6;
+  /* Text */
+  --text-1:      #F0F4FF;
+  --text-2:      #8B9CC0;
+  --text-3:      #4A567A;
+  /* Surface */
+  --card:        rgba(255,255,255,0.035);
+  --card-hover:  rgba(255,255,255,0.06);
+  --border:      rgba(255,255,255,0.07);
+  --border-h:    rgba(255,255,255,0.14);
+  /* Medal */
+  --medal-gold:   #FFD700;
+  --medal-silver: #C0C0C0;
+  --medal-bronze: #CD7F32;
+  /* Typography */
+  --font: 'DM Sans', sans-serif;
+  --font-serif: 'DM Serif Display', serif;
+  /* Layout */
+  --sidebar-w: 256px;
+  --sidebar-w-collapsed: 68px;
+  --topbar-h: 64px;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-xs: 7px;
+  --transition: all 0.3s cubic-bezier(0.23,1,0.32,1);
+}
+
+/* ════════════════════════════════════════════════════════════
+   RESET & BASE
+════════════════════════════════════════════════════════════ */
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; -webkit-font-smoothing:antialiased; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text-1);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+a { text-decoration:none; color:inherit; }
+button { font-family:inherit; cursor:pointer; border:none; outline:none; }
+input,select { font-family:inherit; outline:none; }
+::-webkit-scrollbar { width:5px; height:5px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.1); border-radius:4px; }
+::-webkit-scrollbar-thumb:hover { background:rgba(255,255,255,0.2); }
+
+/* ════════════════════════════════════════════════════════════
+   ANIMATED GRID BACKGROUND
+════════════════════════════════════════════════════════════ */
+body::before {
+  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:
+    repeating-linear-gradient(90deg, transparent, transparent 64px, rgba(255,255,255,0.015) 64px, rgba(255,255,255,0.015) 65px),
+    repeating-linear-gradient(0deg,  transparent, transparent 64px, rgba(255,255,255,0.015) 64px, rgba(255,255,255,0.015) 65px);
+}
+body::after {
+  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 60% 50% at 15% 10%, rgba(1,55,125,0.25) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 40% at 85% 80%, rgba(230,179,37,0.06) 0%, transparent 60%);
+}
+
+/* ════════════════════════════════════════════════════════════
+   LAYOUT SHELL
+════════════════════════════════════════════════════════════ */
+.shell {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* ════════════════════════════════════════════════════════════
+   SIDEBAR
+════════════════════════════════════════════════════════════ */
+.sidebar {
+  width: var(--sidebar-w);
+  min-height: 100vh;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top:0; left:0; bottom:0;
+  z-index: 200;
+  transition: var(--transition);
+  overflow: hidden;
+}
+.sidebar.collapsed { width: var(--sidebar-w-collapsed); }
+
+/* Sidebar brand */
+.sb-brand {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 1.25rem 1.125rem;
+  border-bottom: 1px solid var(--border);
+  min-height: var(--topbar-h);
+  overflow: hidden;
+}
+.sb-logo {
+  width: 36px; height: 36px; border-radius: 10px; flex-shrink:0;
+  background: linear-gradient(135deg, var(--blue-l), var(--blue));
+  display: flex; align-items:center; justify-content:center;
+  font-size: 1.1rem;
+  box-shadow: 0 0 20px rgba(1,55,125,0.5);
+}
+.sb-brand-text { overflow:hidden; white-space:nowrap; }
+.sb-brand-text h2 { font-size:.82rem; font-weight:800; color:var(--text-1); line-height:1.2; }
+.sb-brand-text p  { font-size:.58rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--gold); margin-top:.1rem; }
+
+/* Nav sections */
+.sb-nav { flex:1; padding: 1rem 0; overflow-y:auto; overflow-x:hidden; }
+.sb-section-label {
+  font-size:.57rem; font-weight:800; text-transform:uppercase; letter-spacing:.18em;
+  color:var(--text-3); padding:.75rem 1.125rem .4rem;
+  white-space:nowrap; overflow:hidden;
+  transition:opacity .3s;
+}
+.sidebar.collapsed .sb-section-label { opacity:0; }
+
+.nav-item {
+  display:flex; align-items:center; gap:.875rem;
+  padding:.7rem 1.125rem; margin:.1rem .6rem;
+  border-radius:var(--radius-sm);
+  font-size:.84rem; font-weight:500; color:var(--text-2);
+  cursor:pointer; white-space:nowrap;
+  transition:var(--transition);
+  position:relative; overflow:hidden;
+}
+.nav-item::before {
+  content:''; position:absolute; inset:0; border-radius:inherit;
+  background:rgba(255,255,255,0.05); opacity:0;
+  transition:opacity .25s;
+}
+.nav-item:hover::before { opacity:1; }
+.nav-item:hover { color:var(--text-1); }
+.nav-item.active {
+  background: linear-gradient(135deg, rgba(1,55,125,0.4), rgba(10,95,196,0.2));
+  border: 1px solid rgba(1,95,196,0.25);
+  color: var(--text-1);
+}
+.nav-item.active .nav-icon { color: var(--gold); }
+/* Left accent bar */
+.nav-item.active::after {
+  content:''; position:absolute; left:0; top:20%; bottom:20%;
+  width:3px; background:var(--gold); border-radius:0 3px 3px 0;
+}
+.nav-icon {
+  width:18px; text-align:center; font-size:.95rem;
+  color:var(--text-3); flex-shrink:0;
+  transition:color .25s;
+}
+.nav-label { transition:opacity .25s, width .25s; }
+.sidebar.collapsed .nav-label { opacity:0; width:0; overflow:hidden; }
+
+.nav-badge {
+  margin-left:auto; min-width:20px; height:20px; padding:0 .4rem;
+  background:var(--gold); color:#000; font-size:.6rem; font-weight:800;
+  border-radius:3rem; display:flex; align-items:center; justify-content:center;
+  transition:opacity .25s;
+}
+.sidebar.collapsed .nav-badge { opacity:0; }
+
+/* Collapse toggle */
+.sb-collapse-btn {
+  padding:1rem 1.125rem; border-top:1px solid var(--border);
+  display:flex; align-items:center; gap:.875rem;
+  font-size:.84rem; font-weight:500; color:var(--text-3);
+  cursor:pointer; white-space:nowrap;
+  transition:var(--transition);
+}
+.sb-collapse-btn:hover { color:var(--text-1); }
+.collapse-icon { transition:transform .3s; }
+.sidebar.collapsed .collapse-icon { transform:rotate(180deg); }
+
+/* Tooltip for collapsed state */
+.nav-item[data-tip] { position:relative; }
+.sidebar.collapsed .nav-item::after { display:none; }
+.sidebar.collapsed .nav-item:hover::before { opacity:1; }
+
+/* ════════════════════════════════════════════════════════════
+   MAIN CONTENT AREA
+════════════════════════════════════════════════════════════ */
+.main {
+  flex:1;
+  margin-left: var(--sidebar-w);
+  min-height:100vh;
+  transition: margin-left .3s cubic-bezier(0.23,1,0.32,1);
+  display:flex; flex-direction:column;
+}
+.sidebar.collapsed ~ .main { margin-left: var(--sidebar-w-collapsed); }
+
+/* ════════════════════════════════════════════════════════════
+   TOP BAR
+════════════════════════════════════════════════════════════ */
+.topbar {
+  height: var(--topbar-h);
+  background: rgba(10,14,20,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 1.25rem;
+  padding: 0 1.75rem;
+  position: sticky; top:0; z-index:100;
+}
+
+/* Mobile burger */
+.topbar-burger {
+  display:none; background:none; padding:.5rem; color:var(--text-2);
+  font-size:1.1rem; border-radius:var(--radius-xs);
+  transition:var(--transition);
+}
+.topbar-burger:hover { color:var(--text-1); background:var(--card); }
+
+/* Search */
+.topbar-search {
+  flex:1; max-width:380px;
+  display:flex; align-items:center; gap:.75rem;
+  background: var(--card); border:1px solid var(--border);
+  border-radius:var(--radius-sm); padding:.55rem 1rem;
+  transition:var(--transition);
+}
+.topbar-search:focus-within {
+  border-color:rgba(1,95,196,0.5);
+  background:rgba(1,95,196,0.06);
+  box-shadow:0 0 0 3px rgba(1,95,196,0.1);
+}
+.topbar-search i { color:var(--text-3); font-size:.85rem; flex-shrink:0; }
+.topbar-search input {
+  background:transparent; border:none; color:var(--text-1);
+  font-size:.85rem; width:100%;
+}
+.topbar-search input::placeholder { color:var(--text-3); }
+
+/* Right group */
+.topbar-right { display:flex; align-items:center; gap:.875rem; margin-left:auto; }
+
+.tb-icon-btn {
+  width:38px; height:38px; border-radius:var(--radius-xs);
+  background:var(--card); border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--text-2); font-size:.95rem; position:relative;
+  transition:var(--transition); cursor:pointer;
+}
+.tb-icon-btn:hover { color:var(--text-1); background:var(--card-hover); border-color:var(--border-h); }
+.tb-notif-dot {
+  position:absolute; top:7px; right:7px;
+  width:7px; height:7px; border-radius:50%;
+  background:var(--gold); border:2px solid var(--bg);
+}
+
+/* Date/time chip */
+.tb-date-chip {
+  display:flex; align-items:center; gap:.5rem;
+  background:var(--card); border:1px solid var(--border);
+  border-radius:var(--radius-sm); padding:.4rem .875rem;
+  font-size:.75rem; font-weight:600; color:var(--text-2);
+}
+.tb-date-chip i { color:var(--gold); font-size:.7rem; }
+
+/* Profile */
+.topbar-profile {
+  display:flex; align-items:center; gap:.75rem;
+  background:var(--card); border:1px solid var(--border);
+  border-radius:var(--radius-sm); padding:.4rem .875rem .4rem .5rem;
+  cursor:pointer; transition:var(--transition);
+}
+.topbar-profile:hover { background:var(--card-hover); border-color:var(--border-h); }
+.tp-avatar {
+  width:32px; height:32px; border-radius:8px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-d));
+  display:flex; align-items:center; justify-content:center;
+  font-size:.85rem; font-weight:800; color:#000; flex-shrink:0;
+}
+.tp-info { line-height:1.25; }
+.tp-name { font-size:.78rem; font-weight:700; color:var(--text-1); }
+.tp-role { font-size:.62rem; color:var(--text-3); }
+
+/* ════════════════════════════════════════════════════════════
+   PAGE CONTENT
+════════════════════════════════════════════════════════════ */
+.page-content {
+  padding: 2rem 1.75rem 3rem;
+  flex:1;
+}
+
+/* Page header */
+.page-header {
+  display:flex; align-items:flex-start; justify-content:space-between;
+  margin-bottom:2rem; flex-wrap:wrap; gap:1rem;
+}
+.page-title-group {}
+.page-eyebrow {
+  display:inline-flex; align-items:center; gap:.45rem;
+  font-size:.62rem; font-weight:800; text-transform:uppercase; letter-spacing:.18em;
+  color:var(--gold); margin-bottom:.4rem;
+}
+.page-eyebrow::before { content:''; width:16px; height:2px; background:var(--gold); border-radius:2px; }
+.page-title { font-size:1.6rem; font-weight:800; color:var(--text-1); letter-spacing:-.025em; }
+.page-title em { font-family:var(--font-serif); color:var(--gold); font-style:italic; }
+.page-sub { font-size:.82rem; color:var(--text-2); margin-top:.25rem; }
+
+.page-actions { display:flex; align-items:center; gap:.75rem; }
+.btn-export {
+  display:inline-flex; align-items:center; gap:.5rem;
+  background:var(--card); border:1px solid var(--border);
+  color:var(--text-2); font-size:.82rem; font-weight:600;
+  padding:.6rem 1.1rem; border-radius:var(--radius-sm);
+  transition:var(--transition);
+}
+.btn-export:hover { color:var(--text-1); border-color:var(--border-h); background:var(--card-hover); }
+.btn-refresh {
+  display:inline-flex; align-items:center; gap:.5rem;
+  background:linear-gradient(135deg,var(--gold-l),var(--gold));
+  color:#000; font-size:.82rem; font-weight:800;
+  padding:.6rem 1.25rem; border-radius:var(--radius-sm);
+  transition:var(--transition);
+}
+.btn-refresh:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(230,179,37,0.35); }
+.btn-refresh.spin i { animation: spin .7s linear; }
+@keyframes spin { to { transform:rotate(360deg); } }
+
+/* ════════════════════════════════════════════════════════════
+   STATS GRID
+════════════════════════════════════════════════════════════ */
+.stats-grid {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1.1rem;
+  margin-bottom:1.75rem;
+}
+
+.stat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.375rem 1.5rem 1.25rem;
+  position:relative; overflow:hidden;
+  transition: var(--transition);
+  cursor:default;
+}
+.stat-card:hover {
+  background:var(--card-hover);
+  border-color:var(--border-h);
+  transform:translateY(-3px);
+  box-shadow:0 20px 50px rgba(0,0,0,0.35);
+}
+/* Top accent line */
+.stat-card::before {
+  content:''; position:absolute; top:0; left:0; right:0;
+  height:2px; border-radius:var(--radius) var(--radius) 0 0;
+}
+.stat-card.c-blue::before   { background:linear-gradient(90deg,var(--blue-l),transparent); }
+.stat-card.c-gold::before   { background:linear-gradient(90deg,var(--gold),transparent); }
+.stat-card.c-green::before  { background:linear-gradient(90deg,var(--green),transparent); }
+.stat-card.c-purple::before { background:linear-gradient(90deg,var(--purple),transparent); }
+
+/* Ambient glow */
+.stat-card.c-blue   { box-shadow:0 0 0 0 rgba(1,95,196,0); }
+.stat-card.c-blue:hover   { box-shadow:0 20px 50px rgba(0,0,0,0.35), 0 0 30px rgba(1,95,196,0.08); }
+.stat-card.c-gold:hover   { box-shadow:0 20px 50px rgba(0,0,0,0.35), 0 0 30px rgba(230,179,37,0.1); }
+.stat-card.c-green:hover  { box-shadow:0 20px 50px rgba(0,0,0,0.35), 0 0 30px rgba(34,197,94,0.08); }
+.stat-card.c-purple:hover { box-shadow:0 20px 50px rgba(0,0,0,0.35), 0 0 30px rgba(139,92,246,0.08); }
+
+.sc-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.1rem; }
+.sc-icon {
+  width:40px; height:40px; border-radius:var(--radius-sm);
+  display:flex; align-items:center; justify-content:center; font-size:1.05rem;
+}
+.sc-icon.c-blue   { background:rgba(1,95,196,0.18);  color:var(--blue-xl); }
+.sc-icon.c-gold   { background:rgba(230,179,37,0.18); color:var(--gold-l); }
+.sc-icon.c-green  { background:rgba(34,197,94,0.18);  color:var(--green); }
+.sc-icon.c-purple { background:rgba(139,92,246,0.18); color:var(--purple); }
+
+.sc-badge {
+  display:inline-flex; align-items:center; gap:.3rem;
+  font-size:.65rem; font-weight:700; padding:.22rem .55rem;
+  border-radius:3rem;
+}
+.sc-badge.up   { background:rgba(34,197,94,0.12);  color:var(--green); }
+.sc-badge.down { background:rgba(239,68,68,0.12);  color:var(--red); }
+.sc-badge.neu  { background:rgba(255,255,255,0.07); color:var(--text-2); }
+
+.sc-value {
+  font-size:2.2rem; font-weight:900; letter-spacing:-.04em;
+  color:var(--text-1); line-height:1; margin-bottom:.3rem;
+}
+.sc-label { font-size:.75rem; font-weight:500; color:var(--text-2); }
+
+/* Sparkline */
+.sc-sparkline { margin-top:1.1rem; }
+.sparkline-svg { width:100%; height:44px; display:block; overflow:visible; }
+
+/* ════════════════════════════════════════════════════════════
+   CHARTS ROW
+════════════════════════════════════════════════════════════ */
+.charts-row {
+  display:grid;
+  grid-template-columns:1fr 400px;
+  gap:1.1rem;
+  margin-bottom:1.75rem;
+}
+
+.chart-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:var(--radius); padding:1.5rem;
+  transition:var(--transition);
+}
+.chart-card:hover { border-color:var(--border-h); }
+
+.chart-header {
+  display:flex; align-items:flex-start; justify-content:space-between;
+  margin-bottom:1.5rem;
+}
+.chart-title { font-size:.9rem; font-weight:700; color:var(--text-1); }
+.chart-sub   { font-size:.72rem; color:var(--text-2); margin-top:.2rem; }
+
+.chart-legend {
+  display:flex; gap:.875rem; flex-wrap:wrap;
+}
+.cl-item {
+  display:flex; align-items:center; gap:.4rem;
+  font-size:.72rem; font-weight:600; color:var(--text-2);
+}
+.cl-dot { width:8px; height:8px; border-radius:2px; flex-shrink:0; }
+
+.chart-wrap { position:relative; }
+.chart-wrap canvas { display:block; }
+
+/* Donut center stat */
+.donut-center {
+  position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  text-align:center; pointer-events:none;
+}
+.donut-center .d-num { font-size:1.8rem; font-weight:900; color:var(--text-1); line-height:1; }
+.donut-center .d-lbl { font-size:.62rem; font-weight:600; color:var(--text-3); text-transform:uppercase; letter-spacing:.1em; }
+
+/* Donut legend pills */
+.donut-legend {
+  display:flex; flex-direction:column; gap:.6rem; margin-top:1.25rem;
+}
+.dl-item {
+  display:flex; align-items:center; gap:.75rem;
+  padding:.5rem .75rem; border-radius:var(--radius-xs);
+  background:rgba(255,255,255,0.025); border:1px solid transparent;
+  transition:var(--transition); cursor:default;
+}
+.dl-item:hover { border-color:var(--border); background:var(--card-hover); }
+.dl-dot { width:10px; height:10px; border-radius:3px; flex-shrink:0; }
+.dl-name { font-size:.78rem; font-weight:600; color:var(--text-2); flex:1; }
+.dl-pct  { font-size:.78rem; font-weight:700; color:var(--text-1); }
+.dl-bar-wrap { width:60px; height:4px; background:rgba(255,255,255,0.06); border-radius:2px; overflow:hidden; }
+.dl-bar { height:100%; border-radius:2px; }
+
+/* ════════════════════════════════════════════════════════════
+   SECONDARY METRICS ROW
+════════════════════════════════════════════════════════════ */
+.metrics-row {
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:1.1rem;
+  margin-bottom:1.75rem;
+}
+
+.metric-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:var(--radius); padding:1.375rem 1.5rem;
+  transition:var(--transition);
+}
+.metric-card:hover { border-color:var(--border-h); background:var(--card-hover); }
+
+.mc-label {
+  font-size:.65rem; font-weight:700; text-transform:uppercase; letter-spacing:.14em;
+  color:var(--text-3); margin-bottom:1rem;
+  display:flex; align-items:center; gap:.5rem;
+}
+.mc-label::before { content:''; width:12px; height:2px; background:var(--gold); }
+
+/* Medal comparison mini */
+.medal-rows { display:flex; flex-direction:column; gap:.75rem; }
+.medal-row {
+  display:flex; align-items:center; gap:.875rem;
+}
+.medal-emoji { font-size:1.2rem; width:26px; text-align:center; flex-shrink:0; }
+.medal-info  { flex:1; }
+.medal-name  { font-size:.75rem; font-weight:600; color:var(--text-2); margin-bottom:.3rem; }
+.medal-track { height:6px; background:rgba(255,255,255,0.06); border-radius:3px; overflow:hidden; }
+.medal-bar   { height:100%; border-radius:3px; transition:width 1.2s cubic-bezier(.23,1,.32,1); }
+.medal-count { font-size:.8rem; font-weight:700; color:var(--text-1); width:32px; text-align:right; flex-shrink:0; }
+
+/* Top pages mini */
+.page-rows { display:flex; flex-direction:column; gap:.6rem; }
+.page-row {
+  display:flex; align-items:center; gap:.75rem;
+  padding:.5rem .75rem; border-radius:var(--radius-xs);
+  background:rgba(255,255,255,0.02);
+  transition:var(--transition);
+}
+.page-row:hover { background:rgba(255,255,255,0.045); }
+.page-rank { font-size:.65rem; font-weight:800; color:var(--text-3); width:16px; text-align:center; }
+.page-name { font-size:.78rem; font-weight:500; color:var(--text-2); flex:1; }
+.page-hits { font-size:.75rem; font-weight:700; color:var(--text-1); }
+.page-trend { font-size:.65rem; margin-left:.3rem; }
+
+/* Activity feed */
+.activity-feed { display:flex; flex-direction:column; gap:0; }
+.act-item {
+  display:flex; align-items:flex-start; gap:.875rem;
+  padding:.75rem 0;
+  border-bottom:1px solid var(--border);
+}
+.act-item:last-child { border-bottom:none; }
+.act-dot {
+  width:30px; height:30px; border-radius:8px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center; font-size:.8rem;
+  margin-top:.05rem;
+}
+.act-dot.quiz    { background:rgba(1,95,196,0.2);   color:var(--blue-xl); }
+.act-dot.medal   { background:rgba(230,179,37,0.2); color:var(--gold); }
+.act-dot.visit   { background:rgba(34,197,94,0.2);  color:var(--green); }
+.act-dot.contact { background:rgba(139,92,246,0.2); color:var(--purple); }
+.act-text  { font-size:.78rem; color:var(--text-2); line-height:1.5; flex:1; }
+.act-text strong { color:var(--text-1); font-weight:600; }
+.act-time  { font-size:.67rem; color:var(--text-3); white-space:nowrap; margin-top:.15rem; }
+
+/* ════════════════════════════════════════════════════════════
+   LEADS TABLE
+════════════════════════════════════════════════════════════ */
+.table-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:var(--radius); overflow:hidden;
+}
+
+.table-header {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1.375rem 1.5rem; border-bottom:1px solid var(--border);
+  flex-wrap:wrap; gap:1rem;
+}
+.table-title-group {}
+.table-title { font-size:.9rem; font-weight:700; color:var(--text-1); }
+.table-sub   { font-size:.72rem; color:var(--text-2); margin-top:.15rem; }
+
+.table-controls { display:flex; align-items:center; gap:.75rem; flex-wrap:wrap; }
+
+/* Table search */
+.tbl-search {
+  display:flex; align-items:center; gap:.6rem;
+  background:rgba(255,255,255,0.04); border:1px solid var(--border);
+  border-radius:var(--radius-xs); padding:.48rem .875rem;
+  transition:var(--transition);
+}
+.tbl-search:focus-within { border-color:rgba(1,95,196,0.4); background:rgba(1,95,196,0.06); }
+.tbl-search i { color:var(--text-3); font-size:.78rem; flex-shrink:0; }
+.tbl-search input { background:transparent; border:none; color:var(--text-1); font-size:.8rem; width:160px; }
+.tbl-search input::placeholder { color:var(--text-3); }
+
+/* Filter select */
+.tbl-filter {
+  background:rgba(255,255,255,0.04); border:1px solid var(--border);
+  border-radius:var(--radius-xs); padding:.48rem .875rem;
+  color:var(--text-2); font-size:.8rem; cursor:pointer;
+  transition:var(--transition);
+}
+.tbl-filter:focus { border-color:rgba(1,95,196,0.4); color:var(--text-1); }
+.tbl-filter option { background:var(--bg-1); color:var(--text-1); }
+
+/* Export mini */
+.btn-export-csv {
+  display:flex; align-items:center; gap:.4rem;
+  background:rgba(230,179,37,0.1); border:1px solid rgba(230,179,37,0.25);
+  color:var(--gold); font-size:.75rem; font-weight:700;
+  padding:.48rem .875rem; border-radius:var(--radius-xs);
+  transition:var(--transition);
+}
+.btn-export-csv:hover { background:rgba(230,179,37,0.2); box-shadow:0 4px 14px rgba(230,179,37,0.2); }
+
+/* Table wrapper */
+.table-wrap { overflow-x:auto; }
+
+table { width:100%; border-collapse:collapse; }
+thead tr {
+  background:rgba(255,255,255,0.025);
+  border-bottom:1px solid var(--border);
+}
+th {
+  padding:.875rem 1.25rem; text-align:left;
+  font-size:.65rem; font-weight:800; text-transform:uppercase; letter-spacing:.12em;
+  color:var(--text-3); white-space:nowrap; cursor:pointer;
+  transition:color .2s; user-select:none;
+}
+th:hover { color:var(--text-2); }
+th .sort-icon { margin-left:.35rem; opacity:.4; transition:opacity .2s; }
+th:hover .sort-icon { opacity:.8; }
+
+tbody tr {
+  border-bottom:1px solid rgba(255,255,255,0.04);
+  transition:background .2s;
+}
+tbody tr:last-child { border-bottom:none; }
+tbody tr:hover { background:rgba(255,255,255,0.03); }
+
+td {
+  padding:.875rem 1.25rem;
+  font-size:.82rem; color:var(--text-2);
+  vertical-align:middle;
+}
+
+/* Date cell */
+.td-date { font-size:.73rem; color:var(--text-3); }
+.td-date strong { display:block; font-size:.78rem; color:var(--text-2); font-weight:600; }
+
+/* Name cell */
+.td-name {
+  display:flex; align-items:center; gap:.875rem;
+}
+.td-avatar {
+  width:36px; height:36px; border-radius:10px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.1rem;
+  background:rgba(255,255,255,0.06); border:1px solid var(--border);
+}
+.td-info {}
+.td-fullname { font-size:.83rem; font-weight:600; color:var(--text-1); }
+.td-class { font-size:.68rem; color:var(--text-3); margin-top:.1rem; }
+
+/* WhatsApp cell */
+.td-wa {
+  display:flex; align-items:center; gap:.4rem;
+  font-size:.78rem; color:var(--text-2);
+}
+.td-wa i { color:#25D366; }
+
+/* Score cell */
+.score-pill {
+  display:inline-flex; align-items:center; gap:.35rem;
+  padding:.3rem .7rem; border-radius:3rem;
+  font-size:.72rem; font-weight:800;
+}
+.sp-excellent { background:rgba(230,179,37,0.15); color:var(--gold); border:1px solid rgba(230,179,37,0.25); }
+.sp-good      { background:rgba(34,197,94,0.12);  color:var(--green); border:1px solid rgba(34,197,94,0.2); }
+.sp-average   { background:rgba(249,115,22,0.12); color:var(--orange); border:1px solid rgba(249,115,22,0.2); }
+.sp-improve   { background:rgba(239,68,68,0.1);   color:var(--red); border:1px solid rgba(239,68,68,0.18); }
+
+/* Category badge */
+.cat-badge {
+  display:inline-flex; align-items:center; gap:.35rem;
+  padding:.28rem .7rem; border-radius:3rem;
+  font-size:.65rem; font-weight:700; white-space:nowrap;
+}
+
+/* WhatsApp action button */
+.btn-wa {
+  display:inline-flex; align-items:center; gap:.45rem;
+  background:rgba(37,211,102,0.1); border:1px solid rgba(37,211,102,0.22);
+  color:#4ADE80; font-size:.75rem; font-weight:700;
+  padding:.42rem .875rem; border-radius:var(--radius-xs);
+  white-space:nowrap; transition:var(--transition);
+}
+.btn-wa:hover {
+  background:rgba(37,211,102,0.2);
+  box-shadow:0 4px 14px rgba(37,211,102,0.2);
+  transform:translateY(-1px);
+}
+
+/* Empty state */
+.table-empty {
+  padding:3.5rem; text-align:center;
+}
+.table-empty i  { font-size:2.5rem; color:var(--text-3); margin-bottom:1rem; display:block; }
+.table-empty p  { font-size:.85rem; color:var(--text-3); }
+
+/* Table footer */
+.table-footer {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1rem 1.5rem; border-top:1px solid var(--border);
+  flex-wrap:wrap; gap:.75rem;
+}
+.tf-info { font-size:.75rem; color:var(--text-3); }
+.tf-info strong { color:var(--text-2); }
+.tf-pagination { display:flex; align-items:center; gap:.4rem; }
+.pg-btn {
+  width:30px; height:30px; border-radius:var(--radius-xs);
+  background:var(--card); border:1px solid var(--border);
+  color:var(--text-2); font-size:.75rem;
+  display:flex; align-items:center; justify-content:center;
+  transition:var(--transition); cursor:pointer;
+}
+.pg-btn:hover  { color:var(--text-1); border-color:var(--border-h); }
+.pg-btn.active { background:var(--blue); border-color:var(--blue-m); color:#fff; }
+
+/* ════════════════════════════════════════════════════════════
+   STATUS BAR (bottom)
+════════════════════════════════════════════════════════════ */
+.status-bar {
+  position:fixed; bottom:0; left:var(--sidebar-w); right:0;
+  height:30px; background:rgba(8,12,20,0.95);
+  border-top:1px solid var(--border);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 1.5rem;
+  font-size:.62rem; color:var(--text-3);
+  z-index:100;
+  transition:left .3s cubic-bezier(0.23,1,0.32,1);
+}
+.sidebar.collapsed ~ .main .status-bar,
+.sidebar.collapsed + .main .status-bar { left:var(--sidebar-w-collapsed); }
+.sb-left,.sb-right { display:flex; align-items:center; gap:1rem; }
+.sb-item { display:flex; align-items:center; gap:.35rem; }
+.sb-item .dot { width:6px; height:6px; border-radius:50%; }
+.dot-green { background:var(--green); box-shadow:0 0 6px var(--green); }
+.dot-gold  { background:var(--gold);  }
+
+/* ════════════════════════════════════════════════════════════
+   TOAST NOTIFICATION
+════════════════════════════════════════════════════════════ */
+.toast {
+  position:fixed; bottom:2.5rem; right:1.5rem; z-index:1000;
+  display:flex; align-items:center; gap:.75rem;
+  background:var(--bg-2); border:1px solid var(--border-h);
+  border-radius:var(--radius-sm); padding:.875rem 1.25rem;
+  box-shadow:0 16px 40px rgba(0,0,0,.5);
+  transform:translateY(120%); opacity:0;
+  transition:transform .4s cubic-bezier(.23,1,.32,1), opacity .4s;
+  max-width:340px;
+}
+.toast.show { transform:translateY(0); opacity:1; }
+.toast-icon { font-size:1.1rem; flex-shrink:0; }
+.toast-text { font-size:.82rem; color:var(--text-1); }
+.toast-text strong { display:block; font-weight:700; margin-bottom:.1rem; }
+.toast-text span { color:var(--text-2); font-size:.75rem; }
+
+/* ════════════════════════════════════════════════════════════
+   OVERLAY (mobile)
+════════════════════════════════════════════════════════════ */
+.overlay {
+  display:none; position:fixed; inset:0; z-index:150;
+  background:rgba(0,0,0,.6); backdrop-filter:blur(4px);
+}
+
+/* ════════════════════════════════════════════════════════════
+   SECTION DIVIDER
+════════════════════════════════════════════════════════════ */
+.section-divider {
+  display:flex; align-items:center; gap:.875rem;
+  margin:1.75rem 0 1.1rem; font-size:.65rem; font-weight:800;
+  text-transform:uppercase; letter-spacing:.16em; color:var(--text-3);
+}
+.section-divider::before { content:''; flex:none; width:3px; height:12px; background:var(--gold); border-radius:2px; }
+.section-divider::after  { content:''; flex:1; height:1px; background:var(--border); }
+
+/* ════════════════════════════════════════════════════════════
+   ANIMATIONS
+════════════════════════════════════════════════════════════ */
+@keyframes count-up {
+  from { opacity:0; transform:translateY(8px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.animate-in { animation:count-up .6s cubic-bezier(.23,1,.32,1) both; }
+
+/* Stagger delays */
+.stat-card:nth-child(1) { animation-delay:.05s; }
+.stat-card:nth-child(2) { animation-delay:.12s; }
+.stat-card:nth-child(3) { animation-delay:.19s; }
+.stat-card:nth-child(4) { animation-delay:.26s; }
+
+/* ════════════════════════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════════════════════════ */
+@media (max-width:1280px) {
+  .charts-row { grid-template-columns:1fr 360px; }
+  .metrics-row { grid-template-columns:1fr 1fr; }
+}
+@media (max-width:1024px) {
+  .stats-grid { grid-template-columns:1fr 1fr; }
+  .charts-row { grid-template-columns:1fr; }
+  .metrics-row { grid-template-columns:1fr 1fr; }
+}
+@media (max-width:768px) {
+  .sidebar {
+    transform:translateX(-100%);
+    width:var(--sidebar-w) !important;
+    box-shadow:0 0 0 9999px transparent;
+    transition:transform .3s cubic-bezier(.23,1,.32,1), box-shadow .3s;
+  }
+  .sidebar.mobile-open {
+    transform:translateX(0);
+    box-shadow:0 0 0 9999px rgba(0,0,0,.6);
+  }
+  .sidebar.collapsed { transform:translateX(-100%); }
+  .overlay { display:block; }
+  .main { margin-left:0 !important; }
+  .topbar-burger { display:flex; }
+  .tb-date-chip { display:none; }
+  .page-content { padding:1.25rem 1rem 4rem; }
+  .stats-grid { grid-template-columns:1fr 1fr; gap:.875rem; }
+  .metrics-row { grid-template-columns:1fr; }
+  .status-bar { left:0 !important; font-size:.58rem; }
+  .table-controls { flex-wrap:wrap; }
+  .tbl-search input { width:120px; }
+}
+@media (max-width:480px) {
+  .stats-grid { grid-template-columns:1fr; }
+  .page-header { flex-direction:column; }
+  .page-actions { width:100%; }
+  .tp-info { display:none; }
+}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ═══════════════════════════════════════
+       SIDEBAR
+  ═══════════════════════════════════════ -->
+  <aside class="sidebar" id="sidebar">
+
+    <div class="sb-brand">
+      <div class="sb-logo">🏫</div>
+      <div class="sb-brand-text">
+        <h2>Alfa e Omega</h2>
+        <p>Painel Admin</p>
+      </div>
+    </div>
+
+    <nav class="sb-nav">
+
+      <div class="sb-section-label">Principal</div>
+
+      <div class="nav-item active" onclick="switchSection('dashboard')">
+        <span class="nav-icon"><i class="fas fa-chart-pie"></i></span>
+        <span class="nav-label">Dashboard</span>
+      </div>
+      <div class="nav-item" onclick="switchSection('leads')">
+        <span class="nav-icon"><i class="fas fa-users"></i></span>
+        <span class="nav-label">Leads do Quiz</span>
+        <span class="nav-badge" id="badge-leads">24</span>
+      </div>
+      <div class="nav-item" onclick="switchSection('medals')">
+        <span class="nav-icon"><i class="fas fa-trophy"></i></span>
+        <span class="nav-label">Performance Medalhas</span>
+      </div>
+      <div class="nav-item" onclick="switchSection('gallery')">
+        <span class="nav-icon"><i class="fas fa-images"></i></span>
+        <span class="nav-label">Galeria</span>
+      </div>
+
+      <div class="sb-section-label">Gestão</div>
+
+      <div class="nav-item" onclick="switchSection('messages')">
+        <span class="nav-icon"><i class="fas fa-envelope"></i></span>
+        <span class="nav-label">Mensagens</span>
+        <span class="nav-badge">3</span>
+      </div>
+      <div class="nav-item" onclick="switchSection('reports')">
+        <span class="nav-icon"><i class="fas fa-file-chart-column"></i></span>
+        <span class="nav-label">Relatórios</span>
+      </div>
+
+      <div class="sb-section-label">Sistema</div>
+
+      <div class="nav-item" onclick="switchSection('settings')">
+        <span class="nav-icon"><i class="fas fa-gear"></i></span>
+        <span class="nav-label">Configurações</span>
+      </div>
+      <div class="nav-item" onclick="switchSection('api')">
+        <span class="nav-icon"><i class="fas fa-plug"></i></span>
+        <span class="nav-label">API / Supabase</span>
+      </div>
+
+    </nav>
+
+    <div class="sb-collapse-btn" onclick="toggleSidebar()">
+      <span class="nav-icon"><i class="fas fa-chevrons-left collapse-icon"></i></span>
+      <span class="nav-label" style="font-size:.8rem;font-weight:600;color:var(--text-3);">Recolher</span>
+    </div>
+
+  </aside>
+
+  <!-- OVERLAY mobile -->
+  <div class="overlay" id="overlay" onclick="closeSidebarMobile()"></div>
+
+  <!-- ═══════════════════════════════════════
+       MAIN
+  ═══════════════════════════════════════ -->
+  <div class="main" id="main">
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <button class="topbar-burger" id="burger-btn" onclick="openSidebarMobile()">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <div class="topbar-search">
+        <i class="fas fa-magnifying-glass"></i>
+        <input type="text" id="global-search" placeholder="Pesquisar lead, página, métrica…" oninput="globalSearch(this.value)">
+      </div>
+
+      <div class="topbar-right">
+        <div class="tb-date-chip">
+          <i class="fas fa-calendar"></i>
+          <span id="top-date"></span>
+        </div>
+
+        <div class="tb-icon-btn" title="Actualizar dados" onclick="refreshData()">
+          <i class="fas fa-rotate-right" id="refresh-topbar-icon"></i>
+        </div>
+
+        <div class="tb-icon-btn" title="Notificações">
+          <i class="fas fa-bell"></i>
+          <div class="tb-notif-dot"></div>
+        </div>
+
+        <div class="topbar-profile">
+          <div class="tp-avatar">D</div>
+          <div class="tp-info">
+            <div class="tp-name">Direcção</div>
+            <div class="tp-role">Alfa e Omega · Admin</div>
+          </div>
+          <i class="fas fa-chevron-down" style="font-size:.65rem;color:var(--text-3);margin-left:.3rem;"></i>
+        </div>
+      </div>
+    </header>
+
+    <!-- PAGE CONTENT -->
+    <main class="page-content" id="page-content">
+
+      <!-- PAGE HEADER -->
+      <div class="page-header">
+        <div class="page-title-group">
+          <div class="page-eyebrow">Visão Geral · 2025</div>
+          <h1 class="page-title">Dashboard <em>Administrativo</em></h1>
+          <p class="page-sub" id="page-sub-date">A carregar dados…</p>
+        </div>
+        <div class="page-actions">
+          <button class="btn-export" onclick="exportCSV()">
+            <i class="fas fa-file-csv"></i> Exportar CSV
+          </button>
+          <button class="btn-refresh" id="btn-refresh" onclick="refreshData()">
+            <i class="fas fa-rotate-right"></i> <span>Actualizar</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ─── STATS GRID ─── -->
+      <div class="stats-grid" id="stats-grid">
+
+        <!-- Card 1: Visitas -->
+        <div class="stat-card c-blue animate-in">
+          <div class="sc-header">
+            <div class="sc-icon c-blue"><i class="fas fa-eye"></i></div>
+            <div class="sc-badge up"><i class="fas fa-arrow-up"></i> +12.4%</div>
+          </div>
+          <div class="sc-value" id="stat-visits">0</div>
+          <div class="sc-label">Total de Visitas ao Site</div>
+          <div class="sc-sparkline">
+            <svg class="sparkline-svg" id="spark-visits" viewBox="0 0 200 44" preserveAspectRatio="none"></svg>
+          </div>
+        </div>
+
+        <!-- Card 2: Leads Quiz -->
+        <div class="stat-card c-gold animate-in">
+          <div class="sc-header">
+            <div class="sc-icon c-gold"><i class="fas fa-clipboard-list"></i></div>
+            <div class="sc-badge up"><i class="fas fa-arrow-up"></i> +8 este mês</div>
+          </div>
+          <div class="sc-value" id="stat-leads">0</div>
+          <div class="sc-label">Leads do Quiz (Pais)</div>
+          <div class="sc-sparkline">
+            <svg class="sparkline-svg" id="spark-leads" viewBox="0 0 200 44" preserveAspectRatio="none"></svg>
+          </div>
+        </div>
+
+        <!-- Card 3: Engajamento -->
+        <div class="stat-card c-green animate-in">
+          <div class="sc-header">
+            <div class="sc-icon c-green"><i class="fas fa-star"></i></div>
+            <div class="sc-badge up"><i class="fas fa-arrow-up"></i> +5.2pp</div>
+          </div>
+          <div class="sc-value" id="stat-engage">0<span style="font-size:1.2rem">%</span></div>
+          <div class="sc-label">Pais Nível Exemplar</div>
+          <div class="sc-sparkline">
+            <svg class="sparkline-svg" id="spark-engage" viewBox="0 0 200 44" preserveAspectRatio="none"></svg>
+          </div>
+        </div>
+
+        <!-- Card 4: Medalhas -->
+        <div class="stat-card c-purple animate-in">
+          <div class="sc-header">
+            <div class="sc-icon c-purple"><i class="fas fa-trophy"></i></div>
+            <div class="sc-badge up"><i class="fas fa-arrow-up"></i> +34 esta semana</div>
+          </div>
+          <div class="sc-value" id="stat-medals">0</div>
+          <div class="sc-label">Cliques Área Olimpíadas</div>
+          <div class="sc-sparkline">
+            <svg class="sparkline-svg" id="spark-medals" viewBox="0 0 200 44" preserveAspectRatio="none"></svg>
+          </div>
+        </div>
+
+      </div><!-- /stats-grid -->
+
+      <!-- ─── CHARTS ROW ─── -->
+      <div class="section-divider">Análise Gráfica</div>
+
+      <div class="charts-row">
+
+        <!-- Bar Chart: Medalhas -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <div class="chart-title">Cliques por Tipo de Medalha</div>
+              <div class="chart-sub">Comparativo de interesse: Ouro · Prata · Bronze</div>
+            </div>
+            <div class="chart-legend">
+              <div class="cl-item"><div class="cl-dot" style="background:var(--medal-gold);"></div>Ouro</div>
+              <div class="cl-item"><div class="cl-dot" style="background:var(--medal-silver);"></div>Prata</div>
+              <div class="cl-item"><div class="cl-dot" style="background:var(--medal-bronze);"></div>Bronze</div>
+            </div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="chart-medals" height="260"></canvas>
+          </div>
+        </div>
+
+        <!-- Doughnut: Níveis pais -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <div class="chart-title">Níveis dos Encarregados</div>
+              <div class="chart-sub">Distribuição por classificação do Quiz</div>
+            </div>
+          </div>
+          <div class="chart-wrap" style="position:relative;max-width:220px;margin:0 auto 1rem;">
+            <canvas id="chart-levels" height="220"></canvas>
+            <div class="donut-center">
+              <div class="d-num" id="donut-total">0</div>
+              <div class="d-lbl">Total</div>
+            </div>
+          </div>
+          <div class="donut-legend" id="donut-legend"></div>
+        </div>
+
+      </div><!-- /charts-row -->
+
+      <!-- ─── SECONDARY METRICS ─── -->
+      <div class="section-divider">Métricas Detalhadas</div>
+
+      <div class="metrics-row">
+
+        <!-- Medal breakdown mini -->
+        <div class="metric-card">
+          <div class="mc-label"><i class="fas fa-medal"></i> Medalhas — Detalhes</div>
+          <div class="medal-rows" id="medal-rows"></div>
+        </div>
+
+        <!-- Top pages -->
+        <div class="metric-card">
+          <div class="mc-label"><i class="fas fa-file-lines"></i> Páginas Mais Visitadas</div>
+          <div class="page-rows" id="page-rows"></div>
+        </div>
+
+        <!-- Activity feed -->
+        <div class="metric-card" style="grid-column:span 1;">
+          <div class="mc-label"><i class="fas fa-bolt"></i> Actividade Recente</div>
+          <div class="activity-feed" id="activity-feed"></div>
+        </div>
+
+      </div>
+
+      <!-- ─── LEADS TABLE ─── -->
+      <div class="section-divider">Gestão de Leads</div>
+
+      <div class="table-card">
+        <div class="table-header">
+          <div class="table-title-group">
+            <div class="table-title">Pais Participantes do Quiz</div>
+            <div class="table-sub" id="table-sub">A carregar…</div>
+          </div>
+          <div class="table-controls">
+            <div class="tbl-search">
+              <i class="fas fa-magnifying-glass"></i>
+              <input type="text" id="table-search" placeholder="Pesquisar nome…" oninput="filterTable()">
+            </div>
+            <select class="tbl-filter" id="table-filter-cat" onchange="filterTable()">
+              <option value="">Todos os níveis</option>
+              <option value="Exemplar">🏆 Exemplar</option>
+              <option value="Bom">✅ Bom</option>
+              <option value="Em Desenvolvimento">📈 Em Desenvolvimento</option>
+              <option value="Atenção">⚠️ Atenção</option>
+            </select>
+            <button class="btn-export-csv" onclick="exportCSV()">
+              <i class="fas fa-file-csv"></i> CSV
+            </button>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table id="leads-table">
+            <thead>
+              <tr>
+                <th onclick="sortTable('date')">Data <i class="fas fa-sort sort-icon"></i></th>
+                <th onclick="sortTable('name')">Nome / Educando <i class="fas fa-sort sort-icon"></i></th>
+                <th>WhatsApp</th>
+                <th onclick="sortTable('score')">Score <i class="fas fa-sort sort-icon"></i></th>
+                <th onclick="sortTable('cat')">Categoria <i class="fas fa-sort sort-icon"></i></th>
+                <th>Acção</th>
+              </tr>
+            </thead>
+            <tbody id="leads-body"></tbody>
+          </table>
+          <div class="table-empty" id="table-empty" style="display:none;">
+            <i class="fas fa-inbox"></i>
+            <p>Nenhum resultado encontrado.</p>
+          </div>
+        </div>
+
+        <div class="table-footer">
+          <div class="tf-info" id="table-footer-info">—</div>
+          <div class="tf-pagination" id="pagination"></div>
+        </div>
+      </div><!-- /table-card -->
+
+    </main><!-- /page-content -->
+
+    <!-- STATUS BAR -->
+    <div class="status-bar" id="status-bar">
+      <div class="sb-left">
+        <div class="sb-item"><div class="dot dot-green"></div> Sistema Online</div>
+        <div class="sb-item"><div class="dot dot-gold"></div> Vercel · Produção</div>
+        <div class="sb-item" id="sb-last-sync">Sincronizado: —</div>
+      </div>
+      <div class="sb-right">
+        <div class="sb-item">Colégio Alfa e Omega · Admin v2.5</div>
+        <div class="sb-item" id="sb-clock"></div>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+
+</div><!-- /shell -->
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span class="toast-icon" id="toast-icon">✅</span>
+  <div class="toast-text">
+    <strong id="toast-title">—</strong>
+    <span id="toast-msg">—</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════════════ -->
+<script>
+const SUPABASE_URL = 'https://f5trssgbvrptk1pincmr.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_f5TrSsgbVRptK1PINCmRag_tWmjDcIp';
+const _supabase = window.supabase?.createClient(SUPABASE_URL, SUPABASE_KEY);
+/* ════════════════════════════════════════════════════
+   ① DATA LAYER
+   → Trocar fetchData() por chamadas Supabase/Firebase
+════════════════════════════════════════════════════ */
+const DB = {
+
+  /* ── Estatísticas gerais ────────────────────────── */
+  stats: {
+    visits:       8_342,
+    leads:        24,
+    engageRate:   37,
+    medalClicks:  1_204,
+  },
+
+  /* ── Sparklines (últimos 12 pontos) ────────────── */
+  sparklines: {
+    visits:  [410,520,490,680,720,610,850,790,920,880,1050,1120],
+    leads:   [0,1,2,1,3,2,4,3,5,4,6,5],
+    engage:  [18,22,19,28,25,31,27,33,30,35,34,37],
+    medals:  [40,55,48,72,80,65,90,84,110,98,120,140],
+  },
+
+  /* ── Medalhas ───────────────────────────────────── */
+  medals: {
+    monthly: {
+      labels: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul'],
+      gold:   [38,45,52,60,55,72,80],
+      silver: [55,62,48,70,65,80,75],
+      bronze: [90,102,95,110,105,120,115],
+    },
+    totals: { gold:402, silver:478, bronze:637 },
+  },
+
+  /* ── Níveis dos encarregados ────────────────────── */
+  levels: [
+    { name:'🏆 Exemplar',          pct:25, count:6,  color:'#E6B325' },
+    { name:'✅ Bom',               pct:37, count:9,  color:'#22C55E' },
+    { name:'📈 Em Desenvolvimento', pct:25, count:6,  color:'#F97316' },
+    { name:'⚠️ Atenção',           pct:13, count:3,  color:'#EF4444' },
+  ],
+
+  /* ── Top páginas ────────────────────────────────── */
+  topPages: [
+    { name:'/ Início',       hits:3420, trend:'↑' },
+    { name:'/olimpiadas',    hits:1204, trend:'↑' },
+    { name:'/galeria',       hits:982,  trend:'→' },
+    { name:'/matriculas',    hits:748,  trend:'↑' },
+    { name:'/quiz',          hits:614,  trend:'↑' },
+    { name:'/contactos',     hits:374,  trend:'↓' },
+  ],
+
+  /* ── Actividade recente ─────────────────────────── */
+  activity: [
+    { type:'quiz',    text:'<strong>Maria Fernandes</strong> completou o Quiz com pontuação Exemplar',  time:'há 8 min' },
+    { type:'medal',   text:'<strong>42 visitantes</strong> acederam à página de Olimpíadas hoje',       time:'há 23 min' },
+    { type:'quiz',    text:'<strong>António Silva</strong> completou o Quiz — nível Bom',               time:'há 1h' },
+    { type:'visit',   text:'<strong>Pico de tráfego</strong> — 220 visitas simultâneas detectadas',     time:'há 2h' },
+    { type:'contact', text:'<strong>Nova matrícula</strong> — pedido de contacto via WhatsApp',         time:'há 3h' },
+  ],
+
+  /* ── Leads do Quiz ──────────────────────────────── */
+  leads: [
+    { id:1,  date:'2025-07-10', avatar:'👨‍👦', name:'António Manuel Silva',   phone:'+244 921 234 567', relacao:'Pai',  filho:'João Silva',     classe:'8ª B', score:30, pts:30, max:32 },
+    { id:2,  date:'2025-07-09', avatar:'👩‍👧', name:'Maria da Conceição',     phone:'+244 935 876 432', relacao:'Mãe',  filho:'Ana Conceição',  classe:'6ª A', score:24, pts:24, max:32 },
+    { id:3,  date:'2025-07-09', avatar:'👨‍👧', name:'Carlos Eduardo Baptista', phone:'+244 948 111 222', relacao:'Pai',  filho:'Sofia Baptista', classe:'10ª A', score:18, pts:18, max:32 },
+    { id:4,  date:'2025-07-08', avatar:'👩‍👦', name:'Filomena da Costa',       phone:'+244 912 333 444', relacao:'Mãe',  filho:'Pedro Costa',    classe:'4ª B', score:12, pts:12, max:32 },
+    { id:5,  date:'2025-07-08', avatar:'👨‍👧‍👦','name':'Domingos Lopes',         phone:'+244 944 555 666', relacao:'Pai',  filho:'Luisa Lopes',    classe:'11ª C', score:28, pts:28, max:32 },
+    { id:6,  date:'2025-07-07', avatar:'👩‍👧‍👦','name':'Esperança Teixeira',     phone:'+244 923 777 888', relacao:'Mãe',  filho:'Rafael Teixeira',classe:'7ª A', score:32, pts:32, max:32 },
+    { id:7,  date:'2025-07-07', avatar:'👨‍👦', name:'Samuel Nkosi',            phone:'+244 962 999 000', relacao:'Pai',  filho:'Amara Nkosi',    classe:'9ª B', score:22, pts:22, max:32 },
+    { id:8,  date:'2025-07-06', avatar:'👩‍👦', name:'Beatriz Ferreira',        phone:'+244 913 111 333', relacao:'Mãe',  filho:'Miguel Ferreira', classe:'5ª A', score:16, pts:16, max:32 },
+    { id:9,  date:'2025-07-05', avatar:'👨‍👧', name:'Ricardo Sousa',           phone:'+244 941 444 555', relacao:'Pai',  filho:'Clara Sousa',    classe:'12ª A', score:26, pts:26, max:32 },
+    { id:10, date:'2025-07-04', avatar:'👩‍👧', name:'Carla Mendes',            phone:'+244 925 666 777', relacao:'Mãe',  filho:'Tiago Mendes',   classe:'3ª B', score:20, pts:20, max:32 },
+    { id:11, date:'2025-07-03', avatar:'👨‍👦', name:'Álvaro Cunha',            phone:'+244 937 888 999', relacao:'Pai',  filho:'Laura Cunha',    classe:'6ª C', score:14, pts:14, max:32 },
+    { id:12, date:'2025-07-02', avatar:'👩‍👧‍👦','name':'Isabel Rodrigues',       phone:'+244 918 222 444', relacao:'Mãe',  filho:'Diogo Rodrigues',classe:'8ª A', score:30, pts:30, max:32 },
+  ],
+};
+
+/* ════════════════════════════════════════════════════
+   ② CLASSIFICATION HELPER
+════════════════════════════════════════════════════ */
+async function fetchDashboardData() {
+  if (!_supabase) return;
+
+  const { data: leads, error: leadError } = await _supabase
+    .from('leads_quiz')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  const { data: metrics, error: metricError } = await _supabase
+    .from('site_metrics')
+    .select('event_type');
+
+  if (leadError) console.error('Erro ao buscar leads:', leadError.message);
+  if (metricError) console.error('Erro ao buscar métricas:', metricError.message);
+
+  if (leads) renderLeadsTable(leads);
+  if (metrics) updateCharts(metrics, leads || []);
+}
+
+function generateWA(phone, name, status) {
+  const msg = `Olá ${name}, vimos que completou o Quiz do Alfa e Ómega como nível ${status}!`;
+  return `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+}
+
+function renderLeadsTable(leads) {
+  DB.leads = (leads || []).map((lead, index) => {
+    const score = Number(lead.score ?? lead.pontuacao ?? 0) || 0;
+    const dateObj = lead.created_at ? new Date(lead.created_at) : new Date();
+    const safeDate = Number.isNaN(dateObj.getTime())
+      ? new Date().toISOString().slice(0, 10)
+      : dateObj.toISOString().slice(0, 10);
+
+    return {
+      id: lead.id || (index + 1),
+      date: safeDate,
+      avatar: '👨‍👦',
+      name: lead.nome || 'Sem nome',
+      phone: lead.whatsapp || '',
+      relacao: 'Encarregado',
+      filho: '—',
+      classe: '—',
+      status: lead.status || '',
+      score,
+      pts: score,
+      max: 32,
+    };
+  });
+
+  DB.stats.leads = DB.leads.length;
+  currentPage = 1;
+  buildTable();
+}
+
+function updateCharts(metrics, leads) {
+  const metricList = Array.isArray(metrics) ? metrics : [];
+  const leadList = Array.isArray(leads) ? leads : [];
+  const medal = { gold: 0, silver: 0, bronze: 0 };
+
+  metricList.forEach(item => {
+    const eventType = String(item.event_type || '').toLowerCase();
+    if (eventType.includes('ouro')) medal.gold += 1;
+    if (eventType.includes('prata')) medal.silver += 1;
+    if (eventType.includes('bronze')) medal.bronze += 1;
+  });
+
+  const medalClicks = medal.gold + medal.silver + medal.bronze;
+  const points = DB.medals.monthly.labels.length;
+  DB.stats.medalClicks = medalClicks;
+  DB.medals.totals = { gold: medal.gold, silver: medal.silver, bronze: medal.bronze };
+  DB.medals.monthly.gold = Array(points).fill(medal.gold);
+  DB.medals.monthly.silver = Array(points).fill(medal.silver);
+  DB.medals.monthly.bronze = Array(points).fill(medal.bronze);
+
+  const bucket = { Exemplar: 0, Bom: 0, 'Em Desenvolvimento': 0, 'Atenção': 0 };
+  leadList.forEach(lead => {
+    const score = Number(lead.score ?? lead.pontuacao ?? 0) || 0;
+    const label = classify(score, 32).label;
+    bucket[label] = (bucket[label] || 0) + 1;
+  });
+
+  const totalLeads = leadList.length;
+  DB.levels = [
+    { name: '🏆 Exemplar', pct: totalLeads ? Math.round((bucket.Exemplar / totalLeads) * 100) : 0, count: bucket.Exemplar, color: '#E6B325' },
+    { name: '✅ Bom', pct: totalLeads ? Math.round((bucket.Bom / totalLeads) * 100) : 0, count: bucket.Bom, color: '#22C55E' },
+    { name: '📈 Em Desenvolvimento', pct: totalLeads ? Math.round((bucket['Em Desenvolvimento'] / totalLeads) * 100) : 0, count: bucket['Em Desenvolvimento'], color: '#F97316' },
+    { name: '⚠️ Atenção', pct: totalLeads ? Math.round((bucket.Atenção / totalLeads) * 100) : 0, count: bucket.Atenção, color: '#EF4444' },
+  ];
+
+  const positive = bucket.Exemplar + bucket.Bom;
+  DB.stats.engageRate = totalLeads ? Math.round((positive / totalLeads) * 100) : 0;
+
+  DB.sparklines.leads = [...DB.sparklines.leads.slice(0, 11), DB.stats.leads];
+  DB.sparklines.medals = [...DB.sparklines.medals.slice(0, 11), DB.stats.medalClicks];
+  DB.sparklines.engage = [...DB.sparklines.engage.slice(0, 11), DB.stats.engageRate];
+
+  document.getElementById('stat-leads').textContent = DB.stats.leads.toLocaleString('pt-PT');
+  document.getElementById('stat-medals').textContent = DB.stats.medalClicks.toLocaleString('pt-PT');
+  document.getElementById('stat-engage').innerHTML = `${DB.stats.engageRate}<span style="font-size:1.2rem">%</span>`;
+  document.getElementById('badge-leads').textContent = DB.stats.leads.toLocaleString('pt-PT');
+
+  buildSparkline('spark-leads', DB.sparklines.leads, '#E6B325', '#E6B325');
+  buildSparkline('spark-engage', DB.sparklines.engage, '#22C55E', '#22C55E');
+  buildSparkline('spark-medals', DB.sparklines.medals, '#8B5CF6', '#8B5CF6');
+  buildChartMedals();
+  buildChartLevels();
+  buildMedalRows();
+}
+
+function classify(score, max) {
+  const pct = (score / max) * 100;
+  if (pct >= 80) return { label:'Exemplar',          emoji:'🏆', cls:'sp-excellent', catCls:'cb-exemplar',   color:'#E6B325' };
+  if (pct >= 60) return { label:'Bom',               emoji:'✅', cls:'sp-good',      catCls:'cb-bom',        color:'#22C55E' };
+  if (pct >= 40) return { label:'Em Desenvolvimento', emoji:'📈', cls:'sp-average',   catCls:'cb-average',    color:'#F97316' };
+  return              { label:'Atenção',             emoji:'⚠️', cls:'sp-improve',   catCls:'cb-improve',    color:'#EF4444' };
+}
+
+function catBadgeHtml(c) {
+  const colorMap = { 'Exemplar':'rgba(230,179,37,.15)','Bom':'rgba(34,197,94,.12)','Em Desenvolvimento':'rgba(249,115,22,.12)','Atenção':'rgba(239,68,68,.1)' };
+  const textMap  = { 'Exemplar':'var(--gold)','Bom':'var(--green)','Em Desenvolvimento':'var(--orange)','Atenção':'var(--red)' };
+  return `<span class="cat-badge" style="background:${colorMap[c.label]||'rgba(255,255,255,.06)'};color:${textMap[c.label]||'#fff'};border:1px solid ${c.color}33;">${c.emoji} ${c.label}</span>`;
+}
+
+/* ════════════════════════════════════════════════════
+   ③ COUNTER ANIMATION
+════════════════════════════════════════════════════ */
+function animateCounter(el, target, suffix = '', duration = 1200) {
+  let start = null;
+  const step = ts => {
+    if (!start) start = ts;
+    const progress = Math.min((ts - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.innerHTML = Math.round(eased * target).toLocaleString('pt-PT') + suffix;
+    if (progress < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+/* ════════════════════════════════════════════════════
+   ④ SPARKLINE BUILDER (SVG)
+════════════════════════════════════════════════════ */
+function buildSparkline(svgId, data, color, fillColor) {
+  const svg = document.getElementById(svgId);
+  if (!svg) return;
+  const W = 200, H = 44, padX = 4, padY = 4;
+  const min = Math.min(...data), max = Math.max(...data);
+  const range = max - min || 1;
+  const xs = data.map((_, i) => padX + i * ((W - padX*2) / (data.length - 1)));
+  const ys = data.map(v => padY + (1 - (v - min) / range) * (H - padY*2));
+
+  const pts = xs.map((x, i) => `${x},${ys[i]}`).join(' ');
+  const fillPath = `M${xs[0]},${H} ` + xs.map((x,i) => `L${x},${ys[i]}`).join(' ') + ` L${xs[xs.length-1]},${H} Z`;
+
+  svg.innerHTML = `
+    <defs>
+      <linearGradient id="grad-${svgId}" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="${fillColor}" stop-opacity="0.3"/>
+        <stop offset="100%" stop-color="${fillColor}" stop-opacity="0.01"/>
+      </linearGradient>
+    </defs>
+    <path d="${fillPath}" fill="url(#grad-${svgId})"/>
+    <polyline points="${pts}" fill="none" stroke="${color}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="${xs[xs.length-1]}" cy="${ys[ys.length-1]}" r="3" fill="${color}" stroke="${color}" stroke-width="1"/>
+  `;
+}
+
+/* ════════════════════════════════════════════════════
+   ⑤ CHART.JS INSTANCES
+════════════════════════════════════════════════════ */
+let chartMedals = null;
+let chartLevels = null;
+
+Chart.defaults.font.family = "'DM Sans', sans-serif";
+Chart.defaults.color = '#8B9CC0';
+
+function buildChartMedals() {
+  const ctx = document.getElementById('chart-medals').getContext('2d');
+  const md  = DB.medals.monthly;
+
+  const makeGrad = (ctx, color) => {
+    const g = ctx.createLinearGradient(0,0,0,260);
+    g.addColorStop(0, color + 'CC');
+    g.addColorStop(1, color + '22');
+    return g;
+  };
+
+  if (chartMedals) chartMedals.destroy();
+  chartMedals = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: md.labels,
+      datasets: [
+        {
+          label:'Ouro', data:md.gold,
+          backgroundColor: makeGrad(ctx,'#FFD700'),
+          borderColor:'#FFD700', borderWidth:1.5, borderRadius:6,
+          barPercentage:.65,
+        },
+        {
+          label:'Prata', data:md.silver,
+          backgroundColor: makeGrad(ctx,'#C0C0C0'),
+          borderColor:'#C0C0C0', borderWidth:1.5, borderRadius:6,
+          barPercentage:.65,
+        },
+        {
+          label:'Bronze', data:md.bronze,
+          backgroundColor: makeGrad(ctx,'#CD7F32'),
+          borderColor:'#CD7F32', borderWidth:1.5, borderRadius:6,
+          barPercentage:.65,
+        },
+      ]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      interaction:{ mode:'index', intersect:false },
+      plugins:{
+        legend:{ display:false },
+        tooltip:{
+          backgroundColor:'rgba(13,18,32,0.95)',
+          borderColor:'rgba(255,255,255,0.1)', borderWidth:1,
+          padding:12, cornerRadius:10,
+          callbacks:{
+            label: ctx => `  ${ctx.dataset.label}: ${ctx.parsed.y} cliques`
+          }
+        }
+      },
+      scales:{
+        x:{
+          grid:{ color:'rgba(255,255,255,0.04)', drawBorder:false },
+          ticks:{ font:{ size:11, weight:'600' } }
+        },
+        y:{
+          grid:{ color:'rgba(255,255,255,0.05)', drawBorder:false },
+          ticks:{ font:{ size:11 }, callback: v => v+'cl' }
+        }
+      }
+    }
+  });
+}
+
+function buildChartLevels() {
+  const ctx = document.getElementById('chart-levels').getContext('2d');
+  const lvl = DB.levels;
+
+  if (chartLevels) chartLevels.destroy();
+  chartLevels = new Chart(ctx, {
+    type:'doughnut',
+    data:{
+      labels: lvl.map(l => l.name),
+      datasets:[{
+        data: lvl.map(l => l.count),
+        backgroundColor: lvl.map(l => l.color + 'CC'),
+        borderColor: lvl.map(l => l.color),
+        borderWidth:2,
+        hoverOffset:8,
+      }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      cutout:'72%',
+      plugins:{
+        legend:{ display:false },
+        tooltip:{
+          backgroundColor:'rgba(13,18,32,0.95)',
+          borderColor:'rgba(255,255,255,0.1)', borderWidth:1,
+          padding:12, cornerRadius:10,
+        }
+      }
+    }
+  });
+
+  // Donut total
+  const total = lvl.reduce((a,b) => a + b.count, 0);
+  document.getElementById('donut-total').textContent = total;
+
+  // Legend
+  const legendEl = document.getElementById('donut-legend');
+  legendEl.innerHTML = '';
+  lvl.forEach(l => {
+    const pct = Math.round((l.count/total)*100);
+    legendEl.innerHTML += `
+      <div class="dl-item">
+        <div class="dl-dot" style="background:${l.color};"></div>
+        <div class="dl-name">${l.name}</div>
+        <div class="dl-bar-wrap"><div class="dl-bar" style="width:${pct}%;background:${l.color};"></div></div>
+        <div class="dl-pct">${pct}%</div>
+      </div>
+    `;
+  });
+}
+
+/* ════════════════════════════════════════════════════
+   ⑥ MEDAL MINI ROWS
+════════════════════════════════════════════════════ */
+function buildMedalRows() {
+  const t = DB.medals.totals;
+  const total = t.gold + t.silver + t.bronze;
+  const el = document.getElementById('medal-rows');
+  const items = [
+    { emoji:'🥇', name:'Medalha de Ouro',   val:t.gold,   pct:Math.round(t.gold/total*100),   bar:'linear-gradient(90deg,#FFD700,#B8860B)' },
+    { emoji:'🥈', name:'Medalha de Prata',  val:t.silver, pct:Math.round(t.silver/total*100), bar:'linear-gradient(90deg,#C0C0C0,#808080)' },
+    { emoji:'🥉', name:'Medalha de Bronze', val:t.bronze, pct:Math.round(t.bronze/total*100), bar:'linear-gradient(90deg,#CD7F32,#8B5A1A)' },
+  ];
+  el.innerHTML = items.map(i => `
+    <div class="medal-row">
+      <div class="medal-emoji">${i.emoji}</div>
+      <div class="medal-info">
+        <div class="medal-name">${i.name}</div>
+        <div class="medal-track">
+          <div class="medal-bar" style="width:${i.pct}%;background:${i.bar};"></div>
+        </div>
+      </div>
+      <div class="medal-count">${i.val}</div>
+    </div>
+  `).join('');
+}
+
+/* ════════════════════════════════════════════════════
+   ⑦ TOP PAGES
+════════════════════════════════════════════════════ */
+function buildTopPages() {
+  const el = document.getElementById('page-rows');
+  el.innerHTML = DB.topPages.map((p,i) => `
+    <div class="page-row">
+      <div class="page-rank">${i+1}</div>
+      <div class="page-name">${p.name}</div>
+      <div class="page-hits">${p.hits.toLocaleString('pt-PT')}</div>
+      <div class="page-trend" style="color:${p.trend==='↑'?'var(--green)':p.trend==='↓'?'var(--red)':'var(--text-3)'}">${p.trend}</div>
+    </div>
+  `).join('');
+}
+
+/* ════════════════════════════════════════════════════
+   ⑧ ACTIVITY FEED
+════════════════════════════════════════════════════ */
+function buildActivity() {
+  const iconMap = { quiz:'📋', medal:'🏅', visit:'👁', contact:'✉️' };
+  const el = document.getElementById('activity-feed');
+  el.innerHTML = DB.activity.map(a => `
+    <div class="act-item">
+      <div class="act-dot ${a.type}">${iconMap[a.type]||'●'}</div>
+      <div class="act-text">${a.text}</div>
+      <div class="act-time">${a.time}</div>
+    </div>
+  `).join('');
+}
+
+/* ════════════════════════════════════════════════════
+   ⑨ WHATSAPP MESSAGE GENERATOR
+════════════════════════════════════════════════════ */
+function buildWAMessage(lead) {
+  const c   = classify(lead.pts, lead.max);
+  const pct = Math.round((lead.pts/lead.max)*100);
+  const msgs = {
+    'Exemplar':          `Olá ${lead.name.split(' ')[0]}! 👋 Analisámos os seus resultados do Monitor Escolar e a pontuação de ${pct}% classifica-o(a) como *Encarregado Exemplar* 🏆. O envolvimento de pais como o(a) sr(a). faz toda a diferença. Obrigado em nome do Colégio Alfa e Omega!`,
+    'Bom':               `Olá ${lead.name.split(' ')[0]}! O seu resultado no Monitor Escolar foi de ${pct}% — classificação *Bom* ✅. Há alguns pontos onde podemos crescer juntos. Poderíamos agendar uma breve conversa com o director de turma de ${lead.filho}?`,
+    'Em Desenvolvimento':`Olá ${lead.name.split(' ')[0]}! Obrigado por participar no Monitor Escolar. A sua pontuação foi de ${pct}%. Identificámos algumas áreas onde podemos apoiá-lo melhor no acompanhamento de ${lead.filho}. Podemos conversar?`,
+    'Atenção':           `Olá ${lead.name.split(' ')[0]}. Recebemos os seus dados do Monitor Escolar (${pct}%). Gostaríamos de agendar uma reunião de apoio para ajudar no percurso escolar de ${lead.filho}. Quando teria disponibilidade?`,
+  };
+  return encodeURIComponent(msgs[c.label] || msgs['Bom']);
+}
+
+/* ════════════════════════════════════════════════════
+   ⑩ LEADS TABLE
+════════════════════════════════════════════════════ */
+let filteredLeads = [];
+let sortState     = { key:'date', asc:false };
+const ROWS_PER_PAGE = 8;
+let currentPage   = 1;
+
+function buildTable() {
+  const search = (document.getElementById('table-search')?.value || '').toLowerCase();
+  const catFilter = document.getElementById('table-filter-cat')?.value || '';
+
+  filteredLeads = DB.leads.filter(l => {
+    const c = classify(l.pts, l.max);
+    const matchSearch = l.name.toLowerCase().includes(search) || l.filho.toLowerCase().includes(search);
+    const matchCat    = !catFilter || c.label === catFilter;
+    return matchSearch && matchCat;
+  });
+
+  // Sort
+  filteredLeads.sort((a, b) => {
+    let va, vb;
+    if (sortState.key === 'date')  { va=a.date;  vb=b.date;  }
+    if (sortState.key === 'name')  { va=a.name;  vb=b.name;  }
+    if (sortState.key === 'score') { va=a.pts;   vb=b.pts;   }
+    if (sortState.key === 'cat')   { va=classify(a.pts,a.max).label; vb=classify(b.pts,b.max).label; }
+    if (va < vb) return sortState.asc ? -1 : 1;
+    if (va > vb) return sortState.asc ? 1 : -1;
+    return 0;
+  });
+
+  const total = filteredLeads.length;
+  const pages = Math.ceil(total / ROWS_PER_PAGE);
+  if (currentPage > pages) currentPage = 1;
+
+  const start = (currentPage-1)*ROWS_PER_PAGE;
+  const slice = filteredLeads.slice(start, start+ROWS_PER_PAGE);
+
+  const tbody = document.getElementById('leads-body');
+  const empty = document.getElementById('table-empty');
+
+  if (slice.length === 0) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+  } else {
+    empty.style.display = 'none';
+    tbody.innerHTML = slice.map(l => {
+      const c    = classify(l.pts, l.max);
+      const pct  = Math.round((l.pts/l.max)*100);
+      const date = new Date(l.date);
+      const dateStr = date.toLocaleDateString('pt-PT',{day:'2-digit',month:'short'});
+      const yearStr = date.getFullYear();
+      const phone  = l.phone.replace(/\s/g,'');
+      const waLink = generateWA(phone, l.name, c.label);
+      return `
+        <tr>
+          <td>
+            <div class="td-date"><strong>${dateStr}</strong>${yearStr}</div>
+          </td>
+          <td>
+            <div class="td-name">
+              <div class="td-avatar">${l.avatar}</div>
+              <div class="td-info">
+                <div class="td-fullname">${l.name}</div>
+                <div class="td-class">📚 ${l.filho} · ${l.classe}</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="td-wa"><i class="fab fa-whatsapp"></i>${l.phone}</div>
+          </td>
+          <td>
+            <span class="score-pill ${c.cls}">${l.pts}/${l.max} · ${pct}%</span>
+          </td>
+          <td>${catBadgeHtml(c)}</td>
+          <td>
+            <a href="${waLink}" target="_blank" class="btn-wa">
+              <i class="fab fa-whatsapp"></i> Contactar
+            </a>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  // Footer info
+  document.getElementById('table-footer-info').innerHTML =
+    `Mostrando <strong>${slice.length}</strong> de <strong>${total}</strong> leads`;
+  document.getElementById('table-sub').textContent =
+    `${DB.leads.length} pais participantes — filtro activo: ${catFilter||'todos'}`;
+
+  // Pagination
+  buildPagination(pages);
+}
+
+function buildPagination(pages) {
+  const el = document.getElementById('pagination');
+  if (pages <= 1) { el.innerHTML = ''; return; }
+  let html = `<button class="pg-btn" onclick="changePage(${currentPage-1})" ${currentPage===1?'disabled':''}>‹</button>`;
+  for (let i=1; i<=pages; i++) {
+    html += `<button class="pg-btn ${i===currentPage?'active':''}" onclick="changePage(${i})">${i}</button>`;
+  }
+  html += `<button class="pg-btn" onclick="changePage(${currentPage+1})" ${currentPage===pages?'disabled':''}>›</button>`;
+  el.innerHTML = html;
+}
+
+function changePage(p) {
+  const pages = Math.ceil(filteredLeads.length / ROWS_PER_PAGE);
+  if (p < 1 || p > pages) return;
+  currentPage = p;
+  buildTable();
+}
+
+function filterTable() { currentPage=1; buildTable(); }
+
+function sortTable(key) {
+  if (sortState.key === key) sortState.asc = !sortState.asc;
+  else { sortState.key = key; sortState.asc = true; }
+  buildTable();
+}
+
+/* Global search → filters table */
+function globalSearch(v) {
+  const ti = document.getElementById('table-search');
+  if (ti) { ti.value = v; filterTable(); }
+}
+
+/* ════════════════════════════════════════════════════
+   ⑪ EXPORT CSV
+════════════════════════════════════════════════════ */
+function exportCSV() {
+  const rows = [['Data','Nome','WhatsApp','Parentesco','Educando','Classe','Score','%','Categoria']];
+  (filteredLeads.length ? filteredLeads : DB.leads).forEach(l => {
+    const c = classify(l.pts, l.max);
+    rows.push([l.date, l.name, l.phone, l.relacao, l.filho, l.classe, `${l.pts}/${l.max}`, Math.round((l.pts/l.max)*100)+'%', c.label]);
+  });
+  const csv = rows.map(r => r.map(v => `"${v}"`).join(',')).join('\n');
+  const blob = new Blob(['\ufeff'+csv], { type:'text/csv;charset=utf-8;' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = `leads-quiz-alfa-omega-${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  showToast('✅','Exportado!','Ficheiro CSV descarregado com sucesso.');
+}
+
+/* ════════════════════════════════════════════════════
+   ⑫ SIDEBAR CONTROLS
+════════════════════════════════════════════════════ */
+let sidebarCollapsed = false;
+
+function toggleSidebar() {
+  sidebarCollapsed = !sidebarCollapsed;
+  document.getElementById('sidebar').classList.toggle('collapsed', sidebarCollapsed);
+}
+
+function openSidebarMobile() {
+  document.getElementById('sidebar').classList.add('mobile-open');
+  document.getElementById('overlay').style.display = 'block';
+}
+function closeSidebarMobile() {
+  document.getElementById('sidebar').classList.remove('mobile-open');
+  document.getElementById('overlay').style.display = 'none';
+}
+
+function switchSection(name) {
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  closeSidebarMobile();
+  showToast('ℹ️', name.charAt(0).toUpperCase()+name.slice(1), 'Secção em construção — apenas o Dashboard está activo.');
+}
+
+/* ════════════════════════════════════════════════════
+   ⑬ REFRESH
+════════════════════════════════════════════════════ */
+function refreshData() {
+  const btn = document.getElementById('btn-refresh');
+  const icon = document.getElementById('refresh-topbar-icon');
+  btn.classList.add('spin');
+  icon.style.animation = 'spin .7s linear';
+  setTimeout(async () => {
+    await fetchDashboardData();
+    btn.classList.remove('spin');
+    icon.style.animation = '';
+    showToast('✅','Dados actualizados!','Última sincronização: ' + new Date().toLocaleTimeString('pt-PT'));
+    document.getElementById('sb-last-sync').textContent = 'Sincronizado: ' + new Date().toLocaleTimeString('pt-PT');
+  }, 1200);
+}
+
+/* ════════════════════════════════════════════════════
+   ⑭ TOAST
+════════════════════════════════════════════════════ */
+let toastTimer;
+function showToast(icon, title, msg) {
+  clearTimeout(toastTimer);
+  document.getElementById('toast-icon').textContent = icon;
+  document.getElementById('toast-title').textContent = title;
+  document.getElementById('toast-msg').textContent   = msg;
+  const t = document.getElementById('toast'); t.classList.add('show');
+  toastTimer = setTimeout(() => t.classList.remove('show'), 4000);
+}
+
+/* ════════════════════════════════════════════════════
+   ⑮ CLOCK & DATE
+════════════════════════════════════════════════════ */
+function updateClock() {
+  const now = new Date();
+  document.getElementById('sb-clock').textContent = now.toLocaleTimeString('pt-PT');
+}
+function updateDate() {
+  const now = new Date();
+  const opts = { weekday:'short', day:'2-digit', month:'short', year:'numeric' };
+  document.getElementById('top-date').textContent = now.toLocaleDateString('pt-PT', opts);
+  document.getElementById('page-sub-date').textContent =
+    `Actualizado em ${now.toLocaleDateString('pt-PT',{day:'2-digit',month:'long',year:'numeric'})} às ${now.toLocaleTimeString('pt-PT',{hour:'2-digit',minute:'2-digit'})}`;
+  document.getElementById('sb-last-sync').textContent = 'Sincronizado: ' + now.toLocaleTimeString('pt-PT');
+}
+
+/* ════════════════════════════════════════════════════
+   ⑯ INIT
+════════════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  updateDate(); updateClock();
+  setInterval(updateClock, 1000);
+
+  /* Counters */
+  const s = DB.stats;
+  setTimeout(() => animateCounter(document.getElementById('stat-visits'), s.visits), 200);
+  setTimeout(() => animateCounter(document.getElementById('stat-leads'), s.leads), 350);
+  setTimeout(() => {
+    const el = document.getElementById('stat-engage');
+    el.innerHTML = '0<span style="font-size:1.2rem">%</span>';
+    animateCounter(el, s.engageRate, '<span style="font-size:1.2rem">%</span>');
+  }, 500);
+  setTimeout(() => animateCounter(document.getElementById('stat-medals'), s.medalClicks), 650);
+
+  /* Sparklines */
+  buildSparkline('spark-visits', DB.sparklines.visits,  '#0A5FC4','#0A5FC4');
+  buildSparkline('spark-leads',  DB.sparklines.leads,   '#E6B325','#E6B325');
+  buildSparkline('spark-engage', DB.sparklines.engage,  '#22C55E','#22C55E');
+  buildSparkline('spark-medals', DB.sparklines.medals,  '#8B5CF6','#8B5CF6');
+
+  /* Charts */
+  buildChartMedals();
+  buildChartLevels();
+
+  /* Secondary */
+  buildMedalRows();
+  buildTopPages();
+  buildActivity();
+
+  /* Table */
+  buildTable();
+
+  /* Badge count */
+  document.getElementById('badge-leads').textContent = DB.leads.length;
+
+  /* Dados reais (Supabase) */
+  fetchDashboardData();
+});
+</script>
+</body>
+</html>
