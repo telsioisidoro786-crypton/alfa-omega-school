@@ -615,6 +615,12 @@
       .subscribe-banner { flex-direction: column; text-align: center; }
     }
   </style>
+
+  <!-- Vercel Web Analytics -->
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
 </head>
 <body>
 
@@ -995,7 +1001,7 @@
   <script>
     AOS.init({ duration: 900, once: true, offset: 70, easing: 'ease-out-cubic' });
 
-    // ─── NAVBAR SCROLL ───────────────────────────────────────
+    // ─── NAVBAR SCROLL ���──────────────────────────────────────
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
       if (window.scrollY > 60) {
