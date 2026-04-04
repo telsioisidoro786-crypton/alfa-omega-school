@@ -670,6 +670,12 @@
       .step-line { display: none; }
     }
   </style>
+
+  <!-- Vercel Web Analytics -->
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
 </head>
 <body>
 
@@ -1374,7 +1380,7 @@
       }
     }
 
-    // ─── LOAD COMPONENTS ──────────────────────────────
+    // ─── LOAD COMPONENTS ────────────────��─────────────
     fetch('/components/navbar.html')
       .then(r => r.text())
       .then(d => { document.getElementById('navbar-container').innerHTML = d; typeof setupMobileMenu === 'function' && setupMobileMenu(); })
