@@ -1,0 +1,79 @@
+{
+  "name": "Colégio Alfa e Omega",
+  "short_name": "Alfa e Omega",
+  "description": "Notificações e atualizações do Colégio Alfa e Omega em Panguila, Angola",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#09091a",
+  "theme_color": "#01377d",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/assets/images/logo/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/images/logo/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/images/logo/icon-192-maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/assets/images/logo/icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/assets/images/logo/screenshot-540.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/assets/images/logo/screenshot-1280.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "categories": ["education"],
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "Caixa do Tempo",
+      "short_name": "Timeline",
+      "description": "Ver eventos escolares do mês",
+      "url": "/tempo.html",
+      "icons": [
+        {
+          "src": "/assets/images/logo/icon-96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Matrículas",
+      "short_name": "Inscrever",
+      "description": "Fazer inscrição/matrícula",
+      "url": "/matriculas.html",
+      "icons": [
+        {
+          "src": "/assets/images/logo/icon-96.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ]
+}
