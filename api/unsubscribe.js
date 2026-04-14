@@ -1,13 +1,3 @@
-/**
- * API: Unsubscribe User
- * Path: /api/unsubscribe.js
- * Method: POST
- * 
- * Responsável por:
- * - Receber endpoint para remover
- * - Desativar subscrição no Supabase
- */
-
 import { createClient } from '@supabase/supabase-js';
 
 const initSupabase = () => {
@@ -22,7 +12,7 @@ const initSupabase = () => {
   return createClient(supabaseUrl, supabaseKey);
 };
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
