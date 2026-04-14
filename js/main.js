@@ -235,22 +235,61 @@ document.addEventListener('keydown', (e) => {
 
 function showToast(message, type = 'success', duration = 3000) {
   const toast = document.createElement('div');
-  toast.className = `fixed bottom-4 right-4 px-6 py-3 rounded-lg text-white font-medium z-50 animate-slide-up`;
+  toast.className = `fixed bottom-4 right-4 rounded-lg text-white font-medium z-50 animate-slide-up overflow-hidden shadow-lg`;
   
-  if (type === 'success') {
-    toast.classList.add('bg-green-500');
-  } else if (type === 'error') {
-    toast.classList.add('bg-red-500');
+  // Define cor de fundo baseada no tipo
+  let bgColor = 'bg-green-500';
+  if (type === 'error') {
+    bgColor = 'bg-red-500';
+  } else if (type === 'warning') {
+    bgColor = 'bg-yellow-500';
   } else if (type === 'info') {
-    toast.classList.add('bg-blue-500');
+    bgColor = 'bg-blue-500';
   }
-
-  toast.textContent = message;
+  
+  toast.classList.add(bgColor);
+  
+  // Conteúdo HTML com botão de fechar e progress bar
+  toast.innerHTML = `
+    <div class="flex items-center justify-between px-6 py-3">
+      <span>${message}</span>
+      <button class="ml-4 text-white hover:opacity-75 transition-opacity focus:outline-none" aria-label="Fechar notificação">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+        </svg>
+      </button>
+    </div>
+    <div class="h-1 bg-black bg-opacity-20 overflow-hidden">
+      <div class="h-full bg-white opacity-40 toast-progress-bar" style="width: 100%;"></div>
+    </div>
+  `;
+  
   document.body.appendChild(toast);
-
-  setTimeout(() => {
+  
+  // Função para remover toast
+  const removeToast = () => {
     toast.classList.add('animate-slide-down');
     setTimeout(() => toast.remove(), 300);
+  };
+  
+  // Botão de fechar
+  const closeBtn = toast.querySelector('button');
+  closeBtn.addEventListener('click', removeToast);
+  
+  // Progress bar que anima durante a duração
+  const progressBar = toast.querySelector('.toast-progress-bar');
+  progressBar.style.transition = `width ${duration}ms linear`;
+  
+  // Iniciar a animação da progress bar
+  setTimeout(() => {
+    progressBar.style.width = '0%';
+  }, 10);
+  
+  // Remover toast automaticamente após a duração
+  setTimeout(() => {
+    if (document.body.contains(toast)) {
+      removeToast();
+    }
   }, duration);
 }
 
