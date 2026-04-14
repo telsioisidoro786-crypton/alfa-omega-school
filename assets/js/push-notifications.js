@@ -541,4 +541,44 @@ window.setDevVapidKey = function(publicKey) {
   console.log('[Push] ✓ VAPID key set. Now run: PushNotifications.initialize()');
 };
 
+// Função para testar API subscribe manualmente
+window.testSubscribeAPI = async function(subscription) {
+  console.log('[Push] Testing /api/subscribe manually...');
+  console.log('[Push] Sending:', {
+    endpoint: subscription?.endpoint?.substring(0, 50) + '...',
+    hasKeys: !!subscription?.keys,
+  });
+
+  try {
+    const response = await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        subscription: subscription?.toJSON?.() || subscription,
+        userAgent: navigator.userAgent,
+        timestamp: new Date().toISOString(),
+      }),
+    });
+
+    const data = await response.json();
+    console.log('[Push] Response status:', response.status);
+    console.log('[Push] Response data:', data);
+
+    if (!response.ok) {
+      console.error('[Push] ✗ API Error:', {
+        status: response.status,
+        error: data.error,
+        details: data.details,
+        code: data.code,
+      });
+    } else {
+      console.log('[Push] ✓ API Success');
+    }
+
+    return data;
+  } catch (error) {
+    console.error('[Push] ✗ Network Error:', error.message);
+  }
+};
+
 console.log('[Push] Diagnóstico disponível: diagnosePushNotifications()');
