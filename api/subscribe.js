@@ -38,15 +38,27 @@ export default async function handler(req, res) {
 
     // Validar input
     if (!subscription || !subscription.endpoint) {
+      console.error('[API Subscribe] Invalid subscription data:', subscription);
       return res.status(400).json({
         error: 'Invalid subscription data',
+        details: 'subscription.endpoint is required',
       });
     }
 
     console.log('[API Subscribe] New subscription:', {
       endpoint: subscription.endpoint.substring(0, 50) + '...',
+      hasKeys: !!subscription.keys,
       timestamp,
     });
+
+    // Validar VAPID keys
+    if (!subscription.keys || !subscription.keys.auth || !subscription.keys.p256dh) {
+      console.error('[API Subscribe] Missing VAPID keys:', subscription.keys);
+      return res.status(400).json({
+        error: 'Invalid subscription keys',
+        details: 'subscription.keys must have auth and p256dh',
+      });
+    }
 
     // Inicializar Supabase
     const supabase = initSupabase();
@@ -65,6 +77,7 @@ export default async function handler(req, res) {
 
     if (existing) {
       // Atualizar subscrição existente
+      console.log('[API Subscribe] Updating existing subscription:', existing.id);
       const { error: updateError } = await supabase
         .from('push_subscriptions')
         .update({
@@ -82,6 +95,7 @@ export default async function handler(req, res) {
         return res.status(500).json({
           error: 'Failed to update subscription',
           details: updateError.message,
+          code: updateError.code,
         });
       }
 
@@ -94,6 +108,7 @@ export default async function handler(req, res) {
     }
 
     // Inserir nova subscrição
+    console.log('[API Subscribe] Inserting new subscription');
     const { data, error } = await supabase.from('push_subscriptions').insert([
       {
         endpoint: subscription.endpoint,
@@ -107,9 +122,16 @@ export default async function handler(req, res) {
 
     if (error) {
       console.error('[API Subscribe] Error inserting subscription:', error);
+      console.error('[API Subscribe] Error details:', {
+        code: error.code,
+        message: error.message,
+        details: error.details,
+        hint: error.hint,
+      });
       return res.status(500).json({
         error: 'Failed to save subscription',
         details: error.message,
+        code: error.code,
       });
     }
 
@@ -123,9 +145,11 @@ export default async function handler(req, res) {
     });
   } catch (error) {
     console.error('[API Subscribe] Unexpected error:', error);
+    console.error('[API Subscribe] Error stack:', error.stack);
     return res.status(500).json({
       error: 'Internal server error',
       details: error.message,
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined,
     });
   }
 }
