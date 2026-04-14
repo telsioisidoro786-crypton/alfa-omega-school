@@ -604,7 +604,78 @@
       // Init
       window.addEventListener('load', () => {
         checkStatus();
+        
+        // Verificar se VAPID está configurada
+        setTimeout(() => {
+          checkVapidConfiguration();
+        }, 1000);
       });
+
+      // Verificar VAPID Configuration
+      async function checkVapidConfiguration() {
+        try {
+          const response = await fetch('/api/vapid-key');
+          if (!response.ok) {
+            showWarningAboutVapidKeys();
+          }
+        } catch (error) {
+          showWarningAboutVapidKeys();
+        }
+      }
+
+      // Mostrar aviso se VAPID não está configurada
+      function showWarningAboutVapidKeys() {
+        const container = document.getElementById('alerts-container');
+        
+        if (container.querySelector('.alert-error[data-vapid]')) {
+          return; // Já existe
+        }
+
+        const alert = document.createElement('div');
+        alert.setAttribute('data-vapid', 'true');
+        alert.className = 'alert alert-error';
+        alert.style.cssText = 'flex-direction: column; text-align: left; align-items: flex-start;';
+        alert.innerHTML = `
+          <div style="width: 100%">
+            <strong style="display: block; margin-bottom: 0.5rem">
+              ⚠️ VAPID Keys não configuradas
+            </strong>
+            <p style="margin-bottom: 1rem; font-size: 0.9rem">
+              As chaves VAPID não foram carregadas do servidor. As notificações não funcionarão até que configure.
+            </p>
+            <details style="font-size: 0.9rem">
+              <summary style="cursor: pointer; color: #dc2626; text-decoration: underline">
+                📖 Como Configurar (Clica para expandir)
+              </summary>
+              <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(239, 68, 68, 0.2)">
+                <ol style="margin-left: 1.5rem; line-height: 1.8">
+                  <li>
+                    <code style="background: #0f172a; padding: 0.2em 0.4em; border-radius: 4px; margin: 0 0.25em">
+                      web-push generate-vapid-keys
+                    </code>
+                  </li>
+                  <li>Copia os valores de "Public Key" e "Private Key"</li>
+                  <li>Vai a <a href="https://vercel.com/dashboard" target="_blank" style="color: #dc2626">Vercel Dashboard</a></li>
+                  <li>Settings → Environment Variables → + Add New</li>
+                  <li>
+                    Cria <code style="background: #0f172a; padding: 0.2em 0.4em">NEXT_PUBLIC_VAPID_PUBLIC_KEY</code>
+                  </li>
+                  <li>
+                    Cria <code style="background: #0f172a; padding: 0.2em 0.4em">VAPID_PRIVATE_KEY</code>
+                  </li>
+                  <li>Espera 2+ minutos pelo redeploy</li>
+                  <li>Reload esta página (Ctrl+Shift+R)</li>
+                </ol>
+                <p style="margin-top: 1rem; font-size: 0.85rem">
+                  Guia completo: <a href="/VAPID_SETUP_QUICK.md" target="_blank" style="color: #dc2626">VAPID_SETUP_QUICK.md</a>
+                </p>
+              </div>
+            </details>
+          </div>
+        `;
+
+        container.insertBefore(alert, container.firstChild);
+      }
     </script>
   </body>
 </html>
