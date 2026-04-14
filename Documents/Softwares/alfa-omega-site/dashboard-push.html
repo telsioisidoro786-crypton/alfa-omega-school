@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Dashboard de Notificações — Colégio Alfa e Omega" />
+    <title>📢 Dashboard Notificações — Alfa e Omega</title>
+
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#01377d" />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary: #01377d;
+        --accent: #cef431;
+        --gold: #e6b325;
+        --white: #ffffff;
+        --dark: #0f172a;
+        --gray: #4a567a;
+        --border: rgba(1, 55, 125, 0.1);
+        --ease: cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'DM Sans', sans-serif;
+        background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%);
+        color: var(--dark);
+        line-height: 1.6;
+        min-height: 100vh;
+        padding: 2rem;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 5vw, 3rem);
+        margin-bottom: 0.5rem;
+        color: var(--primary);
+      }
+
+      .subtitle {
+        font-size: 1rem;
+        color: var(--gray);
+      }
+
+      /* Card Container */
+      .card {
+        background: var(--white);
+        border: 1.5px solid var(--border);
+        border-radius: 20px;
+        padding: 2.5rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 10px 40px rgba(1, 55, 125, 0.08);
+        transition: all 0.4s var(--ease);
+      }
+
+      .card:hover {
+        border-color: rgba(1, 55, 125, 0.2);
+        box-shadow: 0 20px 60px rgba(1, 55, 125, 0.12);
+      }
+
+      .card h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      /* Form */
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--primary);
+        font-size: 0.95rem;
+      }
+
+      input,
+      textarea,
+      select {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1.5px solid var(--border);
+        border-radius: 12px;
+        font-family: inherit;
+        font-size: 1rem;
+        color: var(--dark);
+        transition: all 0.3s;
+      }
+
+      input:focus,
+      textarea:focus,
+      select:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(206, 244, 49, 0.1);
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 120px;
+      }
+
+      /* Buttons */
+      .button-group {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      button {
+        padding: 0.9rem 2rem;
+        border: none;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.4s var(--ease);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        min-width: 150px;
+        justify-content: center;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, var(--primary) 0%, #0a5fc4 100%);
+        color: var(--accent);
+        box-shadow: 0 8px 20px rgba(1, 55, 125, 0.2);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px rgba(1, 55, 125, 0.3);
+      }
+
+      .btn-primary:active {
+        transform: translateY(0);
+      }
+
+      .btn-secondary {
+        background: rgba(206, 244, 49, 0.15);
+        color: var(--primary);
+        border: 1.5px solid rgba(206, 244, 49, 0.3);
+      }
+
+      .btn-secondary:hover {
+        background: rgba(206, 244, 49, 0.25);
+        border-color: rgba(206, 244, 49, 0.6);
+      }
+
+      .btn-danger {
+        background: rgba(239, 68, 68, 0.1);
+        color: #dc2626;
+        border: 1.5px solid rgba(239, 68, 68, 0.3);
+      }
+
+      .btn-danger:hover {
+        background: rgba(239, 68, 68, 0.2);
+      }
+
+      button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      /* Status */
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+
+      .status-active {
+        background: rgba(34, 197, 94, 0.15);
+        color: #16a34a;
+      }
+
+      .status-inactive {
+        background: rgba(107, 114, 128, 0.15);
+        color: #4b5563;
+      }
+
+      .status-loading {
+        background: rgba(59, 130, 246, 0.15);
+        color: #2563eb;
+      }
+
+      /* Alert Messages */
+      .alert {
+        padding: 1rem 1.5rem;
+        border-radius: 12px;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        animation: slideIn 0.3s var(--ease);
+      }
+
+      .alert-success {
+        background: rgba(34, 197, 94, 0.1);
+        border: 1px solid rgba(34, 197, 94, 0.3);
+        color: #16a34a;
+      }
+
+      .alert-error {
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        color: #dc2626;
+      }
+
+      .alert-info {
+        background: rgba(59, 130, 246, 0.1);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        color: #2563eb;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Loading Spinner */
+      .spinner {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-top-color: var(--accent);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Stats Grid */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .stat-card {
+        background: linear-gradient(135deg, rgba(206, 244, 49, 0.1), rgba(206, 244, 49, 0.05));
+        border: 1.5px solid rgba(206, 244, 49, 0.2);
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+      }
+
+      .stat-value {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        font-size: 0.85rem;
+        color: var(--gray);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        body {
+          padding: 1rem;
+        }
+
+        .card {
+          padding: 1.5rem;
+        }
+
+        .button-group {
+          flex-direction: column;
+        }
+
+        button {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header>
+        <h1>📢 Dashboard de Notificações</h1>
+        <p class="subtitle">Colégio Alfa e Omega — Enviar notifications aos pais e encarregados</p>
+      </header>
+
+      <!-- Alerts Container -->
+      <div id="alerts-container"></div>
+
+      <!-- Card 1: Status -->
+      <div class="card">
+        <h2>🔔 Status do Sistema</h2>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value" id="stat-subscriptions">—</div>
+            <div class="stat-label">Subscrições</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="stat-sent">—</div>
+            <div class="stat-label">Enviadas</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="stat-failed">—</div>
+            <div class="stat-label">Falhadas</div>
+          </div>
+        </div>
+
+        <div style="margin-top: 1.5rem">
+          <p style="margin-bottom: 1rem">
+            <strong>Seu status:</strong>
+            <span id="subscription-status" class="status-badge status-loading">
+              <span class="spinner" style="width: 12px; height: 12px"></span>
+              Carregando...
+            </span>
+          </p>
+          <div class="button-group">
+            <button class="btn-secondary" onclick="checkStatus()">
+              🔄 Verificar Status
+            </button>
+            <button class="btn-secondary" onclick="toggleSubscription()">
+              🔔 Ativar Notificações
+            </button>
+            <button class="btn-danger" onclick="sendTestNotification()">
+              📤 Teste de Notificação
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Send Notification -->
+      <div class="card">
+        <h2>✉️ Enviar Notificação</h2>
+        <form id="notification-form" onsubmit="sendNotification(event)">
+          <div class="form-group">
+            <label for="title">📝 Título</label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              placeholder="ex: Reunião Importante de Pais"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="body">📄 Mensagem</label>
+            <textarea
+              id="body"
+              name="body"
+              placeholder="ex: Gostaríamos de convidá-lo para a reunião mensal de pais..."
+              required
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="url">🔗 URL de Destino (Opcional)</label>
+            <input
+              type="url"
+              id="url"
+              name="url"
+              placeholder="ex: /eventos/reuniao-pais"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="recipients">👥 Destinatários</label>
+            <select id="recipients" name="recipients">
+              <option value="all">Todos os subscritos</option>
+              <option value="parents">Apenas pais</option>
+              <option value="staff">Apenas staff</option>
+            </select>
+          </div>
+
+          <div class="button-group">
+            <button type="submit" class="btn-primary">
+              <span id="send-spinner"></span> 📤 Enviar Agora
+            </button>
+            <button type="reset" class="btn-secondary">🔄 Limpar</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Card 3: History -->
+      <div class="card">
+        <h2>📊 Histórico de Notificações</h2>
+        <div id="history-container" style="color: var(--gray)">
+          <p>Nenhuma notificação enviada ainda.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/assets/js/push-notifications.js"></script>
+    <script>
+      /**
+       * Dashboard Functions
+       */
+
+      // Alert Manager
+      function showAlert(message, type = 'info') {
+        const container = document.getElementById('alerts-container');
+        const alert = document.createElement('div');
+        alert.className = `alert alert-${type}`;
+        alert.innerHTML = `
+          <span>${
+            type === 'success'
+              ? '✓'
+              : type === 'error'
+                ? '✗'
+                : 'ℹ'
+          }</span>
+          <span>${message}</span>
+        `;
+
+        container.appendChild(alert);
+
+        // Auto-remove após 5 segundos
+        setTimeout(() => {
+          alert.style.opacity = '0';
+          alert.style.transform = 'translateY(-10px)';
+          setTimeout(() => alert.remove(), 300);
+        }, 5000);
+      }
+
+      // Check Status
+      async function checkStatus() {
+        const status = PushNotifications.getStatus();
+        const statusEl = document.getElementById('subscription-status');
+
+        if (status.isSupported) {
+          if (status.isSubscribed) {
+            statusEl.innerHTML = '✓ <strong>Notificações Ativas</strong>';
+            statusEl.className = 'status-badge status-active';
+          } else {
+            statusEl.innerHTML = '⊘ <strong>Não Subscrito</strong>';
+            statusEl.className = 'status-badge status-inactive';
+          }
+        } else {
+          statusEl.innerHTML = '✗ <strong>Não Suportado</strong>';
+          statusEl.className = 'status-badge status-inactive';
+        }
+
+        showAlert('Status verificado', 'info');
+      }
+
+      // Toggle Subscription
+      async function toggleSubscription() {
+        const status = PushNotifications.getStatus();
+
+        try {
+          if (status.isSubscribed) {
+            await PushNotifications.unsubscribeUser();
+            showAlert('Notificações desativadas', 'info');
+          } else {
+            await PushNotifications.subscribeUser();
+            showAlert('Notificações ativadas! ✓', 'success');
+          }
+          checkStatus();
+        } catch (error) {
+          showAlert(`Erro: ${error.message}`, 'error');
+        }
+      }
+
+      // Send Test Notification
+      async function sendTestNotification() {
+        try {
+          await PushNotifications.sendTestNotification();
+          showAlert('Notificação de teste enviada!', 'success');
+        } catch (error) {
+          showAlert(`Erro ao enviar teste: ${error.message}`, 'error');
+        }
+      }
+
+      // Send Notification
+      async function sendNotification(event) {
+        event.preventDefault();
+
+        const title = document.getElementById('title').value;
+        const body = document.getElementById('body').value;
+        const url = document.getElementById('url').value;
+        const sendBtn = event.target.querySelector('button[type="submit"]');
+        const spinner = document.getElementById('send-spinner');
+
+        // Validar
+        if (!title.trim() || !body.trim()) {
+          showAlert('Preencha título e mensagem', 'error');
+          return;
+        }
+
+        // UI
+        sendBtn.disabled = true;
+        spinner.innerHTML = '<span class="spinner"></span>';
+
+        try {
+          const response = await fetch('/api/send-notification', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              title,
+              body,
+              data: url ? { url } : {},
+            }),
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            showAlert(
+              `Notificação enviada a ${result.sent}/${result.total} utilizadores ✓`,
+              'success'
+            );
+
+            // Limpar form
+            event.target.reset();
+
+            // Atualizar histórico
+            addToHistory(title, result.sent, result.total);
+          } else {
+            showAlert(`Erro: ${result.error}`, 'error');
+          }
+        } catch (error) {
+          showAlert(`Erro na requisição: ${error.message}`, 'error');
+        } finally {
+          sendBtn.disabled = false;
+          spinner.innerHTML = '';
+        }
+      }
+
+      // Add to History
+      function addToHistory(title, sent, total) {
+        const container = document.getElementById('history-container');
+
+        if (container.querySelector('p')) {
+          container.innerHTML = '';
+        }
+
+        const item = document.createElement('div');
+        item.style.cssText = `
+          padding: 1rem;
+          background: rgba(206, 244, 49, 0.05);
+          border-left: 3px solid var(--accent);
+          border-radius: 6px;
+          margin-bottom: 1rem;
+        `;
+        item.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: start; gap: 1rem">
+            <div>
+              <strong>${title}</strong>
+              <p style="font-size: 0.9rem; margin-top: 0.25rem; color: var(--gray)">
+                ${sent}/${total} enviadas • ${new Date().toLocaleTimeString('pt-PT')}
+              </p>
+            </div>
+            <span style="color: var(--accent); font-weight: 700">✓</span>
+          </div>
+        `;
+
+        container.insertBefore(item, container.firstChild);
+      }
+
+      // Init
+      window.addEventListener('load', () => {
+        checkStatus();
+        
+        // Verificar se VAPID está configurada
+        setTimeout(() => {
+          checkVapidConfiguration();
+        }, 1000);
+      });
+
+      // Verificar VAPID Configuration
+      async function checkVapidConfiguration() {
+        try {
+          const response = await fetch('/api/vapid-key');
+          if (!response.ok) {
+            showWarningAboutVapidKeys();
+          }
+        } catch (error) {
+          showWarningAboutVapidKeys();
+        }
+      }
+
+      // Mostrar aviso se VAPID não está configurada
+      function showWarningAboutVapidKeys() {
+        const container = document.getElementById('alerts-container');
+        
+        if (container.querySelector('.alert-error[data-vapid]')) {
+          return; // Já existe
+        }
+
+        const alert = document.createElement('div');
+        alert.setAttribute('data-vapid', 'true');
+        alert.className = 'alert alert-error';
+        alert.style.cssText = 'flex-direction: column; text-align: left; align-items: flex-start;';
+        alert.innerHTML = `
+          <div style="width: 100%">
+            <strong style="display: block; margin-bottom: 0.5rem">
+              ⚠️ VAPID Keys não configuradas
+            </strong>
+            <p style="margin-bottom: 1rem; font-size: 0.9rem">
+              As chaves VAPID não foram carregadas do servidor. As notificações não funcionarão até que configure.
+            </p>
+            <details style="font-size: 0.9rem">
+              <summary style="cursor: pointer; color: #dc2626; text-decoration: underline">
+                📖 Como Configurar (Clica para expandir)
+              </summary>
+              <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(239, 68, 68, 0.2)">
+                <ol style="margin-left: 1.5rem; line-height: 1.8">
+                  <li>
+                    <code style="background: #0f172a; padding: 0.2em 0.4em; border-radius: 4px; margin: 0 0.25em">
+                      web-push generate-vapid-keys
+                    </code>
+                  </li>
+                  <li>Copia os valores de "Public Key" e "Private Key"</li>
+                  <li>Vai a <a href="https://vercel.com/dashboard" target="_blank" style="color: #dc2626">Vercel Dashboard</a></li>
+                  <li>Settings → Environment Variables → + Add New</li>
+                  <li>
+                    Cria <code style="background: #0f172a; padding: 0.2em 0.4em">NEXT_PUBLIC_VAPID_PUBLIC_KEY</code>
+                  </li>
+                  <li>
+                    Cria <code style="background: #0f172a; padding: 0.2em 0.4em">VAPID_PRIVATE_KEY</code>
+                  </li>
+                  <li>Espera 2+ minutos pelo redeploy</li>
+                  <li>Reload esta página (Ctrl+Shift+R)</li>
+                </ol>
+                <p style="margin-top: 1rem; font-size: 0.85rem">
+                  Guia completo: <a href="/VAPID_SETUP_QUICK.md" target="_blank" style="color: #dc2626">VAPID_SETUP_QUICK.md</a>
+                </p>
+              </div>
+            </details>
+          </div>
+        `;
+
+        container.insertBefore(alert, container.firstChild);
+      }
+    </script>
+  </body>
+</html>

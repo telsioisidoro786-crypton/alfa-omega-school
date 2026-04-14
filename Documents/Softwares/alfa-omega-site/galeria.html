@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galeria Fotográfica — Colégio Alfa e Omega</title>
+  <meta name="description" content="Galeria fotográfica do Colégio Alfa e Omega. Veja o ambiente escolar, actividades, eventos e momentos dos alunos em Panguila, Angola.">
+  <meta name="author" content="Colégio Alfa e Omega">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.colegioalfaeomega.com/galeria.html">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/main.css">
+
+  <style>
+    /* ============================================
+       TOKENS
+    ============================================ */
+    :root {
+      --ink-950:   #010E24;
+      --ink-900:   #011830;
+      --primary:   #01377D;
+      --primary-m: #0147A0;
+      --primary-l: #0A5FC4;
+      --accent:    #CEF431;
+      --accent-m:  #B8D400;
+      --accent-d:  #8FA300;
+      --white:     #FFFFFF;
+      --off-white: #F8F9F6;
+      --gray-50:   #F5F6F3;
+      --gray-100:  #EAEBE8;
+      --gray-200:  #D4D6D1;
+      --gray-400:  #9BA09A;
+      --gray-500:  #6D726B;
+      --gray-600:  #4D524B;
+      --gray-700:  #3D4239;
+      --gray-900:  #1A1E18;
+      --font-serif: 'DM Serif Display', serif;
+      --font-sans:  'DM Sans', sans-serif;
+      --font-head:  'Poppins', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--white);
+      color: var(--gray-700);
+      overflow-x: hidden;
+      padding-top: 5rem;
+    }
+
+    /* =============================================
+       NAVBAR
+    ============================================= */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: 5rem;
+      transition: background 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease;
+    }
+
+    .navbar.transparent {
+      background: transparent;
+    }
+
+    .navbar.scrolled {
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.08), 0 8px 32px rgba(1,55,125,0.06);
+    }
+
+    .navbar-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      text-decoration: none;
+    }
+
+    .logo-img {
+      width: 46px;
+      height: 46px;
+      object-fit: contain;
+      transition: transform 0.3s ease;
+    }
+
+    .logo-section:hover .logo-img { transform: scale(1.05); }
+
+    .logo-text-block h2 {
+      font-family: var(--font-heading);
+      font-size: 0.925rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1.1;
+      transition: color 0.3s;
+    }
+
+    .navbar.transparent .logo-text-block h2 { color: var(--white); }
+
+    .logo-text-block p {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--accent-mid);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .navbar.transparent .logo-text-block p { color: rgba(206,244,49,0.75); }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .nav-link {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--gray-700);
+      text-decoration: none;
+      padding: 0.6rem 0.9rem;
+      border-radius: 0.5rem;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .navbar.transparent .nav-link { color: rgba(255,255,255,0.85); }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 4px; left: 50%; right: 50%;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: left 0.3s ease, right 0.3s ease;
+    }
+
+    .nav-link:hover::after, .nav-link.active::after { left: 0.9rem; right: 0.9rem; }
+    .nav-link:hover { color: var(--primary); }
+    .navbar.transparent .nav-link:hover { color: var(--white); }
+
+    .nav-cta {
+      margin-left: 0.75rem;
+      background: var(--accent);
+      color: var(--primary);
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.875rem;
+      padding: 0.65rem 1.4rem;
+      border-radius: 2rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .nav-cta:hover {
+      background: var(--primary);
+      color: var(--white);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(1,55,125,0.25);
+    }
+
+    .mobile-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: var(--primary);
+      cursor: pointer;
+    }
+
+    .navbar.transparent .mobile-btn { color: var(--white); }
+
+    .mobile-menu {
+      display: none;
+      position: absolute;
+      top: 100%; left: 0; right: 0;
+      background: var(--white);
+      border-top: 3px solid var(--accent);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+      padding: 1rem 0;
+      flex-direction: column;
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-nav-link {
+      padding: 0.875rem 2rem;
+      font-weight: 600;
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 0.95rem;
+      border-left: 3px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .mobile-nav-link:hover { background: rgba(1,55,125,0.05); border-left-color: var(--accent); }
+
+    /* ============================================
+       HERO — FULL DARK CINEMATIC
+    ============================================ */
+    .page-hero {
+      background: var(--ink-950);
+      padding: 7rem 2rem 5rem;
+      position: relative; overflow: hidden;
+    }
+
+    /* Ghost text */
+    .page-hero::before {
+      content: 'GALERIA';
+      position: absolute; left: -2rem; bottom: -3rem;
+      font-family: var(--font-serif);
+      font-size: clamp(8rem, 18vw, 20rem);
+      color: rgba(255,255,255,0.025);
+      line-height: 1; pointer-events: none; white-space: nowrap; z-index: 0;
+    }
+
+    /* Grid texture */
+    .page-hero::after {
+      content: ''; position: absolute; inset: 0;
+      background-image:
+        repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(255,255,255,0.012) 80px, rgba(255,255,255,0.012) 81px),
+        repeating-linear-gradient(0deg, transparent, transparent 80px, rgba(255,255,255,0.012) 80px, rgba(255,255,255,0.012) 81px);
+      pointer-events: none;
+    }
+
+    .hero-glow {
+      position: absolute; top: -4rem; right: -4rem;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(1,55,125,0.5) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 4rem; align-items: end;
+      position: relative; z-index: 2;
+    }
+
+    .hero-left {}
+
+    .hero-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+
+    .hero-breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-sans); font-size: 0.75rem; color: rgba(255,255,255,0.35); }
+    .hero-breadcrumb a { color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
+    .hero-breadcrumb a:hover { color: var(--accent); }
+    .hero-breadcrumb i { font-size: 0.55rem; }
+
+    .hero-photo-count { font-family: var(--font-sans); font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.18em; color: rgba(255,255,255,0.35); }
+    .hero-photo-count strong { color: var(--accent); }
+
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--font-sans); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent); margin-bottom: 1.25rem; }
+    .hero-eyebrow::before { content: ''; width: 28px; height: 2px; background: var(--accent); border-radius: 2px; }
+
+    .hero-h1 { font-family: var(--font-serif); font-size: clamp(2.8rem, 6vw, 5rem); color: var(--white); line-height: 1.0; letter-spacing: -0.025em; margin-bottom: 1.5rem; }
+    .hero-h1 em { color: var(--accent); font-style: italic; }
+
+    .hero-desc { font-family: var(--font-sans); font-size: 1rem; color: rgba(255,255,255,0.45); line-height: 1.85; font-weight: 300; max-width: 500px; }
+
+    /* Right: category pills */
+    .hero-right { display: flex; flex-direction: column; gap: 0.75rem; }
+
+    .cat-pill {
+      display: flex; align-items: center; gap: 0.75rem;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 0.875rem; padding: 0.875rem 1.25rem;
+      text-decoration: none; transition: all 0.3s;
+      cursor: pointer;
+    }
+    .cat-pill:hover { background: rgba(206,244,49,0.1); border-color: rgba(206,244,49,0.3); }
+    .cat-pill.active-cat { background: rgba(206,244,49,0.12); border-color: rgba(206,244,49,0.4); }
+
+    .cat-icon { width: 36px; height: 36px; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .cat-icon.blue { background: rgba(1,55,125,0.4); color: var(--accent); }
+    .cat-icon.yellow { background: rgba(206,244,49,0.2); color: var(--accent); }
+    .cat-icon.dark { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.8); }
+
+    .cat-info {}
+    .cat-name { font-family: var(--font-head); font-size: 0.85rem; font-weight: 700; color: var(--white); display: block; line-height: 1.1; }
+    .cat-count { font-family: var(--font-sans); font-size: 0.68rem; color: rgba(255,255,255,0.4); display: block; margin-top: 0.1rem; }
+
+    /* Breadcrumb strip */
+    .hero-strip {
+      border-top: 1px solid rgba(255,255,255,0.07); padding: 0.875rem 0; margin-top: 0;
+    }
+    .hero-strip-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding: 0 2rem; }
+    .strip-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .strip-tag { font-family: var(--font-sans); font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.45); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 0.28rem 0.75rem; border-radius: 3rem; }
+    .strip-scroll { display: flex; align-items: center; gap: 0.4rem; font-family: var(--font-sans); font-size: 0.72rem; color: rgba(255,255,255,0.3); text-decoration: none; transition: color 0.2s; }
+    .strip-scroll:hover { color: var(--accent); }
+
+    /* ============================================
+       SECTION: HERO SLIDER
+    ============================================ */
+    .section-slider {
+      padding: 5rem 2rem;
+      background: var(--off-white);
+    }
+
+    .slider-inner { max-width: 1280px; margin: 0 auto; }
+
+    .slider-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap; }
+
+    .section-label { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-sans); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.18em; color: var(--primary); margin-bottom: 0.5rem; }
+    .section-label::before { content: ''; width: 22px; height: 2px; background: var(--accent); }
+
+    .display-title { font-family: var(--font-serif); font-size: clamp(1.6rem, 3vw, 2.4rem); color: var(--gray-900); line-height: 1.1; letter-spacing: -0.02em; }
+    .display-title em { color: var(--primary); font-style: italic; }
+
+    /* Swiper custom */
+    .gallery-swiper {
+      border-radius: 1.5rem;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(1,55,125,0.15);
+      aspect-ratio: 16/9;
+      position: relative;
+    }
+
+    .gallery-swiper .swiper-slide { position: relative; overflow: hidden; }
+    .gallery-swiper .swiper-slide img { width: 100%; height: 100%; object-fit: cover; transition: transform 8s ease; }
+    .gallery-swiper .swiper-slide.swiper-slide-active img { transform: scale(1.06); }
+
+    .slide-caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(1,8,24,0.85) 0%, transparent 100%);
+      padding: 3rem 2.5rem 2rem;
+      z-index: 2;
+    }
+
+    .slide-caption-tag { display: inline-block; background: var(--accent); color: var(--primary); font-family: var(--font-sans); font-size: 0.62rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; padding: 0.28rem 0.8rem; border-radius: 3rem; margin-bottom: 0.6rem; }
+    .slide-caption h3 { font-family: var(--font-serif); font-size: clamp(1.4rem, 3vw, 2rem); color: var(--white); line-height: 1.1; margin-bottom: 0.3rem; }
+    .slide-caption p { font-family: var(--font-sans); font-size: 0.875rem; color: rgba(255,255,255,0.65); font-weight: 300; }
+
+    /* Custom nav buttons */
+    .swiper-nav-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      z-index: 10; width: 52px; height: 52px;
+      background: rgba(1,55,125,0.85); backdrop-filter: blur(10px);
+      border: 2px solid rgba(206,244,49,0.4); border-radius: 50%;
+      color: var(--accent); font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.3s;
+    }
+    .swiper-nav-btn:hover { background: var(--accent); color: var(--primary); border-color: var(--accent); transform: translateY(-50%) scale(1.1); }
+    .btn-prev-g { left: 1.5rem; }
+    .btn-next-g { right: 1.5rem; }
+
+    .swiper-pagination-g {
+      position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+      z-index: 10; display: flex; gap: 0.5rem;
+    }
+
+    /* ============================================
+       FILTER BAR
+    ============================================ */
+    .filter-bar {
+      padding: 0 2rem 3rem;
+      background: var(--white);
+    }
+
+    .filter-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: flex; align-items: center; gap: 0.5rem;
+      flex-wrap: wrap; padding-top: 3rem;
+      border-top: 1px solid var(--gray-100);
+    }
+
+    .filter-label { font-family: var(--font-sans); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-400); margin-right: 0.5rem; }
+
+    .filter-btn {
+      font-family: var(--font-sans); font-size: 0.8rem; font-weight: 600;
+      color: var(--gray-600); background: var(--gray-50);
+      border: 1.5px solid var(--gray-100); border-radius: 3rem;
+      padding: 0.5rem 1.25rem; cursor: pointer; transition: all 0.25s;
+    }
+    .filter-btn:hover { border-color: var(--primary); color: var(--primary); background: var(--white); }
+    .filter-btn.active { background: var(--primary); color: var(--white); border-color: var(--primary); }
+    .filter-btn.active:hover { background: var(--ink-950); border-color: var(--ink-950); }
+
+    /* ============================================
+       MASONRY GALLERY GRID
+    ============================================ */
+    .section-gallery {
+      padding: 0 2rem 7rem;
+      background: var(--white);
+    }
+
+    .gallery-inner { max-width: 1280px; margin: 0 auto; }
+
+    /* CSS columns for masonry effect */
+    .masonry-grid {
+      column-count: 4;
+      column-gap: 1rem;
+    }
+
+    .masonry-item {
+      break-inside: avoid;
+      margin-bottom: 1rem;
+      border-radius: 0.875rem;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      background: var(--gray-100);
+    }
+
+    .masonry-item img {
+      width: 100%; height: auto; display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .masonry-item:hover img { transform: scale(1.06); }
+
+    /* Hover overlay */
+    .masonry-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(1,8,24,0.85) 0%, transparent 55%);
+      opacity: 0; transition: opacity 0.35s ease;
+      display: flex; flex-direction: column;
+      justify-content: flex-end; padding: 1.25rem;
+    }
+
+    .masonry-item:hover .masonry-overlay { opacity: 1; }
+
+    .masonry-overlay-tag {
+      font-family: var(--font-sans); font-size: 0.6rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.12em;
+      color: var(--accent); margin-bottom: 0.3rem; display: block;
+    }
+
+    .masonry-overlay-title {
+      font-family: var(--font-head); font-size: 0.85rem; font-weight: 700;
+      color: var(--white); line-height: 1.3;
+    }
+
+    /* Zoom icon */
+    .masonry-zoom {
+      position: absolute; top: 0.75rem; right: 0.75rem;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(206,244,49,0.9); color: var(--primary);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+      opacity: 0; transform: scale(0.6);
+      transition: all 0.35s ease;
+    }
+    .masonry-item:hover .masonry-zoom { opacity: 1; transform: scale(1); }
+
+    @media (max-width: 1024px) { .masonry-grid { column-count: 3; } }
+    @media (max-width: 768px) { .masonry-grid { column-count: 2; } }
+    @media (max-width: 480px) { .masonry-grid { column-count: 1; } }
+
+    /* ============================================
+       LIGHTBOX
+    ============================================ */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(1,8,24,0.97);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden;
+      transition: all 0.35s ease;
+      padding: 1rem;
+    }
+
+    .lightbox.open {
+      opacity: 1; visibility: visible;
+    }
+
+    .lb-inner {
+      position: relative; max-width: 1100px; width: 100%;
+      display: flex; flex-direction: column; align-items: center; gap: 1.25rem;
+    }
+
+    .lb-img-wrap {
+      position: relative; width: 100%;
+      border-radius: 1rem; overflow: hidden;
+      max-height: 75vh; display: flex; align-items: center; justify-content: center;
+    }
+
+    .lb-img-wrap img {
+      max-width: 100%; max-height: 75vh;
+      object-fit: contain; border-radius: 1rem;
+      display: block;
+      transition: opacity 0.3s ease;
+    }
+
+    .lb-caption {
+      text-align: center;
+    }
+    .lb-caption-tag { font-family: var(--font-sans); font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent); display: block; margin-bottom: 0.3rem; }
+    .lb-caption-title { font-family: var(--font-serif); font-size: 1.4rem; color: var(--white); }
+
+    .lb-counter { font-family: var(--font-sans); font-size: 0.75rem; color: rgba(255,255,255,0.4); margin-top: 0.25rem; }
+
+    /* Close button */
+    .lb-close {
+      position: absolute; top: -3.5rem; right: 0;
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.8); font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.3s;
+    }
+    .lb-close:hover { background: rgba(206,244,49,0.2); color: var(--accent); border-color: rgba(206,244,49,0.4); }
+
+    /* Nav buttons */
+    .lb-prev, .lb-next {
+      position: fixed; top: 50%; transform: translateY(-50%);
+      width: 52px; height: 52px; border-radius: 50%;
+      background: rgba(1,55,125,0.8); border: 2px solid rgba(206,244,49,0.3);
+      color: var(--accent); font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.3s; z-index: 2;
+    }
+    .lb-prev { left: 1.5rem; }
+    .lb-next { right: 1.5rem; }
+    .lb-prev:hover, .lb-next:hover { background: var(--accent); color: var(--primary); border-color: var(--accent); transform: translateY(-50%) scale(1.1); }
+
+    /* Thumbnails strip */
+    .lb-thumbs {
+      display: flex; gap: 0.5rem; overflow-x: auto;
+      padding: 0.5rem; max-width: 100%;
+      scrollbar-width: thin; scrollbar-color: rgba(206,244,49,0.3) transparent;
+    }
+
+    .lb-thumb {
+      width: 60px; height: 45px; border-radius: 0.375rem; overflow: hidden;
+      flex-shrink: 0; cursor: pointer; opacity: 0.4;
+      border: 2px solid transparent; transition: all 0.25s;
+    }
+    .lb-thumb.active { opacity: 1; border-color: var(--accent); }
+    .lb-thumb:hover { opacity: 0.8; }
+    .lb-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* ============================================
+       CTA SECTION
+    ============================================ */
+    .section-cta {
+      padding: 7rem 2rem; background: var(--ink-950);
+      position: relative; overflow: hidden; text-align: center;
+    }
+
+    .cta-bg { position: absolute; inset: 0; background: radial-gradient(circle at 30% 50%, rgba(1,55,125,0.5) 0%, transparent 55%), radial-gradient(circle at 70% 50%, rgba(206,244,49,0.07) 0%, transparent 55%); }
+
+    .cta-inner { max-width: 680px; margin: 0 auto; position: relative; z-index: 2; }
+
+    .cta-badge { display: inline-block; background: rgba(206,244,49,0.1); border: 1px solid rgba(206,244,49,0.25); color: var(--accent); font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.18em; padding: 0.4rem 1.2rem; border-radius: 3rem; margin-bottom: 2rem; }
+
+    .cta-h2 { font-family: var(--font-serif); font-size: clamp(2.2rem, 4vw, 3.5rem); color: var(--white); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 1.25rem; }
+    .cta-h2 em { color: var(--accent); font-style: italic; }
+
+    .cta-p { font-family: var(--font-sans); font-size: 1rem; color: rgba(255,255,255,0.4); line-height: 1.8; font-weight: 300; margin-bottom: 3rem; }
+
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    .btn-cp { display: inline-flex; align-items: center; gap: 0.6rem; background: var(--accent); color: var(--primary); font-family: var(--font-sans); font-weight: 700; font-size: 0.9rem; padding: 1rem 2.25rem; border-radius: 3rem; text-decoration: none; transition: all 0.3s; }
+    .btn-cp:hover { background: var(--white); transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,0.4); }
+
+    .btn-cs { display: inline-flex; align-items: center; gap: 0.6rem; background: transparent; border: 1.5px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.7); font-family: var(--font-sans); font-weight: 500; font-size: 0.9rem; padding: 1rem 2.25rem; border-radius: 3rem; text-decoration: none; transition: all 0.3s; }
+    .btn-cs:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-3px); }
+
+    /* Swiper custom bullets */
+    .swiper-pagination-bullet { background: rgba(255,255,255,0.4) !important; width: 8px !important; height: 8px !important; }
+    .swiper-pagination-bullet-active { background: var(--accent) !important; width: 24px !important; border-radius: 4px !important; }
+    .swiper-button-prev::after, .swiper-button-next::after { display: none; }
+
+    /* Responsive */
+    @media (max-width: 1024px) { .hero-inner { grid-template-columns: 1fr; } .hero-right { flex-direction: row; flex-wrap: wrap; } }
+    @media (max-width: 768px) { .page-hero { padding: 5rem 1.5rem 4rem; } .section-slider, .filter-bar, .section-gallery, .section-cta { padding-left: 1.5rem; padding-right: 1.5rem; } }
+
+    .nav-cta.gold {
+      margin-left: 0.5rem;
+      background: linear-gradient(135deg, #F5D06A 0%, #E6B325 50%, #D4A625 100%);
+      color: #010E24;
+      font-weight: 800;
+      font-size: 0.825rem;
+      padding: 0.7rem 1.6rem;
+      position: relative;
+      overflow: hidden;
+      letter-spacing: 0.01em;
+      border: 1px solid rgba(245,208,106,0.3);
+      box-shadow: 0 0 20px rgba(230,179,37,0.4), 0 0 40px rgba(230,179,37,0.2), inset 0 1px 0 rgba(255,255,255,0.5);
+      transition: all 0.35s cubic-bezier(0.23,1,0.32,1);
+    }
+
+    .nav-cta.gold::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 0; height: 0;
+      background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, transparent 70%);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s cubic-bezier(0.23,1,0.32,1);
+      pointer-events: none;
+    }
+
+    .nav-cta.gold:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .nav-cta.gold:hover {
+      background: linear-gradient(135deg, #FFF0C0 0%, #F5D06A 50%, #E6B325 100%);
+      color: #010E24;
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 0 30px rgba(230,179,37,0.6), 0 0 60px rgba(230,179,37,0.3), 0 12px 32px rgba(230,179,37,0.25), inset 0 1px 0 rgba(255,255,255,0.8);
+      letter-spacing: 0.02em;
+    }
+
+    .nav-cta.gold i {
+      margin-right: 0.4rem;
+      font-size: 0.95rem;
+      transition: transform 0.35s cubic-bezier(0.23,1,0.32,1);
+    }
+
+    .nav-cta.gold:hover i {
+      transform: rotate(12deg) scale(1.2);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar transparent" id="navbar">
+    <div class="navbar-container">
+      <a class="logo-section" href="/">
+        <img src="/assets/images/logo/lo.png" alt="Alfa e Omega" class="logo-img">
+        <div class="logo-text-block">
+          <h2>Colégio Alfa e Omega</h2>
+          <p>Panguila · Angola</p>
+        </div>
+      </a>
+
+      <nav class="nav-menu" role="navigation">
+        <a href="/" class="nav-link">Início</a>
+        <a href="/sobre.html" class="nav-link">Sobre</a>
+        <a href="/oferta.html" class="nav-link">Oferta</a>
+        <a href="/novidades.html" class="nav-link">Novidades</a>
+        <a href="/avisos.html" class="nav-link">Avisos</a>
+        <a href="/galeria.html" class="nav-link active">Galeria</a>
+        <a href="/olimpiadas.html" class="nav-link">Olimpíadas</a>
+
+        <a href="/contactos.html" class="nav-link">Contactos</a>
+      </nav>
+
+      <a href="/matriculas.html" class="nav-cta">Matricular Agora</a>
+
+      <button class="mobile-btn" id="mobile-btn" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="/" class="mobile-nav-link"><i class="fas fa-home"></i> Início</a>
+      <a href="/sobre.html" class="mobile-nav-link"><i class="fas fa-info-circle"></i> Sobre</a>
+      <a href="/oferta.html" class="mobile-nav-link"><i class="fas fa-book-open"></i> Oferta Educativa</a>
+      <a href="/novidades.html" class="mobile-nav-link"><i class="fas fa-newspaper"></i> Novidades</a>
+      <a href="/avisos.html" class="mobile-nav-link"><i class="fas fa-bullhorn"></i> Avisos</a>
+      <a href="/galeria.html" class="mobile-nav-link"><i class="fas fa-images"></i> Galeria</a>
+      <a href="/contactos.html" class="mobile-nav-link"><i class="fas fa-envelope"></i> Contactos</a>
+      <a href="https://wa.me/925952771" class="mobile-nav-link" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+      <div style="padding-top: 1rem; border-top: 1px solid rgba(0,0,0,0.1); margin: 1rem 0; display: flex; flex-direction: column; gap: 0.5rem;">
+        <a href="/matriculas.html" class="nav-cta" style="margin-left: 0; text-align: center;">Matricular Agora</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ===================== HERO ===================== -->
+    <section class="page-hero" id="hero-top">
+      <div class="hero-glow"></div>
+      <div class="hero-inner">
+        <div class="hero-left" data-aos="fade-right">
+          <div class="hero-meta">
+            <div class="hero-breadcrumb">
+              <a href="/"><i class="fas fa-home"></i> Início</a>
+              <i class="fas fa-chevron-right"></i>
+              <span>Galeria</span>
+            </div>
+            <div class="hero-photo-count"><strong>60+</strong> fotografias</div>
+          </div>
+          <div class="hero-eyebrow">Colégio Alfa e Omega · Panguila</div>
+          <h1 class="hero-h1">
+            A nossa<br><em>Galeria</em><br>Visual
+          </h1>
+          <p class="hero-desc">
+            Cada fotografia conta uma história da nossa comunidade escolar. Explore os momentos, actividades e o ambiente único do Colégio Alfa e Omega.
+          </p>
+        </div>
+        <div class="hero-right" data-aos="fade-left" data-aos-delay="150">
+          <a class="cat-pill active-cat" href="#galeria" data-filter="all">
+            <div class="cat-icon blue"><i class="fas fa-th"></i></div>
+            <div class="cat-info"><span class="cat-name">Todas</span><span class="cat-count">20 fotografias</span></div>
+          </a>
+          <a class="cat-pill" href="#galeria" data-filter="instalacoes">
+            <div class="cat-icon yellow"><i class="fas fa-school"></i></div>
+            <div class="cat-info"><span class="cat-name">Instalações</span><span class="cat-count">Salas, espaços</span></div>
+          </a>
+          <a class="cat-pill" href="#galeria" data-filter="atividades">
+            <div class="cat-icon dark"><i class="fas fa-users"></i></div>
+            <div class="cat-info"><span class="cat-name">Actividades</span><span class="cat-count">Desporto, cultura</span></div>
+          </a>
+          <a class="cat-pill" href="#galeria" data-filter="eventos">
+            <div class="cat-icon blue"><i class="fas fa-crown"></i></div>
+            <div class="cat-info"><span class="cat-name">Eventos</span><span class="cat-count">Cerimónias</span></div>
+          </a>
+        </div>
+      </div>
+      <div class="hero-strip">
+        <div class="hero-strip-inner">
+          <div class="strip-tags">
+            <span class="strip-tag">📸 Galeria 2026</span>
+            <span class="strip-tag">🏫 Instalações</span>
+            <span class="strip-tag">⚽ Desporto</span>
+            <span class="strip-tag">🎓 Cerimónias</span>
+            <span class="strip-tag">🎭 Cultura</span>
+          </div>
+          <a href="#galeria" class="strip-scroll">Ver galeria <i class="fas fa-arrow-down"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SLIDER ===================== -->
+    <section class="section-slider">
+      <div class="slider-inner">
+        <div class="slider-header" data-aos="fade-up">
+          <div>
+            <div class="section-label">Destaque</div>
+            <h2 class="display-title">Momentos em <em>Foco</em></h2>
+          </div>
+        </div>
+
+        <div class="swiper gallery-swiper" id="gallery-swiper" data-aos="fade-up" data-aos-delay="100">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <img src="/assets/images/atualizacoes/aquatico (2).webp" alt="Salas de Aula">
+              <div class="slide-caption">
+                <span class="slide-caption-tag">🏫 Instalações</span>
+                <h3>Salas de Aula</h3>
+                <p>Ambientes modernos e acolhedores para a aprendizagem</p>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <img src="/assets/images/atualizacoes/ilha (3).webp" alt="Actividades Desportivas">
+              <div class="slide-caption">
+                <span class="slide-caption-tag">⚽ Desporto</span>
+                <h3>Actividades Desportivas</h3>
+                <p>Desenvolvendo espírito de equipa e saúde</p>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <img src="/assets/images/atualizacoes/aquatico (4).webp" alt="Eventos Escolares">
+              <div class="slide-caption">
+                <span class="slide-caption-tag">🎉 Eventos</span>
+                <h3>Eventos Escolares</h3>
+                <p>Momentos memoráveis partilhados pela comunidade</p>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <img src="/assets/images/atualizacoes/ilha (2).webp" alt="Espaços de Aprendizagem">
+              <div class="slide-caption">
+                <span class="slide-caption-tag">📚 Académico</span>
+                <h3>Espaços de Aprendizagem</h3>
+                <p>Biblioteca e laboratórios para explorar o conhecimento</p>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <img src="/assets/images/atualizacoes/africa (2).webp" alt="Cerimónias">
+              <div class="slide-caption">
+                <span class="slide-caption-tag">🎓 Cerimónias</span>
+                <h3>Formatura e Cerimónias</h3>
+                <p>Celebrando conquistas e o crescimento dos nossos alunos</p>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <img src="/assets/images/matematica/matematica (3).webp" alt="Actividades Culturais">
+              <div class="slide-caption">
+                <span class="slide-caption-tag">🎭 Cultura</span>
+                <h3>Actividades Culturais</h3>
+                <p>Expressão criativa e valorização das raízes africanas</p>
+              </div>
+            </div>
+          </div>
+          <button class="swiper-nav-btn btn-prev-g" id="btn-prev-g"><i class="fas fa-chevron-left"></i></button>
+          <button class="swiper-nav-btn btn-next-g" id="btn-next-g"><i class="fas fa-chevron-right"></i></button>
+          <div class="swiper-pagination swiper-pagination-g" id="swiper-pag-g"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FILTER BAR ===================== -->
+    <div class="filter-bar">
+      <div class="filter-inner" data-aos="fade-up">
+        <span class="filter-label">Filtrar:</span>
+        <button class="filter-btn active" data-filter="all">Todas</button>
+        <button class="filter-btn" data-filter="instalacoes">🏫 Instalações</button>
+        <button class="filter-btn" data-filter="atividades">⚽ Actividades</button>
+        <button class="filter-btn" data-filter="eventos">🎓 Eventos</button>
+        <button class="filter-btn" data-filter="cultura">🎭 Cultura</button>
+      </div>
+    </div>
+
+    <!-- ===================== MASONRY GALLERY ===================== -->
+    <section class="section-gallery" id="galeria">
+      <div class="gallery-inner">
+        <div class="masonry-grid" id="masonry-grid" data-aos="fade-up">
+
+          <div class="masonry-item" data-cat="instalacoes" data-index="0" data-title="Salas de Aula" data-tag="Instalações">
+            <img src="/assets/images/atualizacoes/ilha (8).webp" alt="Galeria 1" loading="lazy">
+            <div class="masonry-overlay">
+              <span class="masonry-overlay-tag">Instalações</span>
+              <div class="masonry-overlay-title">Salas de Aula</div>
+            </div>
+            <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
+          </div>
+
+       
+          <div class="masonry-item" data-cat="atividades" data-index="2" data-title="Trabalho em Grupo" data-tag="Actividades">
+            <img src="/assets/images/atualizacoes/ilha (7).webp" alt="Galeria 3" loading="lazy">
+            <div class="masonry-overlay">
+              <span class="masonry-overlay-tag">Actividades</span>
+              <div class="masonry-overlay-title">Trabalho em Grupo</div>
+            </div>
+            <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
+          </div>
+
+          <div class="masonry-item" data-cat="eventos" data-index="3" data-title="Evento Escolar" data-tag="Eventos">
+            <img src="/assets/images/atualizacoes/ilha (2).webp" alt="Galeria 4" loading="lazy">
+            <div class="masonry-overlay">
+              <span class="masonry-overlay-tag">Eventos</span>
+              <div class="masonry-overlay-title">Evento Escolar</div>
+            </div>
+            <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
+          </div>
+
+          <!-- IMAGENS DE SALA -->
+          <div class="masonry-item" data-cat="instalacoes" data-index="20" data-title="Sala de Aula - Ambiente Acolhedor" data-tag="Instalações">
+            <img src="/assets/images/sala/sala (1).webp" alt="Sala 1" loading="lazy">
+            <div class="masonry-overlay">
+              <span class="masonry-overlay-tag">Instalações</span>
+              <div class="masonry-overlay-title">Sala de Aula</div>
+            </div>
+            <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
+          </div>
+
+          <div class="masonry-item" data-cat="instalacoes" data-index="21" data-title="Sala de Aula - Infraestrutura" data-tag="Instalações">
+            <img src="/assets/images/sala/sala (2).webp" alt="Sala 2" loading="lazy">
+            <div class="masonry-overlay">
+              <span class="masonry-overlay-tag">Instalações</span>
+              <div class="masonry-overlay-title">Infraestrutura Moderna</div>
+            </div>
+            <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
+          </div>
+
+          <div class="masonry-item" data-cat="instalacoes" data-index="22" data-title="Sala de Aula - Espaço de Aprendizagem" data-tag="Instalações">
+            <img src="/assets/images/sala/sala (3).webp" alt="Sala 3" loading="lazy">
+            <div class="masonry-overlay">
+              <span class="masonry-overlay-tag">Instalações</span>
+              <div class="masonry-overlay-title">Espaço de Aprendizagem</div>
+            </div>
+            <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
+          </div>
+
+          <div class="masonry-item" data-cat="instalacoes" data-index="23" data-title="Sala de Aula - Conforto" data-tag="Instalações">
+            <img src="/assets/images/sala/sala (4).webp" alt="Sala 4" loading="lazy">
+            <div class="masonry-overlay">
+              <span class="masonry-overlay-tag">Instalações</span>
+              <div class="masonry-overlay-title">Conforto e Segurança</div>
+            </div>
+            <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
+          </div>
+
+         
+
+          <div class="masonry-item" data-cat="instalacoes" data-index="27" data-title="Sala de Aula - Tecnologia" data-tag="Instalações">
+            <img src="/assets/images/sala/sala (8).webp" alt="Sala 8" loading="lazy">
+            <div class="masonry-overlay">
+              <span class="masonry-overlay-tag">Instalações</span>
+              <div class="masonry-overlay-title">Tecnologia em Sala</div>
+            </div>
+            <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
+          </div>
+
+          <!-- IMAGENS DE MATEMÁTICA -->
+          <div class="masonry-item" data-cat="atividades" data-index="28" data-title="Aula de Matemática - Raciocínio" data-tag="Actividades">
+            <img src="/assets/images/matematica/matematica (1).webp" alt="Matemática 1" loading="lazy">
+            <div class="masonry-overlay">
+              <span class="masonry-overlay-tag">Actividades</span>
+              <div class="masonry-overlay-title">Aula de Matemática</div>
+            </div>
+            <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
+          </div>
+
+          <div class="masonry-item" data-cat="atividades" data-index="29" data-title="Matemática - Concentração" data-tag="Actividades">
+            <img src="/assets/images/matematica/matematica (2).webp" alt="Matemática 2" loading="lazy">
+            <div class="masonry-overlay">
+              <span class="masonry-overlay-tag">Actividades</span>
+              <div class="masonry-overlay-title">Foco e Concentração</div>
+            </div>
+            <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
+          </div>
+
+          <div class="masonry-item" data-cat="atividades" data-index="30" data-title="Matemática - Exercícios Práticos" data-tag="Actividades">
+            <img src="/assets/images/matematica/matematica (3).webp" alt="Matemática 3" loading="lazy">
+            <div class="masonry-overlay">
+              <span class="masonry-overlay-tag">Actividades</span>
+              <div class="masonry-overlay-title">Exercícios Práticos</div>
+            </div>
+            <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
+          </div>
+
+          <div class="masonry-item" data-cat="atividades" data-index="31" data-title="Matemática - Desafios" data-tag="Actividades">
+            <img src="/assets/images/matematica/matematica (4).webp" alt="Matemática 4" loading="lazy">
+            <div class="masonry-overlay">
+              <span class="masonry-overlay-tag">Actividades</span>
+              <div class="masonry-overlay-title">Desafios Matemáticos</div>
+            </div>
+            <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
+          </div>
+
+         
+
+          <div class="masonry-item" data-cat="atividades" data-index="34" data-title="Matemática - Inovação" data-tag="Actividades">
+            <img src="/assets/images/matematica/matematica (7).webp" alt="Matemática 7" loading="lazy">
+            <div class="masonry-overlay">
+              <span class="masonry-overlay-tag">Actividades</span>
+              <div class="masonry-overlay-title">Método Inovador</div>
+            </div>
+            <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
+          </div>
+
+         
+
+          <div class="masonry-item" data-cat="atividades" data-index="37" data-title="Matemática - Excelência" data-tag="Actividades">
+            <img src="/assets/images/matematica/matematica (10).webp" alt="Matemática 10" loading="lazy">
+            <div class="masonry-overlay">
+              <span class="masonry-overlay-tag">Actividades</span>
+              <div class="masonry-overlay-title">Caminho para Excelência</div>
+            </div>
+            <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
+          </div>
+
+          <!-- IMAGENS DE CULTURA -->
+          <div class="masonry-item" data-cat="cultura" data-index="38" data-title="Cultura - Expressão Artística" data-tag="Cultura">
+            <img src="/assets/images/cultura/cultura (1).webp" alt="Cultura 1" loading="lazy">
+            <div class="masonry-overlay">
+              <span class="masonry-overlay-tag">Cultura</span>
+              <div class="masonry-overlay-title">Expressão Artística</div>
+            </div>
+            <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
+          </div>
+
+          <div class="masonry-item" data-cat="cultura" data-index="39" data-title="Cultura - Tradições" data-tag="Cultura">
+            <img src="/assets/images/cultura/cultura (2).webp" alt="Cultura 2" loading="lazy">
+            <div class="masonry-overlay">
+              <span class="masonry-overlay-tag">Cultura</span>
+              <div class="masonry-overlay-title">Tradições Vivas</div>
+            </div>
+            <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
+          </div>
+
+          <div class="masonry-item" data-cat="cultura" data-index="40" data-title="Cultura - Criatividade" data-tag="Cultura">
+            <img src="/assets/images/cultura/cultura (3).webp" alt="Cultura 3" loading="lazy">
+            <div class="masonry-overlay">
+              <span class="masonry-overlay-tag">Cultura</span>
+              <div class="masonry-overlay-title">Criatividade e Arte</div>
+            </div>
+            <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
+          </div>
+
+         
+
+          <!-- IMAGENS DE ATUALIZAÇÕES -->
+          <div class="masonry-item" data-cat="atividades" data-index="43" data-title="Atividade Aquática - Lazer" data-tag="Actividades">
+            <img src="/assets/images/atualizacoes/aquatico (1).webp" alt="Aquático 1" loading="lazy">
+            <div class="masonry-overlay">
+              <span class="masonry-overlay-tag">Actividades</span>
+              <div class="masonry-overlay-title">Atividades Aquáticas</div>
+            </div>
+            <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
+          </div>
+
+          <div class="masonry-item" data-cat="atividades" data-index="44" data-title="Atividade Aquática - Diversão" data-tag="Actividades">
+            <img src="/assets/images/atualizacoes/aquatico (2).webp" alt="Aquático 2" loading="lazy">
+            <div class="masonry-overlay">
+              <span class="masonry-overlay-tag">Actividades</span>
+              <div class="masonry-overlay-title">Diversão na Água</div>
+            </div>
+            <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
+          </div>
+
+          <div class="masonry-item" data-cat="atividades" data-index="45" data-title="Atividade Aquática - Esportes" data-tag="Actividades">
+            <img src="/assets/images/atualizacoes/aquatico (3).webp" alt="Aquático 3" loading="lazy">
+            <div class="masonry-overlay">
+              <span class="masonry-overlay-tag">Actividades</span>
+              <div class="masonry-overlay-title">Esportes Aquáticos</div>
+            </div>
+            <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
+          </div>
+
+          <div class="masonry-item" data-cat="atividades" data-index="46" data-title="Atividade Aquática - Piscina" data-tag="Actividades">
+            <img src="/assets/images/atualizacoes/aquatico (4).webp" alt="Aquático 4" loading="lazy">
+            <div class="masonry-overlay">
+              <span class="masonry-overlay-tag">Actividades</span>
+              <div class="masonry-overlay-title">Momentos na Piscina</div>
+            </div>
+            <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
+          </div>
+
+          
+
+          <div class="masonry-item" data-cat="eventos" data-index="50" data-title="Ilha - Exploração" data-tag="Eventos">
+            <img src="/assets/images/atualizacoes/ilha (1).webp" alt="Ilha 1" loading="lazy">
+            <div class="masonry-overlay">
+              <span class="masonry-overlay-tag">Eventos</span>
+              <div class="masonry-overlay-title">Exploração de Ilha</div>
+            </div>
+            <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
+          </div>
+
+          <div class="masonry-item" data-cat="eventos" data-index="51" data-title="Ilha - Aventura" data-tag="Eventos">
+            <img src="/assets/images/atualizacoes/ilha (2).webp" alt="Ilha 2" loading="lazy">
+            <div class="masonry-overlay">
+              <span class="masonry-overlay-tag">Eventos</span>
+              <div class="masonry-overlay-title">Aventura na Natureza</div>
+            </div>
+            <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
+          </div>
+
+          <div class="masonry-item" data-cat="eventos" data-index="52" data-title="Ilha - Paisagem" data-tag="Eventos">
+            <img src="/assets/images/atualizacoes/ilha (3).webp" alt="Ilha 3" loading="lazy">
+            <div class="masonry-overlay">
+              <span class="masonry-overlay-tag">Eventos</span>
+              <div class="masonry-overlay-title">Paisagem Natural</div>
+            </div>
+            <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
+          </div>
+
+          <div class="masonry-item" data-cat="eventos" data-index="53" data-title="Ilha - Descoberta" data-tag="Eventos">
+            <img src="/assets/images/atualizacoes/ilha (4).webp" alt="Ilha 4" loading="lazy">
+            <div class="masonry-overlay">
+              <span class="masonry-overlay-tag">Eventos</span>
+              <div class="masonry-overlay-title">Descoberta</div>
+            </div>
+            <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
+          </div>
+
+          <div class="masonry-item" data-cat="eventos" data-index="54" data-title="Ilha - Exploração Local" data-tag="Eventos">
+            <img src="/assets/images/atualizacoes/ilha (5).webp" alt="Ilha 5" loading="lazy">
+            <div class="masonry-overlay">
+              <span class="masonry-overlay-tag">Eventos</span>
+              <div class="masonry-overlay-title">Exploração Local</div>
+            </div>
+            <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
+          </div>
+
+          <div class="masonry-item" data-cat="eventos" data-index="55" data-title="Ilha - Experiência" data-tag="Eventos">
+            <img src="/assets/images/atualizacoes/ilha (6).webp" alt="Ilha 6" loading="lazy">
+            <div class="masonry-overlay">
+              <span class="masonry-overlay-tag">Eventos</span>
+              <div class="masonry-overlay-title">Experiência Única</div>
+            </div>
+            <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
+          </div>
+
+         
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== LIGHTBOX ===================== -->
+    <div class="lightbox" id="lightbox">
+      <button class="lb-prev" id="lb-prev"><i class="fas fa-chevron-left"></i></button>
+      <div class="lb-inner">
+        <button class="lb-close" id="lb-close"><i class="fas fa-times"></i></button>
+        <div class="lb-img-wrap">
+          <img src="" alt="" id="lb-img">
+        </div>
+        <div class="lb-caption">
+          <span class="lb-caption-tag" id="lb-tag">—</span>
+          <h3 class="lb-caption-title" id="lb-title">—</h3>
+          <div class="lb-counter" id="lb-counter">1 / 20</div>
+        </div>
+        <div class="lb-thumbs" id="lb-thumbs"></div>
+      </div>
+      <button class="lb-next" id="lb-next"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <!-- ===================== CTA ===================== -->
+    <section class="section-cta">
+      <div class="cta-bg"></div>
+      <div class="cta-inner" data-aos="fade-up">
+        <div class="cta-badge">📅 Agendar Visita</div>
+        <h2 class="cta-h2">Gostaria de conhecer<br>a escola em <em>pessoa</em>?</h2>
+        <p class="cta-p">As fotografias não capturam tudo. Agende uma visita guiada e descubra de perto o ambiente, instalações e a comunidade do Colégio Alfa e Omega.</p>
+        <div class="cta-btns">
+          <a href="/contactos.html" class="btn-cp"><i class="fas fa-calendar-check"></i> Agendar Visita</a>
+          <a href="https://wa.me/925952771" target="_blank" class="btn-cs"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="footer-container"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script>
+    AOS.init({ duration: 900, once: true, offset: 70, easing: 'ease-out-cubic' });
+
+    // ─── NAVBAR SCROLL ───────────────────────────────────────
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        navbar.classList.remove('transparent');
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.add('transparent');
+        navbar.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    // ─── MOBILE MENU ───────────────────────────────────────────
+    const mobileBtn = document.getElementById('mobile-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+      mobileBtn.querySelector('i').className =
+        mobileMenu.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+    });
+
+    // ─── SWIPER ───────────────────────────────────────
+    const swiper = new Swiper('#gallery-swiper', {
+      loop: true, autoplay: { delay: 5000, disableOnInteraction: false },
+      navigation: { prevEl: '#btn-prev-g', nextEl: '#btn-next-g' },
+      pagination: { el: '#swiper-pag-g', clickable: true },
+      speed: 900,
+    });
+
+    // ─── FILTER ───────────────────────────────────────
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const items = document.querySelectorAll('.masonry-item');
+    const catPills = document.querySelectorAll('.cat-pill');
+
+    function applyFilter(filter) {
+      items.forEach(item => {
+        const cat = item.dataset.cat;
+        const show = filter === 'all' || cat === filter;
+        item.style.display = show ? 'block' : 'none';
+        if (show) {
+          item.style.animation = 'none';
+          item.offsetHeight; // reflow
+          item.style.animation = 'fadeInUp 0.4s ease both';
+        }
+      });
+      filterBtns.forEach(b => b.classList.toggle('active', b.dataset.filter === filter));
+      catPills.forEach(p => p.classList.toggle('active-cat', p.dataset.filter === filter));
+      // Rebuild lightbox indices
+      buildLbItems();
+    }
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => applyFilter(btn.dataset.filter));
+    });
+
+    catPills.forEach(pill => {
+      pill.addEventListener('click', (e) => {
+        e.preventDefault();
+        applyFilter(pill.dataset.filter);
+        document.getElementById('galeria').scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    // Inline keyframe for filter animation
+    const style = document.createElement('style');
+    style.textContent = '@keyframes fadeInUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }';
+    document.head.appendChild(style);
+
+    // ─── LIGHTBOX ─────────────────────────────────────
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lb-img');
+    const lbTitle = document.getElementById('lb-title');
+    const lbTag = document.getElementById('lb-tag');
+    const lbCounter = document.getElementById('lb-counter');
+    const lbThumbs = document.getElementById('lb-thumbs');
+
+    let lbItems = [];
+    let lbCurrent = 0;
+
+    function buildLbItems() {
+      lbItems = Array.from(document.querySelectorAll('.masonry-item[style="display: block;"], .masonry-item:not([style*="display: none"])'))
+        .filter(el => el.offsetParent !== null || el.style.display !== 'none');
+      // Actually just collect all visible items
+      lbItems = [];
+      items.forEach(item => {
+        if (item.style.display !== 'none') {
+          lbItems.push({
+            src: item.querySelector('img').src,
+            title: item.dataset.title,
+            tag: item.dataset.tag,
+            el: item
+          });
+        }
+      });
+    }
+
+    function openLb(index) {
+      buildLbItems();
+      lbCurrent = index;
+      updateLb();
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      buildThumbs();
+    }
+
+    function closeLb() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function updateLb() {
+      const item = lbItems[lbCurrent];
+      if (!item) return;
+      lbImg.style.opacity = '0';
+      setTimeout(() => {
+        lbImg.src = item.src;
+        lbImg.alt = item.title;
+        lbImg.onload = () => { lbImg.style.opacity = '1'; };
+      }, 150);
+      lbTitle.textContent = item.title;
+      lbTag.textContent = item.tag;
+      lbCounter.textContent = `${lbCurrent + 1} / ${lbItems.length}`;
+      // Update active thumb
+      document.querySelectorAll('.lb-thumb').forEach((t, i) => t.classList.toggle('active', i === lbCurrent));
+      // Scroll active thumb into view
+      const activeThumb = document.querySelector('.lb-thumb.active');
+      if (activeThumb) activeThumb.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+    }
+
+    function buildThumbs() {
+      lbThumbs.innerHTML = '';
+      lbItems.forEach((item, i) => {
+        const t = document.createElement('div');
+        t.className = 'lb-thumb' + (i === lbCurrent ? ' active' : '');
+        t.innerHTML = `<img src="${item.src}" alt="${item.title}" loading="lazy">`;
+        t.addEventListener('click', () => { lbCurrent = i; updateLb(); });
+        lbThumbs.appendChild(t);
+      });
+    }
+
+    function lbPrev() { lbCurrent = (lbCurrent - 1 + lbItems.length) % lbItems.length; updateLb(); }
+    function lbNext() { lbCurrent = (lbCurrent + 1) % lbItems.length; updateLb(); }
+
+    // Click items to open lightbox
+    items.forEach((item, i) => {
+      item.addEventListener('click', () => {
+        buildLbItems();
+        const idx = lbItems.findIndex(l => l.el === item);
+        openLb(idx >= 0 ? idx : 0);
+      });
+    });
+
+    document.getElementById('lb-close').addEventListener('click', closeLb);
+    document.getElementById('lb-prev').addEventListener('click', lbPrev);
+    document.getElementById('lb-next').addEventListener('click', lbNext);
+
+    // Close on backdrop click
+    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLb(); });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLb();
+      if (e.key === 'ArrowLeft') lbPrev();
+      if (e.key === 'ArrowRight') lbNext();
+    });
+
+    // ─── LOAD COMPONENTS ──────────────────────────────
+    fetch('/components/navbar.html')
+      .then(r => r.text())
+      .then(d => { document.getElementById('navbar-container').innerHTML = d; typeof setupMobileMenu === 'function' && setupMobileMenu(); })
+      .catch(() => { const fb = document.getElementById('navbar-fallback'); if (fb) fb.style.display = 'block'; });
+
+    fetch('/components/footer.html')
+      .then(r => r.text())
+      .then(d => { document.getElementById('footer-container').innerHTML = d; })
+      .catch(() => {});
+
+    // Initial build
+    buildLbItems();
+  </script>
+</body>
+</html>

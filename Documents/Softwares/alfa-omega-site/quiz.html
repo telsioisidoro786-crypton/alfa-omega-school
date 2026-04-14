@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monitor Escolar — Colégio Alfa e Omega</title>
+  <meta name="description" content="Quiz de avaliação do envolvimento do encarregado na vida escolar do seu filho. Colégio Alfa e Omega.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+/* ══════════════════════════════════════════════
+   TOKENS
+══════════════════════════════════════════════ */
+:root {
+  --ink-950:   #010E24;
+  --ink-900:   #011830;
+  --ink-800:   #031E38;
+  --ink-700:   #062444;
+  --primary:   #01377D;
+  --primary-m: #0147A0;
+  --primary-l: #0A5FC4;
+  --accent:    #CEF431;
+  --accent-m:  #B8D400;
+  --accent-d:  #8FA300;
+  --white:     #FFFFFF;
+  --off-white: #F8F9F6;
+  --gray-100:  #EAEBE8;
+  --gray-400:  #9BA09A;
+  --gray-600:  #4D524B;
+  --gray-700:  #3D4239;
+  --green:     #22C55E;
+  --yellow:    #FACC15;
+  --red:       #EF4444;
+  --font-serif:'DM Serif Display', serif;
+  --font-sans: 'DM Sans', sans-serif;
+  --font-head: 'Poppins', sans-serif;
+  --radius-card: 1.5rem;
+  --transition: all 0.45s cubic-bezier(0.23,1,0.32,1);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;height:100%}
+body{
+  font-family:var(--font-sans);
+  background:var(--ink-950);
+  color:var(--white);
+  min-height:100vh;
+  overflow-x:hidden;
+  position:relative;
+}
+
+/* ══════════════════════════════════════════════
+   BACKGROUND SYSTEM
+══════════════════════════════════════════════ */
+#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
+
+.bg-grid{
+  position:fixed;inset:0;z-index:1;pointer-events:none;
+  background-image:
+    repeating-linear-gradient(90deg,transparent,transparent 72px,rgba(255,255,255,0.014) 72px,rgba(255,255,255,0.014) 73px),
+    repeating-linear-gradient(0deg,transparent,transparent 72px,rgba(255,255,255,0.014) 72px,rgba(255,255,255,0.014) 73px);
+}
+.bg-glow-1{position:fixed;top:-8rem;left:-6rem;width:700px;height:700px;z-index:1;pointer-events:none;background:radial-gradient(circle,rgba(1,55,125,0.38) 0%,transparent 65%);}
+.bg-glow-2{position:fixed;bottom:-6rem;right:-4rem;width:500px;height:500px;z-index:1;pointer-events:none;background:radial-gradient(circle,rgba(206,244,49,0.05) 0%,transparent 65%);}
+.bg-vignette{position:fixed;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 30%,rgba(1,8,24,0.7) 80%,rgba(1,8,24,0.96) 100%);}
+
+/* Floating math symbols */
+.math-sym{
+  position:fixed;z-index:2;pointer-events:none;
+  font-family:var(--font-serif);font-style:italic;
+  color:rgba(206,244,49,0.07);
+  animation:sym-drift linear infinite;
+  user-select:none;
+}
+@keyframes sym-drift{
+  0%  {transform:translateY(105vh) rotate(0deg);opacity:0}
+  5%  {opacity:1}
+  95% {opacity:.5}
+  100%{transform:translateY(-20vh) rotate(15deg);opacity:0}
+}
+
+/* ══════════════════════════════════════════════
+   APP SHELL
+══════════════════════════════════════════════ */
+.app{
+  position:relative;z-index:10;
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:2rem 1.25rem;
+}
+
+/* ══════════════════════════════════════════════
+   LOGO TOP
+══════════════════════════════════════════════ */
+.top-logo{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  height:4.5rem;
+  background:rgba(1,8,24,0.75);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 2rem;
+}
+.logo-group{display:flex;align-items:center;gap:.75rem;text-decoration:none;}
+.logo-img-sm{width:38px;height:38px;object-fit:contain;}
+.logo-txt h2{font-family:var(--font-head);font-size:.85rem;font-weight:800;color:var(--white);line-height:1.1;}
+.logo-txt p{font-size:.58rem;font-weight:700;color:rgba(206,244,49,.7);text-transform:uppercase;letter-spacing:.1em;}
+.quiz-badge{
+  display:inline-flex;align-items:center;gap:.4rem;
+  background:rgba(206,244,49,.1);border:1px solid rgba(206,244,49,.22);
+  color:var(--accent);font-size:.62rem;font-weight:800;text-transform:uppercase;
+  letter-spacing:.15em;padding:.3rem .9rem;border-radius:3rem;
+}
+
+/* ══════════════════════════════════════════════
+   SCREENS WRAPPER
+══════════════════════════════════════════════ */
+.screens{
+  width:100%;max-width:680px;
+  margin-top:5rem;
+}
+
+/* Individual screen */
+.screen{
+  display:none;
+  animation:screen-in .5s cubic-bezier(.23,1,.32,1) both;
+}
+.screen.active{display:block;}
+@keyframes screen-in{
+  from{opacity:0;transform:translateY(28px) scale(.98)}
+  to  {opacity:1;transform:translateY(0)    scale(1)}
+}
+@keyframes screen-out{
+  from{opacity:1;transform:translateY(0)}
+  to  {opacity:0;transform:translateY(-20px)}
+}
+
+/* ══════════════════════════════════════════════
+   CARD BASE
+══════════════════════════════════════════════ */
+.card{
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:var(--radius-card);
+  overflow:hidden;
+  position:relative;
+}
+.card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--accent),var(--primary-l),transparent);
+}
+
+/* ══════════════════════════════════════════════
+   SCREEN 0 — WELCOME
+══════════════════════════════════════════════ */
+#screen-welcome{text-align:center;}
+
+.welcome-card{padding:3.5rem 2.5rem 3rem;}
+
+.welcome-icon{
+  width:88px;height:88px;border-radius:50%;
+  background:radial-gradient(135deg,var(--accent) 0%,var(--accent-d) 100%);
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.2rem;margin:0 auto 2rem;
+  box-shadow:0 0 0 12px rgba(206,244,49,.08),0 0 50px rgba(206,244,49,.25);
+  animation:icon-breathe 3s ease-in-out infinite;
+}
+@keyframes icon-breathe{
+  0%,100%{box-shadow:0 0 0 12px rgba(206,244,49,.08),0 0 50px rgba(206,244,49,.25);}
+  50%    {box-shadow:0 0 0 20px rgba(206,244,49,.04),0 0 80px rgba(206,244,49,.35);}
+}
+
+.welcome-eyebrow{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-size:.65rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.2em;color:var(--accent);margin-bottom:.875rem;
+}
+.welcome-eyebrow::before,.welcome-eyebrow::after{content:'';width:18px;height:2px;background:var(--accent);}
+
+.welcome-h1{
+  font-family:var(--font-serif);font-size:clamp(1.8rem,4vw,2.6rem);
+  color:var(--white);line-height:1.1;letter-spacing:-.025em;margin-bottom:1rem;
+}
+.welcome-h1 em{color:var(--accent);font-style:italic;}
+
+.welcome-desc{
+  font-size:.95rem;color:rgba(255,255,255,.45);line-height:1.8;
+  font-weight:300;max-width:480px;margin:0 auto 2rem;
+}
+
+/* Stats row */
+.welcome-stats{
+  display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-bottom:2.5rem;
+}
+.ws-item{
+  display:flex;align-items:center;gap:.5rem;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  border-radius:.875rem;padding:.6rem 1rem;
+}
+.ws-item i{color:var(--accent);font-size:.85rem;}
+.ws-item span{font-size:.75rem;font-weight:600;color:rgba(255,255,255,.6);}
+
+/* ══════════════════════════════════════════════
+   BTN SYSTEM
+══════════════════════════════════════════════ */
+.btn-primary{
+  display:inline-flex;align-items:center;gap:.65rem;
+  background:var(--accent);color:var(--primary);
+  font-family:var(--font-sans);font-weight:700;font-size:.95rem;
+  padding:1rem 2.5rem;border-radius:3rem;border:none;cursor:pointer;
+  transition:var(--transition);position:relative;overflow:hidden;
+  text-decoration:none;white-space:nowrap;
+}
+.btn-primary::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  background:var(--white);transform:translateX(-105%);transition:transform .4s cubic-bezier(.23,1,.32,1);
+}
+.btn-primary:hover::before{transform:translateX(0);}
+.btn-primary span,.btn-primary i{position:relative;z-index:1;}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(0,0,0,.4);}
+.btn-primary:active{transform:translateY(-1px);}
+
+.btn-secondary{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:transparent;border:1.5px solid rgba(255,255,255,.14);
+  color:rgba(255,255,255,.6);font-family:var(--font-sans);font-weight:500;font-size:.9rem;
+  padding:.9rem 1.75rem;border-radius:3rem;cursor:pointer;
+  transition:var(--transition);text-decoration:none;
+}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px);}
+
+/* Intro auth step before quiz questions */
+#auth-step{text-align:left;}
+.notif-title-premium{
+  font-family:var(--font-serif);
+  font-size:clamp(1.35rem,3vw,1.9rem);
+  color:var(--white);
+  line-height:1.1;
+  letter-spacing:-.02em;
+  margin-bottom:.7rem;
+}
+.notif-text-premium{
+  font-size:.9rem;
+  color:rgba(255,255,255,.45);
+  line-height:1.7;
+  margin-bottom:1.25rem;
+  font-weight:300;
+}
+.quiz-input{
+  width:100%;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.12);
+  color:var(--white);
+  border-radius:.9rem;
+  padding:1rem 1rem;
+  font-family:var(--font-sans);
+  font-size:.92rem;
+  margin-bottom:.8rem;
+  transition:var(--transition);
+}
+.quiz-input:focus{
+  outline:none;
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(206,244,49,.12);
+}
+.quiz-input::placeholder{color:rgba(255,255,255,.35);}
+.btn-back-home{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.65rem;
+  background:var(--accent);
+  color:var(--primary);
+  font-family:var(--font-sans);
+  font-weight:700;
+  font-size:.95rem;
+  padding:1rem 2rem;
+  border-radius:3rem;
+  border:none;
+  cursor:pointer;
+  transition:var(--transition);
+  text-decoration:none;
+}
+.btn-back-home:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(0,0,0,.35);}
+
+/* ══════════════════════════════════════════════
+   SCREEN 1 — DADOS PESSOAIS
+══════════════════════════════════════════════ */
+.form-card{padding:2.5rem;}
+
+.screen-label{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-size:.62rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.2em;color:var(--accent);margin-bottom:1rem;
+}
+.screen-label::before{content:'';width:20px;height:2px;background:var(--accent);}
+
+.screen-h2{
+  font-family:var(--font-serif);font-size:clamp(1.4rem,3vw,2rem);
+  color:var(--white);line-height:1.1;letter-spacing:-.02em;margin-bottom:.6rem;
+}
+.screen-h2 em{color:var(--accent);font-style:italic;}
+.screen-sub{font-size:.875rem;color:rgba(255,255,255,.38);line-height:1.7;margin-bottom:2rem;font-weight:300;}
+
+/* Form fields */
+.field-group{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1.25rem;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+
+label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.45);}
+
+input,select{
+  background:rgba(255,255,255,.05);
+  border:1.5px solid rgba(255,255,255,.1);
+  border-radius:.875rem;
+  color:var(--white);
+  font-family:var(--font-sans);font-size:.95rem;font-weight:400;
+  padding:.875rem 1.1rem;
+  outline:none;
+  transition:border-color .25s,background .25s,box-shadow .25s;
+  width:100%;
+}
+input::placeholder{color:rgba(255,255,255,.2);}
+input:focus,select:focus{
+  border-color:rgba(206,244,49,.5);
+  background:rgba(206,244,49,.04);
+  box-shadow:0 0 0 3px rgba(206,244,49,.08);
+}
+select option{background:var(--ink-900);color:var(--white);}
+
+/* Avatar picker */
+.avatar-row{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1.5rem;}
+.avatar-opt{
+  width:52px;height:52px;border-radius:50%;font-size:1.5rem;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.05);border:2px solid rgba(255,255,255,.1);
+  cursor:pointer;transition:var(--transition);
+}
+.avatar-opt:hover{border-color:rgba(206,244,49,.4);background:rgba(206,244,49,.08);transform:scale(1.1);}
+.avatar-opt.selected{border-color:var(--accent);background:rgba(206,244,49,.15);transform:scale(1.08);box-shadow:0 0 20px rgba(206,244,49,.3);}
+
+@media(max-width:520px){.field-row{grid-template-columns:1fr;}}
+
+/* ══════════════════════════════════════════════
+   PROGRESS BAR
+══════════════════════════════════════════════ */
+.progress-wrap{margin-bottom:2rem;}
+.progress-meta{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:.625rem;
+}
+.progress-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.4);}
+.progress-frac{font-size:.68rem;font-weight:700;color:var(--accent);}
+.progress-track{
+  height:5px;background:rgba(255,255,255,.07);border-radius:4px;overflow:hidden;
+}
+.progress-fill{
+  height:100%;border-radius:4px;
+  background:linear-gradient(90deg,var(--accent),var(--accent-m));
+  transition:width .55s cubic-bezier(.23,1,.32,1);
+  position:relative;
+}
+.progress-fill::after{
+  content:'';position:absolute;top:0;right:0;bottom:0;width:20px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.4));
+  border-radius:4px;
+}
+
+/* ══════════════════════════════════════════════
+   SCREEN 2–N — QUIZ QUESTIONS
+══════════════════════════════════════════════ */
+.quiz-card{padding:2.5rem;}
+
+.q-category{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:.6rem;font-weight:800;text-transform:uppercase;
+  letter-spacing:.18em;padding:.28rem .875rem;border-radius:3rem;
+  margin-bottom:1.25rem;
+}
+.cat-presence{background:rgba(10,95,196,.25);color:#6FB3FF;border:1px solid rgba(10,95,196,.3);}
+.cat-comunic {background:rgba(206,244,49,.12);color:var(--accent);border:1px solid rgba(206,244,49,.25);}
+.cat-academic{background:rgba(34,197,94,.12);color:#4ADE80;border:1px solid rgba(34,197,94,.25);}
+.cat-wellbeing{background:rgba(251,191,36,.12);color:#FCD34D;border:1px solid rgba(251,191,36,.25);}
+
+.q-number{
+  font-family:var(--font-head);font-size:.62rem;font-weight:800;
+  color:rgba(255,255,255,.25);text-transform:uppercase;letter-spacing:.18em;margin-bottom:.5rem;
+}
+
+.q-text{
+  font-family:var(--font-serif);font-size:clamp(1.15rem,2.5vw,1.5rem);
+  color:var(--white);line-height:1.3;letter-spacing:-.015em;margin-bottom:.5rem;
+}
+.q-hint{font-size:.8rem;color:rgba(255,255,255,.3);margin-bottom:2rem;line-height:1.5;}
+
+/* Options */
+.options{display:flex;flex-direction:column;gap:.75rem;}
+
+.opt{
+  display:flex;align-items:flex-start;gap:1rem;
+  background:rgba(255,255,255,.04);
+  border:1.5px solid rgba(255,255,255,.09);
+  border-radius:1.1rem;padding:1.1rem 1.25rem;
+  cursor:pointer;
+  transition:var(--transition);
+  position:relative;overflow:hidden;
+  user-select:none;
+}
+.opt::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  background:rgba(206,244,49,.06);
+  transform:translateX(-100%);
+  transition:transform .4s cubic-bezier(.23,1,.32,1);
+}
+.opt:hover::before{transform:translateX(0);}
+.opt:hover{border-color:rgba(206,244,49,.28);transform:translateX(4px);}
+
+.opt.selected{
+  border-color:var(--accent);
+  background:rgba(206,244,49,.1);
+}
+.opt.selected::before{transform:translateX(0);}
+.opt.correct{border-color:var(--green);background:rgba(34,197,94,.1);}
+.opt.wrong  {border-color:var(--red);  background:rgba(239,68,68,.1);}
+
+.opt-letter{
+  width:32px;height:32px;border-radius:.5rem;flex-shrink:0;
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-head);font-size:.78rem;font-weight:800;
+  color:rgba(255,255,255,.45);
+  transition:var(--transition);
+}
+.opt:hover .opt-letter,.opt.selected .opt-letter{
+  background:var(--accent);color:var(--primary);border-color:var(--accent);
+}
+.opt.correct .opt-letter{background:var(--green);color:#fff;border-color:var(--green);}
+.opt.wrong   .opt-letter{background:var(--red);  color:#fff;border-color:var(--red);}
+
+.opt-body{}
+.opt-text{font-size:.9rem;font-weight:500;color:rgba(255,255,255,.85);line-height:1.4;}
+.opt-sub {font-size:.75rem;color:rgba(255,255,255,.3);margin-top:.2rem;}
+
+.opt-check{
+  margin-left:auto;font-size:1rem;
+  opacity:0;transition:opacity .25s,transform .25s;
+  flex-shrink:0;margin-top:.25rem;
+}
+.opt.selected .opt-check,.opt.correct .opt-check,.opt.wrong .opt-check{opacity:1;transform:scale(1.1);}
+.opt.selected .opt-check,.opt.correct .opt-check{color:var(--accent);}
+.opt.wrong    .opt-check{color:var(--red);}
+
+/* Score ticker */
+.score-ticker{
+  display:flex;align-items:center;gap:.5rem;
+  background:rgba(206,244,49,.08);border:1px solid rgba(206,244,49,.18);
+  border-radius:3rem;padding:.4rem 1rem;
+  font-family:var(--font-head);font-size:.78rem;font-weight:800;
+  color:var(--accent);margin-bottom:1.5rem;
+  width:fit-content;
+}
+.score-ticker i{font-size:.7rem;}
+
+/* ══════════════════════════════════════════════
+   NAV BUTTONS ROW
+══════════════════════════════════════════════ */
+.nav-row{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:2rem;gap:1rem;
+}
+
+/* ══════════════════════════════════════════════
+   SCREEN FINAL — RESULTS
+══════════════════════════════════════════════ */
+.result-card{padding:3rem 2.5rem;}
+
+/* Big score ring */
+.score-ring-wrap{
+  display:flex;justify-content:center;margin-bottom:2.5rem;
+  position:relative;
+}
+.score-ring-svg{width:160px;height:160px;transform:rotate(-90deg);}
+.sr-track{fill:none;stroke:rgba(255,255,255,.06);stroke-width:10;}
+.sr-fill{
+  fill:none;stroke-width:10;stroke-linecap:round;
+  stroke-dasharray:440;stroke-dashoffset:440;
+  transition:stroke-dashoffset 1.6s cubic-bezier(.23,1,.32,1) .3s;
+}
+.sr-fill.gold  {stroke:var(--accent);}
+.sr-fill.silver{stroke:#B8B8B8;}
+.sr-fill.bronze{stroke:#E8A45A;}
+
+.score-ring-inner{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  text-align:center;
+}
+.sri-pct{
+  font-family:var(--font-head);font-size:2.4rem;font-weight:900;
+  line-height:1;color:var(--white);
+}
+.sri-label{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:rgba(255,255,255,.35);}
+
+/* Classification badge */
+.class-badge{
+  display:inline-flex;align-items:center;gap:.6rem;
+  border-radius:3rem;padding:.5rem 1.5rem;
+  font-family:var(--font-head);font-size:.85rem;font-weight:800;
+  text-transform:uppercase;letter-spacing:.1em;
+  margin:0 auto 1.5rem;
+}
+.cb-excellent{background:rgba(206,244,49,.12);border:1.5px solid rgba(206,244,49,.3);color:var(--accent);}
+.cb-good     {background:rgba(34,197,94,.1); border:1.5px solid rgba(34,197,94,.3);  color:#4ADE80;}
+.cb-average  {background:rgba(250,204,21,.1);border:1.5px solid rgba(250,204,21,.3); color:#FCD34D;}
+.cb-improve  {background:rgba(239,68,68,.08);border:1.5px solid rgba(239,68,68,.25); color:#FCA5A5;}
+
+.result-h2{
+  font-family:var(--font-serif);font-size:clamp(1.5rem,3.5vw,2rem);
+  color:var(--white);line-height:1.2;letter-spacing:-.02em;
+  text-align:center;margin-bottom:.75rem;
+}
+.result-h2 em{color:var(--accent);font-style:italic;}
+.result-msg{font-size:.9rem;color:rgba(255,255,255,.45);line-height:1.75;text-align:center;margin-bottom:2rem;font-weight:300;}
+
+/* Breakdown bars */
+.breakdown{margin-bottom:2rem;}
+.bd-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.35);margin-bottom:1.1rem;}
+.bd-item{display:flex;align-items:center;gap:.875rem;margin-bottom:.875rem;}
+.bd-name{font-size:.8rem;font-weight:600;color:rgba(255,255,255,.65);width:130px;flex-shrink:0;}
+.bd-track{flex:1;height:8px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden;}
+.bd-bar{height:100%;border-radius:4px;width:0;transition:width 1.2s cubic-bezier(.23,1,.32,1);}
+.bd-num{font-size:.78rem;font-weight:700;color:rgba(255,255,255,.45);width:35px;text-align:right;flex-shrink:0;}
+
+.bar-presence {background:linear-gradient(90deg,#6FB3FF,#4A90D9);}
+.bar-comunic  {background:linear-gradient(90deg,var(--accent),var(--accent-m));}
+.bar-academic {background:linear-gradient(90deg,#4ADE80,#22C55E);}
+.bar-wellbeing{background:linear-gradient(90deg,#FCD34D,#F59E0B);}
+
+/* Recommendations */
+.recs{
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
+  border-radius:1.1rem;padding:1.5rem;margin-bottom:2rem;
+}
+.recs-title{
+  font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;
+  color:rgba(255,255,255,.3);margin-bottom:1rem;
+  display:flex;align-items:center;gap:.5rem;
+}
+.recs-title::before{content:'';width:16px;height:2px;background:var(--accent);}
+.rec-item{display:flex;gap:.75rem;align-items:flex-start;margin-bottom:.875rem;}
+.rec-item:last-child{margin-bottom:0;}
+.rec-icon{width:28px;height:28px;border-radius:.5rem;background:rgba(206,244,49,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.8rem;color:var(--accent);}
+.rec-text{font-size:.82rem;color:rgba(255,255,255,.5);line-height:1.6;}
+.rec-text strong{color:rgba(255,255,255,.8);font-weight:600;}
+
+/* Result actions */
+.result-actions{display:flex;gap:.875rem;flex-wrap:wrap;justify-content:center;}
+
+/* Print card for school */
+.data-summary{
+  background:rgba(1,55,125,.15);border:1px solid rgba(1,95,196,.25);
+  border-radius:1.1rem;padding:1.25rem 1.5rem;margin-bottom:1.75rem;
+}
+.ds-label{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:var(--primary-l);margin-bottom:.875rem;}
+.ds-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;}
+.ds-item span{display:block;}
+.ds-item .k{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.3);}
+.ds-item .v{font-size:.88rem;font-weight:600;color:rgba(255,255,255,.8);}
+
+/* ══════════════════════════════════════════════
+   CONFETTI CANVAS
+══════════════════════════════════════════════ */
+#confetti-canvas{position:fixed;inset:0;z-index:200;pointer-events:none;}
+
+/* ══════════════════════════════════════════════
+   TOAST
+══════════════════════════════════════════════ */
+.toast{
+  position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(120%);
+  z-index:500;
+  background:var(--ink-800);border:1px solid rgba(255,255,255,.1);
+  border-radius:3rem;padding:.7rem 1.4rem;
+  display:flex;align-items:center;gap:.6rem;
+  font-size:.82rem;font-weight:600;color:var(--white);
+  box-shadow:0 8px 32px rgba(0,0,0,.4);
+  transition:transform .4s cubic-bezier(.23,1,.32,1);
+}
+.toast.show{transform:translateX(-50%) translateY(0);}
+.toast i{color:var(--accent);}
+
+/* Responsive */
+@media(max-width:640px){
+  .result-card,.quiz-card,.form-card,.welcome-card{padding:2rem 1.5rem;}
+  .ds-grid{grid-template-columns:1fr;}
+  .top-logo{padding:0 1.25rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- Background -->
+<canvas id="bg-canvas"></canvas>
+<div class="bg-grid"></div>
+<div class="bg-glow-1"></div>
+<div class="bg-glow-2"></div>
+<div class="bg-vignette"></div>
+<canvas id="confetti-canvas"></canvas>
+
+<!-- Floating symbols -->
+<div class="math-sym" style="left:7%;font-size:2rem;animation-duration:22s;animation-delay:0s;">∑</div>
+<div class="math-sym" style="left:88%;font-size:1.4rem;animation-duration:18s;animation-delay:4s;">π</div>
+<div class="math-sym" style="left:15%;font-size:1.1rem;animation-duration:26s;animation-delay:8s;">√x</div>
+<div class="math-sym" style="left:75%;font-size:1.8rem;animation-duration:20s;animation-delay:2s;">∞</div>
+<div class="math-sym" style="left:50%;font-size:1rem;animation-duration:30s;animation-delay:12s;">f(x)</div>
+
+<!-- Navbar -->
+<div class="top-logo">
+  <a class="logo-group" href="/">
+    <img src="/assets/images/logo/lo.png" alt="Logo" class="logo-img-sm">
+    <div class="logo-txt">
+      <h2>Colégio Alfa e Omega</h2>
+      <p>Panguila · Angola</p>
+    </div>
+  </a>
+  <div class="quiz-badge"><i class="fas fa-gamepad"></i> Monitor Escolar</div>
+</div>
+
+<div class="app">
+<div class="screens">
+
+  <!-- ══════════════════════════════════════
+       SCREEN 0 — BOAS-VINDAS
+  ══════════════════════════════════════ -->
+  <div class="screen active" id="screen-welcome">
+    <div class="card welcome-card">
+      <div class="welcome-icon">📋</div>
+      <div class="welcome-eyebrow">Para Encarregados de Educação</div>
+      <h1 class="welcome-h1">
+        Monitor<br><em>Escolar</em> 2025
+      </h1>
+      <p class="welcome-desc">
+        Um programa especial do Colégio Alfa e Omega para compreender melhor como os encarregados acompanham os seus filhos. Responda com sinceridade — os dados são confidenciais e ajudam-nos a apoiá-lo melhor.
+      </p>
+
+      <div class="welcome-stats">
+        <div class="ws-item"><i class="fas fa-clock"></i><span>~5 minutos</span></div>
+        <div class="ws-item"><i class="fas fa-question-circle"></i><span>8 perguntas</span></div>
+        <div class="ws-item"><i class="fas fa-lock"></i><span>Confidencial</span></div>
+        <div class="ws-item"><i class="fas fa-chart-bar"></i><span>Resultado imediato</span></div>
+      </div>
+
+      <button class="btn-primary" onclick="goTo('screen-dados')">
+        <i class="fas fa-play"></i>
+        <span>Começar o Quiz</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SCREEN 1 — DADOS DO ENCARREGADO
+  ══════════════════════════════════════ -->
+  <div class="screen" id="screen-dados">
+    <div class="card form-card">
+      <div class="screen-label">Passo 1 de 2 — Identificação</div>
+      <h2 class="screen-h2">Os seus <em>dados</em></h2>
+      <p class="screen-sub">Precisamos de alguns dados para personalizar o seu relatório e partilhá-lo com a escola de forma organizada.</p>
+
+      <!-- Avatar -->
+      <div style="margin-bottom:1.5rem;">
+        <label style="display:block;margin-bottom:.75rem;">Escolha o seu avatar</label>
+        <div class="avatar-row" id="avatar-row">
+          <div class="avatar-opt selected" data-val="👨‍👦">👨‍👦</div>
+          <div class="avatar-opt" data-val="👩‍👦">👩‍👦</div>
+          <div class="avatar-opt" data-val="👨‍👧">👨‍👧</div>
+          <div class="avatar-opt" data-val="👩‍👧">👩‍👧</div>
+          <div class="avatar-opt" data-val="👨‍👧‍👦">👨‍👧‍👦</div>
+          <div class="avatar-opt" data-val="👩‍👧‍👦">👩‍👧‍👦</div>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label for="f-nome">Nome completo *</label>
+          <input type="text" id="f-nome" placeholder="Ex: Maria da Silva">
+        </div>
+        <div class="field-group">
+          <label for="f-tel">Telefone / WhatsApp *</label>
+          <input type="tel" id="f-tel" placeholder="+244 9XX XXX XXX">
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label for="f-relacao">Grau de parentesco</label>
+        <select id="f-relacao">
+          <option value="">Seleccionar…</option>
+          <option value="Pai">Pai</option>
+          <option value="Mãe">Mãe</option>
+          <option value="Avô / Avó">Avô / Avó</option>
+          <option value="Tio / Tia">Tio / Tia</option>
+          <option value="Outro familiar">Outro familiar</option>
+        </select>
+      </div>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label for="f-filho">Nome do(a) filho(a) *</label>
+          <input type="text" id="f-filho" placeholder="Ex: João da Silva">
+        </div>
+        <div class="field-group">
+          <label for="f-classe">Classe / Ano</label>
+          <select id="f-classe">
+            <option value="">Seleccionar…</option>
+            <option>1ª Classe</option><option>2ª Classe</option>
+            <option>3ª Classe</option><option>4ª Classe</option>
+            <option>5ª Classe</option><option>6ª Classe</option>
+            <option>7ª Classe</option><option>8ª Classe</option>
+            <option>9ª Classe</option><option>Rolinha</option>
+            <option>Beija-Flor</option><option>Sabiá</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label for="f-turma">Turma</label>
+        <select id="f-turma">
+          <option value="">Seleccionar…</option>
+          <option>Turma A</option><option>Turma B</option>
+          <option>Turma C</option><option>Turma D</option>
+        </select>
+      </div>
+
+      <div class="nav-row">
+        <button class="btn-secondary" onclick="goTo('screen-welcome')"><i class="fas fa-arrow-left"></i> Voltar</button>
+        <button class="btn-primary" onclick="validateDados()"><span>Continuar</span><i class="fas fa-arrow-right"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SCREENS 2-9 — QUIZ
+  ══════════════════════════════════════ -->
+  <div class="screen" id="screen-quiz">
+    <div class="card quiz-card">
+      <div id="auth-step">
+        <h2 class="notif-title-premium">Identificação do Encarregado</h2>
+        <p class="notif-text-premium">Insira os seus dados para receber o feedback personalizado.</p>
+        <input type="text" id="parent-name" placeholder="Seu Nome Completo" class="quiz-input">
+        <input type="tel" id="parent-whatsapp" placeholder="Seu WhatsApp (Ex: 923...)" class="quiz-input">
+        <button onclick="startQuiz()" class="btn-back-home" style="margin-top:20px; width:100%;">Começar Desafio</button>
+      </div>
+
+      <div id="question-wrapper" style="display: none;">
+      <div class="progress-wrap">
+        <div class="progress-meta">
+          <span class="progress-label" id="q-label">Pergunta 1 de 8</span>
+          <span class="progress-frac" id="q-score-ticker">⭐ 0 pts</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+        </div>
+      </div>
+
+      <div id="q-category" class="q-category cat-presence"></div>
+      <div id="q-number" class="q-number">Pergunta 1</div>
+      <h3 id="q-text" class="q-text"></h3>
+      <p id="q-hint" class="q-hint"></p>
+
+      <div class="options" id="q-options"></div>
+
+      <div class="nav-row" id="q-nav">
+        <div></div>
+        <button class="btn-primary" id="btn-next" onclick="nextQuestion()" style="display:none;">
+          <span id="btn-next-label">Próxima</span><i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SCREEN FINAL — RESULTADOS
+  ══════════════════════════════════════ -->
+  <div class="screen" id="screen-result">
+    <div class="card result-card" style="text-align:center;">
+
+      <!-- Ring -->
+      <div class="score-ring-wrap">
+        <svg class="score-ring-svg" viewBox="0 0 160 160">
+          <circle class="sr-track" cx="80" cy="80" r="70"/>
+          <circle class="sr-fill" id="sr-fill" cx="80" cy="80" r="70"/>
+        </svg>
+        <div class="score-ring-inner">
+          <div class="sri-pct" id="res-pct">0%</div>
+          <div class="sri-label">Pontuação</div>
+        </div>
+      </div>
+
+      <div id="res-badge" class="class-badge cb-excellent" style="display:none;"></div>
+
+      <h2 class="result-h2" id="res-title"></h2>
+      <p class="result-msg" id="res-msg"></p>
+
+      <!-- Data summary -->
+      <div class="data-summary" id="res-data">
+        <div class="ds-label"><i class="fas fa-id-card"></i> Dados do Encarregado</div>
+        <div class="ds-grid" id="ds-grid"></div>
+      </div>
+
+      <!-- Breakdown -->
+      <div class="breakdown">
+        <div class="bd-label"><i class="fas fa-chart-bar"></i> Desempenho por Área</div>
+        <div id="bd-bars"></div>
+      </div>
+
+      <!-- Recommendations -->
+      <div class="recs">
+        <div class="recs-title">Recomendações Personalizadas</div>
+        <div id="recs-list"></div>
+      </div>
+
+      <!-- Actions -->
+      <div class="result-actions">
+        <button class="btn-primary" onclick="printResult()"><i class="fas fa-print"></i><span>Imprimir</span></button>
+        <button class="btn-secondary" onclick="copyResult()"><i class="fas fa-copy"></i> Copiar Resumo</button>
+        <button class="btn-secondary" onclick="restartQuiz()"><i class="fas fa-redo"></i> Recomeçar</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /screens -->
+</div><!-- /app -->
+
+<!-- Toast -->
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toast-msg">Copiado!</span></div>
+
+<script>
+/* ═══════════════════════════════════════
+   QUIZ DATA
+═══════════════════════════════════════ */
+const QUESTIONS = [
+  {
+    cat:'Presença Escolar', catClass:'cat-presence', icon:'📅',
+    text:'Com que frequência vai à escola do seu filho (reuniões, entregas de notas, eventos)?',
+    hint:'Considere os últimos 3 meses do ano lectivo.',
+    opts:[
+      {l:'A', text:'Sempre que há convocatória ou evento', sub:'Nunca falto quando a escola me chama', pts:4},
+      {l:'B', text:'Na maioria das vezes', sub:'Só falto quando tenho um compromisso urgente', pts:3},
+      {l:'C', text:'Raramente consigo ir', sub:'O trabalho ou outras obrigações dificultam', pts:2},
+      {l:'D', text:'Nunca ou quase nunca', sub:'Ainda não consegui ir este ano lectivo', pts:1},
+    ], area:'presence'
+  },
+  {
+    cat:'Comunicação', catClass:'cat-comunic', icon:'💬',
+    text:'Quantas vezes por semana conversa com o seu filho sobre como foi a escola?',
+    hint:'Considere conversas sobre aulas, professores, amigos e dificuldades.',
+    opts:[
+      {l:'A', text:'Todos os dias', sub:'Faz parte da nossa rotina', pts:4},
+      {l:'B', text:'3 a 4 vezes por semana', sub:'Conversamos frequentemente', pts:3},
+      {l:'C', text:'1 a 2 vezes por semana', sub:'Às vezes conversamos', pts:2},
+      {l:'D', text:'Raramente ou nunca', sub:'Não costumo perguntar sobre a escola', pts:1},
+    ], area:'comunic'
+  },
+  {
+    cat:'Acompanhamento Académico', catClass:'cat-academic', icon:'📚',
+    text:'Verifica os cadernos, fichas e trabalhos de casa do seu filho?',
+    hint:'Inclui assinaturas, correcção de erros e apoio nas tarefas.',
+    opts:[
+      {l:'A', text:'Diariamente — é uma rotina em casa', sub:'Assino e verifico todos os dias', pts:4},
+      {l:'B', text:'Com frequência, mas nem sempre', sub:'Verifico quando lembro ou quando peço', pts:3},
+      {l:'C', text:'Só quando há teste ou exame', sub:'Acompanho mais nas épocas de avaliação', pts:2},
+      {l:'D', text:'Raramente verifico', sub:'O meu filho trata da escola sozinho', pts:1},
+    ], area:'academic'
+  },
+  {
+    cat:'Bem-estar do Filho', catClass:'cat-wellbeing', icon:'❤️',
+    text:'Sabe quais são as disciplinas em que o seu filho tem mais dificuldade este ano?',
+    hint:'Reflicta sobre o conhecimento que tem do percurso escolar do seu filho.',
+    opts:[
+      {l:'A', text:'Sei exactamente — acompanho as notas', sub:'Tenho o boletim e sei onde está mais fraco', pts:4},
+      {l:'B', text:'Tenho uma ideia geral', sub:'Ele fala-me mas não tenho os detalhes todos', pts:3},
+      {l:'C', text:'Não tenho a certeza', sub:'Sei pouco sobre o seu desempenho específico', pts:2},
+      {l:'D', text:'Não sei', sub:'Ainda não tive acesso às notas', pts:1},
+    ], area:'wellbeing'
+  },
+  {
+    cat:'Presença Escolar', catClass:'cat-presence', icon:'📅',
+    text:'Quando o seu filho falta à escola, como é que isso acontece?',
+    hint:'Assiduidade é um factor crítico no desempenho académico.',
+    opts:[
+      {l:'A', text:'Raramente falta e sempre com justificação', sub:'Comunico sempre com a escola', pts:4},
+      {l:'B', text:'Falta às vezes, normalmente justificado', sub:'Tentamos informar a escola', pts:3},
+      {l:'C', text:'Falta com alguma frequência', sub:'Nem sempre comunico à escola', pts:2},
+      {l:'D', text:'Falta muitas vezes sem eu saber', sub:'Às vezes fico a saber depois', pts:1},
+    ], area:'presence'
+  },
+  {
+    cat:'Comunicação', catClass:'cat-comunic', icon:'💬',
+    text:'Já contactou directamente um professor do seu filho este ano para falar sobre o seu progresso?',
+    hint:'Inclui chamadas, mensagens WhatsApp, reuniões ou bilhetes via caderneta.',
+    opts:[
+      {l:'A', text:'Sim, várias vezes', sub:'Tenho um contacto próximo com os professores', pts:4},
+      {l:'B', text:'Sim, uma ou duas vezes', sub:'Fiz contacto mas não é habitual', pts:3},
+      {l:'C', text:'Não, mas gostaria de o fazer', sub:'Nunca soube bem como abordar', pts:2},
+      {l:'D', text:'Não — deixo isso para o meu filho', sub:'Nunca entrei em contacto com nenhum professor', pts:1},
+    ], area:'comunic'
+  },
+  {
+    cat:'Acompanhamento Académico', catClass:'cat-academic', icon:'📚',
+    text:'O seu filho tem um espaço em casa adequado para estudar (mesa, luz, sem distrações)?',
+    hint:'O ambiente de estudo em casa impacta directamente o desempenho escolar.',
+    opts:[
+      {l:'A', text:'Sim, tem um espaço dedicado ao estudo', sub:'Mesa própria, boa iluminação e silêncio', pts:4},
+      {l:'B', text:'Tem um sítio mas nem sempre é ideal', sub:'Por vezes há barulho ou falta espaço', pts:3},
+      {l:'C', text:'Estuda onde consegue', sub:'Mesa de jantar, cama ou outro local partilhado', pts:2},
+      {l:'D', text:'Não temos espaço adequado em casa', sub:'É uma dificuldade real no nosso dia a dia', pts:1},
+    ], area:'academic'
+  },
+  {
+    cat:'Bem-estar do Filho', catClass:'cat-wellbeing', icon:'❤️',
+    text:'Como descreve o estado emocional do seu filho em relação à escola?',
+    hint:'A motivação e o bem-estar emocional são fundamentais para o sucesso académico.',
+    opts:[
+      {l:'A', text:'Motivado e feliz — gosta de ir à escola', sub:'Fala bem dos professores e colegas', pts:4},
+      {l:'B', text:'Normal — não reclama mas não demonstra entusiasmo', sub:'Vai à escola sem problemas', pts:3},
+      {l:'C', text:'Às vezes diz que não quer ir ou que está cansado', sub:'Manifesta alguma resistência', pts:2},
+      {l:'D', text:'Mostra sinais de desmotivação ou tristeza', sub:'Tem falado negativamente sobre a escola', pts:1},
+    ], area:'wellbeing'
+  },
+];
+
+/* ═══════════════════════════════════════
+   STATE
+═══════════════════════════════════════ */
+let state = {
+  avatar: '👨‍👦',
+  nome:'', tel:'', relacao:'', filho:'', classe:'', turma:'',
+  currentQ: 0,
+  answers: [],
+  score: 0,
+  areaScores: { presence:0, comunic:0, academic:0, wellbeing:0 },
+  areaMax:    { presence:0, comunic:0, academic:0, wellbeing:0 },
+  answerSelected: false,
+};
+let parentData = {};
+
+/* ═══════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════ */
+function goTo(screenId) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(screenId).classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* ═══════════════════════════════════════
+   AVATAR PICKER
+═══════════════════════════════════════ */
+document.getElementById('avatar-row').addEventListener('click', e => {
+  const opt = e.target.closest('.avatar-opt');
+  if (!opt) return;
+  document.querySelectorAll('.avatar-opt').forEach(a => a.classList.remove('selected'));
+  opt.classList.add('selected');
+  state.avatar = opt.dataset.val;
+});
+
+/* ═══════════════════════════════════════
+   VALIDATE DADOS
+═══════════════════════════════════════ */
+function validateDados() {
+  const nome   = document.getElementById('f-nome').value.trim();
+  const tel    = document.getElementById('f-tel').value.trim();
+  const filho  = document.getElementById('f-filho').value.trim();
+  if (!nome || !tel || !filho) {
+    showToast('⚠️ Por favor preencha os campos obrigatórios (*)', 'warning');
+    return;
+  }
+  state.nome    = nome;
+  state.tel     = tel;
+  state.relacao = document.getElementById('f-relacao').value || 'Encarregado';
+  state.filho   = filho;
+  state.classe  = document.getElementById('f-classe').value || '—';
+  state.turma   = document.getElementById('f-turma').value  || '—';
+  state.currentQ = 0;
+  state.answers  = [];
+  state.score    = 0;
+  state.areaScores = { presence:0, comunic:0, academic:0, wellbeing:0 };
+  state.areaMax    = { presence:0, comunic:0, academic:0, wellbeing:0 };
+  QUESTIONS.forEach(q => { state.areaMax[q.area] += 4; });
+
+  const parentNameEl = document.getElementById('parent-name');
+  const parentWhatsappEl = document.getElementById('parent-whatsapp');
+  if (parentNameEl) parentNameEl.value = state.nome;
+  if (parentWhatsappEl) parentWhatsappEl.value = state.tel;
+
+  const authStep = document.getElementById('auth-step');
+  const questionWrapper = document.getElementById('question-wrapper');
+  if (authStep) authStep.style.display = 'block';
+  if (questionWrapper) questionWrapper.style.display = 'none';
+
+  goTo('screen-quiz');
+}
+
+function startQuiz() {
+  const parentNameEl = document.getElementById('parent-name');
+  const parentWhatsappEl = document.getElementById('parent-whatsapp');
+  if (!parentNameEl || !parentWhatsappEl) return;
+
+  const parentName = parentNameEl.value.trim();
+  const parentWhatsapp = parentWhatsappEl.value.trim();
+  if (!parentName || !parentWhatsapp) {
+    alert('Por favor, preencha os seus dados para continuar.');
+    return;
+  }
+
+  parentData = { nome: parentName, whatsapp: parentWhatsapp };
+  state.nome = parentName;
+  state.tel = parentWhatsapp;
+  state.currentQ = 0;
+  state.answers = [];
+  state.score = 0;
+  state.areaScores = { presence:0, comunic:0, academic:0, wellbeing:0 };
+  state.answerSelected = false;
+
+  document.getElementById('auth-step').style.display = 'none';
+  document.getElementById('question-wrapper').style.display = 'block';
+  loadQuestion(0);
+}
+
+/* ═══════════════════════════════════════
+   LOAD QUESTION
+═══════════════════════════════════════ */
+function loadQuestion(idx) {
+  const q = QUESTIONS[idx];
+  state.answerSelected = false;
+
+  // Progress
+  const pct = Math.round((idx / QUESTIONS.length) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('q-label').textContent = `Pergunta ${idx+1} de ${QUESTIONS.length}`;
+  document.getElementById('q-score-ticker').textContent = `⭐ ${state.score} pts`;
+
+  // Category
+  const catEl = document.getElementById('q-category');
+  catEl.className = 'q-category ' + q.catClass;
+  catEl.innerHTML = q.icon + ' ' + q.cat;
+
+  document.getElementById('q-number').textContent = `Pergunta ${idx+1}`;
+  document.getElementById('q-text').textContent   = q.text;
+  document.getElementById('q-hint').textContent   = q.hint;
+
+  // Options
+  const optsEl = document.getElementById('q-options');
+  optsEl.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const div = document.createElement('div');
+    div.className = 'opt';
+    div.innerHTML = `
+      <div class="opt-letter">${opt.l}</div>
+      <div class="opt-body">
+        <div class="opt-text">${opt.text}</div>
+        ${opt.sub ? `<div class="opt-sub">${opt.sub}</div>` : ''}
+      </div>
+      <i class="fas fa-check opt-check"></i>
+    `;
+    div.addEventListener('click', () => selectOption(div, opt, q, optsEl));
+    optsEl.appendChild(div);
+    // Stagger in
+    div.style.opacity = '0';
+    div.style.transform = 'translateX(-12px)';
+    setTimeout(() => {
+      div.style.transition = 'opacity .35s ease, transform .35s ease';
+      div.style.opacity = '1';
+      div.style.transform = 'translateX(0)';
+    }, 60 + i * 70);
+  });
+
+  // Hide next button
+  document.getElementById('btn-next').style.display = 'none';
+}
+
+/* ═══════════════════════════════════════
+   SELECT OPTION
+═══════════════════════════════════════ */
+function selectOption(div, opt, q, optsEl) {
+  if (state.answerSelected) return;
+  state.answerSelected = true;
+
+  // Mark selected
+  div.classList.add('selected');
+
+  // Disable all
+  optsEl.querySelectorAll('.opt').forEach(o => {
+    if (o !== div) o.style.opacity = '.4';
+    o.style.pointerEvents = 'none';
+  });
+
+  // Add score
+  state.score += opt.pts;
+  state.areaScores[q.area] += opt.pts;
+  state.answers.push({ qIdx: state.currentQ, pts: opt.pts, area: q.area });
+
+  // Ticker
+  document.getElementById('q-score-ticker').textContent = `⭐ ${state.score} pts`;
+
+  // Score pulse
+  const ticker = document.getElementById('q-score-ticker');
+  ticker.style.transform = 'scale(1.2)';
+  setTimeout(() => ticker.style.transform = 'scale(1)', 300);
+
+  // Show next button
+  const btnNext = document.getElementById('btn-next');
+  const isLast  = state.currentQ === QUESTIONS.length - 1;
+  document.getElementById('btn-next-label').textContent = isLast ? 'Ver Resultados' : 'Próxima';
+  btnNext.style.display = 'inline-flex';
+
+  // Brief ripple flash on card
+  const card = document.querySelector('.quiz-card');
+  card.style.borderColor = 'rgba(206,244,49,.35)';
+  setTimeout(() => card.style.borderColor = '', 600);
+}
+
+/* ═══════════════════════════════════════
+   NEXT QUESTION
+═══════════════════════════════════════ */
+function nextQuestion() {
+  state.currentQ++;
+  if (state.currentQ >= QUESTIONS.length) {
+    showResults();
+  } else {
+    // Slide transition
+    const card = document.querySelector('.quiz-card');
+    card.style.transition = 'opacity .2s ease, transform .2s ease';
+    card.style.opacity    = '0';
+    card.style.transform  = 'translateX(-20px)';
+    setTimeout(() => {
+      loadQuestion(state.currentQ);
+      card.style.opacity   = '1';
+      card.style.transform = 'translateX(0)';
+    }, 220);
+  }
+}
+
+/* ═══════════════════════════════════════
+   SHOW RESULTS
+═══════════════════════════════════════ */
+function showResults() {
+  const maxScore = QUESTIONS.length * 4;
+  const totalScore = state.score;
+  const pct = Math.round((state.score / maxScore) * 100);
+
+  // Classification
+  let cls, clsClass, title, msg;
+  if (pct >= 80) {
+    cls = '🏆 Encarregado Exemplar'; clsClass = 'cb-excellent';
+    title = `Parabéns, <em>${state.nome.split(' ')[0]}!</em>`;
+    msg = `O seu envolvimento na vida escolar de ${state.filho} está acima da média. O Colégio Alfa e Omega orgulha-se de ter encarregados tão dedicados. Continue assim — os resultados do(a) seu/sua filho(a) reflectem o seu empenho.`;
+  } else if (pct >= 60) {
+    cls = '✅ Bom Acompanhamento'; clsClass = 'cb-good';
+    title = `Bom trabalho, <em>${state.nome.split(' ')[0]}!</em>`;
+    msg = `Está no bom caminho. Com algumas melhorias pontuais, o impacto no percurso escolar de ${state.filho} pode ser ainda maior. Veja as recomendações abaixo.`;
+  } else if (pct >= 40) {
+    cls = '📈 Em Desenvolvimento'; clsClass = 'cb-average';
+    title = `Há margem para <em>crescer</em>`;
+    msg = `Reconhecemos que a vida quotidiana é exigente. Mas com pequenas mudanças na rotina, o acompanhamento de ${state.filho} pode melhorar significativamente. A escola está aqui para apoiar.`;
+  } else {
+    cls = '⚠️ Atenção Necessária'; clsClass = 'cb-improve';
+    title = `${state.filho} precisa de <em>si</em>`;
+    msg = `Os resultados indicam que o acompanhamento escolar em casa precisa de reforço. Não é um julgamento — é um ponto de partida. A escola está disponível para conversar e ajudar a encontrar soluções.`;
+  }
+
+  // Badge
+  const badge = document.getElementById('res-badge');
+  badge.className = 'class-badge ' + clsClass;
+  badge.innerHTML = cls;
+  badge.style.display = 'inline-flex';
+
+  document.getElementById('res-title').innerHTML = title;
+  document.getElementById('res-msg').textContent  = msg;
+  document.getElementById('res-pct').textContent  = pct + '%';
+
+  // Data summary
+  const dsGrid = document.getElementById('ds-grid');
+  dsGrid.innerHTML = `
+    <div class="ds-item"><span class="k">Encarregado</span><span class="v">${state.avatar} ${state.nome}</span></div>
+    <div class="ds-item"><span class="k">Parentesco</span><span class="v">${state.relacao}</span></div>
+    <div class="ds-item"><span class="k">Educando</span><span class="v">${state.filho}</span></div>
+    <div class="ds-item"><span class="k">Classe</span><span class="v">${state.classe} · ${state.turma}</span></div>
+    <div class="ds-item"><span class="k">Pontuação</span><span class="v">${state.score} / ${maxScore} pts (${pct}%)</span></div>
+    <div class="ds-item"><span class="k">Data</span><span class="v">${new Date().toLocaleDateString('pt-PT')}</span></div>
+  `;
+
+  // Breakdown bars
+  const areas = [
+    { key:'presence', name:'Presença Escolar',  cls:'bar-presence' },
+    { key:'comunic',  name:'Comunicação',        cls:'bar-comunic'  },
+    { key:'academic', name:'Acompanhamento',     cls:'bar-academic' },
+    { key:'wellbeing',name:'Bem-estar',          cls:'bar-wellbeing'},
+  ];
+  const bdEl = document.getElementById('bd-bars');
+  bdEl.innerHTML = '';
+  areas.forEach(a => {
+    const score = state.areaScores[a.key];
+    const max   = state.areaMax[a.key];
+    const p     = Math.round((score/max)*100);
+    const div   = document.createElement('div');
+    div.className = 'bd-item';
+    div.innerHTML = `
+      <div class="bd-name">${a.name}</div>
+      <div class="bd-track"><div class="bd-bar ${a.cls}" data-w="${p}"></div></div>
+      <div class="bd-num">${p}%</div>
+    `;
+    bdEl.appendChild(div);
+  });
+
+  // Build recommendations
+  const recs = [];
+  if (state.areaScores.presence / state.areaMax.presence < 0.6)
+    recs.push({icon:'📅', txt:'<strong>Presença:</strong> Tente participar em pelo menos uma reunião por trimestre. A escola agenda-as com antecedência para facilitar.'});
+  if (state.areaScores.comunic / state.areaMax.comunic < 0.6)
+    recs.push({icon:'💬', txt:'<strong>Comunicação:</strong> Reserve 10 minutos por dia para perguntar ao seu filho como foi o dia na escola. Pequenas conversas têm grande impacto.'});
+  if (state.areaScores.academic / state.areaMax.academic < 0.6)
+    recs.push({icon:'📚', txt:'<strong>Estudo:</strong> Estabeleça um horário fixo de estudo em casa. Verifique o caderno diário pelo menos 3 vezes por semana.'});
+  if (state.areaScores.wellbeing / state.areaMax.wellbeing < 0.6)
+    recs.push({icon:'❤️', txt:'<strong>Bem-estar:</strong> Pergunte regularmente como o seu filho se sente em relação à escola. A motivação emocional é a base do sucesso académico.'});
+  if (recs.length === 0)
+    recs.push({icon:'⭐', txt:'<strong>Continue assim!</strong> O seu nível de envolvimento é um exemplo para outros encarregados. Partilhe a sua experiência com outros pais.'});
+
+  const recsEl = document.getElementById('recs-list');
+  recsEl.innerHTML = recs.map(r => `
+    <div class="rec-item">
+      <div class="rec-icon">${r.icon}</div>
+      <div class="rec-text">${r.txt}</div>
+    </div>
+  `).join('');
+
+  const payload = {
+    ...parentData,
+    score: totalScore,
+    status: (totalScore >= 25) ? 'Diamante' : 'Em Construção',
+    data: new Date().toLocaleString(),
+  };
+
+  saveQuizLead(payload);
+
+  // Go to results screen
+  goTo('screen-result');
+
+  // Animate ring after transition
+  setTimeout(() => {
+    const circumference = 2 * Math.PI * 70; // ~440
+    const fillEl = document.getElementById('sr-fill');
+    fillEl.style.strokeDashoffset = circumference - (pct / 100) * circumference;
+    fillEl.className = 'sr-fill ' + (pct >= 80 ? 'gold' : pct >= 60 ? 'silver' : 'bronze');
+
+    // Animate bars
+    document.querySelectorAll('.bd-bar').forEach(bar => {
+      bar.style.width = bar.dataset.w + '%';
+    });
+
+    // Confetti if excellent
+    if (pct >= 80) setTimeout(fireConfetti, 600);
+  }, 400);
+}
+
+/* ═══════════════════════════════════════
+   PRINT
+═══════════════════════════════════════ */
+function printResult() {
+  window.print();
+}
+
+/* ═══════════════════════════════════════
+   COPY RESULT
+═══════════════════════════════════════ */
+function copyResult() {
+  const maxScore = QUESTIONS.length * 4;
+  const pct = Math.round((state.score / maxScore) * 100);
+  const areas = {presence:'Presença Escolar', comunic:'Comunicação', academic:'Acompanhamento', wellbeing:'Bem-estar'};
+  let text = `📋 MONITOR ESCOLAR — Colégio Alfa e Omega\n`;
+  text += `═══════════════════════════════\n`;
+  text += `👤 Encarregado: ${state.nome}\n`;
+  text += `🎓 Educando: ${state.filho} · ${state.classe} ${state.turma}\n`;
+  text += `📅 Data: ${new Date().toLocaleDateString('pt-PT')}\n\n`;
+  text += `📊 PONTUAÇÃO: ${state.score}/${maxScore} pts (${pct}%)\n\n`;
+  Object.keys(areas).forEach(k => {
+    const p = Math.round((state.areaScores[k]/state.areaMax[k])*100);
+    const bar = '█'.repeat(Math.floor(p/10)) + '░'.repeat(10-Math.floor(p/10));
+    text += `${areas[k]}: ${bar} ${p}%\n`;
+  });
+  text += `\nGerado em colegioalfaeomega.com`;
+  navigator.clipboard.writeText(text).then(() => showToast('Resumo copiado para a área de transferência!'));
+}
+
+/* ═══════════════════════════════════════
+   RESTART
+═══════════════════════════════════════ */
+function restartQuiz() {
+  state = { avatar:'👨‍👦', nome:'', tel:'', relacao:'', filho:'', classe:'', turma:'', currentQ:0, answers:[], score:0, areaScores:{presence:0,comunic:0,academic:0,wellbeing:0}, areaMax:{presence:0,comunic:0,academic:0,wellbeing:0}, answerSelected:false };
+  parentData = {};
+  document.getElementById('f-nome').value  = '';
+  document.getElementById('f-tel').value   = '';
+  document.getElementById('f-filho').value = '';
+  document.getElementById('parent-name').value = '';
+  document.getElementById('parent-whatsapp').value = '';
+  document.getElementById('auth-step').style.display = 'block';
+  document.getElementById('question-wrapper').style.display = 'none';
+  document.getElementById('sr-fill').style.strokeDashoffset = 440;
+  goTo('screen-welcome');
+}
+
+/* ═══════════════════════════════════════
+   TOAST
+═══════════════════════════════════════ */
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+/* ═══════════════════════════════════════
+   CONFETTI
+═══════════════════════════════════════ */
+function fireConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+  const ctx = canvas.getContext('2d');
+  const COLORS = ['#CEF431','#01377D','#FFD700','#FFFFFF','#0A5FC4','#B8D400'];
+  const pieces = Array.from({length:120}, () => ({
+    x: Math.random() * canvas.width,
+    y: -20,
+    r: Math.random() * 7 + 3,
+    vy: Math.random() * 3 + 2,
+    vx: (Math.random()-0.5) * 4,
+    angle: Math.random() * 360,
+    spin: (Math.random()-0.5)*8,
+    c: COLORS[Math.floor(Math.random()*COLORS.length)],
+    shape: Math.random() > 0.5 ? 'rect' : 'circle',
+  }));
+
+  let frame = 0;
+  function draw() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pieces.forEach(p => {
+      p.y += p.vy; p.x += p.vx; p.angle += p.spin;
+      p.vy += 0.08;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.angle * Math.PI/180);
+      ctx.fillStyle = p.c;
+      ctx.globalAlpha = Math.max(0, 1 - frame/120);
+      if (p.shape === 'rect') ctx.fillRect(-p.r/2,-p.r/4,p.r,p.r/2);
+      else { ctx.beginPath(); ctx.arc(0,0,p.r/2,0,Math.PI*2); ctx.fill(); }
+      ctx.restore();
+    });
+    frame++;
+    if (frame < 150) requestAnimationFrame(draw);
+    else ctx.clearRect(0,0,canvas.width,canvas.height);
+  }
+  draw();
+}
+
+/* ═══════════════════════════════════════
+   BG CANVAS — particles
+═══════════════════════════════════════ */
+(function() {
+  const c = document.getElementById('bg-canvas');
+  const x = c.getContext('2d');
+  function resize(){ c.width=window.innerWidth; c.height=window.innerHeight; }
+  resize(); window.addEventListener('resize',resize,{passive:true});
+  const pts = Array.from({length:55},()=>({
+    x:Math.random(), y:Math.random(),
+    r:Math.random()*1.2+0.2,
+    vx:(Math.random()-.5)*.0001, vy:(Math.random()-.5)*.0001,
+    c:['rgba(1,55,125,','rgba(206,244,49,','rgba(10,95,196,'][Math.floor(Math.random()*3)],
+    a:Math.random()*.3+.05,
+  }));
+  function draw(){
+    x.clearRect(0,0,c.width,c.height);
+    const W=c.width,H=c.height;
+    pts.forEach(p=>{
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0)p.x=1; if(p.x>1)p.x=0;
+      if(p.y<0)p.y=1; if(p.y>1)p.y=0;
+      x.beginPath(); x.arc(p.x*W,p.y*H,p.r,0,Math.PI*2);
+      x.fillStyle=p.c+p.a+')'; x.fill();
+    });
+    for(let i=0;i<pts.length;i++) for(let j=i+1;j<pts.length;j++){
+      const dx=(pts[i].x-pts[j].x)*W, dy=(pts[i].y-pts[j].y)*H;
+      const d=Math.sqrt(dx*dx+dy*dy);
+      if(d<120){ x.beginPath(); x.moveTo(pts[i].x*W,pts[i].y*H); x.lineTo(pts[j].x*W,pts[j].y*H); x.strokeStyle=`rgba(1,55,125,${.09*(1-d/120)})`; x.lineWidth=.5; x.stroke(); }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+
+<script>
+/**
+ * SISTEMA DE INTELIGÊNCIA - COLÉGIO ALFA E ÓMEGA
+ * Implementação: Supabase Realtime Data Tracking
+ *
+ * Este script conecta o frontend ao banco de dados para capturar:
+ * 1. Leads de Encarregados (Quiz)
+ * 2. Cliques em Medalhas (Métricas de Interesse)
+ */
+const SUPABASE_URL = 'https://xpoysdrwvmamrtybiflj.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_f5TrSsgbVRptK1PINCmRag_tWmjDcIp';
+const _supabase = window.supabase?.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+async function saveQuizLead(payload) {
+  if (!_supabase) return;
+  const { error } = await _supabase.from('leads_quiz').insert([
+    {
+      nome: payload.nome,
+      whatsapp: payload.whatsapp,
+      score: payload.score,
+      status: payload.status,
+    },
+  ]);
+
+  if (error) {
+    console.error('Erro Supabase (Quiz):', error.message);
+  } else {
+    console.log('Lead salvo com sucesso no Supabase.');
+  }
+}
+
+async function trackMedalInteraction(medalType) {
+  if (!_supabase) return;
+  const { error } = await _supabase.from('site_metrics').insert([
+    {
+      event_type: `clique_medalha_${String(medalType).toLowerCase()}`,
+      page_url: window.location.pathname,
+    },
+  ]);
+
+  if (error) console.error('Erro nas métricas:', error.message);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+# robots.txt - Colégio Alfa e Omega
+# Instruções aos motores de busca sobre acesso ao site
+
+# Permitir todos os bots
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+Disallow: /components/
+Disallow: /seo/
+Disallow: /.env
+Disallow: /.git
+Disallow: /uploads/
+
+# Velocidade de crawl
+Crawl-delay: 1
+
+# Sitemap
+Sitemap: https://www.colegioalfaeomega.com/sitemap.xml
+
+# Específico para Google
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Específico para Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Específico para Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Bloquear bots maliciosos
+User-agent: AhrefsBot
+User-agent: SemrushBot
+User-agent: DotBot
+User-agent: MJ12bot
+Disallow: /

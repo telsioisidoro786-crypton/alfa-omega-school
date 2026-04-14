@@ -1,0 +1,64 @@
+2026-01-13 14:05:15 | ═══════════════════════════════════════════════════════
+2026-01-13 14:05:15 | Nova requisição recebida
+2026-01-13 14:05:15 | Método: GET
+2026-01-13 14:05:15 | Upload Dir: /home/telmo/alfa-omega-site/uploads
+2026-01-13 14:05:15 | Log File: /home/telmo/alfa-omega-site/uploads/debug.log
+2026-01-13 14:05:15 | Método não é POST!
+2026-01-13 14:07:25 | ═══════════════════════════════════════════════════════
+2026-01-13 14:07:25 | Nova requisição recebida
+2026-01-13 14:07:25 | Método: OPTIONS
+2026-01-13 14:07:25 | Upload Dir: /home/telmo/alfa-omega-site/uploads
+2026-01-13 14:07:25 | Log File: /home/telmo/alfa-omega-site/uploads/debug.log
+2026-01-13 14:07:25 | Preflight request
+2026-01-13 14:07:25 | ═══════════════════════════════════════════════════════
+2026-01-13 14:07:25 | Nova requisição recebida
+2026-01-13 14:07:25 | Método: POST
+2026-01-13 14:07:25 | Upload Dir: /home/telmo/alfa-omega-site/uploads
+2026-01-13 14:07:25 | Log File: /home/telmo/alfa-omega-site/uploads/debug.log
+2026-01-13 14:07:25 | JSON recebido: 702123 bytes
+2026-01-13 14:07:25 | Dados decodificados com sucesso
+2026-01-13 14:07:25 | Processando: ID=AO-2026-040839, Arquivo=WhatsApp Image 2026-01-12 at 14.04.48.jpeg
+2026-01-13 14:07:25 | Base64 recebido: 701748 caracteres
+2026-01-13 14:07:25 | Nome do arquivo sanitizado: WhatsApp_Image_2026-01-12_at_14.04.48.jpeg
+2026-01-13 14:07:25 | ID sanitizado: AO-2026-040839
+2026-01-13 14:07:25 | Tentando criar pasta: /home/telmo/alfa-omega-site/uploads/AO-2026-040839
+2026-01-13 14:07:25 | Pasta criada com sucesso
+2026-01-13 14:07:25 | Caminho final: /home/telmo/alfa-omega-site/uploads/AO-2026-040839/WhatsApp_Image_2026-01-12_at_14.04.48.jpeg
+2026-01-13 14:07:25 | Descodificando Base64...
+2026-01-13 14:07:25 | Base64 descodificado: 526310 bytes
+2026-01-13 14:07:25 | Salvando arquivo...
+2026-01-13 14:07:25 | ✓ Arquivo salvo com sucesso: 526310 bytes
+2026-01-13 14:07:25 | Criando arquivo TXT com dados do aluno...
+2026-01-13 14:07:25 | ✓ Arquivo TXT salvo: 1558 bytes
+2026-01-13 14:07:25 | ✓✓✓ Processo concluído com sucesso!
+2026-01-13 14:07:25 | ═══════════════════════════════════════════════════════
+
+2026-01-13 15:32:49 | ═══════════════════════════════════════════════════════
+2026-01-13 15:32:49 | Nova requisição recebida
+2026-01-13 15:32:49 | Método: OPTIONS
+2026-01-13 15:32:49 | Upload Dir: /home/telmo/alfa-omega-site/uploads
+2026-01-13 15:32:49 | Log File: /home/telmo/alfa-omega-site/uploads/debug.log
+2026-01-13 15:32:49 | Preflight request
+2026-01-13 15:32:49 | ═══════════════════════════════════════════════════════
+2026-01-13 15:32:49 | Nova requisição recebida
+2026-01-13 15:32:49 | Método: POST
+2026-01-13 15:32:49 | Upload Dir: /home/telmo/alfa-omega-site/uploads
+2026-01-13 15:32:49 | Log File: /home/telmo/alfa-omega-site/uploads/debug.log
+2026-01-13 15:32:49 | JSON recebido: 702119 bytes
+2026-01-13 15:32:49 | Dados decodificados com sucesso
+2026-01-13 15:32:49 | Processando: ID=AO-2026-290190, Arquivo=WhatsApp Image 2026-01-12 at 14.04.48.jpeg
+2026-01-13 15:32:49 | Base64 recebido: 701748 caracteres
+2026-01-13 15:32:49 | Nome do arquivo sanitizado: WhatsApp_Image_2026-01-12_at_14.04.48.jpeg
+2026-01-13 15:32:49 | ID sanitizado: AO-2026-290190
+2026-01-13 15:32:49 | Tentando criar pasta: /home/telmo/alfa-omega-site/uploads/AO-2026-290190
+2026-01-13 15:32:49 | Pasta criada com sucesso
+2026-01-13 15:32:49 | Caminho final: /home/telmo/alfa-omega-site/uploads/AO-2026-290190/WhatsApp_Image_2026-01-12_at_14.04.48.jpeg
+2026-01-13 15:32:49 | Descodificando Base64...
+2026-01-13 15:32:49 | Base64 descodificado: 526310 bytes
+2026-01-13 15:32:49 | Salvando arquivo...
+2026-01-13 15:32:49 | ✓ Arquivo salvo com sucesso: 526310 bytes
+2026-01-13 15:32:49 | Criando arquivo TXT com dados do aluno...
+2026-01-13 15:32:49 | ✓ Arquivo TXT salvo: 1554 bytes
+2026-01-13 15:32:49 | ✓✓✓ Processo concluído com sucesso!
+2026-01-13 15:32:49 | ═══════════════════════════════════════════════════════
+

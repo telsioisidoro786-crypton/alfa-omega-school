@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anuário Completo 2026 — Colégio Alfa e Omega</title>
+  <meta name="description" content="Anuário Digital 2026 — todos os 87 finalistas do Colégio Alfa e Omega, Panguila, Angola.">
+  <meta name="author" content="Colégio Alfa e Omega">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* ═══════════════════════════════════════════
+       DESIGN TOKENS
+    ═══════════════════════════════════════════ */
+    :root {
+      --void:        #010810;
+      --deep:        #010E24;
+      --navy:        #011830;
+      --ocean:       #012050;
+      --primary:     #01377D;
+      --electric:    #0A5FC4;
+      --accent:      #CEF431;
+      --gold:        #E6B325;
+      --gold-l:      #F5D06A;
+      --gold-d:      #B8880C;
+      --champagne:   #FFF0C0;
+      --white:       #FFFFFF;
+      --g100:        #EAEBE8;
+      --g300:        #C4C6C1;
+      --g500:        #6D726B;
+      --font-cinzel: 'Cinzel', serif;
+      --font-display:'Playfair Display', serif;
+      --font-sans:   'DM Sans', sans-serif;
+      --sk-base:     rgba(255,255,255,0.04);
+      --sk-shine:    rgba(255,255,255,0.10);
+      --bar-h:       68px;
+      --gap:         14px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--void);
+      color: var(--white);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--void); }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(var(--gold), var(--accent)); border-radius: 3px; }
+
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+      opacity: 0.025;
+    }
+
+    /* ═══════════════════════════════════════════
+       ★ NEW HEADER — GLASSMORPHISM PRO
+    ═══════════════════════════════════════════ */
+    .modern-header {
+      position: sticky; top: 0; z-index: 300;
+      padding: 0;
+    }
+
+    /* Blur glass panel */
+    .hdr-glass {
+      background: rgba(1, 10, 28, 0.55);
+      backdrop-filter: blur(32px) saturate(180%);
+      -webkit-backdrop-filter: blur(32px) saturate(180%);
+      border-bottom: 1px solid rgba(230, 179, 37, 0.12);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+    .modern-header.scrolled .hdr-glass {
+      background: rgba(1, 6, 18, 0.82);
+      box-shadow: 0 2px 60px rgba(0,0,0,0.6), 0 1px 0 rgba(230,179,37,0.18);
+    }
+
+    /* Top micro-bar — gold gradient stripe */
+    .hdr-topbar {
+      height: 2.5px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        var(--gold-d) 20%,
+        var(--gold) 40%,
+        var(--accent) 60%,
+        var(--gold) 75%,
+        var(--gold-d) 88%,
+        transparent 100%);
+      background-size: 200% 100%;
+      animation: shimmer-bar 4s ease infinite;
+      position: relative; z-index: 2;
+    }
+    @keyframes shimmer-bar {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* Subtle ambient glow inside the glass */
+    .hdr-glass::before {
+      content: '';
+      position: absolute; top: -60px; left: 50%;
+      transform: translateX(-50%);
+      width: 600px; height: 120px;
+      background: radial-gradient(ellipse, rgba(230,179,37,0.06) 0%, transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+
+    .hdr-inner {
+      max-width: 1400px; margin: 0 auto;
+      display: flex; align-items: center; gap: 2rem;
+      padding: 0 2rem;
+      height: 70px;
+      position: relative; z-index: 1;
+    }
+
+    /* ── Logo zone ── */
+    .hdr-logo {
+      display: flex; align-items: center; gap: 1rem;
+      text-decoration: none; flex: 1; min-width: 0;
+      group: logo;
+    }
+
+    .hdr-logo-icon {
+      position: relative; flex-shrink: 0;
+      width: 44px; height: 44px;
+    }
+    /* Rotating ring around logo */
+    .hdr-logo-icon::before {
+      content: '';
+      position: absolute; inset: -4px;
+      border-radius: 50%;
+      background: conic-gradient(
+        var(--gold-d) 0deg,
+        var(--gold) 90deg,
+        var(--accent) 180deg,
+        var(--gold) 270deg,
+        var(--gold-d) 360deg
+      );
+      animation: spin-ring 6s linear infinite;
+      opacity: 0.65;
+    }
+    @keyframes spin-ring {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    /* Inner mask to make ring look like border */
+    .hdr-logo-icon::after {
+      content: '';
+      position: absolute; inset: -2px;
+      background: rgba(1,10,28,0.85);
+      border-radius: 50%;
+    }
+    .hdr-logo-icon img {
+      width: 100%; height: 100%; object-fit: contain;
+      border-radius: 50%;
+      position: relative; z-index: 2;
+    }
+
+    .hdr-logo-text { display: flex; flex-direction: column; min-width: 0; }
+    .hdr-school-name {
+      font-family: var(--font-cinzel);
+      font-size: 0.98rem; font-weight: 700;
+      color: var(--white); line-height: 1.1;
+      letter-spacing: 0.04em;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .hdr-school-sub {
+      display: flex; align-items: center; gap: 0.4rem;
+      margin-top: 0.25rem;
+    }
+    .hdr-location-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--accent);
+      animation: pulse-dot 2.5s ease infinite;
+    }
+    @keyframes pulse-dot {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: 0.4; transform: scale(0.7); }
+    }
+    .hdr-location-text {
+      font-size: 0.62rem; font-weight: 700;
+      color: rgba(255,255,255,0.45); text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    /* ── Center status badge ── */
+    .hdr-center { flex: 1; display: flex; justify-content: center; }
+    .hdr-badge {
+      display: flex; align-items: center; gap: 0.65rem;
+      background: rgba(230,179,37,0.06);
+      border: 1px solid rgba(230,179,37,0.16);
+      border-radius: 3rem;
+      padding: 0.35rem 1.1rem;
+      backdrop-filter: blur(8px);
+      animation: badge-in 0.8s cubic-bezier(0.34,1.56,0.64,1) 0.4s both;
+    }
+    @keyframes badge-in {
+      from { opacity: 0; transform: translateY(-8px) scale(0.92); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .hdr-badge-live {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+      animation: pulse-live 2s ease infinite;
+    }
+    @keyframes pulse-live {
+      0%,100% { box-shadow: 0 0 6px var(--accent); }
+      50%      { box-shadow: 0 0 14px var(--accent), 0 0 24px rgba(206,244,49,0.3); }
+    }
+    .hdr-badge-text {
+      font-family: var(--font-cinzel);
+      font-size: 0.65rem; font-weight: 700;
+      color: rgba(255,255,255,0.55); letter-spacing: 0.12em;
+    }
+    .hdr-badge-year {
+      font-family: var(--font-cinzel);
+      font-size: 0.72rem; font-weight: 700;
+      color: var(--gold-l); letter-spacing: 0.08em;
+    }
+
+    /* ── Nav buttons ── */
+    .hdr-nav { display: flex; align-items: center; gap: 0.6rem; flex-shrink: 0; }
+
+    .btn-hdr {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-family: var(--font-sans); font-size: 0.82rem; font-weight: 700;
+      padding: 0.6rem 1.3rem; border-radius: 0.6rem;
+      text-decoration: none; cursor: pointer;
+      border: 1px solid transparent;
+      position: relative; overflow: hidden;
+      letter-spacing: 0.01em;
+      transition: all 0.3s cubic-bezier(0.23,1,0.32,1);
+    }
+
+    /* Ripple effect on hover */
+    .btn-hdr::after {
+      content: '';
+      position: absolute; inset: 0; border-radius: inherit;
+      background: radial-gradient(circle at var(--mx,50%) var(--my,50%),
+        rgba(255,255,255,0.12) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .btn-hdr:hover::after { opacity: 1; }
+
+    /* Ghost button (Home) */
+    .btn-hdr-ghost {
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.7);
+    }
+    .btn-hdr-ghost:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.2);
+      color: var(--white);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+
+    /* Gold accent button (Back) */
+    .btn-hdr-accent {
+      background: linear-gradient(135deg,
+        rgba(230,179,37,0.12) 0%,
+        rgba(230,179,37,0.06) 100%);
+      border-color: rgba(230,179,37,0.28);
+      color: var(--gold-l);
+    }
+    .btn-hdr-accent:hover {
+      background: linear-gradient(135deg,
+        rgba(230,179,37,0.22) 0%,
+        rgba(230,179,37,0.12) 100%);
+      border-color: rgba(230,179,37,0.55);
+      color: var(--champagne);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(230,179,37,0.2), inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+    .btn-hdr-accent:active { transform: translateY(0); }
+
+    .btn-hdr i {
+      font-size: 0.8rem;
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .btn-hdr-ghost:hover i   { transform: scale(1.2); }
+    .btn-hdr-accent:hover i  { transform: translateX(-3px) scale(1.1); }
+
+    /* Right ornament */
+    .hdr-ornament {
+      width: 1px; height: 28px;
+      background: linear-gradient(180deg, transparent, rgba(230,179,37,0.3), transparent);
+      flex-shrink: 0; margin: 0 0.1rem;
+    }
+
+    @media (max-width: 900px) {
+      .hdr-center { display: none; }
+    }
+    @media (max-width: 640px) {
+      .hdr-inner { padding: 0 1.25rem; height: 62px; }
+      .hdr-school-name { font-size: 0.85rem; }
+      .btn-hdr { font-size: 0.75rem; padding: 0.5rem 1rem; }
+      .hdr-ornament { display: none; }
+    }
+
+    /* ═══════════════════════════════════════════
+       ★ NEW HERO — CINEMATIC ARCHIVE HEADER
+    ═══════════════════════════════════════════ */
+    .archive-hero {
+      position: relative;
+      min-height: 480px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    /* ── Animated aurora background ── */
+    .hero-canvas {
+      position: absolute; inset: 0; z-index: 0;
+      background: var(--deep);
+      overflow: hidden;
+    }
+
+    /* Dark vignette gradient */
+    .hero-canvas::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 40%,
+        rgba(1,20,70,0.2) 0%, rgba(1,8,16,0.85) 100%);
+    }
+
+    /* Floating orbs */
+    .hero-orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(60px);
+      animation: float-orb var(--dur,12s) ease-in-out infinite var(--delay,0s);
+      will-change: transform, opacity;
+    }
+    .hero-orb-1 {
+      width: 500px; height: 300px;
+      background: radial-gradient(ellipse, rgba(1,55,125,0.35) 0%, transparent 70%);
+      top: -80px; left: -100px;
+      --dur: 14s; --delay: 0s;
+    }
+    .hero-orb-2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(ellipse, rgba(230,179,37,0.1) 0%, transparent 70%);
+      top: -50px; right: -80px;
+      --dur: 18s; --delay: -4s;
+    }
+    .hero-orb-3 {
+      width: 600px; height: 200px;
+      background: radial-gradient(ellipse, rgba(10,95,196,0.2) 0%, transparent 70%);
+      bottom: -60px; left: 50%; transform: translateX(-50%);
+      --dur: 16s; --delay: -7s;
+    }
+    .hero-orb-4 {
+      width: 250px; height: 250px;
+      background: radial-gradient(ellipse, rgba(206,244,49,0.06) 0%, transparent 70%);
+      top: 40%; right: 10%;
+      --dur: 20s; --delay: -3s;
+    }
+    @keyframes float-orb {
+      0%,100% { transform: translate(0,0) scale(1); opacity: 0.7; }
+      33%      { transform: translate(30px,-20px) scale(1.05); opacity: 1; }
+      66%      { transform: translate(-20px,15px) scale(0.97); opacity: 0.6; }
+    }
+    .hero-orb-3 { animation-name: float-orb-h; }
+    @keyframes float-orb-h {
+      0%,100% { transform: translateX(-50%) scale(1); }
+      50%      { transform: translateX(calc(-50% + 20px)) scale(1.04); }
+    }
+
+    /* ── Star field particles ── */
+    .hero-stars {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      overflow: hidden;
+    }
+    .star {
+      position: absolute; border-radius: 50%;
+      background: white;
+      animation: twinkle var(--dur,3s) ease-in-out infinite var(--delay,0s);
+    }
+    @keyframes twinkle {
+      0%,100% { opacity: var(--opa,0.3); transform: scale(1); }
+      50%      { opacity: calc(var(--opa,0.3) * 0.2); transform: scale(0.6); }
+    }
+
+    /* ── Horizontal scan line ── */
+    .hero-scanline {
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(230,179,37,0.15), var(--accent), rgba(230,179,37,0.15), transparent);
+      animation: scan 8s ease-in-out infinite;
+      z-index: 2;
+    }
+    @keyframes scan {
+      0%   { top: 0%; opacity: 0; }
+      5%   { opacity: 1; }
+      95%  { opacity: 1; }
+      100% { top: 100%; opacity: 0; }
+    }
+
+    /* Bottom separator */
+    .hero-bottom-line {
+      position: absolute; bottom: 0; left: 0; right: 0; z-index: 3;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(230,179,37,0.25) 30%, rgba(230,179,37,0.5) 50%, rgba(230,179,37,0.25) 70%, transparent 100%);
+    }
+
+    /* ── Ghost year watermark ── */
+    .hero-watermark {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      font-family: var(--font-cinzel); font-weight: 900;
+      font-size: clamp(8rem, 20vw, 18rem);
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,255,255,0.025);
+      white-space: nowrap; pointer-events: none;
+      letter-spacing: 0.08em;
+      z-index: 1;
+      animation: watermark-drift 20s ease-in-out infinite;
+    }
+    @keyframes watermark-drift {
+      0%,100% { letter-spacing: 0.08em; opacity: 0.7; }
+      50%      { letter-spacing: 0.12em; opacity: 1; }
+    }
+
+    /* ── Hero content ── */
+    .hero-content {
+      position: relative; z-index: 4;
+      display: flex; flex-direction: column; align-items: center; gap: 0;
+    }
+
+    /* Eyebrow tag */
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.75rem;
+      font-family: var(--font-sans); font-size: 0.62rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.24em;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 1.5rem;
+      animation: hero-fade-up 0.9s cubic-bezier(0.34,1.56,0.64,1) 0.1s both;
+    }
+    .eyebrow-diamond {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+    }
+    .eyebrow-diamond::before,
+    .eyebrow-diamond::after {
+      content: '';
+      display: inline-block; width: 32px; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(230,179,37,0.6));
+    }
+    .eyebrow-diamond::after {
+      background: linear-gradient(90deg, rgba(230,179,37,0.6), transparent);
+    }
+    .eyebrow-gem {
+      width: 6px; height: 6px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      box-shadow: 0 0 8px var(--gold);
+      animation: gem-pulse 2.5s ease infinite;
+    }
+    @keyframes gem-pulse {
+      0%,100% { box-shadow: 0 0 6px var(--gold); }
+      50%      { box-shadow: 0 0 14px var(--gold), 0 0 24px rgba(230,179,37,0.4); }
+    }
+
+    /* Main title */
+    .archive-title {
+      font-family: var(--font-cinzel);
+      font-size: clamp(2.2rem, 5vw, 4.5rem);
+      font-weight: 700; color: var(--white);
+      letter-spacing: 0.04em; line-height: 1;
+      margin-bottom: 0.85rem;
+      animation: hero-fade-up 0.9s cubic-bezier(0.34,1.56,0.64,1) 0.25s both;
+    }
+    .archive-title .gold {
+      background: linear-gradient(135deg, var(--gold-d), var(--gold), var(--gold-l), var(--gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      background-size: 200% auto;
+      animation: gold-shimmer 5s ease infinite;
+    }
+    @keyframes gold-shimmer {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Subtitle */
+    .archive-subtitle {
+      font-family: var(--font-display);
+      font-size: clamp(0.9rem, 1.6vw, 1.15rem);
+      color: rgba(255,255,255,0.38); font-style: italic;
+      margin-bottom: 2.5rem;
+      animation: hero-fade-up 0.9s cubic-bezier(0.34,1.56,0.64,1) 0.4s both;
+    }
+
+    /* ── Stats grid ── */
+    .hero-stats {
+      display: flex; align-items: stretch; gap: 0;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 1.2rem;
+      overflow: hidden;
+      backdrop-filter: blur(16px);
+      animation: hero-fade-up 0.9s cubic-bezier(0.34,1.56,0.64,1) 0.55s both;
+    }
+
+    .h-stat {
+      display: flex; flex-direction: column; align-items: center;
+      padding: 1.1rem 1.8rem; gap: 0.2rem;
+      position: relative; cursor: default;
+      transition: background 0.3s;
+    }
+    .h-stat:hover { background: rgba(255,255,255,0.03); }
+    .h-stat + .h-stat::before {
+      content: '';
+      position: absolute; left: 0; top: 25%; bottom: 25%;
+      width: 1px;
+      background: rgba(255,255,255,0.07);
+    }
+
+    .h-stat-num {
+      font-family: var(--font-cinzel);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700; line-height: 1;
+      color: var(--white);
+    }
+    .h-stat-num.gold-num {
+      background: linear-gradient(135deg, var(--gold), var(--gold-l));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .h-stat-label {
+      font-family: var(--font-sans);
+      font-size: 0.58rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.3);
+      white-space: nowrap;
+    }
+    .h-stat-icon {
+      font-size: 0.7rem; color: var(--gold);
+      margin-bottom: 0.2rem; opacity: 0.7;
+    }
+
+    /* Scroll indicator */
+    .hero-scroll {
+      position: absolute; bottom: 1.75rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.35rem;
+      z-index: 4;
+      animation: hero-fade-up 1s ease 1.2s both;
+    }
+    .scroll-text {
+      font-size: 0.55rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.18em;
+      color: rgba(255,255,255,0.2);
+    }
+    .scroll-track {
+      width: 1px; height: 32px;
+      background: rgba(255,255,255,0.1);
+      position: relative; overflow: hidden; border-radius: 1px;
+    }
+    .scroll-thumb {
+      position: absolute; top: -100%; left: 0;
+      width: 100%; height: 50%;
+      background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+      animation: scroll-anim 2s ease infinite;
+    }
+    @keyframes scroll-anim {
+      0%   { top: -50%; }
+      100% { top: 150%; }
+    }
+
+    @keyframes hero-fade-up {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 640px) {
+      .archive-hero { min-height: 400px; padding: 3.5rem 1.25rem 3rem; }
+      .h-stat { padding: 0.85rem 1.2rem; }
+      .hero-scroll { display: none; }
+    }
+    @media (max-width: 420px) {
+      .hero-stats { flex-wrap: wrap; }
+      .h-stat { flex: 1 0 45%; }
+      .h-stat + .h-stat::before { display: none; }
+    }
+
+    /* ═══════════════════════════════════════════
+       STICKY FILTER BAR
+    ═══════════════════════════════════════════ */
+    .filter-bar {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(1,8,16,0.92);
+      backdrop-filter: blur(28px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 0.875rem 2rem;
+      transition: box-shadow 0.3s;
+    }
+    .filter-bar.stuck {
+      box-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 1px 0 rgba(230,179,37,0.15);
+    }
+    .filter-inner {
+      max-width: 1400px; margin: 0 auto;
+      display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;
+    }
+    .filter-tabs { display: flex; gap: 0.4rem; flex-shrink: 0; }
+    .f-tab {
+      display: flex; align-items: center; gap: 0.45rem;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.55);
+      font-family: var(--font-sans); font-size: 0.78rem; font-weight: 700;
+      padding: 0.5rem 1.25rem; border-radius: 3rem; cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      white-space: nowrap;
+    }
+    .f-tab:hover { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85); transform: translateY(-1px); }
+    .f-tab.active {
+      background: linear-gradient(135deg, var(--gold-d), var(--gold), var(--gold-l));
+      border-color: transparent; color: #1a0f00;
+      box-shadow: 0 4px 20px rgba(230,179,37,0.35);
+      transform: translateY(-2px);
+    }
+    .f-tab .ft-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .f-tab.active .ft-dot { background: rgba(0,0,0,0.35); }
+    .turma-tabs { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+    .t-tab {
+      display: flex; align-items: center; gap: 0.35rem;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.45);
+      font-family: var(--font-sans); font-size: 0.7rem; font-weight: 600;
+      padding: 0.4rem 0.9rem; border-radius: 3rem; cursor: pointer;
+      transition: all 0.25s;
+    }
+    .t-tab:hover { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.7); }
+    .t-tab.active {
+      background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2);
+      color: var(--white); font-weight: 700;
+    }
+    .filter-divider { width: 1px; height: 28px; background: rgba(255,255,255,0.08); flex-shrink: 0; }
+    .search-box {
+      flex: 1; min-width: 200px; max-width: 320px;
+      display: flex; align-items: center; gap: 0.6rem;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 3rem; padding: 0.5rem 1.1rem;
+      transition: all 0.3s;
+    }
+    .search-box:focus-within {
+      border-color: rgba(230,179,37,0.4); background: rgba(230,179,37,0.04);
+      box-shadow: 0 0 0 3px rgba(230,179,37,0.08);
+    }
+    .search-box i { color: rgba(255,255,255,0.35); font-size: 0.8rem; flex-shrink: 0; transition: color 0.3s; }
+    .search-box:focus-within i { color: var(--gold); }
+    .search-box input {
+      background: transparent; border: none;
+      color: var(--white); font-family: var(--font-sans); font-size: 0.82rem; width: 100%;
+    }
+    .search-box input::placeholder { color: rgba(255,255,255,0.3); }
+    .search-clear {
+      background: rgba(255,255,255,0.08); border: none;
+      color: rgba(255,255,255,0.4); font-size: 0.65rem;
+      width: 18px; height: 18px; border-radius: 50%;
+      display: none; align-items: center; justify-content: center; cursor: pointer;
+      flex-shrink: 0; transition: all 0.2s;
+    }
+    .search-clear.visible { display: flex; }
+    .search-clear:hover { background: rgba(230,179,37,0.2); color: var(--gold); }
+    .count-badge {
+      margin-left: auto; flex-shrink: 0;
+      font-family: var(--font-sans); font-size: 0.7rem; color: rgba(255,255,255,0.4);
+      white-space: nowrap;
+    }
+    .count-badge strong { color: var(--gold-l); font-size: 0.85rem; font-weight: 800; }
+
+    /* ═══════════════════════════════════════════
+       TURMA SECTION HEADER
+    ═══════════════════════════════════════════ */
+    .turma-header {
+      max-width: 1400px; margin: 0 auto;
+      padding: 2.5rem 2rem 1.25rem;
+      display: flex; align-items: center; gap: 1.25rem;
+    }
+    .th-icon {
+      width: 44px; height: 44px; border-radius: 0.75rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; flex-shrink: 0;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .th-info { flex: 1; }
+    .th-name { font-family: var(--font-cinzel); font-size: 1rem; font-weight: 700; color: var(--white); }
+    .th-detail { font-family: var(--font-sans); font-size: 0.72rem; color: rgba(255,255,255,0.4); font-weight: 300; margin-top: 0.15rem; }
+    .th-count {
+      font-family: var(--font-cinzel); font-size: 0.72rem; font-weight: 700;
+      padding: 0.35rem 1rem; border-radius: 3rem; white-space: nowrap;
+    }
+    .th-line { flex: 1; height: 1px; max-width: 60px; background: rgba(255,255,255,0.06); }
+
+    /* ═══════════════════════════════════════════
+       MAIN GRID
+    ═══════════════════════════════════════════ */
+    .archive-main {
+      max-width: 1400px; margin: 0 auto;
+      padding: 0 2rem 6rem;
+      position: relative; z-index: 1;
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: var(--gap);
+    }
+    @media (max-width: 1280px) { .cards-grid { grid-template-columns: repeat(4, 1fr); } }
+    @media (max-width: 900px)  { .cards-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 560px)  { .cards-grid { grid-template-columns: repeat(2, 1fr); --gap: 10px; } }
+
+    /* ═══════════════════════════════════════════
+       SKELETON CARD
+    ═══════════════════════════════════════════ */
+    .sk-card { border-radius: 1rem; overflow: hidden; background: var(--sk-base); border: 1px solid rgba(255,255,255,0.04); }
+    .sk-photo { width: 100%; aspect-ratio: 3/4; background: linear-gradient(110deg, var(--sk-base) 30%, var(--sk-shine) 50%, var(--sk-base) 70%); background-size: 200% 100%; animation: shimmer 1.6s ease infinite; }
+    .sk-info { padding: 0.75rem 0.875rem 1rem; }
+    .sk-line { height: 10px; border-radius: 5px; background: linear-gradient(110deg, var(--sk-base) 30%, var(--sk-shine) 50%, var(--sk-base) 70%); background-size: 200% 100%; animation: shimmer 1.6s ease infinite; margin-bottom: 0.5rem; }
+    .sk-line.short { width: 60%; }
+    @keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+
+    /* ═══════════════════════════════════════════
+       FINALISTA CARD
+    ═══════════════════════════════════════════ */
+    .f-card {
+      border-radius: 1rem; overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.03);
+      cursor: pointer; position: relative;
+      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.4s ease, border-color 0.3s;
+      animation: card-reveal 0.5s ease both;
+    }
+    .f-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 0 1px rgba(230,179,37,0.3);
+      border-color: rgba(230,179,37,0.3); z-index: 2;
+    }
+    .f-card.destaque { border-color: rgba(230,179,37,0.25); }
+    .f-card.destaque:hover { box-shadow: 0 20px 60px rgba(230,179,37,0.2), 0 0 0 1.5px rgba(230,179,37,0.5); }
+    @keyframes card-reveal { from { opacity: 0; transform: translateY(16px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+    .fc-photo-wrap { position: relative; aspect-ratio: 3/4; overflow: hidden; background: var(--sk-base); }
+    .fc-photo-wrap::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(110deg, var(--sk-base) 30%, var(--sk-shine) 50%, var(--sk-base) 70%);
+      background-size: 200% 100%; animation: shimmer 1.6s ease infinite;
+      z-index: 1; transition: opacity 0.5s;
+    }
+    .fc-photo-wrap.loaded::before { opacity: 0; pointer-events: none; }
+    .fc-emoji-bg { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+    .fc-emoji-icon { font-size: 3.5rem; position: relative; z-index: 2; }
+    .fc-img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; position: absolute; inset: 0; opacity: 0; transition: opacity 0.6s ease; z-index: 2; }
+    .fc-img.loaded { opacity: 1; }
+    .fc-overlay { position: absolute; bottom: 0; left: 0; right: 0; height: 55%; background: linear-gradient(to top, rgba(1,8,16,0.95) 0%, rgba(1,8,16,0.5) 50%, transparent 100%); z-index: 3; opacity: 0; transition: opacity 0.35s ease; }
+    .f-card:hover .fc-overlay { opacity: 1; }
+    .fc-crown { position: absolute; top: 0; left: 0; right: 0; height: 2.5px; background: linear-gradient(90deg, var(--gold-d), var(--gold), var(--gold-l)); z-index: 4; }
+    .fc-num { position: absolute; top: 0.65rem; right: 0.65rem; z-index: 5; font-family: var(--font-cinzel); font-size: 0.55rem; font-weight: 700; color: rgba(255,255,255,0.3); background: rgba(1,8,16,0.55); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.08); padding: 0.18rem 0.5rem; border-radius: 3rem; transition: color 0.3s, border-color 0.3s; }
+    .f-card:hover .fc-num { color: var(--gold-l); border-color: rgba(230,179,37,0.35); }
+    .fc-turma { position: absolute; top: 0.65rem; left: 0.65rem; z-index: 5; width: 8px; height: 8px; border-radius: 50%; box-shadow: 0 0 8px currentColor; transition: transform 0.3s; }
+    .f-card:hover .fc-turma { transform: scale(1.3); }
+    .fc-info { padding: 0.7rem 0.875rem 0.875rem; position: relative; }
+    .fc-polo { font-family: var(--font-sans); font-size: 0.55rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.14em; color: rgba(255,255,255,0.35); margin-bottom: 0.25rem; display: block; }
+    .fc-name { font-family: var(--font-cinzel); font-size: 0.78rem; font-weight: 700; color: var(--white); line-height: 1.25; letter-spacing: 0.03em; }
+    .fc-name mark { background: rgba(230,179,37,0.3); color: var(--gold-l); border-radius: 2px; padding: 0 1px; }
+    .fc-apelido { font-family: var(--font-sans); font-size: 0.65rem; color: rgba(255,255,255,0.4); font-weight: 300; margin-top: 0.15rem; display: block; }
+    .fc-underline { height: 1.5px; width: 0; margin-top: 0.55rem; background: linear-gradient(90deg, var(--gold), transparent); border-radius: 1px; transition: width 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+    .f-card:hover .fc-underline { width: 100%; }
+    .turma-section { margin-bottom: 0.5rem; }
+    .turma-section.hidden { display: none; }
+
+    /* ═══════════════════════════════════════════
+       EMPTY STATE
+    ═══════════════════════════════════════════ */
+    .empty-state { grid-column: 1/-1; text-align: center; padding: 5rem 2rem; display: flex; flex-direction: column; align-items: center; gap: 1.25rem; }
+    .es-icon { width: 72px; height: 72px; border-radius: 50%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; font-size: 1.75rem; }
+    .es-title { font-family: var(--font-cinzel); font-size: 1rem; color: rgba(255,255,255,0.5); }
+    .es-sub { font-family: var(--font-sans); font-size: 0.82rem; color: rgba(255,255,255,0.3); font-weight: 300; }
+    .es-clear { display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(230,179,37,0.1); border: 1px solid rgba(230,179,37,0.25); color: var(--gold); font-family: var(--font-sans); font-size: 0.78rem; font-weight: 700; padding: 0.55rem 1.25rem; border-radius: 3rem; cursor: pointer; transition: all 0.25s; }
+    .es-clear:hover { background: rgba(230,179,37,0.2); }
+
+    /* ═══════════════════════════════════════════
+       BACK TO TOP
+    ═══════════════════════════════════════════ */
+    .back-top { position: fixed; bottom: 2rem; right: 2rem; z-index: 100; width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--gold-d), var(--gold)); color: #1a0f00; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; box-shadow: 0 8px 24px rgba(230,179,37,0.35); transform: translateY(80px); opacity: 0; pointer-events: none; transition: all 0.35s cubic-bezier(0.34,1.56,0.64,1); }
+    .back-top.visible { transform: translateY(0); opacity: 1; pointer-events: all; }
+    .back-top:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(230,179,37,0.5); }
+
+    /* ═══════════════════════════════════════════
+       FOOTER MINI
+    ═══════════════════════════════════════════ */
+    .footer-mini { border-top: 1px solid rgba(255,255,255,0.05); padding: 2rem; text-align: center; font-family: var(--font-sans); font-size: 0.72rem; color: rgba(255,255,255,0.25); }
+    .footer-mini a { color: var(--gold); text-decoration: none; }
+    .footer-mini a:hover { color: var(--gold-l); }
+
+    /* ═══════════════════════════════════════════
+       MODAL
+    ═══════════════════════════════════════════ */
+    .modal-bg { position: fixed; inset: 0; z-index: 500; background: rgba(1,4,12,0.88); backdrop-filter: blur(20px); display: flex; align-items: center; justify-content: center; padding: 2rem; opacity: 0; pointer-events: none; transition: opacity 0.35s; }
+    .modal-bg.open { opacity: 1; pointer-events: all; }
+    .modal-box { background: linear-gradient(145deg, rgba(1,20,50,0.97), rgba(1,8,16,0.99)); border: 1px solid rgba(230,179,37,0.18); border-radius: 1.75rem; max-width: 360px; width: 100%; overflow: hidden; transform: scale(0.87) translateY(24px); transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); box-shadow: 0 40px 100px rgba(0,0,0,0.7), 0 0 50px rgba(230,179,37,0.06); position: relative; }
+    .modal-bg.open .modal-box { transform: scale(1) translateY(0); }
+    .modal-gold-bar { height: 2px; background: linear-gradient(90deg, var(--gold-d), var(--gold), var(--accent), var(--gold)); }
+    .modal-photo { width: 100%; aspect-ratio: 3/4; max-height: 280px; object-fit: cover; object-position: center top; display: block; background: var(--sk-base); }
+    .modal-emoji-ph { width: 100%; aspect-ratio: unset; height: 200px; display: flex; align-items: center; justify-content: center; font-size: 6rem; }
+    .modal-grad { height: 60px; margin-top: -60px; background: linear-gradient(to top, rgba(1,8,16,0.97), transparent); position: relative; }
+    .modal-body { padding: 1.25rem 1.75rem 1.75rem; }
+    .modal-num { font-family: var(--font-cinzel); font-size: 0.58rem; font-weight: 700; color: var(--gold); letter-spacing: 0.18em; margin-bottom: 0.3rem; }
+    .modal-name { font-family: var(--font-cinzel); font-size: 1.2rem; font-weight: 700; color: var(--white); line-height: 1.15; margin-bottom: 0.2rem; }
+    .modal-apelido { font-family: var(--font-sans); font-size: 0.78rem; color: rgba(255,255,255,0.45); font-weight: 300; margin-bottom: 1rem; }
+    .modal-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+    .modal-tag { font-family: var(--font-sans); font-size: 0.62rem; font-weight: 700; padding: 0.25rem 0.7rem; border-radius: 3rem; }
+    .modal-motto { font-family: var(--font-display); font-size: 0.88rem; color: rgba(255,255,255,0.65); font-style: italic; line-height: 1.55; border-left: 2px solid var(--gold); padding-left: 0.875rem; margin-bottom: 1.25rem; }
+    .modal-stars { display: flex; gap: 0.3rem; margin-bottom: 1.25rem; }
+    .modal-stars i { color: var(--gold); font-size: 0.75rem; }
+    .modal-close-btn { width: 100%; padding: 0.8rem; background: rgba(230,179,37,0.08); border: 1px solid rgba(230,179,37,0.2); color: var(--gold-l); font-family: var(--font-sans); font-weight: 700; font-size: 0.82rem; border-radius: 0.75rem; cursor: pointer; transition: all 0.25s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+    .modal-close-btn:hover { background: rgba(230,179,37,0.16); }
+    .modal-x { position: absolute; top: 1rem; right: 1rem; z-index: 10; width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); font-size: 0.8rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.25s; }
+    .modal-x:hover { background: rgba(230,179,37,0.15); color: var(--gold); border-color: rgba(230,179,37,0.35); transform: rotate(90deg); }
+
+    @media (max-width: 640px) {
+      .filter-inner { gap: 0.5rem; }
+      .filter-divider { display: none; }
+      .count-badge { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ ★ NEW HEADER ═══ -->
+  <header class="modern-header" id="modern-header">
+    <div class="hdr-glass">
+      <div class="hdr-topbar"></div>
+      <div class="hdr-inner">
+
+        <!-- Logo -->
+        <a href="/" class="hdr-logo">
+          <div class="hdr-logo-icon">
+            <img src="/assets/images/logo/lo.png" alt="Colégio Alfa e Omega">
+          </div>
+          <div class="hdr-logo-text">
+            <div class="hdr-school-name">Colégio Alfa e Omega</div>
+            <div class="hdr-school-sub">
+              <div class="hdr-location-dot"></div>
+              <span class="hdr-location-text">Panguila · Angola</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Center badge -->
+        <div class="hdr-center">
+          <div class="hdr-badge">
+            <div class="hdr-badge-live"></div>
+            <span class="hdr-badge-text">Anuário Digital</span>
+            <span class="hdr-badge-year">2026</span>
+          </div>
+        </div>
+
+        <!-- Nav -->
+        <nav class="hdr-nav">
+          <a href="index.html" class="btn-hdr btn-hdr-ghost">
+            <i class="fas fa-house"></i> Home
+          </a>
+          <div class="hdr-ornament"></div>
+          <a href="/finalistas.html" class="btn-hdr btn-hdr-accent">
+            <i class="fas fa-arrow-left"></i> Vitrine
+          </a>
+        </nav>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══ ★ NEW HERO ═══ -->
+  <header class="archive-hero">
+
+    <!-- Animated background -->
+    <div class="hero-canvas">
+      <div class="hero-orb hero-orb-1"></div>
+      <div class="hero-orb hero-orb-2"></div>
+      <div class="hero-orb hero-orb-3"></div>
+      <div class="hero-orb hero-orb-4"></div>
+    </div>
+
+    <!-- Stars field — generated by JS below -->
+    <div class="hero-stars" id="hero-stars"></div>
+
+    <!-- Scan line -->
+    <div class="hero-scanline"></div>
+
+    <!-- Bottom separator -->
+    <div class="hero-bottom-line"></div>
+
+    <!-- Ghost watermark year -->
+    <div class="hero-watermark" aria-hidden="true">2026</div>
+
+    <!-- Content -->
+    <div class="hero-content">
+      <!-- Eyebrow -->
+      <div class="hero-eyebrow">
+        <span class="eyebrow-diamond">
+          <div class="eyebrow-gem"></div>
+          Anuário Digital · Ano Lectivo 2026
+        </span>
+      </div>
+
+      <!-- Title -->
+      <h1 class="archive-title">Todos os <span class="gold">Finalistas</span></h1>
+
+      <!-- Subtitle -->
+      <p class="archive-subtitle">A galeria completa das nossas estrelas</p>
+
+      <!-- Stats grid -->
+      <div class="hero-stats">
+        <div class="h-stat">
+          <div class="h-stat-icon"><i class="fas fa-users"></i></div>
+          <div class="h-stat-num gold-num" id="stat-count">87</div>
+          <div class="h-stat-label">Finalistas</div>
+        </div>
+        <div class="h-stat">
+          <div class="h-stat-icon"><i class="fas fa-layer-group"></i></div>
+          <div class="h-stat-num" id="stat-turmas">4</div>
+          <div class="h-stat-label">Turmas</div>
+        </div>
+        <div class="h-stat">
+          <div class="h-stat-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div class="h-stat-num">2</div>
+          <div class="h-stat-label">Polos</div>
+        </div>
+        <div class="h-stat">
+          <div class="h-stat-icon"><i class="fas fa-star"></i></div>
+          <div class="h-stat-num gold-num">2026</div>
+          <div class="h-stat-label">Ano Lectivo</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll cue -->
+    <div class="hero-scroll" aria-hidden="true">
+      <span class="scroll-text">Explorar</span>
+      <div class="scroll-track"><div class="scroll-thumb"></div></div>
+    </div>
+
+  </header>
+
+  <!-- ═══ STICKY FILTER BAR ═══ -->
+  <div class="filter-bar" id="filter-bar">
+    <div class="filter-inner">
+      <div class="filter-tabs" id="polo-tabs">
+        <button class="f-tab active" data-polo="all">
+          <span class="ft-dot" style="background:var(--gold);"></span> Todos
+        </button>
+        <button class="f-tab" data-polo="polo1">
+          <span class="ft-dot" style="background:#3B82F6;"></span> Polo 1 — Vila
+        </button>
+        <button class="f-tab" data-polo="polo2">
+          <span class="ft-dot" style="background:#10B981;"></span> Polo 2 — Cidade
+        </button>
+      </div>
+      <div class="filter-divider"></div>
+      <div class="turma-tabs" id="turma-tabs">
+        <button class="t-tab active" data-turma="all">Todas</button>
+        <button class="t-tab" data-turma="a" style="color:rgba(100,160,255,0.8)">Turma A</button>
+        <button class="t-tab" data-turma="b" style="color:rgba(170,238,100,0.8)">Turma B</button>
+        <button class="t-tab" data-turma="c" style="color:rgba(245,208,106,0.8)">Turma C</button>
+        <button class="t-tab" data-turma="d" style="color:rgba(110,231,183,0.8)">Turma D</button>
+      </div>
+      <div class="filter-divider"></div>
+      <div class="search-box">
+        <i class="fas fa-magnifying-glass"></i>
+        <input type="text" id="search-input" placeholder="Pesquisar aluno…" autocomplete="off" spellcheck="false">
+        <button class="search-clear" id="search-clear" title="Limpar"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="count-badge"><strong id="count-visible">87</strong> alunos</div>
+    </div>
+  </div>
+
+  <!-- ═══ MAIN CONTENT ═══ -->
+  <main class="archive-main" id="archive-main"></main>
+
+  <!-- ═══ BACK TO TOP ═══ -->
+  <button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer-mini">
+    <p>Colégio Alfa e Omega · Panguila, Angola · <a href="/">colegioalfaeomega.com</a></p>
+    <p style="margin-top:0.4rem;">Anuário Digital 2026 — Todos os direitos reservados</p>
+  </footer>
+
+  <!-- ═══ MODAL ═══ -->
+  <div class="modal-bg" id="modal-bg">
+    <div class="modal-box" id="modal-box" style="position:relative;">
+      <button class="modal-x" onclick="closeModal()"><i class="fas fa-times"></i></button>
+      <div class="modal-gold-bar"></div>
+      <div id="modal-photo-wrap"></div>
+      <div class="modal-body">
+        <div class="modal-num" id="modal-num"></div>
+        <div class="modal-name" id="modal-name"></div>
+        <div class="modal-apelido" id="modal-apelido"></div>
+        <div class="modal-tags" id="modal-tags"></div>
+        <div class="modal-motto" id="modal-motto"></div>
+        <div class="modal-stars">
+          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          <i class="fas fa-star"></i><i class="fas fa-star"></i>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal()"><i class="fas fa-times"></i> Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ══ STAR FIELD GENERATOR ══ */
+    (function() {
+      const container = document.getElementById('hero-stars');
+      const stars = [
+        [1.5, 0.3, 12, 0.45, '3s', '0s'],
+        [2, 0.15, 20, 0.3, '4s', '-1s'],
+        [1, 0.8, 35, 0.5, '5s', '-2s'],
+        [1.5, 0.6, 55, 0.25, '3.5s', '-0.5s'],
+        [2, 0.9, 70, 0.4, '6s', '-3s'],
+        [1, 0.25, 80, 0.35, '4.5s', '-1.5s'],
+        [1.5, 0.5, 18, 0.5, '3s', '-2.5s'],
+        [2, 0.75, 45, 0.3, '5.5s', '-0.8s'],
+        [1, 0.4, 62, 0.45, '4s', '-3.5s'],
+        [1.5, 0.85, 88, 0.2, '6.5s', '-1s'],
+        [2, 0.1, 93, 0.5, '3.8s', '-2s'],
+        [1, 0.55, 28, 0.35, '5s', '-0.3s'],
+        [1.5, 0.7, 75, 0.4, '4.2s', '-1.8s'],
+        [2, 0.35, 50, 0.25, '7s', '-3.2s'],
+        [1, 0.92, 10, 0.5, '3.5s', '-0.7s'],
+        [1.5, 0.2, 40, 0.3, '4.8s', '-2.8s'],
+        [2, 0.65, 65, 0.45, '5.5s', '-1.2s'],
+        [1, 0.48, 82, 0.35, '6s', '-0.5s'],
+        [1.5, 0.78, 22, 0.5, '3.2s', '-3.8s'],
+        [2, 0.05, 58, 0.2, '4.5s', '-1.5s'],
+      ];
+      const html = stars.map(([size, left, top, opa, dur, delay]) =>
+        `<div class="star" style="width:${size}px;height:${size}px;left:${left*100}%;top:${top}%;--opa:${opa};--dur:${dur};animation-delay:${delay};"></div>`
+      ).join('');
+      container.innerHTML = html;
+    })();
+
+    /* ══ SCROLL-AWARE HEADER ══ */
+    const hdr = document.getElementById('modern-header');
+    window.addEventListener('scroll', () => {
+      hdr.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    /* ══ ANIMATED COUNTER ══ */
+    function animateCounter(el, target, duration) {
+      let start = null;
+      const step = ts => {
+        if (!start) start = ts;
+        const prog = Math.min((ts - start) / duration, 1);
+        const ease = 1 - Math.pow(1 - prog, 3);
+        el.textContent = Math.round(ease * target);
+        if (prog < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+
+    /* Trigger counter after a short delay */
+    setTimeout(() => {
+      const el = document.getElementById('stat-count');
+      if (el) animateCounter(el, 87, 1400);
+    }, 800);
+
+    /* ══ BTN RIPPLE (mouse pos) ══ */
+    document.querySelectorAll('.btn-hdr').forEach(btn => {
+      btn.addEventListener('mousemove', e => {
+        const r = btn.getBoundingClientRect();
+        btn.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+        btn.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+      });
+    });
+
+    /* ════════════════════════════════════════════
+       DATA — 87 Finalistas
+    ════════════════════════════════════════════ */
+    const TURMA_META = {
+      a: { label:'Turma A', detail:'Pré-Escolar · 4–5 anos', polo:'polo1', icon:'🌱', color:'#3B82F6', dotColor:'#60A5FA', bg:'linear-gradient(135deg,#012050,#0147A0)', tagBg:'rgba(59,130,246,0.15)', tagBorder:'rgba(59,130,246,0.3)', tagColor:'#93C5FD' },
+      b: { label:'Turma B', detail:'Iniciação · 5–6 anos',   polo:'polo1', icon:'🌿', color:'#7ab800', dotColor:'#aaee55', bg:'linear-gradient(135deg,#3a5c00,#7ab800)', tagBg:'rgba(122,184,0,0.15)', tagBorder:'rgba(122,184,0,0.3)', tagColor:'#aaee55' },
+      c: { label:'Turma C', detail:'1ª Classe · 6–7 anos',   polo:'polo2', icon:'☀️', color:'#c87d00', dotColor:'#f5d06a', bg:'linear-gradient(135deg,#7a4800,#c87d00)', tagBg:'rgba(200,125,0,0.15)', tagBorder:'rgba(200,125,0,0.3)', tagColor:'#f5d06a' },
+      d: { label:'Turma D', detail:'2ª Classe · 7 anos',     polo:'polo2', icon:'⭐', color:'#059669', dotColor:'#6ee7b7', bg:'linear-gradient(135deg,#064e3b,#059669)', tagBg:'rgba(5,150,105,0.15)', tagBorder:'rgba(5,150,105,0.3)', tagColor:'#6ee7b7' },
+    };
+
+    const ALUNOS = [
+      { id:1,  nome:'Ana Beatriz',    ape:'Mendes',    turma:'a', emoji:'🌸', dest:false, motto:'O sorriso mais bonito da sala!', idade:4, foto:null },
+      { id:2,  nome:'João Miguel',    ape:'Silva',     turma:'a', emoji:'🚀', dest:false, motto:'Curioso e sempre a perguntar porquê.', idade:5, foto:null },
+      { id:3,  nome:'Sofia Graça',    ape:'Lopes',     turma:'a', emoji:'🌟', dest:true,  motto:'Dança como ninguém e ri para todos.', idade:4, foto:null },
+      { id:4,  nome:'Pedro Neto',     ape:'Carvalho',  turma:'a', emoji:'🎨', dest:false, motto:'Adora desenhar e pintar o mundo.', idade:5, foto:null },
+      { id:5,  nome:'Maria Luísa',    ape:'António',   turma:'a', emoji:'💛', dest:false, motto:'A mais carinhosa de toda a turma.', idade:4, foto:null },
+      { id:6,  nome:'Diogo Filipe',   ape:'Teixeira',  turma:'a', emoji:'🏗️', dest:false, motto:'Campeão das construções!', idade:5, foto:null },
+      { id:7,  nome:'Luana Joy',      ape:'Paiva',     turma:'a', emoji:'🌈', dest:false, motto:'Sempre pronta para a aventura.', idade:4, foto:null },
+      { id:8,  nome:'Tomás André',    ape:'Ferreira',  turma:'a', emoji:'☀️', dest:false, motto:'O seu gargalhar ilumina o corredor.', idade:5, foto:null },
+      { id:9,  nome:'Cristina Bela',  ape:'Sousa',     turma:'a', emoji:'🦋', dest:false, motto:'Sonhadora e cheia de imaginação.', idade:4, foto:null },
+      { id:10, nome:'Rafael Tomé',    ape:'Costa',     turma:'a', emoji:'🌍', dest:false, motto:'Nunca para de explorar novos mundos.', idade:5, foto:null },
+      { id:11, nome:'Inês Vitória',   ape:'Matos',     turma:'a', emoji:'🌺', dest:false, motto:'Alegria contagiante em cada dia.', idade:4, foto:null },
+      { id:12, nome:'Davi Leonel',    ape:'Pinto',     turma:'a', emoji:'🦁', dest:false, motto:'Corajoso e cheio de energia.', idade:5, foto:null },
+      { id:13, nome:'Luísa Fé',       ape:'Gonçalves', turma:'a', emoji:'🎵', dest:false, motto:'Música no coração, amor na voz.', idade:4, foto:null },
+      { id:14, nome:'Martim Sol',     ape:'Barbosa',   turma:'a', emoji:'🌤️', dest:false, motto:'Ilumina tudo o que toca.', idade:5, foto:null },
+      { id:15, nome:'Clara Beatriz',  ape:'Moreira',   turma:'a', emoji:'🌸', dest:false, motto:'Gentileza em cada gesto.', idade:4, foto:null },
+      { id:16, nome:'Henrique Luz',   ape:'Cardoso',   turma:'a', emoji:'💡', dest:false, motto:'Sempre a descobrir coisas novas.', idade:5, foto:null },
+      { id:17, nome:'Amélia Flor',    ape:'Rodrigues', turma:'a', emoji:'🌷', dest:false, motto:'Floresce a cada dia que passa.', idade:4, foto:null },
+      { id:18, nome:'Mateus Céu',     ape:'Almeida',   turma:'a', emoji:'🌙', dest:false, motto:'Sonhador e criativo como poucos.', idade:5, foto:null },
+      { id:19, nome:'Yara Paz',       ape:'Santos',    turma:'a', emoji:'🕊️', dest:false, motto:'Traz paz e alegria onde vai.', idade:4, foto:null },
+      { id:20, nome:'Ezequiel Nobre', ape:'Lima',      turma:'a', emoji:'🦅', dest:false, motto:'Voa alto, sempre com determinação.', idade:5, foto:null },
+      { id:21, nome:'Catarina Sol',   ape:'Neves',     turma:'a', emoji:'☀️', dest:false, motto:'Sorri para a vida e a vida responde.', idade:4, foto:null },
+      { id:22, nome:'Dinis Boa',      ape:'Oliveira',  turma:'a', emoji:'🌿', dest:false, motto:'Crescer é a sua missão diária.', idade:5, foto:null },
+      { id:23, nome:'Valentina Rose', ape:'Nguema',    turma:'b', emoji:'👑', dest:true,  motto:'A rainha da matemática dos 5 anos!', idade:5, foto:null },
+      { id:24, nome:'Gabriel Luz',    ape:'Pinto',     turma:'b', emoji:'💫', dest:false, motto:'Criativo, gentil e sempre solidário.', idade:6, foto:null },
+      { id:25, nome:'Iara Vitória',   ape:'Rocha',     turma:'b', emoji:'🎵', dest:false, motto:'A voz mais bonita nas canções.', idade:5, foto:null },
+      { id:26, nome:'Samuel Dante',   ape:'Alves',     turma:'b', emoji:'🔭', dest:false, motto:'Cada dia é uma nova descoberta.', idade:6, foto:null },
+      { id:27, nome:'Layla Fátima',   ape:'Dias',      turma:'b', emoji:'🤝', dest:false, motto:'Amiga de todos, esquece ninguém.', idade:5, foto:null },
+      { id:28, nome:'Mateus Ângelo',  ape:'Barros',    turma:'b', emoji:'⚡', dest:false, motto:'Corre mais rápido que o vento!', idade:6, foto:null },
+      { id:29, nome:'Inês Margarida', ape:'Gomes',     turma:'b', emoji:'🖌️', dest:false, motto:'Os seus desenhos contam histórias.', idade:5, foto:null },
+      { id:30, nome:'Davide Simão',   ape:'Martins',   turma:'b', emoji:'🧠', dest:false, motto:'Sempre com a resposta certa.', idade:6, foto:null },
+      { id:31, nome:'Nayara Sol',     ape:'Carvalho',  turma:'b', emoji:'🌺', dest:false, motto:'Traz luz para todos os ambientes.', idade:5, foto:null },
+      { id:32, nome:'Lucas Bento',    ape:'Pereira',   turma:'b', emoji:'🛡️', dest:false, motto:'Protector dos amigos e dos sonhos.', idade:6, foto:null },
+      { id:33, nome:'Zara Esperança', ape:'Cunha',     turma:'b', emoji:'🌟', dest:false, motto:'Esperança que contagia a todos.', idade:5, foto:null },
+      { id:34, nome:'André Fé',       ape:'Monteiro',  turma:'b', emoji:'🙏', dest:false, motto:'Fé e alegria em cada manhã.', idade:6, foto:null },
+      { id:35, nome:'Lara Vitória',   ape:'Batista',   turma:'b', emoji:'🏅', dest:false, motto:'Vencedora nata, desde pequena.', idade:5, foto:null },
+      { id:36, nome:'Nuno Alegre',    ape:'Teixeira',  turma:'b', emoji:'😄', dest:false, motto:'Alegria contagiante e sem limites.', idade:6, foto:null },
+      { id:37, nome:'Jade Luz',       ape:'Ferreira',  turma:'b', emoji:'💎', dest:false, motto:'Preciosa como o seu nome indica.', idade:5, foto:null },
+      { id:38, nome:'Tiago Boa',      ape:'Sousa',     turma:'b', emoji:'🌊', dest:false, motto:'Calmo como o mar, forte como ele.', idade:6, foto:null },
+      { id:39, nome:'Ayla Celeste',   ape:'Melo',      turma:'b', emoji:'✨', dest:false, motto:'Cintila em tudo que faz.', idade:5, foto:null },
+      { id:40, nome:'Bernardo Paz',   ape:'Azevedo',   turma:'b', emoji:'🕊️', dest:false, motto:'Paz e harmonia onde quer que vá.', idade:6, foto:null },
+      { id:41, nome:'Raíssa Flores',  ape:'Costa',     turma:'b', emoji:'🌸', dest:false, motto:'Floresce com cada novo desafio.', idade:5, foto:null },
+      { id:42, nome:'Fábio Nobre',    ape:'Lima',      turma:'b', emoji:'🦋', dest:false, motto:'Transforma tudo em beleza.', idade:6, foto:null },
+      { id:43, nome:'Íris Amor',      ape:'Silva',     turma:'b', emoji:'💜', dest:false, motto:'Amor que transborda para todos.', idade:5, foto:null },
+      { id:44, nome:'Caetano Belo',   ape:'Rodrigues', turma:'b', emoji:'🌈', dest:false, motto:'Colore o mundo com a sua presença.', idade:6, foto:null },
+      { id:45, nome:'Isabella Paz',   ape:'Santos',    turma:'c', emoji:'📚', dest:true,  motto:'Lê como se voasse entre as palavras.', idade:6, foto:null },
+      { id:46, nome:'Arthur Noel',    ape:'Cunha',     turma:'c', emoji:'🔢', dest:false, motto:'Matemático nato, brilha nos números.', idade:7, foto:null },
+      { id:47, nome:'Yasmin Glória',  ape:'Monteiro',  turma:'c', emoji:'🎭', dest:false, motto:'Dança, canta e ainda tira 20!', idade:6, foto:null },
+      { id:48, nome:'Emílio Dário',   ape:'Andrade',   turma:'c', emoji:'🌠', dest:false, motto:'Líder natural, apoia a todos.', idade:7, foto:null },
+      { id:49, nome:'Jade Esperança', ape:'Rodrigues', turma:'c', emoji:'✍️', dest:false, motto:'As histórias que escreve têm alma.', idade:6, foto:null },
+      { id:50, nome:'Noah Patrick',   ape:'Lima',      turma:'c', emoji:'🔬', dest:false, motto:'Cientista do futuro, curioso do presente.', idade:7, foto:null },
+      { id:51, nome:'Cecília Amor',   ape:'Coelho',    turma:'c', emoji:'💝', dest:false, motto:'O coração mais generoso da 1ª classe.', idade:6, foto:null },
+      { id:52, nome:'Bruno Maxim',    ape:'Neves',     turma:'c', emoji:'💪', dest:false, motto:'Nunca desiste — o seu lema!', idade:7, foto:null },
+      { id:53, nome:'Miriam Celeste', ape:'Tavares',   turma:'c', emoji:'🦄', dest:false, motto:'Criativa, corajosa e talentosa.', idade:6, foto:null },
+      { id:54, nome:'Henrique Davi',  ape:'Azevedo',   turma:'c', emoji:'⚽', dest:false, motto:'Futebol na escola, estrela em casa.', idade:7, foto:null },
+      { id:55, nome:'Beatriz Fé',     ape:'Ferreira',  turma:'c', emoji:'🌟', dest:false, motto:'Fé que move montanhas, desde já.', idade:6, foto:null },
+      { id:56, nome:'Rodrigo Asa',    ape:'Pinto',     turma:'c', emoji:'🦅', dest:false, motto:'Voa alto, sem medo de nenhuma altura.', idade:7, foto:null },
+      { id:57, nome:'Eva Luz',        ape:'Sousa',     turma:'c', emoji:'💡', dest:false, motto:'Ilumina com a sua inteligência.', idade:6, foto:null },
+      { id:58, nome:'Gustavo Mar',    ape:'Almeida',   turma:'c', emoji:'🌊', dest:false, motto:'Profundo como o mar que ama.', idade:7, foto:null },
+      { id:59, nome:'Lívia Ouro',     ape:'Baptista',  turma:'c', emoji:'🏆', dest:false, motto:'Ouro puro, em tudo o que faz.', idade:6, foto:null },
+      { id:60, nome:'Hugo Paz',       ape:'Moreira',   turma:'c', emoji:'🕊️', dest:false, motto:'Traz paz a todos os conflitos.', idade:7, foto:null },
+      { id:61, nome:'Âmber Rosa',     ape:'Cardoso',   turma:'c', emoji:'🌹', dest:false, motto:'Delicada e forte como uma rosa.', idade:6, foto:null },
+      { id:62, nome:'Kevin Nobre',    ape:'Gomes',     turma:'c', emoji:'👑', dest:false, motto:'Nobreza de carácter acima de tudo.', idade:7, foto:null },
+      { id:63, nome:'Lia Vitória',    ape:'Melo',      turma:'c', emoji:'🏅', dest:false, motto:'Vitória em tudo o que empreende.', idade:6, foto:null },
+      { id:64, nome:'Filipe Belo',    ape:'Costa',     turma:'c', emoji:'🌈', dest:false, motto:'Colorido e alegre como um arco-íris.', idade:7, foto:null },
+      { id:65, nome:'Nádia Estrela',  ape:'Silva',     turma:'c', emoji:'⭐', dest:false, motto:'Estrela que guia os colegas.', idade:6, foto:null },
+      { id:66, nome:'Dário Sol',      ape:'Rodrigues', turma:'c', emoji:'☀️', dest:false, motto:'Brilha como o sol em dia de festa.', idade:7, foto:null },
+      { id:67, nome:'Mariana Céu',    ape:'Batista',   turma:'d', emoji:'🏆', dest:true,  motto:'A aluna mais aplicada do ano!', idade:7, foto:null },
+      { id:68, nome:'Frederico Ary',  ape:'Matos',     turma:'d', emoji:'😄', dest:false, motto:'Resolve problemas com um sorriso.', idade:7, foto:null },
+      { id:69, nome:'Aline Serafim',  ape:'Cardoso',   turma:'d', emoji:'🌙', dest:false, motto:'Aprendiz do universo, mestre na bondade.', idade:7, foto:null },
+      { id:70, nome:'Dinis Caetano',  ape:'Moreira',   turma:'d', emoji:'📖', dest:false, motto:'Adora ler e partilhar o que aprende.', idade:7, foto:null },
+      { id:71, nome:'Rania Safira',   ape:'Abreu',     turma:'d', emoji:'🎨', dest:false, motto:'Artista, atleta e excelente amiga.', idade:7, foto:null },
+      { id:72, nome:'Tiago Elias',    ape:'Figueiredo',turma:'d', emoji:'🚀', dest:false, motto:'Os seus projectos surpreendem.', idade:7, foto:null },
+      { id:73, nome:'Aurora Feliz',   ape:'Mendonça',  turma:'d', emoji:'🌅', dest:false, motto:'Traz alegria a cada manhã.', idade:7, foto:null },
+      { id:74, nome:'Vicente Artur',  ape:'Peixoto',   turma:'d', emoji:'🥇', dest:false, motto:'Campeão nas olimpíadas e na sala.', idade:7, foto:null },
+      { id:75, nome:'Letícia Boa',    ape:'Henriques', turma:'d', emoji:'🍎', dest:false, motto:'Futura professora — já ensina os colegas!', idade:7, foto:null },
+      { id:76, nome:'Simão Guerreiro',ape:'Campos',    turma:'d', emoji:'🗺️', dest:false, motto:'Desbravador de livros e de sonhos.', idade:7, foto:null },
+      { id:77, nome:'Cláudia Amor',   ape:'Pereira',   turma:'d', emoji:'💝', dest:false, motto:'Amor e dedicação em cada tarefa.', idade:7, foto:null },
+      { id:78, nome:'Raul Nobre',     ape:'Santos',    turma:'d', emoji:'🦁', dest:false, motto:'Corajoso e determinado como um leão.', idade:7, foto:null },
+      { id:79, nome:'Vera Luz',       ape:'Gomes',     turma:'d', emoji:'💡', dest:false, motto:'Brilhante e cheia de ideias novas.', idade:7, foto:null },
+      { id:80, nome:'Diogo Mar',      ape:'Alves',     turma:'d', emoji:'🌊', dest:false, motto:'Profundo em tudo o que aprende.', idade:7, foto:null },
+      { id:81, nome:'Glória Paz',     ape:'Ferreira',  turma:'d', emoji:'🕊️', dest:false, motto:'Paz e glória onde quer que esteja.', idade:7, foto:null },
+      { id:82, nome:'Nuno Fé',        ape:'Costa',     turma:'d', emoji:'⭐', dest:false, motto:'Fé que inspira toda a turma.', idade:7, foto:null },
+      { id:83, nome:'Érica Vitória',  ape:'Lima',      turma:'d', emoji:'🏅', dest:false, motto:'Vitória merecida após muito esforço.', idade:7, foto:null },
+      { id:84, nome:'Tomás Belo',     ape:'Rodrigues', turma:'d', emoji:'🌈', dest:false, motto:'Colore a sala com a sua presença.', idade:7, foto:null },
+      { id:85, nome:'Adriana Sol',    ape:'Cunha',     turma:'d', emoji:'☀️', dest:false, motto:'Aquece a turma inteira com o seu sorriso.', idade:7, foto:null },
+      { id:86, nome:'Pedro Estrela',  ape:'Barbosa',   turma:'d', emoji:'⭐', dest:false, motto:'Estrela que não para de crescer.', idade:7, foto:null },
+      { id:87, nome:'Marta Flor',     ape:'Teixeira',  turma:'d', emoji:'🌷', dest:false, motto:'Floresce a cada novo desafio da vida.', idade:7, foto:null },
+    ];
+
+    let activePolo  = 'all';
+    let activeTurma = 'all';
+    let searchQuery = '';
+    let activeModal = null;
+
+    function getFiltered() {
+      const q = searchQuery.toLowerCase().trim();
+      return ALUNOS.filter(a => {
+        const meta = TURMA_META[a.turma];
+        if (activePolo !== 'all' && meta.polo !== activePolo) return false;
+        if (activeTurma !== 'all' && a.turma !== activeTurma) return false;
+        if (q) { const full = `${a.nome} ${a.ape}`.toLowerCase(); if (!full.includes(q)) return false; }
+        return true;
+      });
+    }
+
+    function highlight(text, q) {
+      if (!q) return text;
+      const re = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
+      return text.replace(re, '<mark>$1</mark>');
+    }
+
+    function renderAll() {
+      const filtered = getFiltered();
+      const main = document.getElementById('archive-main');
+      document.getElementById('count-visible').textContent = filtered.length;
+
+      if (filtered.length === 0) {
+        main.innerHTML = `<div class="cards-grid"><div class="empty-state"><div class="es-icon">🔍</div><div class="es-title">Nenhum aluno encontrado</div><div class="es-sub">Tente pesquisar por outro nome ou limpe os filtros</div><button class="es-clear" onclick="clearAll()"><i class="fas fa-times"></i> Limpar filtros</button></div></div>`;
+        return;
+      }
+
+      const turmaOrder = ['a','b','c','d'];
+      const grouped = {};
+      turmaOrder.forEach(t => grouped[t] = []);
+      filtered.forEach(a => grouped[a.turma].push(a));
+      let html = '';
+
+      turmaOrder.forEach(t => {
+        const group = grouped[t];
+        if (group.length === 0) return;
+        const meta = TURMA_META[t];
+        const q = searchQuery.toLowerCase().trim();
+
+        html += `
+          <div class="turma-header">
+            <div class="th-icon" style="background:${meta.bg};">${meta.icon}</div>
+            <div class="th-info">
+              <div class="th-name">${meta.label}</div>
+              <div class="th-detail">${meta.detail}</div>
+            </div>
+            <div class="th-line"></div>
+            <div class="th-count" style="background:${meta.tagBg};border:1px solid ${meta.tagBorder};color:${meta.tagColor};">${group.length} finalistas</div>
+          </div>
+          <div class="cards-grid">`;
+
+        group.forEach((a, i) => {
+          const delay = Math.min((i % 10) * 40, 400);
+          const num = String(a.id).padStart(2,'0');
+          const nameH = highlight(a.nome, q);
+          const apeH  = highlight(a.ape, q);
+
+          let photoHtml = '';
+          if (a.foto) {
+            photoHtml = `<img class="fc-img" src="${a.foto}" alt="${a.nome} ${a.ape}" loading="lazy" onload="this.classList.add('loaded');this.closest('.fc-photo-wrap').classList.add('loaded');" onerror="this.style.display='none'">`;
+          } else {
+            photoHtml = `<div class="fc-emoji-bg" style="background:${meta.bg};"><span class="fc-emoji-icon">${a.emoji}</span></div>`;
+          }
+
+          html += `
+            <div class="f-card ${a.dest?'destaque':''}" style="animation-delay:${delay}ms;" onclick="openModal(${a.id})">
+              ${a.dest?`<div class="fc-crown"></div>`:''}
+              <div class="fc-photo-wrap ${a.foto?'':'loaded'}">
+                ${photoHtml}
+                <div class="fc-overlay"></div>
+                <div class="fc-num">${num}</div>
+                <div class="fc-turma" style="background:${meta.dotColor};color:${meta.dotColor};"></div>
+              </div>
+              <div class="fc-info">
+                <span class="fc-polo">${meta.label} · ${meta.detail}</span>
+                <div class="fc-name">${nameH}</div>
+                <span class="fc-apelido">${apeH}</span>
+                <div class="fc-underline"></div>
+              </div>
+            </div>`;
+        });
+
+        html += `</div>`;
+      });
+
+      main.innerHTML = html;
+    }
+
+    function openModal(id) {
+      const a = ALUNOS.find(x => x.id === id);
+      if (!a) return;
+      const meta = TURMA_META[a.turma];
+      const num = String(a.id).padStart(2,'0');
+      let photoHtml = a.foto
+        ? `<img class="modal-photo" src="${a.foto}" alt="${a.nome}" loading="lazy">`
+        : `<div class="modal-emoji-ph" style="background:${meta.bg};">${a.emoji}</div>`;
+      document.getElementById('modal-photo-wrap').innerHTML = photoHtml + `<div class="modal-grad"></div>`;
+      document.getElementById('modal-num').textContent = `Finalista #${num}`;
+      document.getElementById('modal-name').textContent = a.nome;
+      document.getElementById('modal-apelido').textContent = a.ape + ' · ' + a.idade + ' anos';
+      document.getElementById('modal-tags').innerHTML = `
+        <span class="modal-tag" style="background:${meta.tagBg};border:1px solid ${meta.tagBorder};color:${meta.tagColor};">${meta.icon} ${meta.label}</span>
+        <span class="modal-tag" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.55);">${meta.detail}</span>
+        ${a.dest?`<span class="modal-tag" style="background:rgba(230,179,37,0.15);border:1px solid rgba(230,179,37,0.3);color:var(--gold-l);">⭐ Destaque</span>`:''}`;
+      document.getElementById('modal-motto').textContent = `"${a.motto}"`;
+      document.getElementById('modal-bg').classList.add('open');
+      document.body.style.overflow = 'hidden';
+      activeModal = id;
+    }
+
+    function closeModal() {
+      document.getElementById('modal-bg').classList.remove('open');
+      document.body.style.overflow = '';
+      activeModal = null;
+    }
+
+    document.getElementById('modal-bg').addEventListener('click', e => {
+      if (e.target === document.getElementById('modal-bg')) closeModal();
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    document.getElementById('polo-tabs').addEventListener('click', e => {
+      const btn = e.target.closest('[data-polo]');
+      if (!btn) return;
+      activePolo = btn.dataset.polo;
+      document.querySelectorAll('[data-polo]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      if (activePolo !== 'all') {
+        const validTurmas = Object.entries(TURMA_META).filter(([,v]) => v.polo === activePolo).map(([k]) => k);
+        if (activeTurma !== 'all' && !validTurmas.includes(activeTurma)) {
+          activeTurma = 'all';
+          document.querySelectorAll('[data-turma]').forEach(b => b.classList.remove('active'));
+          document.querySelector('[data-turma="all"]').classList.add('active');
+        }
+      }
+      renderAll();
+    });
+
+    document.getElementById('turma-tabs').addEventListener('click', e => {
+      const btn = e.target.closest('[data-turma]');
+      if (!btn) return;
+      activeTurma = btn.dataset.turma;
+      document.querySelectorAll('[data-turma]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      if (activeTurma !== 'all') {
+        const meta = TURMA_META[activeTurma];
+        activePolo = meta.polo;
+        document.querySelectorAll('[data-polo]').forEach(b => b.classList.remove('active'));
+        document.querySelector(`[data-polo="${activePolo}"]`).classList.add('active');
+      }
+      renderAll();
+    });
+
+    const searchInput = document.getElementById('search-input');
+    const searchClear = document.getElementById('search-clear');
+    searchInput.addEventListener('input', () => {
+      searchQuery = searchInput.value;
+      searchClear.classList.toggle('visible', searchQuery.length > 0);
+      renderAll();
+    });
+    searchClear.addEventListener('click', () => {
+      searchInput.value = ''; searchQuery = '';
+      searchClear.classList.remove('visible');
+      searchInput.focus(); renderAll();
+    });
+
+    function clearAll() {
+      activePolo = 'all'; activeTurma = 'all'; searchQuery = '';
+      searchInput.value = ''; searchClear.classList.remove('visible');
+      document.querySelectorAll('[data-polo]').forEach(b => b.classList.remove('active'));
+      document.querySelector('[data-polo="all"]').classList.add('active');
+      document.querySelectorAll('[data-turma]').forEach(b => b.classList.remove('active'));
+      document.querySelector('[data-turma="all"]').classList.add('active');
+      renderAll();
+    }
+
+    const filterBar = document.getElementById('filter-bar');
+    const backTop   = document.getElementById('back-top');
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      filterBar.classList.toggle('stuck', y > 200);
+      backTop.classList.toggle('visible', y > 500);
+    }, { passive: true });
+
+    function showSkeletons() {
+      const main = document.getElementById('archive-main');
+      let sk = '<div class="cards-grid" style="padding:0 0 1rem;">';
+      for (let i = 0; i < 15; i++) {
+        sk += `<div class="sk-card"><div class="sk-photo"></div><div class="sk-info"><div class="sk-line"></div><div class="sk-line short"></div></div></div>`;
+      }
+      sk += '</div>';
+      main.innerHTML = sk;
+    }
+
+    showSkeletons();
+    document.getElementById('count-visible').textContent = ALUNOS.length;
+    setTimeout(() => renderAll(), 600);
+  </script>
+</body>
+</html>

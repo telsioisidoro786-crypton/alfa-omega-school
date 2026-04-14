@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Novidades 2026 — Colégio Alfa e Omega</title>
+  <meta name="description" content="Acompanhe as últimas novidades, eventos e atualizações do Colégio Alfa e Omega em Panguila, Angola.">
+  <meta name="author" content="Colégio Alfa e Omega">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.colegioalfaeomega.com/novidades.html">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/main.css">
+
+  <style>
+    :root {
+      --ink-950:   #010E24;
+      --ink-900:   #011830;
+      --primary:   #01377D;
+      --primary-m: #0147A0;
+      --primary-l: #0A5FC4;
+      --accent:    #CEF431;
+      --accent-m:  #B8D400;
+      --accent-d:  #8FA300;
+      --white:     #FFFFFF;
+      --off-white: #F8F9F6;
+      --gray-50:   #F5F6F3;
+      --gray-100:  #EAEBE8;
+      --gray-200:  #D4D6D1;
+      --gray-400:  #9BA09A;
+      --gray-500:  #6D726B;
+      --gray-600:  #4D524B;
+      --gray-700:  #3D4239;
+      --gray-900:  #1A1E18;
+      --font-serif: 'DM Serif Display', serif;
+      --font-sans:  'DM Sans', sans-serif;
+      --font-head:  'Poppins', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--white);
+      color: var(--gray-700);
+      overflow-x: hidden;
+      padding-top: 5rem;
+    }
+
+    /* ---- NAVBAR ---- */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: 5rem;
+      transition: background 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease;
+    }
+
+    .navbar.transparent {
+      background: transparent;
+    }
+
+    .navbar.scrolled {
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.08), 0 8px 32px rgba(1,55,125,0.06);
+    }
+
+    .navbar-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      text-decoration: none;
+    }
+
+    .logo-img {
+      width: 46px;
+      height: 46px;
+      object-fit: contain;
+      transition: transform 0.3s ease;
+    }
+
+    .logo-section:hover .logo-img { transform: scale(1.05); }
+
+    .logo-text-block h2 {
+      font-family: var(--font-heading);
+      font-size: 0.925rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1.1;
+      transition: color 0.3s;
+    }
+
+    .navbar.transparent .logo-text-block h2 { color: var(--white); }
+
+    .logo-text-block p {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--accent-mid);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .navbar.transparent .logo-text-block p { color: rgba(206,244,49,0.75); }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .nav-link {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--gray-700);
+      text-decoration: none;
+      padding: 0.6rem 0.9rem;
+      border-radius: 0.5rem;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .navbar.transparent .nav-link { color: rgba(255,255,255,0.85); }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 4px; left: 50%; right: 50%;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: left 0.3s ease, right 0.3s ease;
+    }
+
+    .nav-link:hover::after, .nav-link.active::after { left: 0.9rem; right: 0.9rem; }
+    .nav-link:hover { color: var(--primary); }
+    .navbar.transparent .nav-link:hover { color: var(--white); }
+
+    .nav-cta {
+      margin-left: 0.75rem;
+      background: var(--accent);
+      color: var(--primary);
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.875rem;
+      padding: 0.65rem 1.4rem;
+      border-radius: 2rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .nav-cta:hover {
+      background: var(--primary);
+      color: var(--white);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(1,55,125,0.25);
+    }
+
+    .mobile-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: var(--primary);
+      cursor: pointer;
+    }
+
+    .navbar.transparent .mobile-btn { color: var(--white); }
+
+    .mobile-menu {
+      display: none;
+      position: absolute;
+      top: 100%; left: 0; right: 0;
+      background: var(--white);
+      border-top: 3px solid var(--accent);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+      padding: 1rem 0;
+      flex-direction: column;
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-nav-link {
+      padding: 0.875rem 2rem;
+      font-weight: 600;
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 0.95rem;
+      border-left: 3px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .mobile-nav-link:hover { background: rgba(1,55,125,0.05); border-left-color: var(--accent); }
+    @media (max-width: 768px) { .nav-menu, .nav-cta { display: none !important; } .mobile-btn { display: block; } }
+
+    /* ---- HERO ---- */
+    .page-hero {
+      background: var(--ink-950); padding: 6rem 2rem 0;
+      position: relative; overflow: hidden;
+    }
+    .page-hero::after {
+      content: ''; position: absolute; inset: 0;
+      background-image:
+        repeating-linear-gradient(90deg, transparent, transparent 100px, rgba(255,255,255,0.012) 100px, rgba(255,255,255,0.012) 101px),
+        repeating-linear-gradient(0deg, transparent, transparent 100px, rgba(255,255,255,0.012) 100px, rgba(255,255,255,0.012) 101px);
+      pointer-events: none;
+    }
+    .hero-glow { position: absolute; top: -5rem; right: -5rem; width: 500px; height: 500px; background: radial-gradient(circle, rgba(1,55,125,0.6) 0%, transparent 70%); pointer-events: none; }
+    .hero-inner { max-width: 1280px; margin: 0 auto; position: relative; z-index: 2; }
+    .hero-meta-bar { display: flex; align-items: center; justify-content: space-between; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 3rem; flex-wrap: wrap; gap: 1rem; }
+    .hero-date-tag { font-family: var(--font-sans); font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.18em; color: rgba(255,255,255,0.35); }
+    .hero-date-tag strong { color: var(--accent); }
+    .hero-breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-sans); font-size: 0.75rem; color: rgba(255,255,255,0.35); }
+    .hero-breadcrumb a { color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
+    .hero-breadcrumb a:hover { color: var(--accent); }
+    .hero-breadcrumb i { font-size: 0.55rem; }
+    .hero-headline { display: grid; grid-template-columns: 1fr auto; gap: 4rem; align-items: end; padding-bottom: 4rem; }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--font-sans); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent); margin-bottom: 1.25rem; }
+    .hero-eyebrow::before { content: ''; width: 28px; height: 2px; background: var(--accent); border-radius: 2px; }
+    .hero-h1 { font-family: var(--font-serif); font-size: clamp(3rem, 6vw, 5.5rem); color: var(--white); line-height: 0.95; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
+    .hero-h1 em { color: var(--accent); font-style: italic; }
+    .hero-desc { font-family: var(--font-sans); font-size: 1rem; color: rgba(255,255,255,0.45); line-height: 1.85; font-weight: 300; max-width: 480px; }
+    .hero-year-block { text-align: right; }
+    .hero-year { font-family: var(--font-serif); font-size: clamp(5rem, 10vw, 9rem); color: rgba(255,255,255,0.04); line-height: 1; letter-spacing: -0.04em; display: block; user-select: none; }
+    .hero-stats-row { display: flex; gap: 2.5rem; margin-top: 1rem; justify-content: flex-end; }
+    .hs { text-align: center; }
+    .hs-n { font-family: var(--font-head); font-size: 1.8rem; font-weight: 900; color: var(--accent); display: block; line-height: 1; }
+    .hs-l { font-family: var(--font-sans); font-size: 0.65rem; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.3rem; display: block; }
+    .hero-strip { border-top: 1px solid rgba(255,255,255,0.07); padding: 0.875rem 0; }
+    .hero-strip-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .strip-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .strip-tag { font-family: var(--font-sans); font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); padding: 0.3rem 0.8rem; border-radius: 3rem; transition: all 0.2s; }
+    .strip-tag:hover { color: var(--accent); border-color: rgba(206,244,49,0.3); }
+    .strip-scroll { display: flex; align-items: center; gap: 0.4rem; font-family: var(--font-sans); font-size: 0.72rem; color: rgba(255,255,255,0.3); text-decoration: none; transition: color 0.2s; }
+    .strip-scroll:hover { color: var(--accent); }
+
+    /* ---- ARQUIVO SECTION ---- */
+    .section-arquivo { padding: 7rem 2rem; background: var(--white); }
+    .arquivo-inner { max-width: 1280px; margin: 0 auto; }
+    .arquivo-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; margin-bottom: 4rem; flex-wrap: wrap; }
+    .section-label { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-sans); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.18em; color: var(--primary); margin-bottom: 0.875rem; }
+    .section-label::before { content: ''; width: 22px; height: 2px; background: var(--accent); }
+    .display-title { font-family: var(--font-serif); font-size: clamp(1.8rem, 3vw, 2.8rem); color: var(--gray-900); line-height: 1.1; letter-spacing: -0.02em; }
+    .display-title em { color: var(--primary); font-style: italic; }
+    .year-pill { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--ink-950); color: var(--accent); font-family: var(--font-head); font-size: 0.75rem; font-weight: 800; padding: 0.5rem 1.25rem; border-radius: 3rem; letter-spacing: 0.05em; }
+    .month-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .month-card { border-radius: 1.5rem; overflow: hidden; border: 1px solid var(--gray-100); background: var(--white); transition: all 0.4s ease; display: flex; flex-direction: column; }
+    .month-card:hover { transform: translateY(-8px); box-shadow: 0 28px 70px rgba(1,55,125,0.13); border-color: transparent; }
+    .mc-cover { height: 260px; position: relative; overflow: hidden; background: var(--gray-100); }
+    .mc-cover img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease; }
+    .month-card:hover .mc-cover img { transform: scale(1.06); }
+    .mc-cover-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(1,8,24,0.9) 0%, rgba(1,8,24,0.4) 50%, rgba(1,8,24,0.1) 100%); }
+    .mc-month-label { position: absolute; top: 1.25rem; left: 1.5rem; font-family: var(--font-head); font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent); background: rgba(1,8,24,0.5); backdrop-filter: blur(8px); border: 1px solid rgba(206,244,49,0.25); padding: 0.3rem 0.9rem; border-radius: 3rem; }
+    .mc-status { position: absolute; top: 1.25rem; right: 1.5rem; font-family: var(--font-head); font-size: 0.6rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.3rem 0.8rem; border-radius: 3rem; }
+    .mc-status.published { background: rgba(206,244,49,0.15); border: 1px solid rgba(206,244,49,0.3); color: var(--accent); }
+    .mc-status.soon { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.5); }
+    .mc-headline { position: absolute; bottom: 1.5rem; left: 1.5rem; right: 1.5rem; }
+    .mc-year-tag { font-family: var(--font-sans); font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-bottom: 0.3rem; display: block; }
+    .mc-title { font-family: var(--font-serif); font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--white); line-height: 1.05; letter-spacing: -0.02em; }
+    .mc-body { padding: 1.75rem 2rem; flex: 1; display: flex; flex-direction: column; }
+    .mc-highlights { list-style: none; margin-bottom: 1.5rem; flex: 1; }
+    .mc-highlights li { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.5rem 0; font-family: var(--font-sans); font-size: 0.875rem; color: var(--gray-600); line-height: 1.4; border-bottom: 1px solid var(--gray-50); }
+    .mc-highlights li:last-child { border-bottom: none; }
+    .mc-highlights li i { color: var(--accent-m); font-size: 0.55rem; margin-top: 0.45rem; flex-shrink: 0; }
+    .mc-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 1.25rem; border-top: 1px solid var(--gray-100); }
+    .mc-count { font-family: var(--font-sans); font-size: 0.8rem; color: var(--gray-400); }
+    .mc-count strong { color: var(--primary); }
+    .mc-btn { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--primary); color: var(--white); font-family: var(--font-sans); font-weight: 700; font-size: 0.825rem; padding: 0.7rem 1.5rem; border-radius: 3rem; text-decoration: none; transition: all 0.3s; }
+    .mc-btn:hover { background: var(--accent); color: var(--primary); transform: translateX(4px); }
+    .mc-btn i { font-size: 0.7rem; transition: transform 0.3s; }
+    .mc-btn:hover i { transform: translateX(4px); }
+    .mc-soon-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(1,8,24,0.6); backdrop-filter: blur(4px); }
+    .mc-soon-pill { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.75); font-family: var(--font-sans); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; padding: 0.6rem 1.5rem; border-radius: 3rem; }
+    .month-card.muted { opacity: 0.55; pointer-events: none; }
+
+    /* ---- RECENTES ---- */
+    .section-recentes { padding: 0 2rem 7rem; background: var(--white); }
+    .recentes-inner { max-width: 1280px; margin: 0 auto; }
+    .recentes-header { display: flex; align-items: center; justify-content: space-between; gap: 2rem; margin-bottom: 3rem; flex-wrap: wrap; padding-top: 3rem; border-top: 1px solid var(--gray-100); }
+    .view-all { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-sans); font-size: 0.8rem; font-weight: 700; color: var(--primary); text-decoration: none; padding: 0.6rem 1.4rem; border: 1.5px solid var(--primary); border-radius: 3rem; transition: all 0.3s; }
+    .view-all:hover { background: var(--primary); color: var(--white); }
+    .news-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .news-card { background: var(--off-white); border-radius: 1.25rem; overflow: hidden; border: 1px solid transparent; transition: all 0.35s; }
+    .news-card:hover { background: var(--white); border-color: var(--gray-100); box-shadow: 0 16px 45px rgba(1,55,125,0.1); transform: translateY(-6px); }
+    .nc-img { height: 180px; overflow: hidden; position: relative; }
+    .nc-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .news-card:hover .nc-img img { transform: scale(1.07); }
+    .nc-tag { position: absolute; top: 0.875rem; left: 0.875rem; background: var(--accent); color: var(--primary); font-family: var(--font-sans); font-size: 0.62rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.28rem 0.7rem; border-radius: 3rem; }
+    .nc-body { padding: 1.5rem; }
+    .nc-date { font-family: var(--font-sans); font-size: 0.75rem; font-weight: 500; color: var(--gray-400); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem; }
+    .nc-date i { font-size: 0.65rem; color: var(--accent-m); }
+    .nc-title { font-family: var(--font-head); font-size: 1rem; font-weight: 700; color: var(--gray-900); line-height: 1.3; margin-bottom: 0.6rem; }
+    .nc-excerpt { font-family: var(--font-sans); font-size: 0.85rem; color: var(--gray-500); line-height: 1.65; font-weight: 300; margin-bottom: 1.25rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .nc-read { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-sans); font-size: 0.78rem; font-weight: 700; color: var(--primary); text-decoration: none; transition: gap 0.3s, color 0.2s; }
+    .nc-read:hover { gap: 0.7rem; color: var(--accent-d); }
+
+    /* ---- VIDEO PREVIEW CARDS ---- */
+    .video-preview-block { margin-bottom: 2rem; }
+    .video-preview-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+    .video-preview-title { font-family: var(--font-head); font-size: 0.98rem; font-weight: 800; color: var(--gray-900); letter-spacing: 0.01em; }
+    .video-preview-hint { font-family: var(--font-sans); font-size: 0.76rem; color: var(--gray-400); }
+    .video-preview-grid { margin-bottom: 1.5rem; }
+    .video-preview-card .nc-img { height: 220px; }
+    .video-preview {
+      position: relative;
+      overflow: hidden;
+      background: var(--ink-900);
+      isolation: isolate;
+      cursor: pointer;
+    }
+    .preview-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transform: scale(1.001);
+      transition: transform 0.65s ease;
+    }
+    .video-preview::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(1,14,36,0.88) 2%, rgba(1,14,36,0.28) 55%, rgba(1,14,36,0.12) 100%);
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    .video-preview-card:hover .preview-video,
+    .video-preview.is-playing .preview-video { transform: scale(1.06); }
+    .video-preview-card:hover .video-preview::after,
+    .video-preview.is-playing::after { opacity: 0.85; }
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 0.85rem;
+      padding: 1rem;
+      pointer-events: none;
+    }
+    .video-overlay-title {
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      color: var(--white);
+      line-height: 1.15;
+      max-width: 82%;
+      letter-spacing: -0.01em;
+      text-shadow: 0 6px 18px rgba(1,14,36,0.5);
+    }
+    .video-social-link {
+      align-self: flex-start;
+      pointer-events: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.5rem 0.85rem;
+      border-radius: 999px;
+      text-decoration: none;
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--white);
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.25);
+      backdrop-filter: blur(8px);
+      transition: all 0.25s ease;
+    }
+    .video-social-link:hover {
+      color: var(--primary);
+      background: var(--accent);
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+    .video-preview .nc-tag {
+      z-index: 3;
+      background: rgba(206,244,49,0.95);
+      backdrop-filter: blur(4px);
+    }
+
+    /* ---- SOCIAL CTA ---- */
+    .section-social { padding: 7rem 2rem; background: var(--ink-950); position: relative; overflow: hidden; text-align: center; }
+    .social-bg { position: absolute; inset: 0; background: radial-gradient(circle at 25% 50%, rgba(1,55,125,0.5) 0%, transparent 55%), radial-gradient(circle at 75% 50%, rgba(206,244,49,0.07) 0%, transparent 55%); }
+    .social-icons-bg { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; gap: 5rem; opacity: 0.04; pointer-events: none; font-size: 8rem; color: var(--white); }
+    .social-inner { max-width: 680px; margin: 0 auto; position: relative; z-index: 2; }
+    .social-badge { display: inline-block; background: rgba(206,244,49,0.1); border: 1px solid rgba(206,244,49,0.25); color: var(--accent); font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.18em; padding: 0.4rem 1.2rem; border-radius: 3rem; margin-bottom: 2rem; }
+    .social-h2 { font-family: var(--font-serif); font-size: clamp(2.2rem, 4vw, 3.5rem); color: var(--white); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 1.25rem; }
+    .social-h2 em { color: var(--accent); font-style: italic; }
+    .social-p { font-family: var(--font-sans); font-size: 1rem; color: rgba(255,255,255,0.4); line-height: 1.8; font-weight: 300; margin-bottom: 3rem; }
+    .social-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-social { display: inline-flex; align-items: center; gap: 0.65rem; font-family: var(--font-sans); font-weight: 700; font-size: 0.9rem; padding: 1rem 2rem; border-radius: 3rem; text-decoration: none; transition: all 0.3s; }
+    .btn-social.fb { background: #1877F2; color: var(--white); }
+    .btn-social.fb:hover { background: #0f62c9; transform: translateY(-3px); box-shadow: 0 10px 25px rgba(24,119,242,0.3); }
+    .btn-social.ig { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: var(--white); }
+    .btn-social.ig:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(220,39,67,0.3); }
+    .btn-social.wa { background: #25D366; color: var(--white); }
+    .btn-social.wa:hover { background: #1aae54; transform: translateY(-3px); box-shadow: 0 10px 25px rgba(37,211,102,0.3); }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 1024px) {
+      .month-grid { grid-template-columns: 1fr; }
+      .news-list { grid-template-columns: 1fr 1fr; }
+      .hero-headline { grid-template-columns: 1fr; }
+      .hero-year-block { display: none; }
+    }
+    @media (max-width: 768px) {
+      body { padding-top: 5rem; }
+      .section-arquivo, .section-recentes, .section-social { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .section-arquivo { padding-top: 5rem; }
+      .news-list { grid-template-columns: 1fr; }
+      .video-preview-card .nc-img { height: 210px; }
+      .video-overlay-title { max-width: 90%; }
+      .mc-cover { height: 200px; }
+    }
+
+    .nav-cta.gold {
+      margin-left: 0.5rem;
+      background: linear-gradient(135deg, #F5D06A 0%, #E6B325 50%, #D4A625 100%);
+      color: #010E24;
+      font-weight: 800;
+      font-size: 0.825rem;
+      padding: 0.7rem 1.6rem;
+      position: relative;
+      overflow: hidden;
+      letter-spacing: 0.01em;
+      border: 1px solid rgba(245,208,106,0.3);
+      box-shadow: 0 0 20px rgba(230,179,37,0.4), 0 0 40px rgba(230,179,37,0.2), inset 0 1px 0 rgba(255,255,255,0.5);
+      transition: all 0.35s cubic-bezier(0.23,1,0.32,1);
+    }
+
+    .nav-cta.gold::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 0; height: 0;
+      background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, transparent 70%);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s cubic-bezier(0.23,1,0.32,1);
+      pointer-events: none;
+    }
+
+    .nav-cta.gold:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .nav-cta.gold:hover {
+      background: linear-gradient(135deg, #FFF0C0 0%, #F5D06A 50%, #E6B325 100%);
+      color: #010E24;
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 0 30px rgba(230,179,37,0.6), 0 0 60px rgba(230,179,37,0.3), 0 12px 32px rgba(230,179,37,0.25), inset 0 1px 0 rgba(255,255,255,0.8);
+      letter-spacing: 0.02em;
+    }
+
+    .nav-cta.gold i {
+      margin-right: 0.4rem;
+      font-size: 0.95rem;
+      transition: transform 0.35s cubic-bezier(0.23,1,0.32,1);
+    }
+
+    .nav-cta.gold:hover i {
+      transform: rotate(12deg) scale(1.2);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar transparent" id="navbar">
+    <div class="navbar-container">
+      <a class="logo-section" href="/">
+        <img src="/assets/images/logo/lo.png" alt="Alfa e Omega" class="logo-img">
+        <div class="logo-text-block">
+          <h2>Colégio Alfa e Omega</h2>
+          <p>Panguila · Angola</p>
+        </div>
+      </a>
+
+      <nav class="nav-menu" role="navigation">
+        <a href="/" class="nav-link">Início</a>
+        <a href="/sobre.html" class="nav-link">Sobre</a>
+        <a href="/oferta.html" class="nav-link">Oferta</a>
+        <a href="/novidades.html" class="nav-link active">Novidades</a>
+        <a href="/avisos.html" class="nav-link">Avisos</a>
+        <a href="/galeria.html" class="nav-link">Galeria</a>
+        <a href="/olimpiadas.html" class="nav-link">Olimpíadas</a>
+        <a href="/contactos.html" class="nav-link">Contactos</a>
+      </nav>
+
+      <a href="/matriculas.html" class="nav-cta">Matricular Agora</a>
+
+      <button class="mobile-btn" id="mobile-btn" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="/" class="mobile-nav-link"><i class="fas fa-home"></i> Início</a>
+      <a href="/sobre.html" class="mobile-nav-link"><i class="fas fa-info-circle"></i> Sobre</a>
+      <a href="/oferta.html" class="mobile-nav-link"><i class="fas fa-book-open"></i> Oferta Educativa</a>
+      <a href="/novidades.html" class="mobile-nav-link"><i class="fas fa-newspaper"></i> Novidades</a>
+      <a href="/avisos.html" class="mobile-nav-link"><i class="fas fa-bullhorn"></i> Avisos</a>
+      <a href="/galeria.html" class="mobile-nav-link"><i class="fas fa-images"></i> Galeria</a>
+      <a href="/contactos.html" class="mobile-nav-link"><i class="fas fa-envelope"></i> Contactos</a>
+      <a href="https://wa.me/925952771" class="mobile-nav-link" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+      <div style="padding-top: 1rem; border-top: 1px solid rgba(0,0,0,0.1); margin: 1rem 0; display: flex; flex-direction: column; gap: 0.5rem;">
+        <a href="/matriculas.html" class="nav-cta" style="margin-left: 0; text-align: center;">Matricular Agora</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="page-hero" id="hero-top">
+      <div class="hero-glow"></div>
+      <div class="hero-inner">
+        <div class="hero-meta-bar">
+          <div class="hero-date-tag">Arquivo <strong>2026</strong> · Actualizações do Colégio</div>
+          <div class="hero-breadcrumb">
+            <a href="/"><i class="fas fa-home"></i> Início</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Novidades</span>
+          </div>
+        </div>
+        <div class="hero-headline">
+          <div data-aos="fade-right">
+            <div class="hero-eyebrow">Colégio Alfa e Omega · Panguila</div>
+            <h1 class="hero-h1">Novidades<br>&amp; <em>Eventos</em></h1>
+            <p class="hero-desc">Acompanhe mês a mês todas as actividades, conquistas e momentos especiais da nossa comunidade escolar ao longo de 2026.</p>
+          </div>
+          <div class="hero-year-block" data-aos="fade-left" data-aos-delay="100">
+            <span class="hero-year">2026</span>
+            <div class="hero-stats-row">
+              <div class="hs"><span class="hs-n">2</span><span class="hs-l">Meses publicados</span></div>
+              <div class="hs"><span class="hs-n">15+</span><span class="hs-l">Actividades</span></div>
+              <div class="hs"><span class="hs-n">Mar</span><span class="hs-l">Em curso</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-strip">
+          <div class="hero-strip-inner">
+            <div class="strip-tags">
+              <span class="strip-tag">📐 Olimpíadas de Matemática</span>
+              <span class="strip-tag">🌊 Excursão Laugorim</span>
+              <span class="strip-tag">🌍 Cultura Africana</span>
+              <span class="strip-tag">🌐 Site Oficial</span>
+              <span class="strip-tag">🇬🇧 Inglês</span>
+              <span class="strip-tag">🏆 Quadro de Honra</span>
+            </div>
+            <a href="#arquivo" class="strip-scroll">Ver arquivo <i class="fas fa-arrow-down"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ARQUIVO MENSAL -->
+    <section class="section-arquivo" id="arquivo">
+      <div class="arquivo-inner">
+        <div class="arquivo-header" data-aos="fade-up">
+          <div>
+            <div class="section-label">Arquivo Histórico</div>
+            <h2 class="display-title">Novidades por <em>Mês</em></h2>
+          </div>
+          <span class="year-pill"><i class="fas fa-calendar"></i> Ano Lectivo 2026</span>
+        </div>
+        <div class="month-grid">
+
+          <!-- JANEIRO -->
+          <div class="month-card" data-aos="fade-up" data-aos-delay="0">
+            <div class="mc-cover">
+              <img src="assets/images/cultura/reuniao.webp" alt="Janeiro 2026">
+              <div class="mc-cover-overlay"></div>
+              <span class="mc-month-label">Janeiro 2026</span>
+              <span class="mc-status published">✅ Publicado</span>
+              <div class="mc-headline">
+                <span class="mc-year-tag">4 actividades · Janeiro</span>
+                <h3 class="mc-title">Arranque do<br>Ano Lectivo</h3>
+              </div>
+            </div>
+            <div class="mc-body">
+              <ul class="mc-highlights">
+                <li><i class="fas fa-circle"></i> Reunião dos Encarregados de Educação</li>
+                <li><i class="fas fa-circle"></i> Anúncio oficial da Excursão "Splash Day"</li>
+                <li><i class="fas fa-circle"></i> Início do Curso de Inglês</li>
+                <li><i class="fas fa-circle"></i> Aniversariantes do mês &amp; Hábitos saudáveis</li>
+              </ul>
+              <div class="mc-footer">
+                <span class="mc-count"><strong>4</strong> eventos registados</span>
+                <a href="galeria.html" class="mc-btn">Ver Galeria Completa <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- FEVEREIRO -->
+          <div class="month-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="mc-cover">
+              <img src="assets/images/splash.webp" alt="Fevereiro 2026">
+              <div class="mc-cover-overlay"></div>
+              <span class="mc-month-label">Fevereiro 2026</span>
+              <span class="mc-status published">✅ Publicado</span>
+              <div class="mc-headline">
+                <span class="mc-year-tag">10 actividades · Fevereiro</span>
+                <h3 class="mc-title">Cultura, Ciência<br>&amp; Lazer</h3>
+              </div>
+            </div>
+            <div class="mc-body">
+              <ul class="mc-highlights">
+                <li><i class="fas fa-circle"></i> Palestra Beija-Flor: Raízes Africanas</li>
+                <li><i class="fas fa-circle"></i> Olimpíadas de Matemática no CEPI Maple Bear</li>
+                <li><i class="fas fa-circle"></i> Excursão ao Parque Aquático Laugorim</li>
+                <li><i class="fas fa-circle"></i> Lançamento do Site Oficial &amp; Quadro de Honra</li>
+              </ul>
+              <div class="mc-footer">
+                <span class="mc-count"><strong>10</strong> eventos registados</span>
+                <a href="galeria.html" class="mc-btn">Ver Galeria Completa <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- MARÇO — COMING SOON -->
+          <div class="month-card muted" data-aos="fade-up" data-aos-delay="200">
+            <div class="mc-cover">
+              <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=700&h=350&fit=crop" alt="Março 2026">
+              <div class="mc-cover-overlay"></div>
+              <span class="mc-month-label">Março 2026</span>
+              <span class="mc-status soon">⏳ Em curso</span>
+              <div class="mc-soon-overlay"><span class="mc-soon-pill">A decorrer — em breve</span></div>
+              <div class="mc-headline">
+                <span class="mc-year-tag">Mês em curso · Março</span>
+                <h3 class="mc-title">Novidades<br>em breve...</h3>
+              </div>
+            </div>
+            <div class="mc-body">
+              <ul class="mc-highlights">
+                <li><i class="fas fa-circle"></i> Actividades em desenvolvimento...</li>
+                <li><i class="fas fa-circle"></i> Publicação no final do mês</li>
+              </ul>
+              <div class="mc-footer">
+                <span class="mc-count">Mês <strong>em curso</strong></span>
+                <span class="mc-btn" style="opacity:0.4; cursor:default; pointer-events:none;">Em breve <i class="fas fa-clock"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- PLACEHOLDER -->
+          <div class="month-card muted" data-aos="fade-up" data-aos-delay="300">
+            <div class="mc-cover" style="background: var(--gray-100);">
+              <div class="mc-cover-overlay" style="background: rgba(1,8,24,0.5);"></div>
+              <span class="mc-month-label" style="opacity:0.4;">Próximos Meses</span>
+              <span class="mc-status soon">📅 Planeado</span>
+              <div class="mc-soon-overlay"><span class="mc-soon-pill">Abril — Dezembro 2026</span></div>
+              <div class="mc-headline">
+                <span class="mc-year-tag">Restante do ano</span>
+                <h3 class="mc-title">Muito ainda<br>está por vir</h3>
+              </div>
+            </div>
+            <div class="mc-body">
+              <ul class="mc-highlights">
+                <li><i class="fas fa-circle"></i> Mais eventos, actividades e conquistas</li>
+                <li><i class="fas fa-circle"></i> Actualizações mensais durante todo o ano</li>
+              </ul>
+              <div class="mc-footer">
+                <span class="mc-count">Publicações <strong>mensais</strong></span>
+                <span class="mc-btn" style="opacity:0.4; cursor:default; pointer-events:none;">Aguarda <i class="fas fa-calendar"></i></span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ÚLTIMAS NOTÍCIAS -->
+    <section class="section-recentes">
+      <div class="recentes-inner">
+        <div class="recentes-header" data-aos="fade-up">
+          <div>
+            <div class="section-label">Em Destaque</div>
+            <h2 class="display-title">Momentos <em>recentes</em></h2>
+          </div>
+          <a href="/novidades/fevereiro.html" class="view-all">Ver todos <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="video-preview-block" data-aos="fade-up" data-aos-delay="40">
+          <div class="video-preview-header">
+            <h3 class="video-preview-title">Video Preview Cards</h3>
+            <p class="video-preview-hint">Passe o rato para reproduzir, ou toque no telemovel.</p>
+          </div>
+          <div class="news-list video-preview-grid">
+            <article class="news-card video-preview-card" data-aos="fade-up" data-aos-delay="0">
+              <div class="nc-img video-preview" data-preview-card>
+                <video class="preview-video" muted loop playsinline preload="none" poster="/assets/img/novidades/laugorim-cover.webp" data-preview-video>
+                  <source data-src="/assets/video/laugorim-preview.webm" type="video/webm">
+                  <source data-src="/assets/video/laugorim-preview.mp4" type="video/mp4">
+                </video>
+                <span class="nc-tag">Video</span>
+                <div class="video-overlay">
+                  <h3 class="video-overlay-title">Excursao ao Laugorim</h3>
+                  <a href="https://www.facebook.com/colegioalfaeomegaangola" target="_blank" rel="noopener noreferrer" class="video-social-link">Ver completo no Facebook <i class="fas fa-arrow-up-right-from-square"></i></a>
+                </div>
+              </div>
+              <div class="nc-body">
+                <div class="nc-date"><i class="fas fa-clock"></i> Preview 10-15s</div>
+                <h3 class="nc-title">Resumo rapido da excursao de Fevereiro</h3>
+                <p class="nc-excerpt">Preview otimizado para carregar leve. O video so e carregado no primeiro hover ou toque.</p>
+              </div>
+            </article>
+            <article class="news-card video-preview-card" data-aos="fade-up" data-aos-delay="80">
+              <div class="nc-img video-preview" data-preview-card>
+                <video class="preview-video" muted loop playsinline preload="none" poster="/assets/img/novidades/matematica-cover.webp" data-preview-video>
+                  <source data-src="/assets/video/matematica-preview.webm" type="video/webm">
+                  <source data-src="/assets/video/matematica-preview.mp4" type="video/mp4">
+                </video>
+                <span class="nc-tag">Video</span>
+                <div class="video-overlay">
+                  <h3 class="video-overlay-title">Olimpiadas de Matematica</h3>
+                  <a href="https://www.instagram.com/colegioalfaeomega/" target="_blank" rel="noopener noreferrer" class="video-social-link">Ver completo no Instagram <i class="fas fa-arrow-up-right-from-square"></i></a>
+                </div>
+              </div>
+              <div class="nc-body">
+                <div class="nc-date"><i class="fas fa-clock"></i> Preview 10-15s</div>
+                <h3 class="nc-title">Momentos dos alunos no CEPI Maple Bear</h3>
+                <p class="nc-excerpt">Card com poster estatico e playback apenas quando ha interacao do utilizador.</p>
+              </div>
+            </article>
+            <article class="news-card video-preview-card" data-aos="fade-up" data-aos-delay="160">
+              <div class="nc-img video-preview" data-preview-card>
+                <video class="preview-video" muted loop playsinline preload="none" poster="/assets/img/novidades/cultura-cover.webp" data-preview-video>
+                  <source data-src="/assets/video/cultura-preview.webm" type="video/webm">
+                  <source data-src="/assets/video/cultura-preview.mp4" type="video/mp4">
+                </video>
+                <span class="nc-tag">Video</span>
+                <div class="video-overlay">
+                  <h3 class="video-overlay-title">Palestra sobre tradicoes africanas</h3>
+                  <a href="https://www.facebook.com/colegioalfaeomegaangola" target="_blank" rel="noopener noreferrer" class="video-social-link">Ver completo no Facebook <i class="fas fa-arrow-up-right-from-square"></i></a>
+                </div>
+              </div>
+              <div class="nc-body">
+                <div class="nc-date"><i class="fas fa-clock"></i> Preview 10-15s</div>
+                <h3 class="nc-title">Cultura e identidade em destaque</h3>
+                <p class="nc-excerpt">Overlay elegante com CTA para o video completo nas redes sociais do colegio.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+        <div class="news-list">
+          <div class="news-card" data-aos="fade-up" data-aos-delay="0">
+            <div class="nc-img">
+              <img src="assets/images/atualizacoes/aquatico (3).webp" alt="Laugorim">
+              <span class="nc-tag">🌊 Lazer</span>
+            </div>
+            <div class="nc-body">
+              <div class="nc-date"><i class="fas fa-calendar-alt"></i> Fevereiro 2026</div>
+              <h3 class="nc-title">Excursão Inesquecível ao Parque Aquático Laugorim</h3>
+              <p class="nc-excerpt">Um dia de diversão, amizade e memórias para a vida. Toda a comunidade escolar reunida no Laugorim.</p>
+              <a href="galeria.html" class="nc-read">Ver todas as imagens <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+          <div class="news-card" data-aos="fade-up" data-aos-delay="80">
+            <div class="nc-img">
+              <img src="assets/images/matematica/matematica (6).webp" alt="Olimpíadas">
+              <span class="nc-tag">🏆 Académico</span>
+            </div>
+            <div class="nc-body">
+              <div class="nc-date"><i class="fas fa-calendar-alt"></i> Fevereiro 2026</div>
+              <h3 class="nc-title">Olimpíadas de Matemática no CEPI Maple Bear</h3>
+              <p class="nc-excerpt">Os nossos alunos brilharam com raciocínio lógico e espírito de superação nas Olimpíadas.</p>
+              <a href="galeria.html" class="nc-read">Ver todas as imagens <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+          <div class="news-card" data-aos="fade-up" data-aos-delay="160">
+            <div class="nc-img">
+              <img src="assets/images/cultura/cultura (2).webp" alt="Cultura">
+              <span class="nc-tag">🌍 Cultura</span>
+            </div>
+            <div class="nc-body">
+              <div class="nc-date"><i class="fas fa-calendar-alt"></i> Fevereiro 2026</div>
+              <h3 class="nc-title">Palestra Beija-Flor: Raízes e Tradições Africanas</h3>
+              <p class="nc-excerpt">Uma imersão nas tradições africanas que reforçou a identidade e orgulho cultural da comunidade.</p>
+              <a href="galeria.html" class="nc-read">Ver todas as imagens <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOCIAL CTA -->
+    <section class="section-social">
+      <div class="social-bg"></div>
+      <div class="social-icons-bg">
+        <i class="fab fa-facebook-f"></i>
+        <i class="fab fa-instagram"></i>
+        <i class="fab fa-whatsapp"></i>
+      </div>
+      <div class="social-inner" data-aos="fade-up">
+        <div class="social-badge">📱 Redes Sociais</div>
+        <h2 class="social-h2">Siga-nos para actualizações<br>em <em>tempo real</em></h2>
+        <p class="social-p">Publicações diárias, fotos, vídeos e avisos instantâneos. A comunidade Alfa e Omega está sempre activa nas redes sociais.</p>
+        <div class="social-btns">
+          <a href="https://www.facebook.com/colegioalfaeomegaangola" target="_blank" class="btn-social fb"><i class="fab fa-facebook-f"></i> Facebook</a>
+          <a href="https://www.instagram.com/colegioalfaeomega/" target="_blank" class="btn-social ig"><i class="fab fa-instagram"></i> Instagram</a>
+          <a href="https://wa.me/925952771" target="_blank" class="btn-social wa"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="footer-container"></div>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script>
+    AOS.init({ duration: 900, once: true, offset: 70, easing: 'ease-out-cubic' });
+
+    // ─── NAVBAR SCROLL ───────────────────────────────
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        navbar.classList.remove('transparent');
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.add('transparent');
+        navbar.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    // ─── MOBILE MENU ─────────────────────────────────
+    const mobileBtn = document.getElementById('mobile-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+      mobileBtn.querySelector('i').className =
+        mobileMenu.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+    });
+
+    // ─── LOAD FOOTER ─────────────────────────────────
+    fetch('/components/footer.html')
+      .then(r => r.text())
+      .then(d => { document.getElementById('footer-container').innerHTML = d; })
+      .catch(() => {});
+
+    // VIDEO PREVIEW CARDS
+    const previewCards = document.querySelectorAll('[data-preview-card]');
+    const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    function hydratePreviewVideo(videoEl) {
+      if (!videoEl || videoEl.dataset.hydrated === '1') return;
+      const sources = videoEl.querySelectorAll('source[data-src]');
+      sources.forEach(source => {
+        source.src = source.dataset.src;
+        source.removeAttribute('data-src');
+      });
+      videoEl.load();
+      videoEl.dataset.hydrated = '1';
+    }
+
+    function playPreview(videoEl) {
+      hydratePreviewVideo(videoEl);
+      const playPromise = videoEl.play();
+      if (playPromise && typeof playPromise.catch === 'function') {
+        playPromise.catch(() => {});
+      }
+      const wrapper = videoEl.closest('.video-preview');
+      if (wrapper) wrapper.classList.add('is-playing');
+    }
+
+    function stopPreview(videoEl) {
+      if (!videoEl) return;
+      videoEl.pause();
+      videoEl.currentTime = 0;
+      const wrapper = videoEl.closest('.video-preview');
+      if (wrapper) wrapper.classList.remove('is-playing');
+    }
+
+    previewCards.forEach(card => {
+      const video = card.querySelector('[data-preview-video]');
+      if (!video) return;
+
+      card.addEventListener('mouseenter', () => {
+        if (!canHover) return;
+        playPreview(video);
+      });
+
+      card.addEventListener('mouseleave', () => {
+        if (!canHover) return;
+        stopPreview(video);
+      });
+
+      card.addEventListener('click', event => {
+        if (event.target.closest('.video-social-link')) return;
+        if (canHover) return;
+        if (video.paused) {
+          playPreview(video);
+        } else {
+          stopPreview(video);
+        }
+      });
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) return;
+      document.querySelectorAll('[data-preview-video]').forEach(video => stopPreview(video));
+    });
+  </script>
+</body>
+</html>

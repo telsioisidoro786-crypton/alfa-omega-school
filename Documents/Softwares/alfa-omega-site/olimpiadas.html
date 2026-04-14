@@ -1,0 +1,1960 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Olimpíadas de Matemática — Colégio Alfa e Omega</title>
+  <meta name="description" content="Colégio Alfa e Omega classificado para as Olimpíadas Internacionais de Matemática. 16 medalhas conquistadas — 2 de Ouro, 4 de Prata, 10 de Bronze.">
+  <meta name="author" content="Colégio Alfa e Omega">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    /* ============================================
+       TOKENS — mesmo sistema da galeria
+    ============================================ */
+    :root {
+      --ink-950:   #010E24;
+      --ink-900:   #011830;
+      --primary:   #01377D;
+      --primary-m: #0147A0;
+      --primary-l: #0A5FC4;
+      --accent:    #CEF431;
+      --accent-m:  #B8D400;
+      --accent-d:  #8FA300;
+      --white:     #FFFFFF;
+      --off-white: #F8F9F6;
+      --gray-50:   #F5F6F3;
+      --gray-100:  #EAEBE8;
+      --gray-200:  #D4D6D1;
+      --gray-400:  #9BA09A;
+      --gray-500:  #6D726B;
+      --gray-600:  #4D524B;
+      --gray-700:  #3D4239;
+      --gray-900:  #1A1E18;
+      /* Medal palette */
+      --gold-bright:  #FFD700;
+      --gold-mid:     #D4A017;
+      --gold-deep:    #9A6F00;
+      --silver-bright:#E8E8E8;
+      --silver-mid:   #B8B8B8;
+      --silver-deep:  #7A7A7A;
+      --bronze-bright:#E8A45A;
+      --bronze-mid:   #C47C28;
+      --bronze-deep:  #7A4C10;
+      --font-serif: 'DM Serif Display', serif;
+      --font-sans:  'DM Sans', sans-serif;
+      --font-head:  'Poppins', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--ink-950);
+      color: var(--white);
+      overflow-x: hidden;
+      padding-top: 5rem;
+    }
+
+    /* =============================================
+       NAVBAR — idêntica à galeria
+    ============================================= */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100; height: 5rem;
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+    .navbar.transparent { background: transparent; }
+    .navbar.scrolled {
+      background: rgba(1,8,24,0.96);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.05), 0 8px 32px rgba(0,0,0,0.3);
+    }
+    .navbar-container {
+      max-width: 1280px; margin: 0 auto; padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between; height: 100%;
+    }
+    .logo-section { display: flex; align-items: center; gap: 0.875rem; text-decoration: none; }
+    .logo-img { width: 46px; height: 46px; object-fit: contain; transition: transform 0.3s ease; }
+    .logo-section:hover .logo-img { transform: scale(1.05); }
+    .logo-text-block h2 {
+      font-family: var(--font-head); font-size: 0.925rem; font-weight: 800;
+      color: var(--white); line-height: 1.1;
+    }
+    .logo-text-block p {
+      font-size: 0.65rem; font-weight: 700; color: rgba(206,244,49,0.75);
+      text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .nav-menu { display: flex; align-items: center; gap: 0.25rem; }
+    .nav-link {
+      font-family: var(--font-sans); font-size: 0.875rem; font-weight: 500;
+      color: rgba(255,255,255,0.85); text-decoration: none;
+      padding: 0.6rem 0.9rem; border-radius: 0.5rem; transition: all 0.25s ease;
+      position: relative;
+    }
+    .nav-link::after {
+      content: ''; position: absolute; bottom: 4px; left: 50%; right: 50%;
+      height: 2px; background: var(--accent); border-radius: 2px;
+      transition: left 0.3s ease, right 0.3s ease;
+    }
+    .nav-link:hover::after, .nav-link.active::after { left: 0.9rem; right: 0.9rem; }
+    .nav-link:hover { color: var(--white); }
+    .nav-link.active { color: var(--accent); }
+    .nav-cta {
+      margin-left: 0.75rem; background: var(--accent); color: var(--primary);
+      font-family: var(--font-sans); font-weight: 700; font-size: 0.875rem;
+      padding: 0.65rem 1.4rem; border-radius: 2rem; text-decoration: none;
+      transition: all 0.3s ease; white-space: nowrap;
+    }
+    .nav-cta:hover { background: var(--white); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(1,55,125,0.25); }
+    .mobile-btn {
+      display: none; background: none; border: none;
+      font-size: 1.4rem; color: var(--white); cursor: pointer;
+    }
+    .mobile-menu {
+      display: none; position: absolute; top: 100%; left: 0; right: 0;
+      background: var(--ink-900); border-top: 3px solid var(--accent);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4); padding: 1rem 0; flex-direction: column;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-nav-link {
+      padding: 0.875rem 2rem; font-weight: 600; color: rgba(255,255,255,0.85);
+      text-decoration: none; font-size: 0.95rem;
+      border-left: 3px solid transparent; transition: all 0.2s;
+    }
+    .mobile-nav-link:hover { background: rgba(206,244,49,0.07); border-left-color: var(--accent); color: var(--accent); }
+    @media (max-width: 1024px) { .nav-menu, .nav-cta { display: none; } .mobile-btn { display: block; } }
+
+    /* ============================================
+       HERO — CINEMATIC FULL DARK
+    ============================================ */
+
+     .page-hero-02 {
+      background:
+        linear-gradient(140deg, rgba(1,14,36,0.88), rgba(1,24,48,0.86)),
+        url('/assets/olimpiadas/todos-02.webp') center/cover no-repeat;
+      padding: 4rem 1rem 2rem;
+      position: relative; overflow: hidden; min-height: 88vh;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+
+
+    .page-hero {
+      background:
+        linear-gradient(140deg, rgba(1,14,36,0.88), rgba(1,24,48,0.86)),
+        url('/assets/olimpiadas/todos.webp') center/cover no-repeat;
+      padding: 6rem 2rem 4rem;
+      position: relative; overflow: hidden; min-height: 92vh;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+
+    /* Partículas de fundo via canvas */
+    #particles-canvas {
+      position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    }
+
+    /* Watermark gigante do nome da escola */
+    .school-watermark {
+      position: absolute; left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-head);
+      font-size: clamp(3rem, 8vw, 9rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: rgba(255,255,255,0.018);
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 0;
+      line-height: 1.1;
+      text-align: center;
+      user-select: none;
+    }
+
+    /* Ghost text OLIMPÍADAS */
+    .hero-ghost {
+      position: absolute; left: -1rem; bottom: -2rem;
+      font-family: var(--font-serif);
+      font-size: clamp(7rem, 16vw, 18rem);
+      color: rgba(255,255,255,0.022);
+      line-height: 1; pointer-events: none; white-space: nowrap; z-index: 0;
+      letter-spacing: -0.02em;
+    }
+
+    /* Grid texture igual à galeria */
+    .page-hero::after {
+      content: ''; position: absolute; inset: 0;
+      background-image:
+        repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(255,255,255,0.01) 80px, rgba(255,255,255,0.01) 81px),
+        repeating-linear-gradient(0deg, transparent, transparent 80px, rgba(255,255,255,0.01) 80px, rgba(255,255,255,0.01) 81px);
+      pointer-events: none; z-index: 1;
+    }
+
+    /* Glow azul no canto */
+    .hero-glow-blue {
+      position: absolute; top: -6rem; right: -6rem;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(1,55,125,0.45) 0%, transparent 65%);
+      pointer-events: none; z-index: 1;
+    }
+    .hero-glow-green {
+      position: absolute; bottom: -4rem; left: -4rem;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(206,244,49,0.04) 0%, transparent 70%);
+      pointer-events: none; z-index: 1;
+    }
+
+    .hero-inner {
+      max-width: 1280px; margin: 0 auto; width: 100%;
+      position: relative; z-index: 2;
+    }
+
+    .hero-meta {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem;
+      padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .hero-breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; color: rgba(255,255,255,0.35); }
+    .hero-breadcrumb a { color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
+    .hero-breadcrumb a:hover { color: var(--accent); }
+    .hero-breadcrumb i { font-size: 0.55rem; }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(206,244,49,0.1); border: 1px solid rgba(206,244,49,0.25);
+      color: var(--accent); font-size: 0.7rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.18em;
+      padding: 0.4rem 1.1rem; border-radius: 3rem;
+    }
+    .hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse-dot 1.8s ease-in-out infinite; }
+    @keyframes pulse-dot { 0%,100%{ opacity:1; transform:scale(1); } 50%{ opacity:0.5; transform:scale(1.6); } }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.2em; color: var(--accent); margin-bottom: 1.25rem;
+    }
+    .hero-eyebrow::before { content: ''; width: 28px; height: 2px; background: var(--accent); border-radius: 2px; }
+
+    .hero-h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      color: var(--white); line-height: 1.0;
+      letter-spacing: -0.03em; margin-bottom: 1.5rem;
+    }
+    .hero-h1 em { color: var(--accent); font-style: italic; }
+
+    .hero-desc {
+      font-size: 1.05rem; color: rgba(255,255,255,0.45);
+      line-height: 1.85; font-weight: 300; max-width: 560px; margin-bottom: 3rem;
+    }
+
+    /* Contador de medalhas no hero */
+    .hero-medals-strip {
+      display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+    }
+    .hms-item {
+      display: flex; align-items: center; gap: 0.75rem;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 1rem; padding: 0.875rem 1.25rem;
+      transition: all 0.3s;
+    }
+    .hms-item:hover { border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.07); }
+    .hms-icon {
+      width: 42px; height: 42px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; flex-shrink: 0;
+    }
+    .hms-icon.gold   { background: radial-gradient(135deg, var(--gold-bright), var(--gold-deep)); box-shadow: 0 0 20px rgba(255,215,0,0.35); }
+    .hms-icon.silver { background: radial-gradient(135deg, var(--silver-bright), var(--silver-deep)); box-shadow: 0 0 20px rgba(200,200,200,0.25); }
+    .hms-icon.bronze { background: radial-gradient(135deg, var(--bronze-bright), var(--bronze-deep)); box-shadow: 0 0 20px rgba(196,124,40,0.3); }
+    .hms-icon.total  { background: radial-gradient(135deg, var(--primary-l), var(--primary)); box-shadow: 0 0 20px rgba(1,55,125,0.4); }
+    .hms-num {
+      font-family: var(--font-head); font-size: 1.6rem; font-weight: 900;
+      color: var(--white); line-height: 1;
+    }
+    .hms-label {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: rgba(255,255,255,0.4); display: block; margin-top: 0.1rem;
+    }
+
+    /* Linha separadora inferior do hero */
+    .hero-strip {
+      border-top: 1px solid rgba(255,255,255,0.07); padding: 0.875rem 0;
+      position: relative; z-index: 2;
+    }
+    .hero-strip-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem; flex-wrap: wrap; padding: 0 2rem;
+    }
+    .strip-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .strip-tag {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+      padding: 0.28rem 0.75rem; border-radius: 3rem;
+    }
+    .strip-scroll {
+      display: flex; align-items: center; gap: 0.4rem;
+      font-size: 0.72rem; color: rgba(255,255,255,0.3); text-decoration: none; transition: color 0.2s;
+    }
+    .strip-scroll:hover { color: var(--accent); }
+
+    /* ============================================
+       PODIUM SECTION
+    ============================================ */
+    .section-podium {
+      background: var(--ink-950); padding: 6rem 2rem;
+      position: relative; overflow: hidden;
+    }
+    .section-podium::before {
+      content: 'MEDALHAS';
+      position: absolute; right: -2rem; top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-serif);
+      font-size: clamp(6rem, 12vw, 15rem);
+      color: rgba(255,255,255,0.018);
+      line-height: 1; pointer-events: none; white-space: nowrap;
+    }
+
+    .podium-inner { max-width: 1280px; margin: 0 auto; position: relative; z-index: 2; }
+
+    .section-header { text-align: center; margin-bottom: 5rem; }
+    .section-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.2em; color: var(--accent); margin-bottom: 1rem;
+    }
+    .section-eyebrow::before, .section-eyebrow::after { content: ''; width: 22px; height: 2px; background: var(--accent); border-radius: 2px; }
+    .section-h2 {
+      font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3.5rem);
+      color: var(--white); line-height: 1.1; letter-spacing: -0.02em;
+    }
+    .section-h2 em { color: var(--accent); font-style: italic; }
+    .section-sub { font-size: 1rem; color: rgba(255,255,255,0.4); line-height: 1.8; margin-top: 1rem; font-weight: 300; }
+
+    /* ──── CARDS GRID ──── */
+    .medals-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr 1fr;
+      gap: 1.5rem;
+      align-items: end;
+    }
+
+    /* Card base */
+    .medal-card {
+      position: relative; border-radius: 1.75rem;
+      overflow: hidden; cursor: default;
+      transition: transform 0.5s cubic-bezier(0.23,1,0.32,1), box-shadow 0.5s ease;
+    }
+    .medal-card:hover { transform: translateY(-12px) scale(1.02); }
+
+    /* Shimmer sweep animation */
+    .medal-card::after {
+      content: '';
+      position: absolute; inset: 0; border-radius: inherit;
+      background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.07) 50%, transparent 60%);
+      background-size: 200% 100%;
+      animation: shimmer-sweep 4s ease-in-out infinite;
+      pointer-events: none; z-index: 5;
+    }
+    @keyframes shimmer-sweep {
+      0%   { background-position: -200% center; }
+      50%  { background-position: 200% center; }
+      100% { background-position: -200% center; }
+    }
+
+    /* ──── OURO ──── */
+    .card-gold {
+      background:
+        radial-gradient(ellipse at 30% 0%, rgba(255,215,0,0.18) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 100%, rgba(218,160,23,0.12) 0%, transparent 50%),
+        linear-gradient(160deg, #0D1A08 0%, #040F20 40%, #010E24 100%);
+      border: 1px solid rgba(255,215,0,0.25);
+      box-shadow: 0 0 0 1px rgba(255,215,0,0.1), 0 30px 80px rgba(0,0,0,0.5), 0 0 60px rgba(255,215,0,0.08);
+    }
+    .card-gold:hover {
+      box-shadow: 0 0 0 1px rgba(255,215,0,0.4), 0 40px 100px rgba(0,0,0,0.6), 0 0 100px rgba(255,215,0,0.2);
+      border-color: rgba(255,215,0,0.5);
+    }
+
+    /* ──── PRATA ──── */
+    .card-silver {
+      background:
+        radial-gradient(ellipse at 30% 0%, rgba(232,232,232,0.12) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 100%, rgba(180,180,180,0.08) 0%, transparent 50%),
+        linear-gradient(160deg, #0A0F18 0%, #040C1E 40%, #010E24 100%);
+      border: 1px solid rgba(200,200,200,0.2);
+      box-shadow: 0 0 0 1px rgba(200,200,200,0.08), 0 30px 80px rgba(0,0,0,0.5), 0 0 60px rgba(200,200,200,0.05);
+    }
+    .card-silver:hover {
+      box-shadow: 0 0 0 1px rgba(200,200,200,0.3), 0 40px 100px rgba(0,0,0,0.6), 0 0 100px rgba(200,200,200,0.12);
+      border-color: rgba(200,200,200,0.4);
+    }
+
+    /* ──── BRONZE ──── */
+    .card-bronze {
+      background:
+        radial-gradient(ellipse at 30% 0%, rgba(196,124,40,0.15) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 100%, rgba(138,100,30,0.1) 0%, transparent 50%),
+        linear-gradient(160deg, #0D0E08 0%, #060F1A 40%, #010E24 100%);
+      border: 1px solid rgba(196,124,40,0.22);
+      box-shadow: 0 0 0 1px rgba(196,124,40,0.08), 0 30px 80px rgba(0,0,0,0.5), 0 0 60px rgba(196,124,40,0.07);
+    }
+    .card-bronze:hover {
+      box-shadow: 0 0 0 1px rgba(196,124,40,0.35), 0 40px 100px rgba(0,0,0,0.6), 0 0 100px rgba(196,124,40,0.15);
+      border-color: rgba(196,124,40,0.45);
+    }
+
+ /* Card inner padding */
+    .card-body { padding: 2.5rem 2.5rem 3rem; position: relative; z-index: 2; }
+
+    /* Photo block inside each medal card */
+    .card-photo {
+      margin-bottom: 1.5rem;
+      border-radius: 1rem;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+      aspect-ratio: 16 / 10;
+      position: relative;
+    }
+    .card-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(1,14,36,0.35) 100%);
+      pointer-events: none;
+    }
+    .card-photo img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .medal-card:hover .card-photo img { transform: scale(1.04); }
+
+
+    /* Medal icon circle */
+    .medal-icon-wrap {
+      width: 90px; height: 90px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 2rem; position: relative;
+    }
+    .medal-icon-wrap::before {
+      content: ''; position: absolute; inset: -4px; border-radius: 50%;
+      border: 2px solid transparent; animation: rotate-ring 6s linear infinite;
+    }
+    @keyframes rotate-ring { to { transform: rotate(360deg); } }
+
+    .icon-gold { background: radial-gradient(135deg, #FFD700 0%, #B8860B 60%, #7A5800 100%); box-shadow: 0 0 40px rgba(255,215,0,0.5), inset 0 1px 0 rgba(255,255,200,0.4); }
+    .icon-gold::before { border-image: linear-gradient(135deg, #FFD700, transparent, #FFD700) 1; }
+
+    .icon-silver { background: radial-gradient(135deg, #E8E8E8 0%, #A0A0A0 60%, #606060 100%); box-shadow: 0 0 40px rgba(200,200,200,0.4), inset 0 1px 0 rgba(255,255,255,0.5); }
+    .icon-silver::before { border-image: linear-gradient(135deg, #E8E8E8, transparent, #E8E8E8) 1; }
+
+    .icon-bronze { background: radial-gradient(135deg, #E8A45A 0%, #C47C28 60%, #7A4C10 100%); box-shadow: 0 0 40px rgba(196,124,40,0.45), inset 0 1px 0 rgba(255,200,100,0.3); }
+    .icon-bronze::before { border-image: linear-gradient(135deg, #E8A45A, transparent, #E8A45A) 1; }
+
+    .medal-icon-inner { font-size: 2.2rem; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4)); }
+
+    /* Card type label */
+    .card-type {
+      font-family: var(--font-sans); font-size: 0.65rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.2em;
+      margin-bottom: 0.6rem; display: block;
+    }
+    .type-gold   { color: var(--gold-bright); }
+    .type-silver { color: var(--silver-bright); }
+    .type-bronze { color: var(--bronze-bright); }
+
+    /* Card number */
+    .card-count {
+      font-family: var(--font-head); font-weight: 900;
+      line-height: 0.9; margin-bottom: 0.5rem;
+      letter-spacing: -0.04em;
+    }
+    .card-count .num { font-size: clamp(4.5rem, 8vw, 7rem); }
+    .card-count .unit { font-size: 1.4rem; opacity: 0.5; margin-left: 0.2rem; }
+    .count-gold   { color: var(--gold-bright); }
+    .count-silver { color: var(--silver-bright); }
+    .count-bronze { color: var(--bronze-bright); }
+
+    /* Card title & desc */
+    .card-title {
+      font-family: var(--font-serif); font-size: 1.5rem; color: var(--white);
+      line-height: 1.1; margin-bottom: 0.75rem;
+    }
+    .card-desc {
+      font-size: 0.875rem; color: rgba(255,255,255,0.45);
+      line-height: 1.7; font-weight: 300;
+    }
+
+    /* Card divider */
+    .card-divider { height: 1px; margin: 1.75rem 0; }
+    .divider-gold   { background: linear-gradient(90deg, rgba(255,215,0,0.4), transparent); }
+    .divider-silver { background: linear-gradient(90deg, rgba(200,200,200,0.3), transparent); }
+    .divider-bronze { background: linear-gradient(90deg, rgba(196,124,40,0.35), transparent); }
+
+    /* Card stats row */
+    .card-stats { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    .cs-item {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.75rem; color: rgba(255,255,255,0.35); font-weight: 500;
+    }
+    .cs-item i { font-size: 0.7rem; }
+    .cs-item.highlight { color: rgba(255,255,255,0.6); }
+
+    /* Card accent bar at top */
+    .card-topbar {
+      height: 3px; width: 100%; position: absolute; top: 0; left: 0; z-index: 3;
+    }
+    .topbar-gold   { background: linear-gradient(90deg, var(--gold-bright), var(--gold-mid), transparent); }
+    .topbar-silver { background: linear-gradient(90deg, var(--silver-bright), var(--silver-mid), transparent); }
+    .topbar-bronze { background: linear-gradient(90deg, var(--bronze-bright), var(--bronze-mid), transparent); }
+
+    /* Card podium height (visual cue) */
+    .card-podium-bar {
+      display: flex; align-items: center; gap: 0.5rem; margin-top: 1.5rem;
+    }
+    .cpb-fill {
+      height: 5px; border-radius: 3px; flex: 1;
+      position: relative; background: rgba(255,255,255,0.06);
+      overflow: hidden;
+    }
+    .cpb-fill::after {
+      content: ''; position: absolute; top: 0; left: 0;
+      height: 100%; border-radius: 3px;
+      animation: fill-bar 1.8s ease-out forwards;
+      animation-delay: 0.5s;
+    }
+    @keyframes fill-bar { from { width: 0; } to { width: var(--fill); } }
+
+    .cpb-fill-gold   { }
+    .cpb-fill-gold::after   { background: linear-gradient(90deg, var(--gold-bright), var(--gold-mid)); --fill: 100%; }
+    .cpb-fill-silver::after { background: linear-gradient(90deg, var(--silver-bright), var(--silver-mid)); --fill: 60%; }
+    .cpb-fill-bronze::after { background: linear-gradient(90deg, var(--bronze-bright), var(--bronze-mid)); --fill: 45%; }
+
+    .cpb-label { font-size: 0.65rem; font-weight: 700; white-space: nowrap; color: rgba(255,255,255,0.35); }
+
+    /* Ranking badge */
+    .ranking-badge {
+      position: absolute; top: 1.5rem; right: 1.75rem;
+      width: 42px; height: 42px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-head); font-weight: 900; font-size: 1rem;
+      z-index: 10;
+    }
+    .rb-gold   { background: rgba(255,215,0,0.12); border: 1.5px solid rgba(255,215,0,0.3); color: var(--gold-bright); }
+    .rb-silver { background: rgba(200,200,200,0.1); border: 1.5px solid rgba(200,200,200,0.25); color: var(--silver-bright); }
+    .rb-bronze { background: rgba(196,124,40,0.12); border: 1.5px solid rgba(196,124,40,0.28); color: var(--bronze-bright); }
+
+    /* Gold card is taller / hero */
+    .card-gold .card-body { padding-top: 3rem; padding-bottom: 3.5rem; }
+    .card-gold .card-photo img { object-position: center 20%; }
+    .card-gold .medal-icon-wrap { width: 100px; height: 100px; }
+    .card-gold .medal-icon-inner { font-size: 2.5rem; }
+
+   @media (max-width: 1024px) { .medals-grid { grid-template-columns: 1fr 1fr; } .card-photo { aspect-ratio: 16 / 9; } }
+    @media (max-width: 640px)  { .medals-grid { grid-template-columns: 1fr; } .card-gold { order: -1; } .card-body { padding: 2rem; } }
+
+    /* ============================================
+       STATS BAR SECTION
+    ============================================ */
+    .section-stats {
+      background: rgba(255,255,255,0.025);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 3.5rem 2rem;
+    }
+    .stats-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+    .stat-cell {
+      padding: 1.5rem 2rem; text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      transition: background 0.3s;
+    }
+    .stat-cell:last-child { border-right: none; }
+    .stat-cell:hover { background: rgba(255,255,255,0.03); }
+    .stat-num {
+      font-family: var(--font-head); font-size: 3rem; font-weight: 900;
+      line-height: 1; margin-bottom: 0.4rem;
+    }
+    .sn-total  { color: var(--accent); }
+    .sn-gold   { color: var(--gold-bright); }
+    .sn-silver { color: var(--silver-bright); }
+    .sn-bronze { color: var(--bronze-bright); }
+    .stat-label {
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.14em; color: rgba(255,255,255,0.35);
+    }
+    .stat-sub {
+      font-size: 0.72rem; color: rgba(255,255,255,0.2); margin-top: 0.25rem;
+    }
+    @media (max-width: 768px) { .stats-inner { grid-template-columns: repeat(2, 1fr); } .stat-cell:nth-child(2) { border-right: none; } .stat-cell:nth-child(3) { border-top: 1px solid rgba(255,255,255,0.06); } .stat-cell:nth-child(4) { border-top: 1px solid rgba(255,255,255,0.06); border-right: none; } }
+
+    /* ============================================
+       FINALISTAS EDUSSA SECTION — CAROUSEL
+    ============================================ */
+    .section-finalistas {
+      background: var(--ink-950); padding: 6rem 2rem;
+      position: relative; overflow: hidden;
+    }
+    .section-finalistas::before {
+      content: 'FINALISTAS';
+      position: absolute; left: -2rem; top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-serif);
+      font-size: clamp(6rem, 12vw, 15rem);
+      color: rgba(255,255,255,0.018);
+      line-height: 1; pointer-events: none; white-space: nowrap;
+    }
+
+    .finalistas-inner { max-width: 1280px; margin: 0 auto; position: relative; z-index: 2; }
+
+    .finalistas-header { text-align: center; margin-bottom: 5rem; }
+    .finalistas-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.2em; color: var(--accent); margin-bottom: 1rem;
+    }
+    .finalistas-eyebrow::before, .finalistas-eyebrow::after { content: ''; width: 22px; height: 2px; background: var(--accent); border-radius: 2px; }
+    .finalistas-h2 {
+      font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3.5rem);
+      color: var(--white); line-height: 1.1; letter-spacing: -0.02em;
+    }
+    .finalistas-h2 em { color: var(--accent); font-style: italic; }
+    .finalistas-sub { font-size: 1rem; color: rgba(255,255,255,0.4); line-height: 1.8; margin-top: 1rem; font-weight: 300; }
+
+    /* ──── CAROUSEL CONTAINER ──── */
+    .finalistas-carousel {
+      position: relative; overflow: hidden;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+    }
+
+    .carousel-wrapper {
+      overflow: hidden;
+      border-radius: 1rem;
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.6s cubic-bezier(0.23,1,0.32,1);
+      gap: 1rem;
+    }
+
+    /* ──── FINALISTA CARD ──── */
+    .finalista-card {
+      flex: 0 0 calc(33.333% - 0.67rem);
+      border-radius: 1.25rem;
+      overflow: hidden;
+      position: relative;
+      transition: all 0.4s cubic-bezier(0.23,1,0.32,1);
+      border: 1px solid rgba(255,255,255,0.12);
+      background: linear-gradient(135deg, rgba(1,55,125,0.1) 0%, rgba(206,244,49,0.03) 100%);
+    }
+
+    .finalista-card:hover {
+      border-color: rgba(255,255,255,0.25);
+      transform: translateY(-8px);
+      box-shadow: 0 24px 60px rgba(206,244,49,0.12);
+    }
+
+    /* Shimmer effect */
+    .finalista-card::after {
+      content: '';
+      position: absolute; inset: 0; border-radius: inherit;
+      background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.05) 50%, transparent 60%);
+      background-size: 200% 100%;
+      animation: shimmer-sweep 4s ease-in-out infinite;
+      pointer-events: none; z-index: 4;
+    }
+
+    .finalista-photo {
+      width: 100%; aspect-ratio: 1/1.2;
+      background: linear-gradient(135deg, rgba(1,55,125,0.15), rgba(206,244,49,0.08));
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3.5rem;
+      color: rgba(255,255,255,0.08);
+      z-index: 1;
+    }
+
+    .finalista-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 0.5s ease;
+    }
+
+    .finalista-card:hover .finalista-photo img { transform: scale(1.06); }
+
+    .finalista-info {
+      padding: 1.5rem;
+      position: relative; z-index: 2;
+    }
+
+    .finalista-role {
+      font-size: 0.6rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .finalista-name {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+      line-height: 1.15;
+    }
+
+    .finalista-title {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 0.8rem;
+      line-height: 1.4;
+      min-height: 2.2rem;
+    }
+
+    .finalista-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .fm-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .fm-item strong {
+      color: rgba(255,255,255,0.65);
+      font-weight: 600;
+    }
+
+    .fm-item i {
+      font-size: 0.7rem;
+      color: var(--accent);
+    }
+
+    /* ──── CAROUSEL CONTROLS ──── */
+    .carousel-controls {
+      display: flex; align-items: center; justify-content: between;
+      margin-top: 2rem; gap: 1rem;
+    }
+
+    .carousel-dots {
+      display: flex; gap: 0.6rem; flex: 1;
+      justify-content: center;
+    }
+
+    .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      cursor: pointer; transition: all 0.3s;
+      border: 1px solid transparent;
+    }
+
+    .dot.active {
+      background: var(--accent);
+      width: 28px; border-radius: 4px;
+      box-shadow: 0 0 20px rgba(206,244,49,0.4);
+    }
+
+    .carousel-nav {
+      display: flex; gap: 0.5rem;
+    }
+
+    .carousel-btn {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.03);
+      color: rgba(255,255,255,0.6);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      transition: all 0.3s;
+    }
+
+    .carousel-btn:hover {
+      background: rgba(206,244,49,0.1);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .carousel-btn:disabled {
+      opacity: 0.3; cursor: not-allowed;
+    }
+
+    @media (max-width: 1024px) {
+      .finalista-card { flex: 0 0 calc(50% - 0.5rem); }
+    }
+
+    @media (max-width: 640px) {
+      .finalista-card { flex: 0 0 100%; }
+      .finalistas-carousel { padding: 1rem; }
+    }
+
+    /* ============================================
+       DESTAQUE FINALISTAS — Full-Width Cards
+    ============================================ */
+    .destaque-finalistas-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .destaque-card {
+      position: relative;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: linear-gradient(135deg, rgba(1,55,125,0.08) 0%, rgba(206,244,49,0.02) 100%);
+      transition: all 0.5s cubic-bezier(0.23,1,0.32,1);
+      height: auto;
+      min-height: 580px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .destaque-card:hover {
+      border-color: rgba(255,255,255,0.25);
+      transform: translateY(-12px);
+      box-shadow: 0 30px 80px rgba(206,244,49,0.15);
+    }
+
+    .destaque-photo {
+      width: 100%;
+      height: 240px;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .destaque-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 0.6s ease;
+    }
+
+    .destaque-card:hover .destaque-photo img {
+      transform: scale(1.08);
+    }
+
+    .destaque-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(1,14,36,0.5) 100%);
+      pointer-events: none;
+    }
+
+    .destaque-content {
+      padding: 1.75rem;
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-y: auto;
+    }
+
+    .destaque-badge {
+      display: inline-block;
+      background: rgba(206,244,49,0.1);
+      border: 1px solid rgba(206,244,49,0.3);
+      color: var(--accent);
+      font-size: 0.65rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      margin-bottom: 1rem;
+      width: fit-content;
+    }
+
+    .destaque-title {
+      font-family: var(--font-serif);
+      font-size: 1.75rem;
+      font-weight: 400;
+      color: var(--white);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .destaque-subtitle {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.5;
+      margin-bottom: 1.2rem;
+      font-weight: 300;
+    }
+
+    .destaque-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .dm-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .dm-item i {
+      font-size: 1rem;
+      color: var(--accent);
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+
+    .dm-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 0.2rem;
+    }
+
+    .dm-value {
+      font-size: 0.9rem;
+      color: var(--white);
+      font-weight: 600;
+      line-height: 1.25;
+    }
+
+    @media (max-width: 1024px) {
+      .destaque-finalistas-grid { grid-template-columns: 1fr; }
+      .destaque-card { height: auto; }
+    }
+
+    /* ============================================
+       QUALIFICAÇÃO SECTION (narrative)
+    ============================================ */
+    .section-story {
+      padding: 7rem 2rem; background: var(--ink-950);
+      position: relative; overflow: hidden;
+    }
+    .story-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1.2fr;
+      gap: 6rem; align-items: center;
+    }
+
+    .story-left {}
+    .story-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.2em; color: var(--accent); margin-bottom: 1.25rem;
+    }
+    .story-eyebrow::before { content: ''; width: 28px; height: 2px; background: var(--accent); }
+    .story-h2 {
+      font-family: var(--font-serif); font-size: clamp(2rem, 3.5vw, 3rem);
+      color: var(--white); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 1.5rem;
+    }
+    .story-h2 em { color: var(--accent); font-style: italic; }
+    .story-p {
+      font-size: 1rem; color: rgba(255,255,255,0.5); line-height: 1.85; font-weight: 300; margin-bottom: 1.25rem;
+    }
+    .story-cta {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: var(--accent); color: var(--primary);
+      font-weight: 700; font-size: 0.9rem;
+      padding: 0.9rem 2rem; border-radius: 3rem; text-decoration: none;
+      transition: all 0.3s; margin-top: 0.75rem;
+    }
+    .story-cta:hover { background: var(--white); transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,0.4); }
+
+    /* Timeline visual */
+    .story-timeline {
+      display: flex; flex-direction: column; gap: 0;
+      position: relative;
+    }
+    .story-timeline::before {
+      content: ''; position: absolute; left: 21px; top: 24px; bottom: 24px;
+      width: 2px; background: linear-gradient(to bottom, var(--accent), rgba(206,244,49,0.1));
+    }
+    .timeline-item {
+      display: flex; gap: 1.5rem; align-items: flex-start;
+      padding: 1.5rem 0; position: relative;
+    }
+    .tl-dot {
+      width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; z-index: 2; position: relative;
+    }
+    .tl-dot.accent { background: var(--accent); color: var(--primary); }
+    .tl-dot.primary { background: var(--primary); border: 2px solid rgba(206,244,49,0.3); color: var(--accent); }
+    .tl-dot.dark { background: rgba(255,255,255,0.06); border: 1.5px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); }
+    .tl-content {}
+    .tl-step {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.14em; color: var(--accent); margin-bottom: 0.2rem;
+    }
+    .tl-title {
+      font-family: var(--font-head); font-weight: 700; font-size: 1rem;
+      color: var(--white); margin-bottom: 0.4rem;
+    }
+    .tl-text { font-size: 0.875rem; color: rgba(255,255,255,0.4); line-height: 1.65; }
+
+    @media (max-width: 1024px) { .story-inner { grid-template-columns: 1fr; gap: 3rem; } }
+
+    /* ============================================
+       CTA SECTION — igual à galeria
+    ============================================ */
+    .section-cta {
+      padding: 7rem 2rem; background: var(--ink-950);
+      position: relative; overflow: hidden; text-align: center;
+    }
+    .cta-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 30% 50%, rgba(1,55,125,0.5) 0%, transparent 55%),
+        radial-gradient(circle at 70% 50%, rgba(206,244,49,0.07) 0%, transparent 55%);
+    }
+    .cta-inner { max-width: 680px; margin: 0 auto; position: relative; z-index: 2; }
+    .cta-badge {
+      display: inline-block; background: rgba(206,244,49,0.1);
+      border: 1px solid rgba(206,244,49,0.25); color: var(--accent);
+      font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.18em; padding: 0.4rem 1.2rem; border-radius: 3rem; margin-bottom: 2rem;
+    }
+    .cta-h2 {
+      font-family: var(--font-serif); font-size: clamp(2.2rem, 4vw, 3.5rem);
+      color: var(--white); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 1.25rem;
+    }
+    .cta-h2 em { color: var(--accent); font-style: italic; }
+    .cta-p { font-size: 1rem; color: rgba(255,255,255,0.4); line-height: 1.8; font-weight: 300; margin-bottom: 3rem; }
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-cp {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: var(--accent); color: var(--primary); font-weight: 700;
+      font-size: 0.9rem; padding: 1rem 2.25rem; border-radius: 3rem;
+      text-decoration: none; transition: all 0.3s;
+    }
+    .btn-cp:hover { background: var(--white); transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,0.4); }
+    .btn-cs {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: transparent; border: 1.5px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.7); font-weight: 500; font-size: 0.9rem;
+      padding: 1rem 2.25rem; border-radius: 3rem; text-decoration: none; transition: all 0.3s;
+    }
+    .btn-cs:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-3px); }
+
+    /* ============================================
+       ANIMAÇÕES GLOBAIS
+    ============================================ */
+    @keyframes float-medal {
+      0%, 100% { transform: translateY(0) rotate(-2deg); }
+      50%       { transform: translateY(-10px) rotate(2deg); }
+    }
+    .medal-icon-wrap { animation: float-medal 4s ease-in-out infinite; }
+    .card-silver .medal-icon-wrap { animation-delay: -1.3s; }
+    .card-bronze .medal-icon-wrap { animation-delay: -2.6s; }
+
+    .nav-cta.gold {
+      margin-left: 0.5rem;
+      background: linear-gradient(135deg, #F5D06A 0%, #E6B325 50%, #D4A625 100%);
+      color: #010E24;
+      font-weight: 800;
+      font-size: 0.825rem;
+      padding: 0.7rem 1.6rem;
+      position: relative;
+      overflow: hidden;
+      letter-spacing: 0.01em;
+      border: 1px solid rgba(245,208,106,0.3);
+      box-shadow: 0 0 20px rgba(230,179,37,0.4), 0 0 40px rgba(230,179,37,0.2), inset 0 1px 0 rgba(255,255,255,0.5);
+      transition: all 0.35s cubic-bezier(0.23,1,0.32,1);
+    }
+
+    .nav-cta.gold::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 0; height: 0;
+      background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, transparent 70%);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s cubic-bezier(0.23,1,0.32,1);
+      pointer-events: none;
+    }
+
+    .nav-cta.gold:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .nav-cta.gold:hover {
+      background: linear-gradient(135deg, #FFF0C0 0%, #F5D06A 50%, #E6B325 100%);
+      color: #010E24;
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 0 30px rgba(230,179,37,0.6), 0 0 60px rgba(230,179,37,0.3), 0 12px 32px rgba(230,179,37,0.25), inset 0 1px 0 rgba(255,255,255,0.8);
+      letter-spacing: 0.02em;
+    }
+
+    .nav-cta.gold i {
+      margin-right: 0.4rem;
+      font-size: 0.95rem;
+      transition: transform 0.35s cubic-bezier(0.23,1,0.32,1);
+    }
+
+    .nav-cta.gold:hover i {
+      transform: rotate(12deg) scale(1.2);
+    }
+
+    /* Responsive geral */
+    @media (max-width: 768px) {
+      .page-hero { padding: 5rem 1.5rem 3rem; }
+      .section-podium, .section-stats, .section-story, .section-cta { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .hero-medals-strip { gap: 0.75rem; }
+      .hms-item { padding: 0.7rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar transparent" id="navbar">
+    <div class="navbar-container">
+      <a class="logo-section" href="/">
+        <img src="/assets/images/logo/lo.png" alt="Alfa e Omega" class="logo-img">
+        <div class="logo-text-block">
+          <h2>Colégio Alfa e Omega</h2>
+          <p>Panguila · Angola</p>
+        </div>
+      </a>
+
+      <nav class="nav-menu" role="navigation">
+        <a href="/" class="nav-link">Início</a>
+        <a href="/sobre.html" class="nav-link">Sobre</a>
+        <a href="/oferta.html" class="nav-link">Oferta</a>
+        <a href="/novidades.html" class="nav-link">Novidades</a>
+        <a href="/avisos.html" class="nav-link">Avisos</a>
+        <a href="/galeria.html" class="nav-link">Galeria</a>
+        <a href="/olimpiadas.html" class="nav-link active">Olimpíadas</a>
+        <a href="/contactos.html" class="nav-link">Contactos</a>
+      </nav>
+
+      <a href="/matriculas.html" class="nav-cta">Matricular Agora</a>
+
+      <button class="mobile-btn" id="mobile-btn" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="/" class="mobile-nav-link"><i class="fas fa-home"></i> Início</a>
+      <a href="/sobre.html" class="mobile-nav-link"><i class="fas fa-info-circle"></i> Sobre</a>
+      <a href="/oferta.html" class="mobile-nav-link"><i class="fas fa-book-open"></i> Oferta Educativa</a>
+      <a href="/novidades.html" class="mobile-nav-link"><i class="fas fa-newspaper"></i> Novidades</a>
+      <a href="/avisos.html" class="mobile-nav-link"><i class="fas fa-bullhorn"></i> Avisos</a>
+      <a href="/galeria.html" class="mobile-nav-link"><i class="fas fa-images"></i> Galeria</a>
+      <a href="/olimpiadas.html" class="mobile-nav-link" style="color:var(--accent);"><i class="fas fa-trophy"></i> Olimpíadas</a>
+      <a href="/contactos.html" class="mobile-nav-link"><i class="fas fa-envelope"></i> Contactos</a>
+      <div style="padding-top: 1rem; border-top: 1px solid rgba(0,0,0,0.1); margin: 1rem 0; display: flex; flex-direction: column; gap: 0.5rem;">
+        <a href="/matriculas.html" class="nav-cta" style="margin-left: 0; text-align: center;">Matricular Agora</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ===================== HERO ===================== -->
+    <section class="page-hero" id="hero-top">
+      <canvas id="particles-canvas"></canvas>
+
+      <!-- Watermark nome da escola -->
+      <div class="school-watermark">
+        COLÉGIO<br>ALFA E OMEGA
+      </div>
+
+      <!-- Ghost text -->
+      <div class="hero-ghost">OLIMPÍADAS</div>
+
+      <div class="hero-glow-blue"></div>
+      <div class="hero-glow-green"></div>
+
+      <div class="hero-inner">
+        <div class="hero-meta" data-aos="fade-down" data-aos-duration="600">
+          <div class="hero-breadcrumb">
+            <a href="/"><i class="fas fa-home"></i> Início</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Olimpíadas</span>
+          </div>
+          <div class="hero-badge">
+            <i class="fas fa-star"></i> Classificados para as Internacionais
+          </div>
+        </div>
+
+        <div class="hero-eyebrow" data-aos="fade-up" data-aos-delay="100">Colégio Alfa e Omega · Panguila</div>
+
+        <h1 class="hero-h1" data-aos="fade-up" data-aos-delay="150">
+          Olimpíadas de<br><em>Matemática</em><br>2025
+        </h1>
+
+        <p class="hero-desc" data-aos="fade-up" data-aos-delay="220">
+          Uma conquista histórica para a nossa escola. Os nossos alunos foram a julgamento, brilharam no palco nacional e garantiram a passagem para as Olimpíadas Internacionais de Matemática.
+        </p>
+
+        <div class="hero-medals-strip" data-aos="fade-up" data-aos-delay="300">
+          <div class="hms-item">
+            <div class="hms-icon total"><i class="fas fa-layer-group"></i></div>
+            <div>
+              <div class="hms-num">16</div>
+              <span class="hms-label">Total de Medalhas</span>
+            </div>
+          </div>
+          <div class="hms-item">
+            <div class="hms-icon gold">🥇</div>
+            <div>
+              <div class="hms-num">2</div>
+              <span class="hms-label">Ouro</span>
+            </div>
+          </div>
+          <div class="hms-item">
+            <div class="hms-icon silver">🥈</div>
+            <div>
+              <div class="hms-num">4</div>
+              <span class="hms-label">Prata</span>
+            </div>
+          </div>
+          <div class="hms-item">
+            <div class="hms-icon bronze">🥉</div>
+            <div>
+              <div class="hms-num">10</div>
+              <span class="hms-label">Bronze</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-strip">
+        <div class="hero-strip-inner">
+          <div class="strip-tags">
+            <span class="strip-tag">🏆 Olimpíadas Nacionais</span>
+            <span class="strip-tag">🌍 Qualificados Internacionais</span>
+            <span class="strip-tag">📐 Matemática</span>
+            <span class="strip-tag">🎓 Excelência Académica</span>
+          </div>
+          <a href="#medals" class="strip-scroll">Ver Medalhas <i class="fas fa-arrow-down"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== STATS BAR ===================== -->
+    <section class="section-stats" id="stats">
+      <div class="stats-inner">
+        <div class="stat-cell" data-aos="fade-up" data-aos-delay="0">
+          <div class="stat-num sn-total" data-count="16">0</div>
+          <div class="stat-label">Medalhas Totais</div>
+          <div class="stat-sub">Melhor resultado da escola</div>
+        </div>
+        <div class="stat-cell" data-aos="fade-up" data-aos-delay="100">
+          <div class="stat-num sn-gold" data-count="2">0</div>
+          <div class="stat-label">Medalhas de Ouro</div>
+          <div class="stat-sub">Top nível nacional</div>
+        </div>
+        <div class="stat-cell" data-aos="fade-up" data-aos-delay="200">
+          <div class="stat-num sn-silver" data-count="4">0</div>
+          <div class="stat-label">Medalhas de Prata</div>
+          <div class="stat-sub">Excelência reconhecida</div>
+        </div>
+        <div class="stat-cell" data-aos="fade-up" data-aos-delay="300">
+          <div class="stat-num sn-bronze" data-count="10">0</div>
+          <div class="stat-label">Medalhas de Bronze</div>
+          <div class="stat-sub">Dedicação e talento</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== MEDALS CARDS ===================== -->
+    <section class="section-podium" id="medals">
+      <div class="podium-inner">
+
+        <div class="section-header" data-aos="fade-up">
+          <div class="section-eyebrow">Pódio · 2025</div>
+          <h2 class="section-h2">O nosso <em>Pódio</em> Nacional</h2>
+          <p class="section-sub">
+            Cada medalha representa horas de estudo, dedicação e o orgulho de toda a comunidade escolar.<br>Resultados das Olimpíadas Nacionais de Matemática — fase classificatória para as Internacionais.
+          </p>
+        </div>
+<!--  -->
+        <div class="medals-grid">
+
+          <!-- ──── CARD PRATA ──── -->
+           <div class="medal-card card-silver" data-aos="fade-up" data-aos-delay="100">
+            <div class="card-topbar topbar-silver"></div>
+            <div class="ranking-badge rb-silver">#2</div>
+            <div class="card-body">
+              <div class="card-photo">
+                <img src="/assets/olimpiadas/prata.webp" alt="Alunos com medalhas de prata" loading="lazy" decoding="async">
+              </div>
+              <div class="medal-icon-wrap icon-silver">
+                <div class="medal-icon-inner">🥈</div>
+              </div>
+              <span class="card-type type-silver">Medalha de Prata</span>
+              <div class="card-count count-silver">
+                <span class="num">4</span><span class="unit">med.</span>
+              </div>
+              <h3 class="card-title">Prata — Segundo Nível de Excelência</h3>
+              <p class="card-desc">
+                Quatro alunos alcançaram a distinção de Prata, demonstrando raciocínio lógico superior e capacidade de resolução de problemas de alta complexidade.
+              </p>
+              <div class="card-divider divider-silver"></div>
+              <div class="card-stats">
+                <div class="cs-item highlight"><i class="fas fa-user-graduate"></i> 4 alunos premiados</div>
+                <div class="cs-item"><i class="fas fa-map-marker-alt"></i> Nível Nacional</div>
+              </div>
+              <div class="card-podium-bar">
+                <div class="cpb-fill cpb-fill-silver"></div>
+                <span class="cpb-label">25% do total</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ──── CARD OURO (centro / destaque) ──── -->
+          <div class="medal-card card-gold" data-aos="fade-up" data-aos-delay="0">
+            <div class="card-topbar topbar-gold"></div>
+            <div class="ranking-badge rb-gold">#1</div>
+            <div class="card-body">
+              <div class="card-photo">
+                <img src="/assets/olimpiadas/ouro.webp" alt="Alunos com medalhas de ouro" loading="lazy" decoding="async">
+              </div>
+              <div class="medal-icon-wrap icon-gold">
+                <div class="medal-icon-inner">🥇</div>
+              </div>
+              <span class="card-type type-gold">Medalha de Ouro</span>
+              <div class="card-count count-gold">
+                <span class="num">2</span><span class="unit">med.</span>
+              </div>
+              <h3 class="card-title">Ouro — O Mais Alto Nível</h3>
+              <p class="card-desc">
+                Dois alunos alcançaram o nível máximo nas Olimpíadas Nacionais de Matemática, garantindo assim a representação do Colégio Alfa e Omega na competição internacional.
+              </p>
+              <div class="card-divider divider-gold"></div>
+              <div class="card-stats">
+                <div class="cs-item highlight"><i class="fas fa-user-graduate"></i> 2 alunos premiados</div>
+                <div class="cs-item"><i class="fas fa-globe"></i> Qualificados Internacionais</div>
+                <div class="cs-item"><i class="fas fa-star"></i> Classificação Máxima</div>
+              </div>
+              <div class="card-podium-bar">
+                <div class="cpb-fill cpb-fill-gold"></div>
+                <span class="cpb-label">Nível máximo</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ──── CARD BRONZE ──── -->
+          <div class="medal-card card-bronze" data-aos="fade-up" data-aos-delay="200">
+            <div class="card-topbar topbar-bronze"></div>
+            <div class="ranking-badge rb-bronze">#3</div>
+            <div class="card-body">
+              <div class="card-photo">
+                <img src="/assets/olimpiadas/bronze.webp" alt="Alunos com medalhas de bronze" loading="lazy" decoding="async">
+              </div>
+              <div class="medal-icon-wrap icon-bronze">
+                <div class="medal-icon-inner">🥉</div>
+              </div>
+              <span class="card-type type-bronze">Medalha de Bronze</span>
+              <div class="card-count count-bronze">
+                <span class="num">10</span><span class="unit">med.</span>
+              </div>
+              <h3 class="card-title">Bronze — Força no Coletivo</h3>
+              <p class="card-desc">
+                Dez alunos conquistaram a medalha de Bronze, evidenciando a profundidade e abrangência do talento matemático cultivado no Colégio Alfa e Omega.
+              </p>
+              <div class="card-divider divider-bronze"></div>
+              <div class="card-stats">
+                <div class="cs-item highlight"><i class="fas fa-users"></i> 10 alunos premiados</div>
+                <div class="cs-item"><i class="fas fa-chart-bar"></i> 62.5% do total</div>
+              </div>
+              <div class="card-podium-bar">
+                <div class="cpb-fill cpb-fill-bronze"></div>
+                <span class="cpb-label">Maior grupo</span>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /medals-grid -->
+
+        <!-- ════════════════════════════════════════════════════ -->
+        <!-- FINALISTAS EDUSSA CHINDECASSE CAROUSEL             -->
+        <!-- ════════════════════════════════════════════════════ -->
+        <div style="margin-top: 6rem; padding-top: 4rem; border-top: 1px solid rgba(255,255,255,0.08);">
+          <div class="finalistas-header" data-aos="fade-up">
+            <div class="finalistas-eyebrow">Delegação · Edussa Chindecasse</div>
+            <h2 class="finalistas-h2">Finalistas No Programa <em>A Sua Manhã - TPA </em></h2>
+            <p class="finalistas-sub">
+              A delegação representante do Programa A Sua Manhã pela Edussa Chindecasse. Liderada pelo Director Geral e Coordenadora do Iº Ciclo, com os alunos premiados que brilharam nas Olimpíadas.
+            </p>
+          </div>
+
+          <div class="finalistas-carousel" data-aos="fade-up" data-aos-delay="100">
+            <div class="carousel-wrapper">
+              <div class="carousel-track" id="carousel-track">
+                
+                <!-- CARD 01: Director Geral -->
+                <div class="finalista-card">
+                  <div class="finalista-photo">
+                    <img src="assets/tpa/director.webp" alt="Director Geral da Instituição" loading="lazy" decoding="async">
+                  </div>
+                  <div class="finalista-info">
+                    <span class="finalista-role">Director Geral</span>
+                    <h3 class="finalista-name">Liderança<br>Instituição</h3>
+                    <p class="finalista-title">Visão Estratégica & Orientação Pedagógica</p>
+                    <div class="finalista-meta">
+                      <div class="fm-item"><i class="fas fa-briefcase"></i> <strong>Gestão Académica</strong></div>
+                      <div class="fm-item"><i class="fas fa-medal"></i> <strong>16 Medalhas 2025</strong></div>
+                      <div class="fm-item"><i class="fas fa-handshake"></i> <strong>Apoio aos Alunos</strong></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- CARD 02: Coordenadora Ciclo -->
+                <div class="finalista-card">
+                  <div class="finalista-photo">
+                    <img src="assets/tpa/dr janeth.webp" alt="Dra. Janeth Neto - Coordenadora do Iº Ciclo" loading="lazy" decoding="async">
+                  </div>
+                  <div class="finalista-info">
+                    <span class="finalista-role">Coordenadora do Iº Ciclo</span>
+                    <h3 class="finalista-name">Dra. Janeth<br>Neto</h3>
+                    <p class="finalista-title">Principais Responsável pela Preparação dos Alunos</p>
+                    <div class="finalista-meta">
+                      <div class="fm-item"><i class="fas fa-book-open"></i> <strong>Coordenação Pedagógica</strong></div>
+                      <div class="fm-item"><i class="fas fa-lightbulb"></i> <strong>Programa Técnico</strong></div>
+                      <div class="fm-item"><i class="fas fa-award"></i> <strong>Sucesso Comprovado</strong></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- CARD 03: Alunas Ouro -->
+                <div class="finalista-card">
+                  <div class="finalista-photo">
+                    <img src="assets/tpa/meninas.webp" alt="Alunas Premiadas - Medalha Ouro" loading="lazy" decoding="async">
+                  </div>
+                  <div class="finalista-info">
+                    <span class="finalista-role">Medalha de Ouro</span>
+                    <h3 class="finalista-name">Alunas<br>Premiadas</h3>
+                    <p class="finalista-title">Classificação Máxima nas Olimpíadas 2025</p>
+                    <div class="finalista-meta">
+                      <div class="fm-item"><i class="fas fa-trophy"></i> <strong>Nível Máximo</strong></div>
+                      <div class="fm-item"><i class="fas fa-globe"></i> <strong>Qualificadas Internacionais</strong></div>
+                      <div class="fm-item"><i class="fas fa-star"></i> <strong>Excelência Pura</strong></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- CARD 04: Alunos Prata -->
+                <div class="finalista-card">
+                  <div class="finalista-photo">
+                    <img src="assets/tpa/meninos.webp" alt="Alunos Premiados - Medalha Prata" loading="lazy" decoding="async">
+                  </div>
+                  <div class="finalista-info">
+                    <span class="finalista-role">Medalha de Prata</span>
+                    <h3 class="finalista-name">Alunos<br>Premiados</h3>
+                    <p class="finalista-title">Segundo Nível de Distinção Nacional 2025</p>
+                    <div class="finalista-meta">
+                      <div class="fm-item"><i class="fas fa-brain"></i> <strong>Raciocínio Avançado</strong></div>
+                      <div class="fm-item"><i class="fas fa-puzzle-piece"></i> <strong>Resolução Complexa</strong></div>
+                      <div class="fm-item"><i class="fas fa-medal"></i> <strong>Reconhecimento Nacional</strong></div>
+                    </div>
+                  </div>
+                </div>
+
+              </div><!-- /carousel-track -->
+            </div><!-- /carousel-wrapper -->
+
+            <div class="carousel-controls">
+              <div class="carousel-dots" id="carousel-dots"></div>
+              <div class="carousel-nav">
+                <button class="carousel-btn" id="prev-btn" title="Slider Anterior"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-btn" id="next-btn" title="Próximo Slider"><i class="fas fa-chevron-right"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════════════════════════════════════════════════ -->
+          <!-- DESTAQUE: Delegação + Colégio                        -->
+          <!-- ════════════════════════════════════════════════════ -->
+          <div style="margin-top: 6rem; padding-top: 4rem; border-top: 1px solid rgba(255,255,255,0.08);">
+            
+            <div class="destaque-finalistas-grid" data-aos="fade-up">
+              
+              <!-- DESTAQUE 01: Delegação Completa -->
+              <div class="destaque-card">
+                <div class="destaque-photo">
+                  <img src="assets/tpa/todos.webp" alt="Delegação Completa - Programa Edussa" loading="lazy" decoding="async">
+                  <div class="destaque-overlay"></div>
+                </div>
+                <div class="destaque-content">
+                  <div class="destaque-badge">Delegação Edussa Chindecasse</div>
+                  <h2 class="destaque-title">Força<br>Coletiva</h2>
+                  <p class="destaque-subtitle">16 Alunos Premiados nas Olimpíadas Nacionais 2025</p>
+                  <div class="destaque-meta">
+                    <div class="dm-item">
+                      <i class="fas fa-users"></i>
+                      <div>
+                        <div class="dm-label">Equipa Unida</div>
+                        <div class="dm-value">Força coletiva do Alfa e Ómega</div>
+                      </div>
+                    </div>
+                    <div class="dm-item">
+                      <i class="fas fa-trophy"></i>
+                      <div>
+                        <div class="dm-label">Desempenho Total</div>
+                        <div class="dm-value">2 Ouro + 4 Prata + 10 Bronze = 16 Medalhas</div>
+                      </div>
+                    </div>
+                    <div class="dm-item">
+                      <i class="fas fa-handshake"></i>
+                      <div>
+                        <div class="dm-label">Espírito Institucional</div>
+                        <div class="dm-value">Dedicação, empenho e união</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- DESTAQUE 02: Colégio Alfa e Ómega -->
+              <div class="destaque-card">
+                <div class="destaque-photo">
+                  <img src="assets/tpa/todos-02.webp" alt="Colégio Alfa e Ómega - Instituição Vencedora" loading="lazy" decoding="async">
+                  <div class="destaque-overlay"></div>
+                </div>
+                <div class="destaque-content">
+                  <div class="destaque-badge">Sucesso Institucional</div>
+                  <h2 class="destaque-title">Colégio Alfa<br>e Ómega</h2>
+                  <p class="destaque-subtitle">Maior Resultado Histórico nas Olimpíadas 2026</p>
+                  <div class="destaque-meta">
+                    <div class="dm-item">
+                      <i class="fas fa-graduation-cap"></i>
+                      <div>
+                        <div class="dm-label">Educação de Excelência</div>
+                        <div class="dm-value">Qualidade académica comprovada</div>
+                      </div>
+                    </div>
+                    <div class="dm-item">
+                      <i class="fas fa-medal"></i>
+                      <div>
+                        <div class="dm-label">Talento Matemático</div>
+                        <div class="dm-value">10 Medalhas de Bronze premiadas</div>
+                      </div>
+                    </div>
+                    <div class="dm-item">
+                      <i class="fas fa-globe"></i>
+                      <div>
+                        <div class="dm-label">Representação Nacional</div>
+                        <div class="dm-value">Representantes em Olimpíadas Internacionais</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ===================== STORY / TIMELINE ===================== -->
+    <section class="section-story">
+      <div class="story-inner">
+
+        <div class="story-left" data-aos="fade-right">
+          <div class="story-eyebrow">A nossa jornada</div>
+          <h2 class="story-h2">
+            Do Colégio à<br>competição <em>Internacional</em>
+          </h2>
+          <p class="story-p">
+            Tudo começou com horas de estudo, perseverança e a crença de que os nossos alunos têm o talento para competir com os melhores. Hoje, essa crença transformou-se em medalhas e num bilhete para o mundo.
+          </p>
+          <p class="story-p">
+            Os 16 alunos premiados representam não só o seu próprio esforço, mas também o empenho dos professores, o apoio das famílias e o compromisso da escola com a excelência académica.
+          </p>
+          <a href="/novidades.html" class="story-cta">
+            <i class="fas fa-newspaper"></i> Ver Notícias
+          </a>
+        </div>
+
+        <div class="story-right" data-aos="fade-left" data-aos-delay="150">
+          <div class="story-timeline">
+            <div class="timeline-item">
+              <div class="tl-dot accent"><i class="fas fa-flag"></i></div>
+              <div class="tl-content">
+                <div class="tl-step">Fase 01</div>
+                <div class="tl-title">Inscrição e Preparação</div>
+                <p class="tl-text">Os alunos foram seleccionados e preparados com treinos intensivos de resolução de problemas matemáticos avançados.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="tl-dot primary"><i class="fas fa-pencil-alt"></i></div>
+              <div class="tl-content">
+                <div class="tl-step">Fase 02</div>
+                <div class="tl-title">Provas Nacionais</div>
+                <p class="tl-text">A escola foi a julgamento nas Olimpíadas Nacionais, onde os nossos alunos enfrentaram os melhores de todo o país.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="tl-dot accent"><i class="fas fa-medal"></i></div>
+              <div class="tl-content">
+                <div class="tl-step">Fase 03</div>
+                <div class="tl-title">16 Medalhas Conquistadas</div>
+                <p class="tl-text">Resultado histórico: 2 Ouro, 4 Prata e 10 Bronze — uma marca que coloca o Colégio Alfa e Omega no mapa da excelência académica angolana.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="tl-dot primary"><i class="fas fa-globe-africa"></i></div>
+              <div class="tl-content">
+                <div class="tl-step">Próximo passo</div>
+                <div class="tl-title">Olimpíadas Internacionais</div>
+                <p class="tl-text">Os medalistas de Ouro representarão Angola (e o nosso colégio) na fase internacional. Uma honra e uma responsabilidade que carregamos com orgulho.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================== CTA ===================== -->
+    <section class="page-hero-02">
+      <div class="cta-bg"></div>
+      <div class="cta-inner" data-aos="fade-up">
+        <div class="cta-badge">🏆 Excelência Académica</div>
+        <h2 class="cta-h2">O seu filho pode ser<br>o próximo <em>campeão</em></h2>
+        <p class="cta-p">No Colégio Alfa e Omega cultivamos o talento de cada aluno. Venha conhecer a nossa escola e descubra como preparamos os líderes de amanhã.</p>
+        <div class="cta-btns">
+          <a href="/matriculas.html" class="btn-cp"><i class="fas fa-graduation-cap"></i> Matricular Agora</a>
+          <a href="https://wa.me/925952771" target="_blank" class="btn-cs"><i class="fab fa-whatsapp"></i> Fale Connosco</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="footer-container"></div>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 900, once: true, offset: 60, easing: 'ease-out-cubic' });
+
+    // ─── FINALISTAS CAROUSEL ──────────────────────
+    const carouselTrack = document.getElementById('carousel-track');
+    const carouselDots = document.getElementById('carousel-dots');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    
+    if (carouselTrack) {
+      const cards = document.querySelectorAll('.finalista-card');
+      let currentIndex = 0;
+      let cardsPerView = 3;
+      let cardWidth = 100 / 3;
+      let maxIndex = cards.length - 3;
+
+      // Detectar quantos cards devem aparecer por linha
+      function getCardsPerView() {
+        const width = window.innerWidth;
+        if (width < 640) return 1;      // Mobile
+        if (width < 1024) return 2;     // Tablet
+        return 3;                       // Desktop
+      }
+
+      // Reconstruir dots
+      function rebuildDots() {
+        carouselDots.innerHTML = '';
+        const slides = Math.ceil(cards.length / cardsPerView);
+        for (let i = 0; i < slides; i++) {
+          const dot = document.createElement('div');
+          dot.className = 'dot' + (i === 0 ? ' active' : '');
+          dot.addEventListener('click', () => goToSlide(i));
+          carouselDots.appendChild(dot);
+        }
+      }
+
+      // Atualizar com base no tamanho da tela
+      function updateResponsive() {
+        const newCardsPerView = getCardsPerView();
+        if (newCardsPerView !== cardsPerView) {
+          cardsPerView = newCardsPerView;
+          cardWidth = 100 / cardsPerView;
+          currentIndex = 0;
+          rebuildDots();
+          updateCarousel();
+        }
+      }
+
+      rebuildDots();
+
+      function updateCarousel() {
+        const slidePercentage = (100 / cardsPerView);
+        const translateX = -(currentIndex * slidePercentage);
+        carouselTrack.style.transform = `translateX(${translateX}%)`;
+        
+        // Update dots
+        const totalSlides = Math.ceil(cards.length / cardsPerView);
+        const maxSlides = totalSlides - 1;
+        document.querySelectorAll('.dot').forEach((dot, i) => {
+          dot.classList.toggle('active', i === currentIndex);
+        });
+
+        // Update button states
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex >= maxSlides;
+      }
+
+      function goToSlide(index) {
+        const totalSlides = Math.ceil(cards.length / cardsPerView);
+        const maxSlides = totalSlides - 1;
+        currentIndex = Math.max(0, Math.min(index, maxSlides));
+        updateCarousel();
+      }
+
+      function nextSlide() {
+        const totalSlides = Math.ceil(cards.length / cardsPerView);
+        const maxSlides = totalSlides - 1;
+        if (currentIndex < maxSlides) {
+          currentIndex++;
+          updateCarousel();
+        }
+      }
+
+      function prevSlide() {
+        if (currentIndex > 0) {
+          currentIndex--;
+          updateCarousel();
+        }
+      }
+
+      prevBtn.addEventListener('click', prevSlide);
+      nextBtn.addEventListener('click', nextSlide);
+
+      // Initial state
+      updateCarousel();
+
+      // Responsive adjustment
+      window.addEventListener('resize', updateResponsive);
+    }
+
+    // ─── NAVBAR SCROLL ────────────────────────────────────
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        navbar.classList.remove('transparent');
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.add('transparent');
+        navbar.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    // ─── MOBILE MENU ──────────────────────────────────────
+    document.getElementById('mobile-btn').addEventListener('click', function () {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('open');
+      this.querySelector('i').className = menu.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+    });
+
+    // ─── COUNTER ANIMATION ────────────────────────────────
+    function animateCounter(el) {
+      const target = parseInt(el.dataset.count);
+      const duration = 1800;
+      const start = performance.now();
+      function step(now) {
+        const elapsed = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - elapsed, 3);
+        el.textContent = Math.round(eased * target);
+        if (elapsed < 1) requestAnimationFrame(step);
+        else el.textContent = target;
+      }
+      requestAnimationFrame(step);
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+
+    document.querySelectorAll('[data-count]').forEach(el => observer.observe(el));
+
+    // ─── PARTICLES CANVAS ─────────────────────────────────
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resize() {
+      canvas.width  = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize, { passive: true });
+
+    const COLORS = [
+      'rgba(206,244,49,',   // accent lime
+      'rgba(1,95,196,',     // primary-l
+      'rgba(255,215,0,',    // gold
+      'rgba(200,200,200,',  // silver
+      'rgba(196,124,40,',   // bronze
+    ];
+
+    for (let i = 0; i < 90; i++) {
+      particles.push({
+        x: Math.random(),
+        y: Math.random(),
+        r: Math.random() * 1.6 + 0.3,
+        vx: (Math.random() - 0.5) * 0.00015,
+        vy: (Math.random() - 0.5) * 0.00015,
+        c: COLORS[Math.floor(Math.random() * COLORS.length)],
+        a: Math.random() * 0.5 + 0.1,
+      });
+    }
+
+    function drawParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const W = canvas.width, H = canvas.height;
+      particles.forEach(p => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0) p.x = 1; if (p.x > 1) p.x = 0;
+        if (p.y < 0) p.y = 1; if (p.y > 1) p.y = 0;
+        ctx.beginPath();
+        ctx.arc(p.x * W, p.y * H, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.c + p.a + ')';
+        ctx.fill();
+      });
+      // Draw faint lines between close particles
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = (particles[i].x - particles[j].x) * W;
+          const dy = (particles[i].y - particles[j].y) * H;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < 120) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x * W, particles[i].y * H);
+            ctx.lineTo(particles[j].x * W, particles[j].y * H);
+            ctx.strokeStyle = `rgba(1,55,125,${0.12 * (1 - dist/120)})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(drawParticles);
+    }
+    drawParticles();
+
+    // ─── LOAD COMPONENTS ──────────────────────────────────
+    fetch('/components/navbar.html')
+      .then(r => r.text())
+      .then(d => { document.getElementById('navbar-container') && (document.getElementById('navbar-container').innerHTML = d); })
+      .catch(() => {});
+    fetch('/components/footer.html')
+      .then(r => r.text())
+      .then(d => { document.getElementById('footer-container').innerHTML = d; })
+      .catch(() => {});
+  </script>
+  <script>
+    /**
+     * SISTEMA DE INTELIGÊNCIA - COLÉGIO ALFA E ÓMEGA
+     * Implementação: Supabase Realtime Data Tracking
+     *
+     * Este script conecta o frontend ao banco de dados para capturar:
+     * 1. Leads de Encarregados (Quiz)
+     * 2. Cliques em Medalhas (Métricas de Interesse)
+     */
+    const SUPABASE_URL = 'https://xpoysdrwvmamrtybiflj.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_f5TrSsgbVRptK1PINCmRag_tWmjDcIp';
+    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    async function saveQuizLead(payload) {
+      if (!_supabase) return;
+      const { error } = await _supabase.from('leads_quiz').insert([
+        {
+          nome: payload.nome,
+          whatsapp: payload.whatsapp,
+          score: payload.score,
+          status: payload.status,
+        },
+      ]);
+
+      if (error) console.error('Erro Supabase (Quiz):', error.message);
+    }
+
+    async function registrarCliqueMedalha(tipo) {
+      if (!_supabase) return;
+      const { error } = await _supabase.from('site_metrics').insert([
+        {
+          event_type: `clique_medalha_${String(tipo).toLowerCase()}`,
+          page_url: window.location.pathname,
+        },
+      ]);
+
+      if (error) {
+        console.error('Erro nas Métricas:', error.message);
+      } else {
+        console.log(`Evento: Clique na medalha de ${tipo} registado!`);
+      }
+    }
+
+    async function trackMedalInteraction(medalType) {
+      await registrarCliqueMedalha(medalType);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const map = [
+        { selector: '.card-gold', type: 'ouro' },
+        { selector: '.card-silver', type: 'prata' },
+        { selector: '.card-bronze', type: 'bronze' },
+      ];
+
+      map.forEach(item => {
+        document.querySelectorAll(item.selector).forEach(el => {
+          el.addEventListener('click', () => registrarCliqueMedalha(item.type));
+        });
+      });
+    });
+  </script>
+</body>
+</html>

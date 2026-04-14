@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>📚 Web Push Notifications Guide</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'DM Sans', sans-serif;
+        background: #f5f5f5;
+        color: #333;
+        line-height: 1.8;
+        padding: 2rem;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        background: #fff;
+        border-radius: 12px;
+        padding: 3rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        color: #01377d;
+        margin-bottom: 0.5rem;
+      }
+
+      .subtitle {
+        color: #666;
+        margin-bottom: 2rem;
+      }
+
+      h2 {
+        color: #01377d;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        border-bottom: 2px solid #cef431;
+        padding-bottom: 0.5rem;
+      }
+
+      h3 {
+        color: #0a5fc4;
+        margin-top: 1.5rem;
+        margin-bottom: 0.75rem;
+      }
+
+      code {
+        background: #f5f5f5;
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+        font-family: 'Courier New', monospace;
+        color: #d63384;
+      }
+
+      pre {
+        background: #1e1e1e;
+        color: #d4d4d4;
+        padding: 1rem;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 1rem 0;
+      }
+
+      pre code {
+        color: inherit;
+        padding: 0;
+        background: none;
+      }
+
+      .file-item {
+        background: #f9f9f9;
+        padding: 1rem;
+        border-left: 4px solid #cef431;
+        margin-bottom: 1rem;
+        border-radius: 4px;
+      }
+
+      .file-name {
+        font-weight: 700;
+        color: #01377d;
+        font-family: monospace;
+      }
+
+      .file-desc {
+        color: #666;
+        margin-top: 0.25rem;
+        font-size: 0.95rem;
+      }
+
+      .checklist {
+        list-style: none;
+      }
+
+      .checklist li {
+        padding: 0.5rem 0;
+        padding-left: 2rem;
+        position: relative;
+      }
+
+      .checklist li:before {
+        content: '☐';
+        position: absolute;
+        left: 0;
+        color: #01377d;
+        font-weight: bold;
+      }
+
+      .checklist li.done:before {
+        content: '✓';
+        color: #22c55e;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1rem 0;
+      }
+
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 0.75rem;
+        text-align: left;
+      }
+
+      th {
+        background: #01377d;
+        color: #fff;
+        font-weight: 600;
+      }
+
+      tr:nth-child(even) {
+        background: #f9f9f9;
+      }
+
+      .btn {
+        display: inline-block;
+        background: linear-gradient(135deg, #01377d, #0a5fc4);
+        color: #cef431;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        margin-top: 1rem;
+        border: none;
+        cursor: pointer;
+      }
+
+      .btn:hover {
+        opacity: 0.9;
+      }
+
+      .warning {
+        background: #fef3c7;
+        border-left: 4px solid #f59e0b;
+        padding: 1rem;
+        border-radius: 4px;
+        margin: 1rem 0;
+      }
+
+      .success {
+        background: #ecfdf5;
+        border-left: 4px solid #10b981;
+        padding: 1rem;
+        border-radius: 4px;
+        margin: 1rem 0;
+      }
+
+      .info {
+        background: #eff6ff;
+        border-left: 4px solid #0284c7;
+        padding: 1rem;
+        border-radius: 4px;
+        margin: 1rem 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🔔 Web Push Notifications — Guia Técnico Completo</h1>
+      <p class="subtitle">
+        Colégio Alfa e Omega | Vercel + Supabase | Implementação Production-Ready
+      </p>
+
+      <div class="info">
+        <strong>✓ Implementação Concluída</strong><br />
+        Todos os ficheiros, APIs e documentação foram gerados e estão prontos para
+        deployment. Este guia serve como referência de uso.
+      </div>
+
+      <h2>📂 Ficheiros Criados</h2>
+
+      <div class="file-item">
+        <div class="file-name">manifest.json</div>
+        <div class="file-desc">Configuração PWA (Progressive Web App)</div>
+      </div>
+
+      <div class="file-item">
+        <div class="file-name">sw.js</div>
+        <div class="file-desc">Service Worker — Cache, Push, Offline Support</div>
+      </div>
+
+      <div class="file-item">
+        <div class="file-name">assets/js/push-notifications.js</div>
+        <div class="file-desc">Frontend Logic (Vanilla JS) — Subscrição, Permissões</div>
+      </div>
+
+      <div class="file-item">
+        <div class="file-name">api/vapid-key.js</div>
+        <div class="file-desc">API GET — Retornar VAPID Public Key</div>
+      </div>
+
+      <div class="file-item">
+        <div class="file-name">api/subscribe.js</div>
+        <div class="file-desc">API POST — Registar subscrição no Supabase</div>
+      </div>
+
+      <div class="file-item">
+        <div class="file-name">api/unsubscribe.js</div>
+        <div class="file-desc">API POST — Remover subscrição</div>
+      </div>
+
+      <div class="file-item">
+        <div class="file-name">api/send-notification.js</div>
+        <div class="file-desc">API POST — Enviar notificações, gerir erros 410/404</div>
+      </div>
+
+      <div class="file-item">
+        <div class="file-name">dashboard-push.html</div>
+        <div class="file-desc">Dashboard Administrativo (UI para enviar notificações)</div>
+      </div>
+
+      <div class="file-item">
+        <div class="file-name">PUSH_NOTIFICATIONS.sql</div>
+        <div class="file-desc">Script SQL — Criar tabelas, RLS, índices</div>
+      </div>
+
+      <div class="file-item">
+        <div class="file-name">PUSH_NOTIFICATIONS_SETUP.md</div>
+        <div class="file-desc">Documentação Completa (80+ linhas)</div>
+      </div>
+
+      <div class="file-item">
+        <div class="file-name">API_REFERENCE.md</div>
+        <div class="file-desc">Referência de Endpoints (HTTP + Examples)</div>
+      </div>
+
+      <div class="file-item">
+        <div class="file-name">package.json.example</div>
+        <div class="file-desc">Dependencies recomendadas (web-push, supabase-js)</div>
+      </div>
+
+      <h2>🚀 Quick Start (3 passos)</h2>
+
+      <h3>1️⃣ Gerar VAPID Keys</h3>
+      <pre><code>npm install -g web-push
+web-push generate-vapid-keys</code></pre>
+      <p>Guardar as keys num local seguro!</p>
+
+      <h3>2️⃣ Configurar Vercel</h3>
+      <ol>
+        <li>Dashboard Vercel → Settings → Environment Variables</li>
+        <li>Adicionar:
+          <pre><code>NEXT_PUBLIC_VAPID_PUBLIC_KEY=BJOU...
+VAPID_PRIVATE_KEY=R4nC...
+SUPABASE_URL=https://...
+SUPABASE_ANON_KEY=eyJ...
+SUPABASE_SERVICE_ROLE_KEY=eyJ...</code></pre></li>
+        <li>Deploy</li>
+      </ol>
+
+      <h3>3️⃣ Executar SQL no Supabase</h3>
+      <ol>
+        <li>Supabase → SQL Editor</li>
+        <li>Copiar conteúdo de <code>PUSH_NOTIFICATIONS.sql</code></li>
+        <li>Executar</li>
+      </ol>
+
+      <h2>🧪 Testar Localmente</h2>
+
+      <pre><code>// 1. No browser console
+PushNotifications.getStatus()
+
+// 2. Subscrever utilizador
+await PushNotifications.subscribeUser()
+
+// 3. Enviar teste
+await PushNotifications.sendTestNotification()
+
+// 4. Ver subscription no Supabase
+SELECT * FROM push_subscriptions;</code></pre>
+
+      <h2>📊 Fluxo de Dados</h2>
+
+      <table>
+        <tr>
+          <th>Passo</th>
+          <th>Componente</th>
+          <th>Ação</th>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>Browser (push-notifications.js)</td>
+          <td>User clica "Ativar Notificações"</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Service Worker (sw.js)</td>
+          <td>Registar + pedir permissão</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>API /api/subscribe</td>
+          <td>POST subscription para Supabase</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Supabase (push_subscriptions)</td>
+          <td>Guardar subscription endpoint + keys</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Admin (/dashboard-push.html)</td>
+          <td>Entra título/mensagem e clica enviar</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>API /api/send-notification</td>
+          <td>Lê subscriptions do Supabase</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>web-push (web-push package)</td>
+          <td>Envia via VAPID para FCM/APNs</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td>Service Worker (push event)</td>
+          <td>Recebe e exibe notificação</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td>Browser/Device</td>
+          <td>Utilizzador vê notificação! 🎉</td>
+        </tr>
+      </table>
+
+      <h2>🔐 Segurança — Checklist</h2>
+      <ul class="checklist">
+        <li class="done">VAPID Private Key guardada apenas em Vercel (server-side)</li>
+        <li class="done">VAPID Public Key exposta via /api/vapid-key (seguro)</li>
+        <li class="done">RLS policies: INSERT público, SELECT bloqueado</li>
+        <li class="done">HTTPS automático (Vercel)</li>
+        <li class="done">Validação de input (title, body required)</li>
+        <li class="done">Auto-cleanup de subscrições inválidas (410, 404)</li>
+        <li>Adicionar JWT auth no dashboard (TODO)</li>
+        <li>Rate limiting nas APIs (TODO)</li>
+      </ul>
+
+      <h2>⚙️ Environment Variables (Vercel)</h2>
+      <table>
+        <tr>
+          <th>Variável</th>
+          <th>Origem</th>
+          <th>Tipo</th>
+          <th>Uso</th>
+        </tr>
+        <tr>
+          <td>NEXT_PUBLIC_VAPID_PUBLIC_KEY</td>
+          <td><code>web-push generate-vapid-keys</code></td>
+          <td>Público</td>
+          <td>Frontend (crypto)</td>
+        </tr>
+        <tr>
+          <td>VAPID_PRIVATE_KEY</td>
+          <td><code>web-push generate-vapid-keys</code></td>
+          <td>Confidencial</td>
+          <td>Backend (sign)</td>
+        </tr>
+        <tr>
+          <td>SUPABASE_URL</td>
+          <td>Supabase → Settings → API</td>
+          <td>Público</td>
+          <td>Cliente + Servidor</td>
+        </tr>
+        <tr>
+          <td>SUPABASE_ANON_KEY</td>
+          <td>Supabase → Settings → API</td>
+          <td>Público</td>
+          <td>Cliente (INSERT subscriptions)</td>
+        </tr>
+        <tr>
+          <td>SUPABASE_SERVICE_ROLE_KEY</td>
+          <td>Supabase → Settings → API</td>
+          <td>Confidencial</td>
+          <td>Servidor (SELECT, DELETE subscriptions)</td>
+        </tr>
+      </table>
+
+      <div class="warning">
+        <strong>⚠️ IMPORTANTE:</strong> Nunca comitar environment variables em Git!
+        Use .env.local (gitignore) para desenvolvimento local.
+      </div>
+
+      <h2>📞 API Endpoints Summary</h2>
+
+      <table>
+        <tr>
+          <th>Método</th>
+          <th>Path</th>
+          <th>Descrição</th>
+        </tr>
+        <tr>
+          <td>GET</td>
+          <td>/api/vapid-key</td>
+          <td>Retornar Public Key</td>
+        </tr>
+        <tr>
+          <td>POST</td>
+          <td>/api/subscribe</td>
+          <td>Registar novo utilizador</td>
+        </tr>
+        <tr>
+          <td>POST</td>
+          <td>/api/unsubscribe</td>
+          <td>Remover utilizador</td>
+        </tr>
+        <tr>
+          <td>POST</td>
+          <td>/api/send-notification</td>
+          <td><strong>ADMIN:</strong> Enviar notificações</td>
+        </tr>
+      </table>
+
+      <h2>📱 Responsividade & Compatibilidade</h2>
+
+      <table>
+        <tr>
+          <th>Browser</th>
+          <th>Push API</th>
+          <th>Notification API</th>
+          <th>Service Worker</th>
+          <th>Status</th>
+        </tr>
+        <tr>
+          <td>Chrome 50+</td>
+          <td>✓</td>
+          <td>✓</td>
+          <td>✓</td>
+          <td>✓ Full</td>
+        </tr>
+        <tr>
+          <td>Firefox 48+</td>
+          <td>✓</td>
+          <td>✓</td>
+          <td>✓</td>
+          <td>✓ Full</td>
+        </tr>
+        <tr>
+          <td>Edge 17+</td>
+          <td>✓</td>
+          <td>✓</td>
+          <td>✓</td>
+          <td>✓ Full</td>
+        </tr>
+        <tr>
+          <td>Safari 16+</td>
+          <td>✗</td>
+          <td>✓</td>
+          <td>✓</td>
+          <td>⚠️ Parcial</td>
+        </tr>
+        <tr>
+          <td>IE 11</td>
+          <td>✗</td>
+          <td>✗</td>
+          <td>✗</td>
+          <td>✗ Não</td>
+        </tr>
+      </table>
+
+      <div class="info">
+        <strong>Safari (16+):</strong> Não suporta Push API, mas suporta Notification
+        API local. Funciona para notificações em-app, mas não push background.
+      </div>
+
+      <h2>🐛 Troubleshooting Rápido</h2>
+
+      <table>
+        <tr>
+          <th>Problema</th>
+          <th>Causa</th>
+          <th>Solução</th>
+        </tr>
+        <tr>
+          <td>Service Worker não registado</td>
+          <td>Ficheiro não encontrado / HTTP em prod</td>
+          <td>Verificar <code>/sw.js</code> existe + HTTPS</td>
+        </tr>
+        <tr>
+          <td>"Permission denied"</td>
+          <td>User recusou no dialog</td>
+          <td>Ir a Settings → Notifications e permitir</td>
+        </tr>
+        <tr>
+          <td>Notificação não aparece</td>
+          <td>Browser em background ou erros</td>
+          <td>DevTools → Application → Service Workers</td>
+        </tr>
+        <tr>
+          <td>API returning 410/404</td>
+          <td>Subscription expirada</td>
+          <td>Removida automaticamente! Check Supabase</td>
+        </tr>
+        <tr>
+          <td>CORS error</td>
+          <td>Requesting dari HTTP</td>
+          <td>Usar /api/* routes (same-origin)</td>
+        </tr>
+      </table>
+
+      <h2>📚 Ficheiros de Referência</h2>
+
+      <p><strong>Leia primeiro:</strong></p>
+      <ul>
+        <li>
+          <a href="/PUSH_NOTIFICATIONS_SETUP.md" target="_blank"
+            >PUSH_NOTIFICATIONS_SETUP.md</a
+          >
+          — Documentação técnica completa
+        </li>
+        <li>
+          <a href="/API_REFERENCE.md" target="_blank">API_REFERENCE.md</a> —
+          Endpoints + Exemplos cURL
+        </li>
+      </ul>
+
+      <p><strong>Para administradores:</strong></p>
+      <ul>
+        <li>
+          <a href="/dashboard-push.html" target="_blank">dashboard-push.html</a>
+          — Interface para enviar notificações
+        </li>
+      </ul>
+
+      <p><strong>Para desenvolvedores:</strong></p>
+      <ul>
+        <li><code>assets/js/push-notifications.js</code> — Frontend logic</li>
+        <li><code>api/send-notification.js</code> — Backend logic</li>
+        <li><code>PUSH_NOTIFICATIONS.sql</code> — Database setup</li>
+      </ul>
+
+      <h2>✅ Deploy Checklist</h2>
+      <ul class="checklist">
+        <li>VAPID keys geradas</li>
+        <li>Environment variables configuradas em Vercel</li>
+        <li>SQL executed no Supabase</li>
+        <li>package.json com web-push + supabase-js</li>
+        <li>git push finalizado</li>
+        <li>Service Worker (/sw.js) testado</li>
+        <li>Subscrição no /dashboard-push.html funcional</li>
+        <li>Notificação teste enviada com sucesso</li>
+      </ul>
+
+      <h2>🎯 Próximos Passos</h2>
+      <ol>
+        <li>👤 Adicionar JWT authentication no dashboard</li>
+        <li>⚡ Implementar rate limiting nas APIs</li>
+        <li>📊 Criar analytics dashboard (envios por dia, taxa sucesso)</li>
+        <li>🔔 Agendar notificações (cron jobs)</li>
+        <li>🌍 Suporte multi-idioma nas mensagens</li>
+        <li>📲 Push notifications segmentadas por grupo (pais, staff, etc.)</li>
+      </ol>
+
+      <div class="success">
+        <strong>✓ Setup completo!</strong><br />
+        A plataforma de Web Push Notifications está pronta para uso em produção.
+        Todos os ficheiros, APIs e documentação foram criados.
+      </div>
+
+      <p style="margin-top: 2rem; text-align: center; color: #666">
+        <strong>Colégio Alfa e Omega</strong><br />
+        Desenvolvido com ❤️ por Telsio Isidoro<br />
+        14 de Abril de 2026
+      </p>
+    </div>
+  </body>
+</html>
