@@ -441,6 +441,64 @@
       box-shadow: 0 6px 20px rgba(1,55,125,0.25);
     }
 
+    /* GOLDEN BUTTON — FINALISTAS 2026 */
+    .nav-cta.gold {
+      margin-left: 0.5rem;
+      background: linear-gradient(135deg, #F5D06A 0%, #E6B325 50%, #D4A625 100%);
+      color: #010E24;
+      font-weight: 800;
+      font-size: 0.825rem;
+      padding: 0.7rem 1.6rem;
+      position: relative;
+      overflow: hidden;
+      letter-spacing: 0.01em;
+      border: 1px solid rgba(245,208,106,0.3);
+      box-shadow: 
+        0 0 20px rgba(230,179,37,0.4),
+        0 0 40px rgba(230,179,37,0.2),
+        inset 0 1px 0 rgba(255,255,255,0.5);
+      transition: all 0.35s cubic-bezier(0.23,1,0.32,1);
+    }
+
+    .nav-cta.gold::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 0; height: 0;
+      background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, transparent 70%);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s cubic-bezier(0.23,1,0.32,1);
+      pointer-events: none;
+    }
+
+    .nav-cta.gold:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .nav-cta.gold:hover {
+      background: linear-gradient(135deg, #FFF0C0 0%, #F5D06A 50%, #E6B325 100%);
+      color: #010E24;
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 
+        0 0 30px rgba(230,179,37,0.6),
+        0 0 60px rgba(230,179,37,0.3),
+        0 12px 32px rgba(230,179,37,0.25),
+        inset 0 1px 0 rgba(255,255,255,0.8);
+      letter-spacing: 0.02em;
+    }
+
+    .nav-cta.gold i {
+      margin-right: 0.4rem;
+      font-size: 0.95rem;
+      transition: transform 0.35s cubic-bezier(0.23,1,0.32,1);
+    }
+
+    .nav-cta.gold:hover i {
+      transform: rotate(12deg) scale(1.2);
+    }
+
     .mobile-btn {
       display: none;
       background: none;
@@ -1380,6 +1438,373 @@
     .ticker-item strong { color: var(--white); }
 
     /* =============================================
+       HERO SCROLL BADGE
+    ============================================= */
+    .hero-scroll-badge {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border: 1.5px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50px;
+      padding: 0.75rem 1.5rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--white);
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 10;
+    }
+
+    .hero-scroll-badge:hover {
+      background: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateX(-50%) translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .scroll-text {
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 0.75rem;
+    }
+
+    .scroll-arrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      animation: bounce-down 2s infinite;
+    }
+
+    @keyframes bounce-down {
+      0%, 100% {
+        opacity: 0.5;
+        transform: translateY(0);
+      }
+      50% {
+        opacity: 1;
+        transform: translateY(6px);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-scroll-badge {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.75rem;
+        bottom: 1.5rem;
+      }
+
+      .scroll-text {
+        font-size: 0.65rem;
+      }
+
+      .scroll-arrow {
+        font-size: 0.8rem;
+      }
+    }
+
+    /* =============================================
+       SECTION: CAIXA DO TEMPO
+    ============================================= */
+    .section-timeline-card {
+      padding: 6rem 2rem;
+      background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 50%, #f8f9fc 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-timeline-card::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -10%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(1, 55, 125, 0.08) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .timeline-card-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .timeline-card {
+      background: linear-gradient(135deg, #fff at 0%, rgba(255,255,255,0.95) 100%);
+      border: 1.5px solid rgba(1, 55, 125, 0.1);
+      border-radius: 24px;
+      padding: 3.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      box-shadow: 0 20px 60px rgba(1, 55, 125, 0.08), inset 0 1px 0 rgba(255,255,255,0.8);
+      transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .timeline-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(206, 244, 49, 0.6), transparent);
+      pointer-events: none;
+    }
+
+    .timeline-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 32px 80px rgba(1, 55, 125, 0.12), inset 0 1px 0 rgba(255,255,255,0.9);
+      border-color: rgba(1, 55, 125, 0.2);
+    }
+
+    .timeline-left {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .timeline-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: linear-gradient(135deg, rgba(206, 244, 49, 0.15), rgba(206, 244, 49, 0.05));
+      border: 1px solid rgba(206, 244, 49, 0.3);
+      color: #01377d;
+      padding: 0.6rem 1.4rem;
+      border-radius: 50px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      width: fit-content;
+    }
+
+    .timeline-badge i {
+      color: #cef431;
+      font-size: 0.85rem;
+    }
+
+    .timeline-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 800;
+      color: #01377d;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    .timeline-title em {
+      color: #cef431;
+      font-style: italic;
+      font-weight: 900;
+      display: inline;
+    }
+
+    .timeline-desc {
+      font-size: 1rem;
+      color: #4a567a;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .timeline-highlights {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      padding: 1.5rem 0;
+    }
+
+    .timeline-highlight {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .tl-highlight-icon {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      background: linear-gradient(135deg, rgba(206, 244, 49, 0.2), rgba(206, 244, 49, 0.05));
+      border: 1.5px solid rgba(206, 244, 49, 0.4);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .tl-highlight-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .tl-highlight-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #01377d;
+    }
+
+    .tl-highlight-value {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #01377d;
+    }
+
+    .timeline-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      text-align: center;
+    }
+
+    .timeline-visual {
+      background: linear-gradient(135deg, rgba(1, 55, 125, 0.05), rgba(206, 244, 49, 0.1));
+      border: 2px solid rgba(206, 244, 49, 0.3);
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .timeline-visual::before {
+      content: '';
+      position: absolute;
+      width: 150%;
+      height: 150%;
+      background: radial-gradient(circle, rgba(206, 244, 49, 0.2) 0%, transparent 70%);
+      animation: pulse-glow 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.1); opacity: 0.8; }
+    }
+
+    .timeline-visual-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .timeline-months {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .timeline-month {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #01377d;
+      color: #cef431;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .timeline-month i {
+      font-size: 0.9rem;
+    }
+
+    .timeline-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: linear-gradient(135deg, #01377d 0%, #0a5fc4 100%);
+      color: #cef431;
+      padding: 1.2rem 2.5rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 12px 30px rgba(1, 55, 125, 0.2);
+      border: 2px solid transparent;
+    }
+
+    .timeline-cta:hover {
+      background: linear-gradient(135deg, #0a5fc4 0%, #01377d 100%);
+      transform: translateY(-4px);
+      box-shadow: 0 18px 45px rgba(1, 55, 125, 0.3);
+      gap: 1rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .timeline-card {
+        grid-template-columns: 1fr;
+        padding: 2.5rem;
+        gap: 2rem;
+      }
+
+      .timeline-title {
+        font-size: 1.8rem;
+      }
+
+      .timeline-highlights {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .section-timeline-card {
+        padding: 4rem 1.5rem;
+      }
+
+      .timeline-card {
+        border-radius: 16px;
+        padding: 1.75rem;
+        gap: 1.5rem;
+      }
+
+      .timeline-left {
+        gap: 1rem;
+      }
+
+      .timeline-title {
+        font-size: 1.4rem;
+      }
+
+      .timeline-desc {
+        font-size: 0.9rem;
+      }
+
+      .timeline-highlights {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 1rem 0;
+      }
+
+      .timeline-cta {
+        padding: 1rem 2rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    /* =============================================
        SECTION: DIFERENCIAIS
     ============================================= */
     .section-diff {
@@ -1599,6 +2024,7 @@
     @media (max-width: 768px) {
       .nav-menu, .nav-cta { display: none !important; }
       .mobile-btn { display: block; }
+      .mobile-menu .nav-cta, .mobile-menu .nav-cta.gold { display: flex !important; margin-left: 0; }
       .hero-indicators { display: none; }
       .hero-stats-inner { grid-template-columns: repeat(2, 1fr); }
       .hero-stat:nth-child(2) { border-right: none; }
@@ -1683,6 +2109,9 @@
       <a href="/galeria.html" class="mobile-nav-link"><i class="fas fa-images"></i> Galeria</a>
       <a href="/contactos.html" class="mobile-nav-link"><i class="fas fa-envelope"></i> Contactos</a>
       <a href="https://wa.me/925952771" class="mobile-nav-link" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+      <div style="padding-top: 1rem; border-top: 1px solid rgba(0,0,0,0.1); margin: 1rem 0; display: flex; flex-direction: column; gap: 0.5rem;">
+        <a href="/matriculas.html" class="nav-cta" style="margin-left: 0; text-align: center;">Matricular Agora</a>
+      </div>
     </div>
   </nav>
 
@@ -1753,6 +2182,14 @@
           </div>
         </div>
       </div>
+
+      <!-- Scroll Badge -->
+      <button class="hero-scroll-badge" aria-label="Descer para Caixa do Tempo" onclick="document.getElementById('timeline-section').scrollIntoView({ behavior: 'smooth', block: 'start' });">
+        <span class="scroll-text">Caixa do Tempo</span>
+        <span class="scroll-arrow">
+          <i class="fas fa-chevron-down"></i>
+        </span>
+      </button>
 
     </section>
 
@@ -1887,6 +2324,79 @@
           </div>
         </div>
 
+      </div>
+    </section>
+
+    <!-- ===================== CAIXA DO TEMPO ===================== -->
+    <section class="section-timeline-card" id="timeline-section" data-aos="fade-up">
+      <div class="timeline-card-inner">
+        <div class="timeline-card">
+          <!-- LEFT: Text Content -->
+          <div class="timeline-left">
+            <div class="timeline-badge">
+              <i class="fas fa-hourglass-half"></i> Caixa do Tempo
+            </div>
+            <h2 class="timeline-title">
+              3 Meses de <em>Conquistas</em> e Memórias
+            </h2>
+            <p class="timeline-desc">
+              Acompanhe tudo o que aconteceu no Colégio Alfa e Omega durante Janeiro, Fevereiro e Março de 2026. Eventos, atividades, celebrações e êxitos compartilhados pela nossa comunidade escolar.
+            </p>
+            
+            <!-- Highlights Grid -->
+            <div class="timeline-highlights">
+              <div class="timeline-highlight">
+                <div class="tl-highlight-icon">📅</div>
+                <div class="tl-highlight-text">
+                  <span class="tl-highlight-label">Janeiro</span>
+                  <span class="tl-highlight-value">4 Eventos</span>
+                </div>
+              </div>
+              <div class="timeline-highlight">
+                <div class="tl-highlight-icon">🎯</div>
+                <div class="tl-highlight-text">
+                  <span class="tl-highlight-label">Fevereiro</span>
+                  <span class="tl-highlight-value">4 Eventos</span>
+                </div>
+              </div>
+              <div class="timeline-highlight">
+                <div class="tl-highlight-icon">🏆</div>
+                <div class="tl-highlight-text">
+                  <span class="tl-highlight-label">Março</span>
+                  <span class="tl-highlight-value">16 Medalhas</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: Visual Section -->
+          <div class="timeline-right">
+            <div class="timeline-visual">
+              <div class="timeline-visual-content">
+                <div class="timeline-months">
+                  <span class="timeline-month">
+                    <i class="fas fa-calendar"></i> Janeiro
+                  </span>
+                  <span class="timeline-month">
+                    <i class="fas fa-calendar"></i> Fevereiro
+                  </span>
+                  <span class="timeline-month">
+                    <i class="fas fa-calendar"></i> Março
+                  </span>
+                </div>
+                <div style="font-size: 3.5rem; margin: 1.5rem 0; letter-spacing: -0.05em;">
+                  📖
+                </div>
+                <p style="font-size: 0.95rem; color: #4a567a; margin-bottom: 1.5rem; line-height: 1.6;">
+                  Histórias de crescimento, aprendizagem e alegria partilhada por toda a comunidade.
+                </p>
+              </div>
+            </div>
+            <a href="/tempo.html" class="timeline-cta">
+              <i class="fas fa-arrow-right"></i> Ver Timeline Completa
+            </a>
+          </div>
+        </div>
       </div>
     </section>
 
