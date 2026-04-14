@@ -57,26 +57,41 @@ const PushNotifications = {
     try {
       // Carregar VAPID key do servidor se não fornecida
       if (!this.config.vapidPublicKey) {
-        await this.loadVapidKey();
+        try {
+          await this.loadVapidKey();
+        } catch (vapidError) {
+          console.error('[Push] VAPID key loading failed:', vapidError.message);
+          console.error('[Push] Push Notifications will NOT work without VAPID key');
+          return false; // Falha crítica
+        }
       }
 
       // Registar Service Worker
-      const swRegistration = await this.registerServiceWorker();
-      if (!swRegistration) {
-        console.error('[Push] ✗ Service Worker registration returned null');
-        return false;
+      try {
+        const swRegistration = await this.registerServiceWorker();
+        if (!swRegistration) {
+          console.error('[Push] ✗ Service Worker registration returned null');
+          return false;
+        }
+      } catch (swError) {
+        console.error('[Push] Service Worker registration failed:', swError.message);
+        return false; // Falha crítica
       }
 
       // Apenas verificar subscription se SW está registado
       if (this.state.swRegistration) {
-        await this.checkSubscriptionStatus();
+        try {
+          await this.checkSubscriptionStatus();
+        } catch (subError) {
+          console.warn('[Push] Subscription status check failed (non-critical):', subError.message);
+        }
       }
 
       this.state.isSupported = true;
       console.log('[Push] ✓ Push Notifications initialized successfully');
       return true;
     } catch (error) {
-      console.error('[Push] ✗ Initialization error:', error.message);
+      console.error('[Push] ✗ Unexpected initialization error:', error.message);
       console.error('[Push] Stack:', error.stack);
       return false;
     }
@@ -94,18 +109,45 @@ const PushNotifications = {
   },
 
   /**
-   * Carregar VAPID key do servidor
+   * Carregar VAPID key do servidor com fallback
    */
   async loadVapidKey() {
     try {
+      // 1. Tentar carregar do servidor
+      console.log('[Push] Attempting to load VAPID key from /api/vapid-key...');
       const response = await fetch('/api/vapid-key');
-      if (!response.ok) throw new Error('Failed to load VAPID key');
+      
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.status}`);
+      }
+      
       const data = await response.json();
       this.config.vapidPublicKey = data.vapidPublicKey;
-      console.log('[Push] VAPID key loaded');
+      console.log('[Push] ✓ VAPID key loaded from server');
+      return;
     } catch (error) {
-      console.error('[Push] Error loading VAPID key:', error);
-      throw error;
+      console.warn('[Push] ⚠️  Failed to load VAPID key from server:', error.message);
+      
+      // 2. Fallback: Tentar localStorage (para desenvolvimento local)
+      try {
+        const cached = localStorage.getItem('debug_vapid_public_key');
+        if (cached) {
+          this.config.vapidPublicKey = cached;
+          console.log('[Push] ✓ VAPID key loaded from localStorage (DEV MODE)');
+          return;
+        }
+      } catch (e) {
+        console.warn('[Push] localStorage unavailable');
+      }
+      
+      // 3. Sem VAPID key - modo degradado
+      console.warn('[Push] ⚠️  VAPID key not available - Push Notifications will not work');
+      console.warn('[Push] Next steps:');
+      console.warn('     1. Generate VAPID keys: npm install -g web-push && web-push generate-vapid-keys');
+      console.warn('     2. Add to Vercel: NEXT_PUBLIC_VAPID_PUBLIC_KEY=<generated>');
+      console.warn('     3. For DEV: localStorage.setItem("debug_vapid_public_key", "<key>");');
+      
+      throw new Error('VAPID key not configured. See console for setup instructions.');
     }
   },
 
@@ -489,6 +531,14 @@ window.diagnosePushNotifications = function() {
   });
   
   console.log('=== FIM DO DIAGNÓSTICO ===');
+};
+
+// Função para development - adicionar VAPID key manualmente
+window.setDevVapidKey = function(publicKey) {
+  console.log('[Push] DEV MODE: Setting VAPID key from console...');
+  localStorage.setItem('debug_vapid_public_key', publicKey);
+  PushNotifications.config.vapidPublicKey = publicKey;
+  console.log('[Push] ✓ VAPID key set. Now run: PushNotifications.initialize()');
 };
 
 console.log('[Push] Diagnóstico disponível: diagnosePushNotifications()');
