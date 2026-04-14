@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Caixa do Tempo — Colégio Alfa e Omega</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900&family=Poppins:wght@400;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+/* ═══════════════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════════════ */
+:root{
+  --ink:    #010E24;
+  --ink-2:  #040F20;
+  --ink-3:  #071526;
+  --blue:   #01377D;
+  --blue-l: #0A5FC4;
+  --blue-xl:#3B82F6;
+  --accent: #CEF431;
+  --gold:   #E6B325;
+  --gold-l: #F5C842;
+  --white:  #F0F4FF;
+  --t2:     #8B9CC0;
+  --t3:     #4A567A;
+  --green:  #22C55E;
+  --orange: #F97316;
+  --purple: #8B5CF6;
+
+  /* Month palette */
+  --jan-color: #3B82F6;
+  --feb-color: #A855F7;
+  --mar-color: #E6B325;
+  --apr-color: #22C55E;
+
+  --font:      'DM Sans', sans-serif;
+  --font-serif:'DM Serif Display', serif;
+  --font-head: 'Poppins', sans-serif;
+  --ease:      cubic-bezier(0.23,1,0.32,1);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{
+  font-family:var(--font);
+  background:var(--ink);
+  color:var(--white);
+  overflow-x:hidden;
+  min-height:100vh;
+  cursor:default;
+}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit;cursor:pointer;border:none;outline:none}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(206,244,49,.2);border-radius:4px}
+
+/* ═══════════════════════════════════════════════
+   CANVAS BG
+═══════════════════════════════════════════════ */
+#cosmos-canvas{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  transition:opacity .6s ease;
+}
+
+/* Film grain overlay */
+.grain{
+  position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.028;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  animation:grain-move 0.5s steps(2) infinite;
+}
+@keyframes grain-move{
+  0%  {transform:translate(0,0)}
+  25% {transform:translate(-2px,1px)}
+  50% {transform:translate(1px,-1px)}
+  75% {transform:translate(-1px,2px)}
+  100%{transform:translate(2px,-2px)}
+}
+
+/* ═══════════════════════════════════════════════
+   NAVBAR
+═══════════════════════════════════════════════ */
+.navbar{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:4.5rem;
+  background:rgba(1,8,24,.8);
+  backdrop-filter:blur(24px);
+  border-bottom:1px solid rgba(255,255,255,.05);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 2rem;
+}
+.logo-group{display:flex;align-items:center;gap:.75rem}
+.logo-img{width:38px;height:38px;object-fit:contain}
+.logo-txt h2{font-family:var(--font-head);font-size:.85rem;font-weight:800;color:var(--white);line-height:1.1}
+.logo-txt p{font-size:.58rem;font-weight:700;color:rgba(206,244,49,.7);text-transform:uppercase;letter-spacing:.1em}
+.nav-badge{
+  display:inline-flex;align-items:center;gap:.45rem;
+  background:rgba(206,244,49,.1);border:1px solid rgba(206,244,49,.22);
+  color:var(--accent);font-size:.62rem;font-weight:800;
+  text-transform:uppercase;letter-spacing:.15em;padding:.3rem .9rem;border-radius:3rem;
+}
+.nav-back{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+  color:var(--t2);font-size:.8rem;font-weight:600;
+  padding:.5rem 1rem;border-radius:2rem;transition:all .3s var(--ease);
+}
+.nav-back:hover{color:var(--white);border-color:rgba(255,255,255,.2)}
+
+/* ═══════════════════════════════════════════════
+   PROGRESS SCRUBBER (fixed right)
+═══════════════════════════════════════════════ */
+.scrubber{
+  position:fixed;right:1.5rem;top:50%;transform:translateY(-50%);
+  z-index:150;display:flex;flex-direction:column;gap:.75rem;align-items:center;
+}
+.sc-dot{
+  width:10px;height:10px;border-radius:50%;
+  background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.15);
+  cursor:pointer;transition:all .4s var(--ease);position:relative;
+}
+.sc-dot::after{
+  content:attr(data-label);
+  position:absolute;right:calc(100% + .75rem);top:50%;transform:translateY(-50%);
+  font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;
+  color:rgba(255,255,255,.3);white-space:nowrap;
+  transition:all .3s;pointer-events:none;opacity:0;
+}
+.sc-dot:hover::after,.sc-dot.active::after{opacity:1;color:var(--white)}
+.sc-dot.active{transform:scale(1.5);border-width:2px}
+.sc-dot[data-month="jan"].active{background:var(--jan-color);border-color:var(--jan-color);box-shadow:0 0 12px var(--jan-color)}
+.sc-dot[data-month="feb"].active{background:var(--feb-color);border-color:var(--feb-color);box-shadow:0 0 12px var(--feb-color)}
+.sc-dot[data-month="mar"].active{background:var(--mar-color);border-color:var(--mar-color);box-shadow:0 0 12px var(--mar-color)}
+.sc-dot[data-month="apr"].active{background:var(--apr-color);border-color:var(--apr-color);box-shadow:0 0 12px var(--apr-color)}
+
+/* Reading progress bar top */
+.read-bar{
+  position:fixed;top:0;left:0;z-index:300;
+  height:2px;width:0%;
+  background:linear-gradient(90deg,var(--accent),var(--blue-l));
+  transition:width .1s linear;
+}
+
+/* ═══════════════════════════════════════════════
+   HERO SECTION
+═══════════════════════════════════════════════ */
+.hero{
+  position:relative;z-index:10;
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:6rem 2rem 4rem;text-align:center;
+  overflow:hidden;
+}
+
+/* Giant watermark behind hero */
+.hero-wm{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-55%);
+  font-family:var(--font-head);font-weight:900;font-size:clamp(8rem,20vw,22rem);
+  color:rgba(255,255,255,.015);text-transform:uppercase;letter-spacing:-.02em;
+  white-space:nowrap;pointer-events:none;user-select:none;line-height:1;z-index:0;
+}
+
+/* Floating rings */
+.hero-ring{
+  position:absolute;border-radius:50%;pointer-events:none;
+  border:1px solid rgba(255,255,255,.04);
+}
+.hr-1{width:600px;height:600px;top:50%;left:50%;transform:translate(-50%,-50%);animation:ring-spin 40s linear infinite}
+.hr-2{width:900px;height:900px;top:50%;left:50%;transform:translate(-50%,-50%);animation:ring-spin 65s linear infinite reverse}
+.hr-3{width:1200px;height:1200px;top:50%;left:50%;transform:translate(-50%,-50%);animation:ring-spin 90s linear infinite}
+@keyframes ring-spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+
+/* Ring dots */
+.ring-dot{
+  position:absolute;width:6px;height:6px;border-radius:50%;
+  top:0;left:50%;transform:translateX(-50%) translateY(-50%);
+}
+.rd-accent{background:var(--accent);box-shadow:0 0 10px var(--accent)}
+.rd-gold  {background:var(--gold);  box-shadow:0 0 10px var(--gold)}
+.rd-blue  {background:var(--blue-xl);box-shadow:0 0 10px var(--blue-xl)}
+
+.hero-inner{position:relative;z-index:2}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.22em;
+  color:var(--accent);margin-bottom:1.5rem;
+  animation:fade-up .8s var(--ease) .2s both;
+}
+.hero-eyebrow::before,.hero-eyebrow::after{content:'';width:24px;height:2px;background:var(--accent);border-radius:2px}
+
+.hero-title{
+  font-family:var(--font-serif);
+  font-size:clamp(3rem,8vw,7rem);
+  line-height:.95;letter-spacing:-.03em;
+  margin-bottom:1.5rem;
+  animation:fade-up .8s var(--ease) .35s both;
+}
+.hero-title .line-2{color:var(--accent);font-style:italic}
+
+.hero-desc{
+  font-size:1.05rem;color:rgba(240,244,255,.45);line-height:1.8;
+  max-width:520px;margin:0 auto 3rem;font-weight:300;
+  animation:fade-up .8s var(--ease) .5s both;
+}
+
+/* Year chips */
+.year-chips{
+  display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-bottom:3.5rem;
+  animation:fade-up .8s var(--ease) .65s both;
+}
+.year-chip{
+  display:inline-flex;align-items:center;gap:.5rem;
+  border-radius:3rem;padding:.5rem 1.1rem;
+  font-size:.75rem;font-weight:700;
+  backdrop-filter:blur(12px);
+  transition:all .3s var(--ease);cursor:pointer;
+}
+.year-chip:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.4)}
+.yc-jan{background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.3);color:#93C5FD}
+.yc-feb{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.3);color:#D8B4FE}
+.yc-mar{background:rgba(230,179,37,.12);border:1px solid rgba(230,179,37,.3);color:var(--gold-l)}
+.yc-apr{background:rgba(34,197,94,.12); border:1px solid rgba(34,197,94,.3); color:#86EFAC;position:relative;overflow:hidden}
+.yc-apr::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(34,197,94,.15),transparent);
+  animation:chip-shine 2.5s ease-in-out infinite}
+@keyframes chip-shine{to{left:100%}}
+
+/* Scroll cue */
+.scroll-cue{
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  animation:fade-up .8s var(--ease) .8s both;
+}
+.scroll-cue p{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.2em;color:var(--t3)}
+.scroll-cue-arrow{
+  width:36px;height:36px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--t3);font-size:.85rem;
+  animation:bounce-down 2s ease-in-out infinite;
+}
+@keyframes bounce-down{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+
+/* Hero stats strip */
+.hero-stats{
+  display:flex;gap:2.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:3rem;
+  animation:fade-up .8s var(--ease) .55s both;
+}
+.hs-item{text-align:center}
+.hs-num{font-family:var(--font-head);font-size:1.8rem;font-weight:900;line-height:1;color:var(--white)}
+.hs-lbl{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--t3);margin-top:.2rem}
+
+/* ═══════════════════════════════════════════════
+   TIMELINE CONTAINER
+═══════════════════════════════════════════════ */
+.timeline{
+  position:relative;z-index:10;
+  padding:0 2rem 8rem;
+  max-width:1100px;margin:0 auto;
+}
+
+/* Central line */
+.tl-spine{
+  position:absolute;left:50%;top:0;bottom:0;
+  width:2px;transform:translateX(-50%);
+  background:rgba(255,255,255,.06);z-index:0;
+}
+.tl-spine-fill{
+  position:absolute;top:0;left:0;right:0;
+  background:linear-gradient(180deg,var(--accent),var(--blue-l),var(--purple),var(--green));
+  height:0%;transition:height .1s linear;border-radius:1px;
+}
+
+/* ═══════════════════════════════════════════════
+   MONTH CHAPTER
+═══════════════════════════════════════════════ */
+.month-chapter{
+  position:relative;padding:5rem 0;
+  opacity:0;transform:translateY(30px);
+  transition:opacity .8s var(--ease), transform .8s var(--ease);
+}
+.month-chapter.revealed{opacity:1;transform:translateY(0)}
+
+/* Month watermark */
+.month-wm{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  font-family:var(--font-head);font-weight:900;font-size:clamp(6rem,14vw,16rem);
+  text-transform:uppercase;letter-spacing:-.02em;
+  pointer-events:none;user-select:none;z-index:0;
+  white-space:nowrap;line-height:1;
+  transition:all .6s var(--ease);
+  opacity:.025;
+}
+
+/* Month node on spine */
+.month-node{
+  position:absolute;left:50%;top:3rem;transform:translateX(-50%);
+  z-index:20;display:flex;flex-direction:column;align-items:center;gap:.5rem;
+}
+.mn-circle{
+  width:56px;height:56px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;font-weight:900;font-family:var(--font-head);
+  position:relative;z-index:2;
+  transition:all .4s var(--ease);
+  box-shadow:0 0 0 6px rgba(0,0,0,.4);
+}
+.mn-circle::before{
+  content:'';position:absolute;inset:-6px;border-radius:50%;
+  border:2px solid transparent;animation:node-rotate 6s linear infinite;
+}
+@keyframes node-rotate{to{transform:rotate(360deg)}}
+
+.mn-label{
+  font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.2em;
+  padding:.2rem .65rem;border-radius:3rem;
+}
+.month-chapter[data-month="jan"] .mn-circle{background:linear-gradient(135deg,#1D4ED8,#3B82F6);color:#fff;box-shadow:0 0 0 6px rgba(0,0,0,.4),0 0 30px rgba(59,130,246,.35)}
+.month-chapter[data-month="jan"] .mn-circle::before{border-image:linear-gradient(135deg,#3B82F6,transparent,#3B82F6) 1}
+.month-chapter[data-month="jan"] .mn-label{background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);color:#93C5FD}
+
+.month-chapter[data-month="feb"] .mn-circle{background:linear-gradient(135deg,#6D28D9,#A855F7);color:#fff;box-shadow:0 0 0 6px rgba(0,0,0,.4),0 0 30px rgba(168,85,247,.35)}
+.month-chapter[data-month="feb"] .mn-label{background:rgba(168,85,247,.15);border:1px solid rgba(168,85,247,.3);color:#D8B4FE}
+
+.month-chapter[data-month="mar"] .mn-circle{background:linear-gradient(135deg,#B8901C,#E6B325);color:#000;box-shadow:0 0 0 6px rgba(0,0,0,.4),0 0 30px rgba(230,179,37,.4)}
+.month-chapter[data-month="mar"] .mn-label{background:rgba(230,179,37,.15);border:1px solid rgba(230,179,37,.3);color:var(--gold-l)}
+
+.month-chapter[data-month="apr"] .mn-circle{
+  background:linear-gradient(135deg,#166534,#22C55E);color:#fff;
+  box-shadow:0 0 0 6px rgba(0,0,0,.4),0 0 40px rgba(34,197,94,.5);
+  animation:apr-pulse 2.5s ease-in-out infinite;
+}
+.month-chapter[data-month="apr"] .mn-label{background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.3);color:#86EFAC}
+@keyframes apr-pulse{0%,100%{box-shadow:0 0 0 6px rgba(0,0,0,.4),0 0 40px rgba(34,197,94,.5)}50%{box-shadow:0 0 0 6px rgba(0,0,0,.4),0 0 70px rgba(34,197,94,.8),0 0 100px rgba(34,197,94,.3)}}
+
+/* Month header section */
+.month-header{
+  display:flex;flex-direction:column;align-items:center;
+  padding-top:5rem;padding-bottom:2.5rem;
+  position:relative;z-index:10;text-align:center;
+}
+.month-num{
+  font-family:var(--font-head);font-size:.62rem;font-weight:800;
+  text-transform:uppercase;letter-spacing:.3em;color:var(--t3);margin-bottom:.5rem;
+}
+.month-name{
+  font-family:var(--font-serif);font-size:clamp(2.5rem,5vw,4.5rem);
+  line-height:1;letter-spacing:-.03em;margin-bottom:.75rem;
+}
+.month-sub{font-size:.85rem;color:var(--t2);font-weight:300;letter-spacing:.05em}
+
+/* ═══════════════════════════════════════════════
+   CARDS GRID
+═══════════════════════════════════════════════ */
+.cards-grid{
+  display:grid;gap:1.1rem;position:relative;z-index:10;
+}
+/* Alternating left/right pattern using left+right columns */
+.cards-left{
+  grid-template-columns:1fr 120px;
+  padding-right:calc(50% + 30px);
+}
+.cards-right{
+  grid-template-columns:120px 1fr;
+  padding-left:calc(50% + 30px);
+}
+.cards-left,.cards-right{display:flex;flex-direction:column;gap:1.1rem}
+.month-cards-wrap{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1.5rem;position:relative;z-index:10;
+}
+
+/* Individual event card */
+.event-card{
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:20px;padding:1.5rem;
+  backdrop-filter:blur(20px);
+  position:relative;overflow:hidden;
+  transition:all .4s var(--ease);
+  cursor:default;
+  /* 3D entry */
+  opacity:0;transform:perspective(800px) rotateX(12deg) translateY(20px);
+}
+.event-card.card-revealed{opacity:1;transform:perspective(800px) rotateX(0deg) translateY(0)}
+.event-card:hover{
+  background:rgba(255,255,255,.06);
+  border-color:rgba(255,255,255,.14);
+  transform:perspective(800px) rotateX(-2deg) translateY(-6px);
+  box-shadow:0 24px 60px rgba(0,0,0,.5);
+}
+
+/* Card shimmer */
+.event-card::after{
+  content:'';position:absolute;top:-50%;left:-60%;
+  width:50%;height:200%;
+  background:linear-gradient(105deg,transparent,rgba(255,255,255,.04),transparent);
+  transform:rotate(15deg);
+  transition:left .6s var(--ease);pointer-events:none;
+}
+.event-card:hover::after{left:160%}
+
+/* Top color accent */
+.event-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  border-radius:20px 20px 0 0;
+}
+.ec-jan::before{background:linear-gradient(90deg,#3B82F6,transparent)}
+.ec-feb::before{background:linear-gradient(90deg,#A855F7,transparent)}
+.ec-mar::before{background:linear-gradient(90deg,#E6B325,transparent)}
+.ec-apr::before{background:linear-gradient(90deg,#22C55E,transparent)}
+
+/* Card icon */
+.ec-icon{
+  width:44px;height:44px;border-radius:13px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;margin-bottom:1rem;
+  position:relative;
+}
+.ec-icon::after{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  opacity:.4;transition:opacity .3s;
+}
+.event-card:hover .ec-icon::after{opacity:.7}
+
+.ic-jan  {background:rgba(59,130,246,.2); border:1px solid rgba(59,130,246,.3)}
+.ic-feb  {background:rgba(168,85,247,.2); border:1px solid rgba(168,85,247,.3)}
+.ic-mar  {background:rgba(230,179,37,.2); border:1px solid rgba(230,179,37,.3)}
+.ic-apr  {background:rgba(34,197,94,.2);  border:1px solid rgba(34,197,94,.3)}
+
+/* Card content */
+.ec-tag{
+  display:inline-flex;align-items:center;gap:.3rem;
+  font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.14em;
+  margin-bottom:.6rem;
+}
+.ec-title{
+  font-family:var(--font-serif);font-size:1.1rem;color:var(--white);
+  line-height:1.2;letter-spacing:-.01em;margin-bottom:.6rem;
+}
+.ec-desc{font-size:.82rem;color:var(--t2);line-height:1.7;font-weight:300;margin-bottom:1rem}
+
+/* Card stats */
+.ec-stats{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1rem}
+.ec-stat{
+  display:flex;align-items:center;gap:.35rem;
+  font-size:.7rem;font-weight:600;color:var(--t2);
+}
+.ec-stat i{font-size:.65rem;color:var(--t3)}
+
+/* Card footer */
+.ec-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-top:.875rem;border-top:1px solid rgba(255,255,255,.06);
+}
+.ec-date{font-size:.68rem;font-weight:600;color:var(--t3);display:flex;align-items:center;gap:.35rem}
+.ec-date i{font-size:.62rem}
+.ec-badge{
+  font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;
+  padding:.2rem .6rem;border-radius:3rem;
+}
+
+/* Feature card (larger, full width) */
+.event-card.card-feature{
+  grid-column:1/-1;
+  padding:2rem;
+}
+.event-card.card-feature .ec-title{font-size:1.4rem}
+.card-feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:1.25rem}
+.cfg-item{
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);
+  border-radius:12px;padding:1rem;
+}
+.cfg-label{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--t3);margin-bottom:.4rem}
+.cfg-val{font-size:1.2rem;font-weight:800;color:var(--white);line-height:1}
+.cfg-sub{font-size:.7rem;color:var(--t2);margin-top:.2rem}
+
+/* Medal trio inside feature card */
+.medal-trio{display:flex;gap:1rem;margin-top:1.25rem;flex-wrap:wrap}
+.medal-block{
+  flex:1;min-width:120px;
+  border-radius:14px;padding:1.25rem 1rem;
+  text-align:center;position:relative;overflow:hidden;
+  transition:all .3s var(--ease);
+}
+.medal-block:hover{transform:translateY(-4px)}
+.mb-gold  {background:linear-gradient(135deg,rgba(255,215,0,.12),rgba(184,134,11,.06));border:1px solid rgba(255,215,0,.25)}
+.mb-silver{background:linear-gradient(135deg,rgba(192,192,192,.1),rgba(100,100,100,.05));border:1px solid rgba(192,192,192,.2)}
+.mb-bronze{background:linear-gradient(135deg,rgba(205,127,50,.1),rgba(130,80,20,.05));border:1px solid rgba(205,127,50,.2)}
+.mb-emoji{font-size:2rem;display:block;margin-bottom:.4rem}
+.mb-num{font-family:var(--font-head);font-size:2.2rem;font-weight:900;line-height:1;margin-bottom:.2rem}
+.mb-gold .mb-num  {color:#FFD700}
+.mb-silver .mb-num{color:#C0C0C0}
+.mb-bronze .mb-num{color:#E8A45A}
+.mb-lbl{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--t2)}
+.mb-glow{position:absolute;width:60px;height:60px;border-radius:50%;top:-10px;right:-10px;opacity:.15;pointer-events:none}
+.mb-gold   .mb-glow{background:radial-gradient(circle,#FFD700,transparent)}
+.mb-silver .mb-glow{background:radial-gradient(circle,#C0C0C0,transparent)}
+.mb-bronze .mb-glow{background:radial-gradient(circle,#E8A45A,transparent)}
+
+/* ═══════════════════════════════════════════════
+   APRIL — EM PROCESSO SPECIAL SECTION
+═══════════════════════════════════════════════ */
+.apr-hero{
+  position:relative;z-index:10;
+  background:rgba(34,197,94,.04);
+  border:1px solid rgba(34,197,94,.15);
+  border-radius:24px;padding:2.5rem;
+  overflow:hidden;margin-top:1.5rem;
+  backdrop-filter:blur(20px);
+}
+.apr-hero::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  background:radial-gradient(ellipse at 30% 50%,rgba(34,197,94,.08) 0%,transparent 65%);
+}
+
+/* Construction animation */
+.construction-bar{
+  display:flex;align-items:center;gap:1rem;margin-bottom:2rem;position:relative;z-index:2;
+}
+.cb-track{flex:1;height:8px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden}
+.cb-fill{
+  height:100%;border-radius:4px;width:0%;
+  background:linear-gradient(90deg,#22C55E,#86EFAC);
+  animation:progress-fill 2s var(--ease) 1s forwards;
+}
+@keyframes progress-fill{to{width:62%}}
+.cb-pct{font-family:var(--font-head);font-size:1rem;font-weight:900;color:#86EFAC;width:48px;flex-shrink:0}
+
+/* Typewriter text */
+.typewriter{
+  font-family:var(--font-serif);font-size:clamp(1.4rem,3vw,2.4rem);
+  color:var(--white);line-height:1.2;letter-spacing:-.02em;
+  margin-bottom:1rem;position:relative;z-index:2;
+}
+.typewriter em{color:#86EFAC;font-style:italic}
+.tw-cursor{
+  display:inline-block;width:3px;height:1em;background:#86EFAC;
+  vertical-align:text-bottom;margin-left:3px;
+  animation:tw-blink .8s step-end infinite;
+}
+@keyframes tw-blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* In-progress items */
+.apr-items{display:grid;grid-template-columns:1fr 1fr;gap:1rem;position:relative;z-index:2;margin-top:1.5rem}
+.apr-item{
+  display:flex;gap:.875rem;align-items:flex-start;
+  background:rgba(255,255,255,.03);border:1px solid rgba(34,197,94,.12);
+  border-radius:14px;padding:1rem;
+  transition:all .3s var(--ease);
+}
+.apr-item:hover{background:rgba(34,197,94,.06);border-color:rgba(34,197,94,.25)}
+.ai-icon{
+  width:36px;height:36px;border-radius:10px;flex-shrink:0;
+  background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.25);
+  display:flex;align-items:center;justify-content:center;font-size:.95rem;
+}
+.ai-body{}
+.ai-title{font-size:.84rem;font-weight:700;color:var(--white);margin-bottom:.2rem}
+.ai-desc{font-size:.72rem;color:var(--t2);line-height:1.5}
+.ai-status{
+  display:inline-flex;align-items:center;gap:.3rem;
+  font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;
+  padding:.18rem .55rem;border-radius:3rem;margin-top:.4rem;
+}
+.ais-wip {background:rgba(34,197,94,.12);color:#86EFAC;border:1px solid rgba(34,197,94,.2)}
+.ais-plan{background:rgba(59,130,246,.12);color:#93C5FD;border:1px solid rgba(59,130,246,.2)}
+.ais-done{background:rgba(230,179,37,.1);color:var(--gold-l);border:1px solid rgba(230,179,37,.2)}
+
+/* Scanning line on apr-hero */
+.scan-line{
+  position:absolute;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(34,197,94,.5),transparent);
+  animation:scan 4s ease-in-out infinite;pointer-events:none;z-index:1;
+}
+@keyframes scan{0%{top:-2px;opacity:0}10%{opacity:1}90%{opacity:1}100%{top:100%;opacity:0}}
+
+/* Particles canvas for april */
+#apr-particles{position:absolute;inset:0;z-index:0;pointer-events:none;border-radius:24px}
+
+/* ═══════════════════════════════════════════════
+   SECTION CONNECTOR (between months)
+═══════════════════════════════════════════════ */
+.month-connector{
+  display:flex;justify-content:center;align-items:center;
+  padding:1.5rem 0;position:relative;z-index:10;
+}
+.mc-line{
+  position:absolute;left:50%;top:0;bottom:0;width:2px;
+  background:linear-gradient(to bottom,rgba(255,255,255,.06),rgba(255,255,255,.03));
+  transform:translateX(-50%);
+}
+.mc-arrow{
+  width:32px;height:32px;border-radius:50%;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--t3);font-size:.8rem;z-index:2;
+  animation:bounce-down 2s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════ */
+.timeline-footer{
+  position:relative;z-index:10;text-align:center;
+  padding:4rem 2rem 6rem;
+}
+.tf-label{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.2em;color:var(--t3);margin-bottom:1rem;display:flex;align-items:center;justify-content:center;gap:.5rem}
+.tf-label::before,.tf-label::after{content:'';width:40px;height:1px;background:var(--border,rgba(255,255,255,.07))}
+.tf-title{font-family:var(--font-serif);font-size:clamp(1.5rem,3vw,2.5rem);color:var(--white);letter-spacing:-.02em;margin-bottom:.75rem}
+.tf-title em{color:var(--accent);font-style:italic}
+.tf-sub{font-size:.85rem;color:var(--t2);margin-bottom:2.5rem;line-height:1.7;font-weight:300;max-width:420px;margin-left:auto;margin-right:auto}
+.tf-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn-go{
+  display:inline-flex;align-items:center;gap:.6rem;
+  background:var(--accent);color:var(--blue);
+  font-weight:800;font-size:.9rem;
+  padding:.9rem 2rem;border-radius:3rem;
+  transition:all .3s var(--ease);
+}
+.btn-go:hover{background:var(--white);transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.4)}
+.btn-go-outline{
+  display:inline-flex;align-items:center;gap:.6rem;
+  background:transparent;border:1.5px solid rgba(255,255,255,.12);
+  color:rgba(255,255,255,.6);font-size:.88rem;font-weight:500;
+  padding:.875rem 1.75rem;border-radius:3rem;
+  transition:all .3s var(--ease);
+}
+.btn-go-outline:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ═══════════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════════ */
+@keyframes fade-up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+
+/* Stagger for cards */
+.event-card:nth-child(1){transition-delay:.05s}
+.event-card:nth-child(2){transition-delay:.12s}
+.event-card:nth-child(3){transition-delay:.19s}
+.event-card:nth-child(4){transition-delay:.26s}
+.event-card:nth-child(5){transition-delay:.33s}
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════ */
+@media(max-width:768px){
+  .month-cards-wrap{grid-template-columns:1fr}
+  .card-feature-grid{grid-template-columns:1fr}
+  .apr-items{grid-template-columns:1fr}
+  .medal-trio{flex-direction:row}
+  .tl-spine,.month-node{display:none}
+  .scrubber{display:none}
+  .timeline{padding:0 1rem 6rem}
+  .month-chapter{padding:3rem 0}
+  .year-chips{gap:.5rem}
+}
+@media(max-width:480px){
+  .hero-stats{gap:1.5rem}
+  .medal-trio{flex-wrap:wrap}
+  .medal-block{min-width:80px}
+}
+</style>
+</head>
+<body>
+
+<!-- READING PROGRESS -->
+<div class="read-bar" id="read-bar"></div>
+
+<!-- CANVAS BG -->
+<canvas id="cosmos-canvas"></canvas>
+<div class="grain"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="logo-group">
+    <img src="/assets/images/logo/lo.png" alt="Logo" class="logo-img" onerror="this.style.display='none'">
+    <div class="logo-txt">
+      <h2>Colégio Alfa e Omega</h2>
+      <p>Panguila · Angola</p>
+    </div>
+  </div>
+  <div class="nav-badge"><i class="fas fa-clock-rotate-left"></i> Caixa do Tempo</div>
+  <a href="/" class="nav-back"><i class="fas fa-arrow-left"></i> Início</a>
+</nav>
+
+<!-- SCRUBBER -->
+<div class="scrubber" id="scrubber">
+  <div class="sc-dot" data-month="jan" data-label="Janeiro" data-target="chapter-jan" onclick="scrollToChapter('chapter-jan')"></div>
+  <div class="sc-dot" data-month="feb" data-label="Fevereiro" data-target="chapter-feb" onclick="scrollToChapter('chapter-feb')"></div>
+  <div class="sc-dot" data-month="mar" data-label="Março" data-target="chapter-mar" onclick="scrollToChapter('chapter-mar')"></div>
+  <div class="sc-dot" data-month="apr" data-label="Abril" data-target="chapter-apr" onclick="scrollToChapter('chapter-apr')"></div>
+</div>
+
+<!-- ═══════════════════════════
+     HERO
+═══════════════════════════ -->
+<section class="hero" id="hero">
+  <div class="hero-wm">2026</div>
+  <div class="hero-ring hr-1"><div class="ring-dot rd-accent"></div></div>
+  <div class="hero-ring hr-2"><div class="ring-dot rd-gold" style="top:auto;bottom:0;transform:translateX(-50%) translateY(50%)"></div></div>
+  <div class="hero-ring hr-3"><div class="ring-dot rd-blue" style="top:50%;left:auto;right:0;transform:translateY(-50%) translateX(50%)"></div></div>
+
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Colégio Alfa e Omega · 2026</div>
+    <h1 class="hero-title">
+      <span class="line-1">Caixa do</span><br>
+      <span class="line-2">Tempo Escolar</span>
+    </h1>
+    <p class="hero-desc">
+      Uma viagem pelos capítulos do ano lectivo. Cada mês, uma história. Cada conquista, um marco eterno na memória do Colégio Alfa e Omega.
+    </p>
+
+    <div class="hero-stats">
+      <div class="hs-item"><div class="hs-num">4</div><div class="hs-lbl">Meses</div></div>
+      <div class="hs-item"><div class="hs-num">16</div><div class="hs-lbl">Medalhas</div></div>
+      <div class="hs-item"><div class="hs-num">24</div><div class="hs-lbl">Quiz Leads</div></div>
+      <div class="hs-item"><div class="hs-num">∞</div><div class="hs-lbl">Memórias</div></div>
+    </div>
+
+    <div class="year-chips">
+      <div class="year-chip yc-jan" onclick="scrollToChapter('chapter-jan')"><i class="fas fa-snowflake"></i> Janeiro · Concluído</div>
+      <div class="year-chip yc-feb" onclick="scrollToChapter('chapter-feb')"><i class="fas fa-heart"></i> Fevereiro · Concluído</div>
+      <div class="year-chip yc-mar" onclick="scrollToChapter('chapter-mar')"><i class="fas fa-trophy"></i> Março · Concluído</div>
+      <div class="year-chip yc-apr" onclick="scrollToChapter('chapter-apr')"><i class="fas fa-spinner fa-spin"></i> Abril · Planeado</div>
+    </div>
+
+    <div class="scroll-cue">
+      <p>Começar a viagem</p>
+      <div class="scroll-cue-arrow"><i class="fas fa-chevron-down"></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════
+     TIMELINE
+═══════════════════════════ -->
+<div class="timeline" id="timeline">
+  <div class="tl-spine"><div class="tl-spine-fill" id="spine-fill"></div></div>
+
+  <!-- ───────────── JANEIRO ───────────── -->
+  <div class="month-chapter" data-month="jan" id="chapter-jan">
+    <div class="month-wm" style="color:rgba(59,130,246,.07)">JAN</div>
+    <div class="month-node">
+      <div class="mn-circle">1</div>
+      <div class="mn-label">Janeiro</div>
+    </div>
+    <div class="month-header">
+      <div class="month-num">01 · 2026</div>
+      <h2 class="month-name" style="color:#93C5FD">Janeiro</h2>
+      <p class="month-sub">Arranque do Ano Lectivo · Comunidade em movimento</p>
+    </div>
+
+    <div class="month-cards-wrap">
+
+      <div class="event-card ec-jan" style="transition-delay:.05s">
+        <div class="ec-icon ic-jan">👥</div>
+        <div class="ec-tag" style="color:#93C5FD"><i class="fas fa-handshake" style="font-size:.55rem"></i> Comunidade</div>
+        <h3 class="ec-title">Reunião dos Encarregados de Educação</h3>
+        <p class="ec-desc">Encontro inicial entre a Direcção e os encarregados de educação para apresentar planos, objetivos e expectativas para o ano lectivo 2026.</p>
+        <div class="ec-stats">
+          <div class="ec-stat"><i class="fas fa-users"></i> Comunidade presente</div>
+          <div class="ec-stat"><i class="fas fa-calendar"></i> Primeira semana</div>
+        </div>
+        <div class="ec-footer">
+          <div class="ec-date"><i class="fas fa-calendar"></i> Início de Janeiro 2026</div>
+          <div class="ec-badge" style="background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);color:#93C5FD">✓ Concluído</div>
+        </div>
+      </div>
+
+      <div class="event-card ec-jan" style="transition-delay:.12s">
+        <div class="ec-icon ic-jan">🌊</div>
+        <div class="ec-tag" style="color:#93C5FD"><i class="fas fa-water" style="font-size:.55rem"></i> Lazer</div>
+        <h3 class="ec-title">Anúncio Oficial da Excursão "Splash Day"</h3>
+        <p class="ec-desc">Anúncio entusiasmante da próxima grande actividade recreativa: uma excursão ao Parque Aquático Laugorim. Alunos e famílias aguardam com entusiasmo.</p>
+        <div class="ec-stats">
+          <div class="ec-stat"><i class="fas fa-smile"></i> Anticipação elevada</div>
+          <div class="ec-stat"><i class="fas fa-clock"></i> Fevereiro</div>
+        </div>
+        <div class="ec-footer">
+          <div class="ec-date"><i class="fas fa-calendar"></i> Janeiro 2026</div>
+          <div class="ec-badge" style="background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);color:#93C5FD">✓ Concluído</div>
+        </div>
+      </div>
+
+      <div class="event-card ec-jan" style="transition-delay:.19s">
+        <div class="ec-icon ic-jan">🇬🇧</div>
+        <div class="ec-tag" style="color:#93C5FD"><i class="fas fa-book" style="font-size:.55rem"></i> Académico</div>
+        <h3 class="ec-title">Início do Curso de Inglês</h3>
+        <p class="ec-desc">Lançamento do programa de ensino de Inglês com professores qualificados. Aulas interactivas e imersão em idioma internacional começam em Janeiro.</p>
+        <div class="ec-stats">
+          <div class="ec-stat"><i class="fas fa-graduation-cap"></i> Todos os ciclos</div>
+          <div class="ec-stat"><i class="fas fa-language"></i> Inglês internacional</div>
+        </div>
+        <div class="ec-footer">
+          <div class="ec-date"><i class="fas fa-calendar"></i> Janeiro 2026</div>
+          <div class="ec-badge" style="background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);color:#93C5FD">✓ Concluído</div>
+        </div>
+      </div>
+
+      <div class="event-card ec-jan" style="transition-delay:.26s">
+        <div class="ec-icon ic-jan">🎂</div>
+        <div class="ec-tag" style="color:#93C5FD"><i class="fas fa-heart" style="font-size:.55rem"></i> Bem-estar</div>
+        <h3 class="ec-title">Aniversariantes & Hábitos Saudáveis</h3>
+        <p class="ec-desc">Celebração dos aniversariantes do mês com actividades de bem-estar escolar e promoção de hábitos saudáveis entre toda a comunidade estudantil.</p>
+        <div class="ec-stats">
+          <div class="ec-stat"><i class="fas fa-birthday-cake"></i> Celebrações</div>
+          <div class="ec-stat"><i class="fas fa-heart-pulse"></i> Saúde integral</div>
+        </div>
+        <div class="ec-footer">
+          <div class="ec-date"><i class="fas fa-calendar"></i> Janeiro 2026</div>
+          <div class="ec-badge" style="background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);color:#93C5FD">✓ Concluído</div>
+        </div>
+      </div>
+
+    </div><!-- /month-cards-wrap -->
+  </div><!-- /chapter-jan -->
+
+  <div class="month-connector">
+    <div class="mc-line"></div>
+    <div class="mc-arrow"><i class="fas fa-chevron-down"></i></div>
+  </div>
+
+  <!-- ───────────── FEVEREIRO ───────────── -->
+  <div class="month-chapter" data-month="feb" id="chapter-feb">
+    <div class="month-wm" style="color:rgba(168,85,247,.06)">FEV</div>
+    <div class="month-node">
+      <div class="mn-circle">2</div>
+      <div class="mn-label">Fevereiro</div>
+    </div>
+    <div class="month-header">
+      <div class="month-num">02 · 2026</div>
+      <h2 class="month-name" style="color:#D8B4FE">Fevereiro</h2>
+      <p class="month-sub">Cultura, Ciência & Lazer · Um mês de celebrações</p>
+    </div>
+
+    <div class="month-cards-wrap">
+
+      <div class="event-card ec-feb" style="transition-delay:.05s">
+        <div class="ec-icon ic-feb">🌍</div>
+        <div class="ec-tag" style="color:#D8B4FE"><i class="fas fa-globe" style="font-size:.55rem"></i> Cultura</div>
+        <h3 class="ec-title">Palestra Beija-Flor: Raízes Africanas</h3>
+        <p class="ec-desc">Programa educativo sobre cultura e história africana, promovendo o conhecimento sobre nossas raízes e identidade. Uma jornada pelos continentes de ancestralidade.</p>
+        <div class="ec-stats">
+          <div class="ec-stat"><i class="fas fa-users"></i> Todos os alunos</div>
+          <div class="ec-stat"><i class="fas fa-lightbulb"></i> Educação cultural</div>
+        </div>
+        <div class="ec-footer">
+          <div class="ec-date"><i class="fas fa-calendar"></i> Fevereiro 2026</div>
+          <div class="ec-badge" style="background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.25);color:#D8B4FE">✓ Concluído</div>
+        </div>
+      </div>
+
+      <div class="event-card ec-feb" style="transition-delay:.12s">
+        <div class="ec-icon ic-feb">🏆</div>
+        <div class="ec-tag" style="color:#D8B4FE"><i class="fas fa-trophy" style="font-size:.55rem"></i> Académico</div>
+        <h3 class="ec-title">Olimpíadas de Matemática no CEPI Maple Bear</h3>
+        <p class="ec-desc">Os nossos alunos brilharam nas Olimpíadas de Matemática realizadas no CEPI Maple Bear, demonstrando excelência em raciocínio lógico e resolução de problemas.</p>
+        <div class="ec-stats">
+          <div class="ec-stat"><i class="fas fa-star"></i> Excelente desempenho</div>
+          <div class="ec-stat"><i class="fas fa-medal"></i> Múltiplas medalhas</div>
+        </div>
+        <div class="ec-footer">
+          <div class="ec-date"><i class="fas fa-calendar"></i> Fevereiro 2026</div>
+          <div class="ec-badge" style="background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.25);color:#D8B4FE">✓ Concluído</div>
+        </div>
+      </div>
+
+      <div class="event-card ec-feb" style="transition-delay:.19s">
+        <div class="ec-icon ic-feb">🌊</div>
+        <div class="ec-tag" style="color:#D8B4FE"><i class="fas fa-water" style="font-size:.55rem"></i> Lazer</div>
+        <h3 class="ec-title">Excursão ao Parque Aquático Laugorim</h3>
+        <p class="ec-desc">Um dia inesquecível no Parque Aquático Laugorim! Alunos, professores e famílias viveram juntos diversão, camaradagem e memórias que durarão para sempre.</p>
+        <div class="ec-stats">
+          <div class="ec-stat"><i class="fas fa-users"></i> Comunidade inteira</div>
+          <div class="ec-stat"><i class="fas fa-smile"></i> Momentos inesquecíveis</div>
+        </div>
+        <div class="ec-footer">
+          <div class="ec-date"><i class="fas fa-calendar"></i> Fevereiro 2026</div>
+          <div class="ec-badge" style="background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.25);color:#D8B4FE">✓ Concluído</div>
+        </div>
+      </div>
+
+      <div class="event-card ec-feb" style="transition-delay:.26s">
+        <div class="ec-icon ic-feb">🌐</div>
+        <div class="ec-tag" style="color:#D8B4FE"><i class="fas fa-globe" style="font-size:.55rem"></i> Digital</div>
+        <h3 class="ec-title">Lançamento Site Official & Quadro de Honra</h3>
+        <p class="ec-desc">O novo website do Colégio Alfa e Omega é lançado com sucesso! Apresentação do Quadro de Honra, celebrando os alunos de excelência académica e comportamental.</p>
+        <div class="ec-stats">
+          <div class="ec-stat"><i class="fas fa-globe"></i> Nova presença online</div>
+          <div class="ec-stat"><i class="fas fa-crown"></i> Reconhecimento merecido</div>
+        </div>
+        <div class="ec-footer">
+          <div class="ec-date"><i class="fas fa-calendar"></i> Fevereiro 2026</div>
+          <div class="ec-badge" style="background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.25);color:#D8B4FE">✓ Concluído</div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /chapter-feb -->
+
+  <div class="month-connector">
+    <div class="mc-line"></div>
+    <div class="mc-arrow"><i class="fas fa-chevron-down"></i></div>
+  </div>
+
+  <!-- ───────────── MARÇO ───────────── -->
+  <div class="month-chapter" data-month="mar" id="chapter-mar">
+    <div class="month-wm" style="color:rgba(230,179,37,.05)">MAR</div>
+    <div class="month-node">
+      <div class="mn-circle">3</div>
+      <div class="mn-label">Março</div>
+    </div>
+    <div class="month-header">
+      <div class="month-num">03 · 2026 · <span style="color:#93C5FD">Concluído</span></div>
+      <h2 class="month-name" style="color:var(--gold-l)">Março</h2>
+      <p class="month-sub">Um mês repleto de celebrações e conquistas</p>
+    </div>
+
+    <div class="month-cards-wrap">
+
+      <!-- FEATURE CARD — Olimpíadas de Matemática -->
+      <div class="event-card ec-mar card-feature" style="transition-delay:.05s">
+        <div class="ec-icon ic-mar">🏆</div>
+        <div class="ec-tag" style="color:var(--gold-l)"><i class="fas fa-trophy" style="font-size:.55rem"></i> Conquista</div>
+        <h3 class="ec-title">Encerramento das Olimpíadas de Matemática 2026</h3>
+        <p class="ec-desc">No sábado, 14 de Março, realizou-se o encerramento das Olimpíadas de Matemática com o Colégio Alfa e Omega em destaque. Mais de 54 alunos participaram com excelência académica, conquistando 16 medalhas e consolidando a reputação da escola na comunidade de Panguila.</p>
+
+        <div class="medal-trio">
+          <div class="medal-block mb-gold">
+            <div class="mb-glow"></div>
+            <span class="mb-emoji">🥇</span>
+            <div class="mb-num">2</div>
+            <div class="mb-lbl">Ouro</div>
+          </div>
+          <div class="medal-block mb-silver">
+            <div class="mb-glow"></div>
+            <span class="mb-emoji">🥈</span>
+            <div class="mb-num">4</div>
+            <div class="mb-lbl">Prata</div>
+          </div>
+          <div class="medal-block mb-bronze">
+            <div class="mb-glow"></div>
+            <span class="mb-emoji">🥉</span>
+            <div class="mb-num">10</div>
+            <div class="mb-lbl">Bronze</div>
+          </div>
+        </div>
+
+        <div class="card-feature-grid" style="margin-top:1.5rem">
+          <div class="cfg-item">
+            <div class="cfg-label">Participantes</div>
+            <div class="cfg-val" style="color:var(--gold-l)">54+</div>
+            <div class="cfg-sub">Alunos da escola</div>
+          </div>
+          <div class="cfg-item">
+            <div class="cfg-label">Total de Medalhas</div>
+            <div class="cfg-val" style="color:#93C5FD">16</div>
+            <div class="cfg-sub">Honra & excelência</div>
+          </div>
+        </div>
+
+        <div class="ec-footer" style="margin-top:1.5rem">
+          <div class="ec-date"><i class="fas fa-calendar"></i> 14 Março 2026</div>
+          <div class="ec-badge" style="background:rgba(230,179,37,.15);border:1px solid rgba(230,179,37,.3);color:var(--gold-l)">✓ Realizado</div>
+        </div>
+      </div>
+
+      <div class="event-card ec-mar" style="transition-delay:.12s">
+        <div class="ec-icon ic-mar">👩</div>
+        <div class="ec-tag" style="color:var(--gold-l)"><i class="fas fa-flower-tulip" style="font-size:.55rem"></i> Comunidade</div>
+        <h3 class="ec-title">Dia Internacional das Mulheres & Piquenique com as Mães</h3>
+        <p class="ec-desc">Celebração especial do Dia das Mulheres com actividades inclusivas. Piquenique convivial com as mães na sexta-feira, uma oportunidade para fortalecer os laços entre escola e família.</p>
+        <div class="ec-stats">
+          <div class="ec-stat"><i class="fas fa-users-female"></i> Mães presentes</div>
+          <div class="ec-stat"><i class="fas fa-heart"></i> Família unida</div>
+        </div>
+        <div class="ec-footer">
+          <div class="ec-date"><i class="fas fa-calendar"></i> Março 2026</div>
+          <div class="ec-badge" style="background:rgba(230,179,37,.12);border:1px solid rgba(230,179,37,.25);color:var(--gold-l)">✓ Realizado</div>
+        </div>
+      </div>
+
+      <div class="event-card ec-mar" style="transition-delay:.19s">
+        <div class="ec-icon ic-mar">👨‍👦</div>
+        <div class="ec-tag" style="color:var(--gold-l)"><i class="fas fa-person-hiking" style="font-size:.55rem"></i> Celebração</div>
+        <h3 class="ec-title">Dia dos Pais — Reconhecimento e Comunidade</h3>
+        <p class="ec-desc">Celebração do Dia dos Pais com homenagens especiais e actividades que envolvem os pais na vida escolar. Um momento para fortalecer parcerias e demonstrar gratidão pelo apoio à educação dos filhos.</p>
+        <div class="ec-stats">
+          <div class="ec-stat"><i class="fas fa-users-male"></i> Pais celebrados</div>
+          <div class="ec-stat"><i class="fas fa-smile"></i> Momentos especiais</div>
+        </div>
+        <div class="ec-footer">
+          <div class="ec-date"><i class="fas fa-calendar"></i> Março 2026</div>
+          <div class="ec-badge" style="background:rgba(230,179,37,.12);border:1px solid rgba(230,179,37,.25);color:var(--gold-l)">✓ Realizado</div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /chapter-mar -->
+
+  <div class="month-connector">
+    <div class="mc-line"></div>
+    <div class="mc-arrow" style="background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.25);color:#86EFAC">
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </div>
+
+  <!-- ───────────── ABRIL ───────────── -->
+  <div class="month-chapter" data-month="apr" id="chapter-apr">
+    <div class="month-wm" style="color:rgba(34,197,94,.05)">ABR</div>
+    <canvas id="apr-particles" style="position:absolute;inset:0;pointer-events:none;z-index:0;border-radius:0"></canvas>
+    <div class="month-node">
+      <div class="mn-circle">4</div>
+      <div class="mn-label">Abril</div>
+    </div>
+    <div class="month-header">
+      <div class="month-num">04 · 2026 · <span style="color:#86EFAC">Planeado</span></div>
+      <h2 class="month-name" style="color:#86EFAC">Abril</h2>
+      <p class="month-sub">O que vem a seguir · A história continua</p>
+    </div>
+
+    <!-- Special "Em Processo" hero block -->
+    <div class="apr-hero">
+      <canvas id="apr-canvas-inner"></canvas>
+      <div class="scan-line"></div>
+
+      <div class="construction-bar" style="position:relative;z-index:2">
+        <div class="cb-track"><div class="cb-fill" id="apr-progress"></div></div>
+        <div class="cb-pct" id="apr-pct-label">62%</div>
+      </div>
+
+      <div class="typewriter" id="typewriter-text" style="position:relative;z-index:2">
+        Abril está a ser <em>construído</em><span class="tw-cursor"></span>
+      </div>
+      <p style="font-size:.88rem;color:rgba(240,244,255,.4);margin-bottom:1.5rem;line-height:1.7;font-weight:300;position:relative;z-index:2">
+        Estamos no coração de Abril — um mês de preparação, antecipação e construção do próximo capítulo. Os eventos abaixo estão em desenvolvimento activo.
+      </p>
+
+      <div class="apr-items">
+
+        <div class="apr-item">
+          <div class="ai-icon">🌍</div>
+          <div class="ai-body">
+            <div class="ai-title">Preparação Olimpíadas Internacionais</div>
+            <div class="ai-desc">Treinos intensivos com os 2 alunos medalha de Ouro para a fase internacional.</div>
+            <div class="ai-status ais-wip"><i class="fas fa-spinner fa-spin" style="font-size:.55rem"></i> Em Progresso</div>
+          </div>
+        </div>
+
+        <div class="apr-item">
+          <div class="ai-icon">📋</div>
+          <div class="ai-body">
+            <div class="ai-title">3º Trimestre — Início das Aulas</div>
+            <div class="ai-desc">Abertura do 3º período com novo currículo reforçado e aulas de preparação para exames.</div>
+            <div class="ai-status ais-wip"><i class="fas fa-spinner fa-spin" style="font-size:.55rem"></i> Em Progresso</div>
+          </div>
+        </div>
+
+        <div class="apr-item">
+          <div class="ai-icon">🏗️</div>
+          <div class="ai-body">
+            <div class="ai-title">Ampliação das Instalações</div>
+            <div class="ai-desc">Nova sala multimédia e laboratório de ciências em construção. Conclusão prevista para Maio.</div>
+            <div class="ai-status ais-plan"><i class="fas fa-hammer" style="font-size:.55rem"></i> Em Construção</div>
+          </div>
+        </div>
+
+        <div class="apr-item">
+          <div class="ai-icon">🎓</div>
+          <div class="ai-body">
+            <div class="ai-title">Semana da Excelência</div>
+            <div class="ai-desc">Cerimónia de entrega de prémios aos alunos e encarregados mais dedicados do ano.</div>
+            <div class="ai-status ais-plan"><i class="fas fa-clock" style="font-size:.55rem"></i> Planeado</div>
+          </div>
+        </div>
+
+        <div class="apr-item">
+          <div class="ai-icon">💻</div>
+          <div class="ai-body">
+            <div class="ai-title">Portal Digital — Novas Funcionalidades</div>
+            <div class="ai-desc">Actualização do site com área de alunos, boletins digitais e notificações automáticas.</div>
+            <div class="ai-status ais-wip"><i class="fas fa-code" style="font-size:.55rem"></i> Em Dev.</div>
+          </div>
+        </div>
+
+        <div class="apr-item">
+          <div class="ai-icon">🤝</div>
+          <div class="ai-body">
+            <div class="ai-title">Parceria com Empresas Locais</div>
+            <div class="ai-desc">Negociação de parcerias para estágios de alunos do 12º ano e apoio ao desenvolvimento.</div>
+            <div class="ai-status ais-plan"><i class="fas fa-handshake" style="font-size:.55rem"></i> Em Negociação</div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /apr-hero -->
+
+  </div><!-- /chapter-apr -->
+
+  <!-- FOOTER -->
+  <div class="timeline-footer">
+    <div class="tf-label">Continua em Maio 2025</div>
+    <h2 class="tf-title">O próximo capítulo está<br>a ser <em>escrito</em></h2>
+    <p class="tf-sub">A história do Colégio Alfa e Omega é feita de cada aluno, professor e encarregado. Faça parte dela.</p>
+    <div class="tf-btns">
+      <a href="/" class="btn-go"><i class="fas fa-home"></i> Página Inicial</a>
+      <a href="/olimpiadas.html" class="btn-go-outline"><i class="fas fa-trophy"></i> Ver Olimpíadas</a>
+      <a href="/galeria.html" class="btn-go-outline"><i class="fas fa-images"></i> Galeria</a>
+    </div>
+  </div>
+
+</div><!-- /timeline -->
+
+<script>
+/* ════════════════════════════════════════
+   COSMOS CANVAS — background starfield
+════════════════════════════════════════ */
+(function(){
+  const canvas=document.getElementById('cosmos-canvas');
+  const ctx=canvas.getContext('2d');
+  let W,H,stars=[];
+  const MONTH_COLORS={jan:'#3B82F6',feb:'#A855F7',mar:'#E6B325',apr:'#22C55E'};
+  let currentMonthColor='#3B82F6';
+
+  function resize(){
+    W=canvas.width=window.innerWidth;
+    H=canvas.height=window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize',resize,{passive:true});
+
+  // Build stars
+  function buildStars(){
+    stars=Array.from({length:200},()=>({
+      x:Math.random()*W, y:Math.random()*H,
+      r:Math.random()*1.3+.2,
+      vx:(Math.random()-.5)*.08,
+      vy:(Math.random()-.5)*.08,
+      a:Math.random()*.6+.1,
+      twinkle:Math.random()*Math.PI*2,
+      twinkleSpeed:Math.random()*.02+.005,
+    }));
+  }
+  buildStars();
+
+  // Shooting stars
+  let shooters=[];
+  function addShooter(){
+    shooters.push({
+      x:Math.random()*W*1.2-W*.1,
+      y:Math.random()*H*.5,
+      l:Math.random()*80+40,
+      vx:Math.random()*3+2,
+      vy:Math.random()*2+1,
+      a:1,
+    });
+  }
+  setInterval(addShooter,4000);
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    // Stars
+    stars.forEach(s=>{
+      s.x+=s.vx; s.y+=s.vy;
+      if(s.x<0)s.x=W; if(s.x>W)s.x=0;
+      if(s.y<0)s.y=H; if(s.y>H)s.y=0;
+      s.twinkle+=s.twinkleSpeed;
+      const alpha=s.a*(0.6+0.4*Math.sin(s.twinkle));
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(240,244,255,${alpha})`;
+      ctx.fill();
+    });
+
+    // Connections
+    for(let i=0;i<stars.length;i++){
+      for(let j=i+1;j<stars.length;j++){
+        const dx=stars[i].x-stars[j].x, dy=stars[i].y-stars[j].y;
+        const d=Math.sqrt(dx*dx+dy*dy);
+        if(d<120){
+          ctx.beginPath();
+          ctx.moveTo(stars[i].x,stars[i].y);
+          ctx.lineTo(stars[j].x,stars[j].y);
+          ctx.strokeStyle=`rgba(59,130,246,${0.04*(1-d/120)})`;
+          ctx.lineWidth=.5;
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Shooting stars
+    shooters=shooters.filter(s=>{
+      s.x+=s.vx*4; s.y+=s.vy*4; s.a-=.015;
+      if(s.a<=0)return false;
+      ctx.beginPath();
+      ctx.moveTo(s.x,s.y);
+      ctx.lineTo(s.x-s.vx*s.l,s.y-s.vy*s.l);
+      const g=ctx.createLinearGradient(s.x,s.y,s.x-s.vx*s.l,s.y-s.vy*s.l);
+      g.addColorStop(0,`rgba(206,244,49,${s.a})`);
+      g.addColorStop(1,'rgba(206,244,49,0)');
+      ctx.strokeStyle=g;
+      ctx.lineWidth=1.5;
+      ctx.stroke();
+      return s.x<W+100 && s.y<H+100;
+    });
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ════════════════════════════════════════
+   APRIL PARTICLES CANVAS
+════════════════════════════════════════ */
+(function(){
+  const canvas=document.getElementById('apr-canvas-inner');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  let W,H;
+  function resize(){
+    const parent=canvas.closest('.apr-hero');
+    if(!parent)return;
+    W=canvas.width=parent.offsetWidth;
+    H=canvas.height=parent.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize',resize,{passive:true});
+  const pts=Array.from({length:35},()=>({
+    x:Math.random(),y:Math.random(),
+    r:Math.random()*2+.5,
+    vx:(Math.random()-.5)*.0002,vy:(Math.random()-.5)*.0002,
+    a:Math.random()*.4+.1,
+  }));
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(p=>{
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0)p.x=1;if(p.x>1)p.x=0;
+      if(p.y<0)p.y=1;if(p.y>1)p.y=0;
+      ctx.beginPath();ctx.arc(p.x*W,p.y*H,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(34,197,94,${p.a})`;ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ════════════════════════════════════════
+   SCROLL MECHANICS
+════════════════════════════════════════ */
+const CHAPTERS=['chapter-jan','chapter-feb','chapter-mar','chapter-apr'];
+
+function getScrollProgress(){
+  const total=document.documentElement.scrollHeight-window.innerHeight;
+  return total>0?window.scrollY/total:0;
+}
+
+function updateReadBar(){
+  document.getElementById('read-bar').style.width=(getScrollProgress()*100)+'%';
+}
+
+function updateSpineFill(){
+  const tl=document.getElementById('timeline');
+  const fill=document.getElementById('spine-fill');
+  if(!tl||!fill)return;
+  const rect=tl.getBoundingClientRect();
+  const tlHeight=tl.offsetHeight;
+  const scrolled=Math.max(0,-rect.top+window.innerHeight*.5);
+  const pct=Math.min(100,(scrolled/tlHeight)*100);
+  fill.style.height=pct+'%';
+}
+
+function updateScrubber(){
+  const dots=document.querySelectorAll('.sc-dot');
+  let activeMonth=null;
+  CHAPTERS.forEach(id=>{
+    const el=document.getElementById(id);
+    if(!el)return;
+    const rect=el.getBoundingClientRect();
+    if(rect.top<=window.innerHeight*.5&&rect.bottom>0){
+      activeMonth=el.dataset.month;
+    }
+  });
+  dots.forEach(d=>{
+    d.classList.toggle('active',d.dataset.month===activeMonth);
+  });
+}
+
+/* IntersectionObserver for chapter reveal */
+const revealObserver=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('revealed');
+    }
+  });
+},{threshold:.08});
+
+document.querySelectorAll('.month-chapter').forEach(el=>revealObserver.observe(el));
+
+/* IntersectionObserver for individual cards */
+const cardObserver=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('card-revealed');
+    }
+  });
+},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+
+document.querySelectorAll('.event-card').forEach((el,i)=>{
+  el.style.transitionDelay=`${(i%4)*0.07}s`;
+  cardObserver.observe(el);
+});
+
+/* IntersectionObserver for medal numbers — count up */
+const medalObserver=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const el=e.target;
+      const target=parseInt(el.dataset.target||el.textContent)||0;
+      let start=null;
+      const step=ts=>{
+        if(!start)start=ts;
+        const p=Math.min((ts-start)/1000,1);
+        const eased=1-Math.pow(1-p,3);
+        el.textContent=Math.round(eased*target);
+        if(p<1)requestAnimationFrame(step);
+        else el.textContent=target;
+      };
+      requestAnimationFrame(step);
+      medalObserver.unobserve(el);
+    }
+  });
+},{threshold:.5});
+
+document.querySelectorAll('.mb-num').forEach(el=>{
+  el.dataset.target=el.textContent;
+  el.textContent='0';
+  medalObserver.observe(el);
+});
+
+/* Scroll listener */
+let ticking=false;
+window.addEventListener('scroll',()=>{
+  if(!ticking){
+    requestAnimationFrame(()=>{
+      updateReadBar();
+      updateSpineFill();
+      updateScrubber();
+      ticking=false;
+    });
+    ticking=true;
+  }
+},{passive:true});
+
+/* Scroll to chapter */
+function scrollToChapter(id){
+  const el=document.getElementById(id);
+  if(!el)return;
+  const offset=el.getBoundingClientRect().top+window.scrollY-80;
+  window.scrollTo({top:offset,behavior:'smooth'});
+}
+
+/* ════════════════════════════════════════
+   TYPEWRITER EFFECT
+════════════════════════════════════════ */
+(function(){
+  const phrases=[
+    'Abril está a ser <em>construído</em>',
+    'A história ainda está a ser <em>escrita</em>',
+    'O futuro está a ser <em>preparado</em>',
+    'A excelência continua a ser <em>cultivada</em>',
+  ];
+  let pIdx=0;
+  const el=document.getElementById('typewriter-text');
+  function nextPhrase(){
+    if(!el)return;
+    pIdx=(pIdx+1)%phrases.length;
+    el.innerHTML=phrases[pIdx]+'<span class="tw-cursor"></span>';
+  }
+  setInterval(nextPhrase,4000);
+})();
+
+/* ════════════════════════════════════════
+   PARALLAX WATERMARKS on scroll
+════════════════════════════════════════ */
+window.addEventListener('scroll',()=>{
+  document.querySelectorAll('.month-wm').forEach(wm=>{
+    const chapter=wm.closest('.month-chapter');
+    const rect=chapter.getBoundingClientRect();
+    const progress=(-rect.top+window.innerHeight*.5)/window.innerHeight;
+    wm.style.transform=`translate(-50%,calc(-50% + ${progress*-30}px))`;
+  });
+},{passive:true});
+
+/* ════════════════════════════════════════
+   APRIL PROGRESS COUNTER
+════════════════════════════════════════ */
+(function(){
+  let val=0;
+  const target=62;
+  const lbl=document.getElementById('apr-pct-label');
+  const fill=document.getElementById('apr-progress');
+  const observer=new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting){
+      let start=null;
+      const step=ts=>{
+        if(!start)start=ts;
+        const p=Math.min((ts-start)/1400,1);
+        const e=1-Math.pow(1-p,3);
+        val=Math.round(e*target);
+        if(lbl)lbl.textContent=val+'%';
+        if(fill)fill.style.width=val+'%';
+        if(p<1)requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+      observer.disconnect();
+    }
+  },{threshold:.3});
+  const el=document.getElementById('apr-progress');
+  if(el)observer.observe(el);
+})();
+
+/* Init on load */
+updateReadBar();
+updateSpineFill();
+updateScrubber();
+</script>
+</body>
+</html>
