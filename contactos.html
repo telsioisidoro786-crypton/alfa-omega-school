@@ -623,6 +623,12 @@
       .doubts-box { padding: 2rem 1.5rem; }
     }
   </style>
+
+  <!-- Vercel Web Analytics -->
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
 </head>
 <body>
 
@@ -1106,7 +1112,7 @@
       }
     }, { passive: true });
 
-    // ─── MOBILE MENU ───────────────────────────────────────────
+    // ─── MOBILE MENU ────────���──────────────────────────────────
     const mobileBtn = document.getElementById('mobile-btn');
     const mobileMenu = document.getElementById('mobile-menu');
     mobileBtn.addEventListener('click', () => {
